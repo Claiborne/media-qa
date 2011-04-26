@@ -1,0 +1,9 @@
+
+<ul>
+	<% @projects.each do |project| %>
+		<li><%=link_to project.project, {:controller => 'gallery', :action => 'build_index', :projectname => project.project} %></li>
+	<% end %>
+</ul>
+
+
+

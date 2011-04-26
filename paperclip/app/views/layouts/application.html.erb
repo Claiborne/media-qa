@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PaperclipV2</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :all %>
+  <%= csrf_meta_tag %>
+  	<link media="screen" rel="stylesheet" href="colorbox.css" />
+	<script>
+		$(document).ready(function(){
+			//Examples of how to assign the ColorBox event to elements
+			$("a[rel='example3']").colorbox({transition:"none", width:"85%", height:"85%"});
+			
+		});
+	</script>
+</head>
+<body>
+  <div>
+      <a href="/gallery/index" title="Paperclip App" class="ignlogo">Paperclip App</a>
+  </div>
+        <p class="center projectheader">Paperclip</p>
+  
+  <hr>
+  
+<%= yield %>
+
+<div>
+<hr style="margin-top:35px">
+
+</div>
+</body>
+</html>
