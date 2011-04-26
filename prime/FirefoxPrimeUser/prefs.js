@@ -71,3 +71,6 @@ user_pref("services.sync.tabs.lastSyncLocal", "0");
 user_pref("urlclassifier.keyupdatetime.https://sb-ssl.google.com/safebrowsing/newkey", 1304621944);
 user_pref("xpinstall.whitelist.add", "");
 user_pref("xpinstall.whitelist.add.36", "");
+user_pref("extensions.firebug.externalEditors", "Aptana");
+user_pref("extensions.firebug.externalEditors.Aptana.executable", "C:\Aptana RadRails\AptanaRadRails.exe");
+user_pref("extensions.firebug.externalEditors.Aptana.label", "Aptana Studio");
