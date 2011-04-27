@@ -1,0 +1,9 @@
+<div>
+	<p class="projectheader">Builds for <%= @project_name %> </p>
+</div>
+
+<ul>
+	<% @projects.find_each do |project| %>
+		<li><%=link_to project.build, {:controller => 'gallery', :action => 'view', :projectname => project.project, :build_num => project.build} %></li>
+	<% end %>	
+</ul>
