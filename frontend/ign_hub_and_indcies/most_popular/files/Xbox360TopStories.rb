@@ -2,8 +2,13 @@ require "test/unit"
 require "rubygems"
 gem "selenium-client"
 require "selenium/client"
+require "files/helpers/global_header_module"
+require "files/helpers/ign_hubs_indices_module"
 
 class Xbox360TopStories < Test::Unit::TestCase
+
+  include GlobalHeaderMod
+  include IGNHubsIndicesMod
 
   def setup
     @verification_errors = []
@@ -23,17 +28,13 @@ class Xbox360TopStories < Test::Unit::TestCase
   end
   
   def test_xbox360_top_stories
-    # SIGN IN
-    @selenium.open "http://my.ign.com/login?r=http://www.ign.com/#"
-    @selenium.click "emailField"
-    @selenium.type "emailField", "smoketest@testign.com"
-    @selenium.type "passwordField", "testpassword"
-    @selenium.click "signinButton"
-    @selenium.wait_for_page_to_load "30000"
-    # END SIGN IN
+
+    sign_in
+	
     # CHECK BASIC ELEMENTS OF XBOX 360 TOP STORIES PAGE
     # Open 360 Top Stories
     @selenium.open "http://xbox360.ign.com/index/features.html"
+	global_header("http://xbox360.ign.com/index/features.html")
     # Verify Title
     begin
         assert /^[\s\S]*Xbox 360 News & Updates[\s\S]*$/ =~ @selenium.get_title, "http://xbox360.ign.com/index/features.html not loading or title has changed"

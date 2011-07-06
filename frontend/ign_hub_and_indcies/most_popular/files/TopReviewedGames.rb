@@ -2,8 +2,13 @@ require "test/unit"
 require "rubygems"
 gem "selenium-client"
 require "selenium/client"
+require "files/helpers/global_header_module"
+require "files/helpers/ign_hubs_indices_module"
 
 class TopReviewedGames < Test::Unit::TestCase
+
+  include GlobalHeaderMod
+  include IGNHubsIndicesMod
 
   def setup
     @verification_errors = []
@@ -23,17 +28,13 @@ class TopReviewedGames < Test::Unit::TestCase
   end
   
   def test_top_reviewed_games
-    # SIGN IN
-    @selenium.open "http://my.ign.com/login?r=http://www.ign.com/#"
-    @selenium.click "emailField"
-    @selenium.type "emailField", "smoketest@testign.com"
-    @selenium.type "passwordField", "testpassword"
-    @selenium.click "signinButton"
-    @selenium.wait_for_page_to_load "30000"
-    # END SIGN IN
+  
+    sign_in
+	
     # CHECKS TOP REVIEWED GAMES PAGE AND TOP LINKS (DEFAULT SORT-- DATE) NOT 404
     # Open Reviews Page
     @selenium.open "http://www.ign.com/index/reviews.html"
+	global_header("http://www.ign.com/index/reviews.html")
     # Verify on Reviews index page
     begin
         assert /^[\s\S]*Recently Reviewed Games[\s\S]*$/ =~ @selenium.get_title, "http://www.ign.com/index/reviews.html did not load or title has changed"
@@ -47,9 +48,10 @@ class TopReviewedGames < Test::Unit::TestCase
         @verification_errors << $!
     end
     @selenium.click "css=table#table-section-index tbody tr:nth-child(2).game-row td.up-com div.gameShortCuts a"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
+	global_header("first game review on index page")
     # Verify on review page
-    assert !60.times{ break if (@selenium.is_element_present("css=meta[content*=Review]") rescue false); sleep 1 }
+    assert !6.times{ break if (@selenium.is_element_present("css=meta[content*=Review]") rescue false); sleep 1 }, "Unable to verify the third game in the http://www.ign.com/index/reviews.html blogroll leads to a review page"
     begin
         assert /^[\s\S]*Review[\s\S]*$/ =~ @selenium.get_title, "First review entry doesn't lead to a review page"
     rescue Test::Unit::AssertionFailedError
@@ -69,9 +71,9 @@ class TopReviewedGames < Test::Unit::TestCase
         @verification_errors << $!
     end
     @selenium.click "css=table#table-section-index tbody tr:nth-child(3).game-row td.up-com div.gameShortCuts a"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
     # Verify on review page
-    assert !60.times{ break if (@selenium.is_element_present("css=meta[content*=Review]") rescue false); sleep 1 }
+    assert !6.times{ break if (@selenium.is_element_present("css=meta[content*=Review]") rescue false); sleep 1 }, "Unable to verify the second game in the http://www.ign.com/index/reviews.html blogroll leads to a review page"
     begin
         assert /^[\s\S]*Review[\s\S]*$/ =~ @selenium.get_title, "Second review entry doesn't lead to a review page"
     rescue Test::Unit::AssertionFailedError
@@ -91,9 +93,9 @@ class TopReviewedGames < Test::Unit::TestCase
         @verification_errors << $!
     end
     @selenium.click "css=table#table-section-index tbody tr:nth-child(4).game-row td.up-com div.gameShortCuts a"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
     # Verify on review page
-    assert !60.times{ break if (@selenium.is_element_present("css=meta[content*=Review]") rescue false); sleep 1 }
+    assert !6.times{ break if (@selenium.is_element_present("css=meta[content*=Review]") rescue false); sleep 1 }, "Unable to verify the third game in the http://www.ign.com/index/reviews.html blogroll leads to a review page"
     begin
         assert /^[\s\S]*Review[\s\S]*$/ =~ @selenium.get_title, "First review entry doesn't lead to a review page"
     rescue Test::Unit::AssertionFailedError
@@ -111,7 +113,7 @@ class TopReviewedGames < Test::Unit::TestCase
     # Sort by Editor's Choice
     @selenium.click("css=div#tab-blogroll a[href*=\"editorsChoice\"]")
     # Wait for sorted to populate
-    assert !60.times{ break if (@selenium.is_element_present("css=div#tab-blogroll div:nth-child(2).selected") rescue false); sleep 1 }
+    assert !6.times{ break if (@selenium.is_element_present("css=div#tab-blogroll div:nth-child(2).selected") rescue false); sleep 1 }
     # Verify on Reviews index page
     begin
         assert /^[\s\S]*Recently Reviewed Games[\s\S]*$/ =~ @selenium.get_title, "Review index did not load when sorted by Editor's Choice, or title has changed"
@@ -132,9 +134,9 @@ class TopReviewedGames < Test::Unit::TestCase
         @verification_errors << $!
     end
     @selenium.click "css=table#table-section-index tbody tr:nth-child(2).game-row td.up-com div.gameShortCuts a"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
+	global_header("first game review on review index page, sort by editor's choice")
     # Verify on review page
-    assert !60.times{ break if (@selenium.is_element_present("css=meta[content*=Review]") rescue false); sleep 1 }
     begin
         assert /^[\s\S]*Review[\s\S]*$/ =~ @selenium.get_title, "First entry in the reviews page (sort by editor's choice) does not lead to a review page"
     rescue Test::Unit::AssertionFailedError
@@ -150,7 +152,7 @@ class TopReviewedGames < Test::Unit::TestCase
     # Sort by Editor's Choice
     @selenium.click("css=div#tab-blogroll a[href*=\"editorsChoice\"]")
     # Wait for sorted to populate
-    assert !60.times{ break if (@selenium.is_element_present("css=div#tab-blogroll div:nth-child(2).selected") rescue false); sleep 1 }
+    assert !6.times{ break if (@selenium.is_element_present("css=div#tab-blogroll div:nth-child(2).selected") rescue false); sleep 1 }
     # Open 2nd game review
     begin
         assert_equal "Reviews", @selenium.get_text("css=table#table-section-index tbody tr:nth-child(3).game-row td.up-com div.gameShortCuts a"), "'Reviews' text or <a> does not display in the second entry when reviews are sorted by editor's choice"
@@ -158,9 +160,8 @@ class TopReviewedGames < Test::Unit::TestCase
         @verification_errors << $!
     end
     @selenium.click "css=table#table-section-index tbody tr:nth-child(3).game-row td.up-com div.gameShortCuts a"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
     # Verify on review page
-    assert !60.times{ break if (@selenium.is_element_present("css=meta[content*=Review]") rescue false); sleep 1 }
     begin
         assert /^[\s\S]*Review[\s\S]*$/ =~ @selenium.get_title, "Second entry in the reviews page (sort by editor's choice) does not lead to a review page"
     rescue Test::Unit::AssertionFailedError
@@ -176,7 +177,7 @@ class TopReviewedGames < Test::Unit::TestCase
     # Sort by Editor's Choice
     @selenium.click("css=div#tab-blogroll a[href*=\"editorsChoice\"]")
     # Wait for sorted to populate
-    assert !60.times{ break if (@selenium.is_element_present("css=div#tab-blogroll div:nth-child(2).selected") rescue false); sleep 1 }
+    assert !6.times{ break if (@selenium.is_element_present("css=div#tab-blogroll div:nth-child(2).selected") rescue false); sleep 1 }
     # Open 3rd game review
     begin
         assert_equal "Reviews", @selenium.get_text("css=table#table-section-index tbody tr:nth-child(4).game-row td.up-com div.gameShortCuts a"), "'Reviews' text or <a> does not display in the third entry when reviews are sorted by editor's choice"
@@ -184,9 +185,8 @@ class TopReviewedGames < Test::Unit::TestCase
         @verification_errors << $!
     end
     @selenium.click "css=table#table-section-index tbody tr:nth-child(4).game-row td.up-com div.gameShortCuts a"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
     # Verify on review page
-    assert !60.times{ break if (@selenium.is_element_present("css=meta[content*=Review]") rescue false); sleep 1 }
     begin
         assert /^[\s\S]*Review[\s\S]*$/ =~ @selenium.get_title, "First entry in the reviews page (sort by editor's choice) does not lead to a review page"
     rescue Test::Unit::AssertionFailedError

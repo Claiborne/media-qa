@@ -9,7 +9,7 @@ class GDCMain < Test::Unit::TestCase
     @selenium = Selenium::Client::Driver.new \
       :host => "qa-server",
       :port => 4444,
-      :browser => "Firefox on OS X",
+      :browser => "Firefox on Windows",
       :url => "http://www.ign.com/events/",
       :timeout_in_second => 60
 	  

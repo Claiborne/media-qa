@@ -2,7 +2,7 @@ require "test/unit"
 require "rubygems"
 gem "selenium-client"
 require "selenium/client"
-require "files/social_blog_format_module"
+require "files/helpers/social_blog_format_module"
 
 
 class SocialBlogVideoPost < Test::Unit::TestCase
@@ -46,7 +46,7 @@ class SocialBlogVideoPost < Test::Unit::TestCase
 	blogid = @selenium.get_attribute("css=div#content div[class='post type-post']@id")
 	blogid = blogid.delete "post-"
 	@selenium.open "http://api.ign.com/v2/articles/"+blogid+".json"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	begin
         assert @selenium.is_text_present("ignvideo url=\"http://www.ign.com/videos/2011/04/15/battlefield-3-my-life-trailer\""), "The IGN video does not appear in the content API"
     rescue Test::Unit::AssertionFailedError
@@ -54,7 +54,7 @@ class SocialBlogVideoPost < Test::Unit::TestCase
 	end
   
 	@selenium.open "http://write.ign.com/Clay.IGN/wp-admin/post-new.php"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	type_title
 	
 	# EMBED IGN VIDEO
@@ -72,14 +72,14 @@ class SocialBlogVideoPost < Test::Unit::TestCase
 	blogid = @selenium.get_attribute("css=div#content div[class='post type-post']@id")
 	blogid = blogid.delete "post-"
 	@selenium.open "http://api.ign.com/v2/articles/"+blogid+".json"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	begin
         assert @selenium.is_text_present("youtube clip_id=\"EsbDa0SEnFE\""), "The Youtube video does not appear in the content API"
     rescue Test::Unit::AssertionFailedError
         @verification_errors << $!
 	end
 	@selenium.open "http://write.ign.com/Clay.IGN/wp-admin/post-new.php"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	type_title
 	
 	# EMBED IGN VIDEO
@@ -97,7 +97,7 @@ class SocialBlogVideoPost < Test::Unit::TestCase
 	blogid = @selenium.get_attribute("css=div#content div[class='post type-post']@id")
 	blogid = blogid.delete "post-"
 	@selenium.open "http://api.ign.com/v2/articles/"+blogid+".json"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	begin
         assert @selenium.is_text_present("vimeo clip_id=\"16776166\""), "The Vimeo video does not appear in the content API"
     rescue Test::Unit::AssertionFailedError

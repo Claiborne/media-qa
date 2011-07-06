@@ -8,9 +8,9 @@ class SearchSmoke < Test::Unit::TestCase
   def setup
     @verification_errors = []
     @selenium = Selenium::Client::Driver.new \
-      :host => "localhost",
+      :host => "qa-server",
       :port => 4444,
-      :browser => "*chrome",
+      :browser => "Firefox on Windows",
       :url => "http://www.ign.com/",
       :timeout_in_second => 60
 
@@ -30,14 +30,14 @@ class SearchSmoke < Test::Unit::TestCase
     @selenium.type "emailField", "smoketest@testign.com"
     @selenium.type "passwordField", "testpassword"
     @selenium.click "signinButton"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	
 	@selenium.open "/"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	
     @selenium.type "search-global", "metal gear solid"
     @selenium.click "search-submit"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	
 	begin
         assert @selenium.is_element_present("css=input#search-global"), "The search input box appears missing from the global header"

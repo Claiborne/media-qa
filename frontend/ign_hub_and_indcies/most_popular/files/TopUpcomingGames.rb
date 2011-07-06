@@ -2,8 +2,13 @@ require "test/unit"
 require "rubygems"
 gem "selenium-client"
 require "selenium/client"
+require "files/helpers/global_header_module"
+require "files/helpers/ign_hubs_indices_module"
 
 class TopUpcomingGames < Test::Unit::TestCase
+
+  include GlobalHeaderMod
+  include IGNHubsIndicesMod
 
   def setup
     @verification_errors = []
@@ -23,25 +28,22 @@ class TopUpcomingGames < Test::Unit::TestCase
   end
   
   def test_top_upcoming_games
-    # SIGN IN
-    @selenium.open "http://my.ign.com/login?r=http://www.ign.com/#"
-    @selenium.click "emailField"
-    @selenium.type "emailField", "smoketest@testign.com"
-    @selenium.type "passwordField", "testpassword"
-    @selenium.click "signinButton"
-    @selenium.wait_for_page_to_load "30000"
-    # END SIGN IN
+    
+	sign_in
+	
     # UPCOMING INDEX > RELEASE DATE > CHECK OBJECT PAGES FOR FIRST THREE ENTIRES
     # Open Upcoming Games
     @selenium.open "http://www.ign.com/index/upcoming.html"
+	global_header("http://www.ign.com/index/upcoming.html")
     # Assert title contains "Top Upcoming Games"
     assert /^[\s\S]*Top Upcoming Games[\s\S]*$/ =~ @selenium.get_title
     # Sort by release date
     @selenium.click "link=Release Date"
-    assert !60.times{ break if (@selenium.is_element_present("css=table#table-section-index tbody tr td[class='right col-width'] a[class*=asc]") rescue false); sleep 1 }
+    assert !6.times{ break if (@selenium.is_element_present("css=table#table-section-index tbody tr td[class='right col-width'] a[class*=asc]") rescue false); sleep 1 }
     # Click first game
     @selenium.click "css=tr:nth-child(2).game-row td:nth-child(2).up-com h3 a"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
+	global_header("first game entry in Top Upcoming Games index, sorted by release date")
     # =====================
     # =====================
     # CHECKS BASIC ELEMENTS OF GAME OBJECT-PAGES
@@ -142,10 +144,10 @@ class TopUpcomingGames < Test::Unit::TestCase
     @selenium.open "http://www.ign.com/index/upcoming.html"
     # Sort again
     @selenium.click "link=Release Date"
-    assert !60.times{ break if (@selenium.is_element_present("css=table#table-section-index tbody tr td[class='right col-width'] a[class*=asc]") rescue false); sleep 1 }
+    assert !6.times{ break if (@selenium.is_element_present("css=table#table-section-index tbody tr td[class='right col-width'] a[class*=asc]") rescue false); sleep 1 }
     # Click second game
     @selenium.click "css=tr:nth-child(3).game-row td:nth-child(2).up-com h3 a"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
     # =====================
     # =====================
     # CHECKS BASIC ELEMENTS OF GAME OBJECT-PAGES
@@ -246,10 +248,10 @@ class TopUpcomingGames < Test::Unit::TestCase
     @selenium.open "http://www.ign.com/index/upcoming.html"
     # Sort again
     @selenium.click "link=Release Date"
-    assert !60.times{ break if (@selenium.is_element_present("css=table#table-section-index tbody tr td[class='right col-width'] a[class*=asc]") rescue false); sleep 1 }
+    assert !6.times{ break if (@selenium.is_element_present("css=table#table-section-index tbody tr td[class='right col-width'] a[class*=asc]") rescue false); sleep 1 }
     # Click third game
     @selenium.click "css=tr:nth-child(4).game-row td:nth-child(2).up-com h3 a"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
     # =====================
     # =====================
      # CHECKS BASIC ELEMENTS OF GAME OBJECT-PAGES

@@ -8,9 +8,9 @@ class SocialBlogEditPost < Test::Unit::TestCase
   def setup
     @verification_errors = []
     @selenium = Selenium::Client::Driver.new \
-      :host => "localhost",
+      :host => "qa-server",
       :port => 4444,
-      :browser => "*chrome",
+      :browser => "Firefox on Windows",
       :url => "http://www.ign.com/",
       :timeout_in_second => 60
 
@@ -26,49 +26,49 @@ class SocialBlogEditPost < Test::Unit::TestCase
   
 	# SIGN IN
     @selenium.open "http://my.ign.com/login?r=http://www.ign.com/#"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
     @selenium.click "emailField"
     @selenium.type "emailField", "smoketest@testign.com"
     @selenium.type "passwordField", "testpassword"
     @selenium.click "signinButton"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	
 	# OPEN MY IGN HOME
     @selenium.open "http://my.ign.com/home"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	
 	# CLICK BLOG TAB
     @selenium.click "link=Blog"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	
 	# CLICK EDIT FIRST BLOG ENTRY
 	@selenium.click "link=Write a New Post"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	
 	# IF MISDIRECTED TO LOGNIN, REDO STEPS
 	while @selenium.get_title == "IGN Login"
 		@selenium.open "http://my.ign.com/login?r=http://www.ign.com/#"
-		@selenium.wait_for_page_to_load "30000"
+		@selenium.wait_for_page_to_load "40"
 		@selenium.click "emailField"
 		@selenium.type "emailField", "smoketest@testign.com"
 		@selenium.type "passwordField", "testpassword"
 		@selenium.click "signinButton"
-		@selenium.wait_for_page_to_load "30000"
+		@selenium.wait_for_page_to_load "40"
 		@selenium.open "http://my.ign.com/home"
-		@selenium.wait_for_page_to_load "30000"
+		@selenium.wait_for_page_to_load "40"
 		@selenium.click "link=Blog"
-		@selenium.wait_for_page_to_load "30000"
+		@selenium.wait_for_page_to_load "40"
 		@selenium.click "link=Write a New Post"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	end
 	
 	# CLICK 'POST' LINK
 	@selenium.click "css=a[href='edit.php']"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	
 	# CLICK FIRST BLOG ENTRY
 	@selenium.click "css=a.row-title"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	
 	# STORE TITLE AND BODY OF BLOG ENTRY
 	title = @selenium.get_text("css=span#editable-post-name")
@@ -91,7 +91,7 @@ class SocialBlogEditPost < Test::Unit::TestCase
 	
 	# CLICK UPDATE
 	@selenium.click "css=input#publish"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	
 	# 'POST UPDATED' NOTIFICATION APPEARS
 	begin
@@ -102,11 +102,11 @@ class SocialBlogEditPost < Test::Unit::TestCase
 
 	# CLICK 'POSTS' LINK
 	@selenium.click "css=a[href='edit.php']"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	
 	# CLICK FIRST BLOG ENTRY
 	@selenium.click "css=a.row-title"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	
 	# VERIFY BODY TEXT MATCHES WHAT WAS JUST ENTERED
 	begin
@@ -119,7 +119,7 @@ class SocialBlogEditPost < Test::Unit::TestCase
 	@selenium.open "http://www.ign.com/blogs/clay.ign"
 	sleep 20
 	@selenium.refresh
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	
 	# VERIFY TITLE OF BLOG POST DISPLAYS, MATCHES WHAT WAS ENTERED ABOVE
 	begin

@@ -2,7 +2,7 @@ require "test/unit"
 require "rubygems"
 gem "selenium-client"
 require "selenium/client"
-require "files/social_blog_format_module"
+require "files/helpers/social_blog_format_module"
 
 
 class SocialBlogFormatPost < Test::Unit::TestCase
@@ -47,7 +47,7 @@ class SocialBlogFormatPost < Test::Unit::TestCase
 	end
 
 	@selenium.open "http://write.ign.com/Clay.IGN/wp-admin/post-new.php"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	type_title
 	
 	# FORMAT NUMLIST, BLOCKQUOTE, COLOR
@@ -66,7 +66,7 @@ class SocialBlogFormatPost < Test::Unit::TestCase
 	end
 	
 	@selenium.open "http://write.ign.com/Clay.IGN/wp-admin/post-new.php"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	type_title
 	
 	# HEADING 1, ALIGN CENTER

@@ -2,10 +2,10 @@ require "test/unit"
 require "rubygems"
 gem "selenium-client"
 require "selenium/client"
-require "files/social_blog_edit_module"
-require "files/social_blog_delete_module"
+require "files/helpers/social_blog_edit_module"
+require "files/helpers/social_blog_delete_module"
 
-class SocialBlogNewPost < Test::Unit::TestCase
+class SocialBlogSmoke < Test::Unit::TestCase
 
 include SocialBlogEditMod
 include SocialBlogDeleteMod
@@ -27,7 +27,7 @@ include SocialBlogDeleteMod
     assert_equal [], @verification_errors
   end
   
-  def test_social_blog_new_post
+  def test_social_blog_smoke
   
 	# SIGN IN
     @selenium.open "http://my.ign.com/login?r=http://www.ign.com/#"
@@ -35,41 +35,41 @@ include SocialBlogDeleteMod
     @selenium.type "emailField", "smoketest@testign.com"
     @selenium.type "passwordField", "testpassword"
     @selenium.click "signinButton"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	
-	# OPEN MY IGN HOME
-    @selenium.open "http://my.ign.com/home"
-    @selenium.wait_for_page_to_load "30000"
+	# OPEN MY IGN PROFILE
+    @selenium.open "http://people.ign.com/clay.ign"
+    @selenium.wait_for_page_to_load "40"
 	
-	#CLICK BLOG TAB
-    @selenium.click "link=Blog"
-    @selenium.wait_for_page_to_load "30000"
+	# CLICK BLOGS
+	@selenium.click "css=a[href*='www.ign.com/blogs/clay.ign']"
+	@selenium.wait_for_page_to_load "40"
 	
 	# OPEN WRITE A NEW POST
 	@selenium.click "link=Write a New Post"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 
 	
 	# IF MISDIRECTED TO LOGNIN, REDO STEPS
-	while @selenium.get_title == "IGN Login"
+	while @selenium.get_title == "Login - IGN"
 		begin
 			assert false, "'Write a New Post' link was misdirected to IGN Login page. This has been a known issue and this script is programmed to run around this issue"
 		rescue Test::Unit::AssertionFailedError
 			@verification_errors << $!
 		end
 		@selenium.open "http://my.ign.com/login?r=http://www.ign.com/#"
-		@selenium.wait_for_page_to_load "30000"
+		@selenium.wait_for_page_to_load "40"
 		@selenium.click "emailField"
 		@selenium.type "emailField", "smoketest@testign.com"
 		@selenium.type "passwordField", "testpassword"
 		@selenium.click "signinButton"
-		@selenium.wait_for_page_to_load "30000"
-		@selenium.open "http://my.ign.com/home"
-		@selenium.wait_for_page_to_load "30000"
-		@selenium.click "link=Blog"
-		@selenium.wait_for_page_to_load "30000"
+		@selenium.wait_for_page_to_load "40"
+		@selenium.open "http://people.ign.com/clay.ign"
+		@selenium.wait_for_page_to_load "40"
+		@selenium.click "css=a[href*='www.ign.com/blogs/clay.ign']"
+		@selenium.wait_for_page_to_load "40"
 		@selenium.click "link=Write a New Post"
-		@selenium.wait_for_page_to_load "30000"
+		@selenium.wait_for_page_to_load "40"
 	end
 	
 	# TYPE TITLE
@@ -87,7 +87,7 @@ include SocialBlogDeleteMod
 	
 	# PUBLISH
 	@selenium.click "publish"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	
 	# 'POST PUBLISHED' NOTIFICATION APPEARS
 	begin
@@ -97,7 +97,7 @@ include SocialBlogDeleteMod
     end
 	# CLICK 'VIEW POST'
 	@selenium.click "link=View post"
-    @selenium.wait_for_page_to_load "30000"
+    @selenium.wait_for_page_to_load "40"
 	
 	# VERIFY TITLE OF BLOG POST DISPLAYS, MATCHES WHAT WAS ENTERED ABOVE
 	begin
@@ -117,7 +117,7 @@ include SocialBlogDeleteMod
 	blogid = @selenium.get_attribute("css=div#content div[class='post type-post']@id")
 	blogid = blogid.delete "post-"
 	@selenium.open "http://api.ign.com/v2/articles/"+blogid+".json"
-	@selenium.wait_for_page_to_load "30000"
+	@selenium.wait_for_page_to_load "40"
 	begin
         assert @selenium.is_text_present("state: \"published\""), "The blog post's state is not marked as 'published' in the content API"
     rescue Test::Unit::AssertionFailedError
@@ -128,7 +128,7 @@ include SocialBlogDeleteMod
 	#@selenium.open "http://www.ign.com/blogs/clay.ign"
 	#sleep 20
 	#@selenium.refresh
-	#@selenium.wait_for_page_to_load "30000"
+	#@selenium.wait_for_page_to_load "40"
 	#sleep 2
 	
 	# VERIFY TITLE OF BLOG POST DISPLAYS, MATCHES WHAT WAS ENTERED ABOVE
@@ -146,11 +146,11 @@ include SocialBlogDeleteMod
     #end
   end
 
-  def test_za_edit_blog
-  social_edit_blog
-  end
+  #def test_za_edit_blog
+  #social_edit_blog
+  #end
   
-  def test_zb_delete_blog
-  social_delete_blog
-  end
+  #def test_zb_delete_blog
+  #social_delete_blog
+  #end
 end

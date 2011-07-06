@@ -2,8 +2,13 @@ require "test/unit"
 require "rubygems"
 gem "selenium-client"
 require "selenium/client"
+require "files/helpers/global_header_module"
+require "files/helpers/ign_hubs_indices_module"
 
 class MovieNewsToVideo < Test::Unit::TestCase
+
+  include GlobalHeaderMod
+  include IGNHubsIndicesMod
 
   def setup
     @verification_errors = []
@@ -23,17 +28,13 @@ class MovieNewsToVideo < Test::Unit::TestCase
   end
   
   def test_movie_news_to_video
-    # SIGN IN
-    @selenium.open "http://my.ign.com/login?r=http://www.ign.com/#"
-    @selenium.click "emailField"
-    @selenium.type "emailField", "smoketest@testign.com"
-    @selenium.type "passwordField", "testpassword"
-    @selenium.click "signinButton"
-    @selenium.wait_for_page_to_load "30000"
-    # END SIGN IN
+  
+    sign_in
+	
     # CHECK MOVIE NEWS INDEX > NEWS (DEFAULT) TAB > CHECK TITLE AND PREVIEW TEXT
     # Open Movies News index
     @selenium.open "http://movies.ign.com/index/news.html"
+	global_header("http://movies.ign.com/index/news.html")
     # Assert on Movies News page
     assert /^[\s\S]*IGN Movies:[\s\S]*$/ =~ @selenium.get_title
     # Assert "News" tab selected
@@ -107,7 +108,6 @@ class MovieNewsToVideo < Test::Unit::TestCase
     # Click over to "Video" tab
     @selenium.open "http://movies.ign.com/index/video.html"
     # Assert/Wait for Video content to populate 
-	@selenium.wait_for_page_to_load "30000"
     # Verify first 3 titles string > 0
     #      First title:
     title1 = @selenium.get_text("css=div#all-news div.headlines div.txt-para a")

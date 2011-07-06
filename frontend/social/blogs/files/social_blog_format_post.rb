@@ -2,7 +2,7 @@ require "test/unit"
 require "rubygems"
 gem "selenium-client"
 require "selenium/client"
-require "files/social_blog_format_module"
+require "files/helpers/social_blog_format_module"
 
 
 class SocialBlogFormatPost < Test::Unit::TestCase

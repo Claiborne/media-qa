@@ -2,8 +2,13 @@ require "test/unit"
 require "rubygems"
 gem "selenium-client"
 require "selenium/client"
+require "files/helpers/global_header_module"
+require "files/helpers/ign_hubs_indices_module"
 
 class MainPage360Tab < Test::Unit::TestCase
+
+  include GlobalHeaderMod
+  include IGNHubsIndicesMod
 
   def setup
     @verification_errors = []
@@ -24,18 +29,11 @@ class MainPage360Tab < Test::Unit::TestCase
   
   def test_main_page360_tab
     # MAIN PAGE -> 360 BLOGROLL TAB. ALL MATCH 360, NO DUPLICATES, PREV TEXT PRESENT
-    # SIGN IN
-    @selenium.open "http://my.ign.com/login?r=http://www.ign.com/#"
-    @selenium.click "emailField"
-    @selenium.type "emailField", "smoketest@testign.com"
-    @selenium.type "passwordField", "testpassword"
-    @selenium.click "signinButton"
-    @selenium.wait_for_page_to_load "30000"
-    # END SIGN IN
+    sign_in
     # Open IGN Main
     @selenium.open "/"
     # Sort blogroll by Xbox 360
-    @selenium.click "css=a[href='http://xbox360.ign.com/']"
+    @selenium.click "css=ul#left-col-consoles a[href='http://xbox360.ign.com/']"
     # Wait for sort to populate
     assert !15.times{ break if (@selenium.is_element_present("css=ul#left-col-consoles a[href=http://xbox360.ign.com/][class*=selected]") rescue false); sleep 1 }
     # Verify all "Xbox 360" (skips headlines 3 and 9 for Daily Fix and Spotlight)
@@ -164,8 +162,10 @@ class MainPage360Tab < Test::Unit::TestCase
 			@verification_errors << $!
 		end
 	end
-	# End verify blogroll preview text present each entry
-    # END END END
-end
-end
+    end
+	# CHECK FIRST ARTICLE LINK IN BLOGROLL HAS A HEADER
+	@selenium.click("css=div#all-news a[href*=xbox360.ign.com/articles/]")
+	@selenium.wait_for_page_to_load "40"
+	global_header("first 360 article link in main-page blogroll (when sort by 360)")
+  end
 end
