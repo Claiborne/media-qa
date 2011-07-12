@@ -1,0 +1,9 @@
+require 'rubygems'
+require 'rake'
+require 'rspec/core/rake_task'
+
+desc "Run all test suites"
+RSpec::Core::RakeTask.new('all') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/**/*.rb'
+end
