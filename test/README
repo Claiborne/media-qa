@@ -1,0 +1,20 @@
+== Automation Framework ==
+
+In order to consolidate the various test scripts used by the media qa team, the team will begin using a unified framework that will be the main entry point for all automated tests and scripts. 
+
+All tests will be written using rspec and any additional test frameworks needed for the application under test.  This typically means selenium client for acceptance/front end testing or plain old ruby for api testing.  Performance tests can be scripted using httperf and auto bench but are still required to be driven by the unified framework for simplified deployment and execution.
+
+The current folder structure:
+
+- media-qa
+  - test
+    - config
+    - spec
+    - lib
+    - performance
+
+The 'spec' folder is a repository for all tests and uses the format /test/spec/#{project}/#{module} (i.e /test/spec/social/profile)
+The 'lib' folder contains all helper classes required by tests.
+The performance folder contains all performance scripts.
+
+There is a sample rspec test 'analytics.rb' under the spec/examples folder that can be used as a template for developing new tests.
