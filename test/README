@@ -18,3 +18,18 @@ The 'lib' folder contains all helper classes required by tests.
 The performance folder contains all performance scripts.
 
 There is a sample rspec test 'analytics.rb' under the spec/examples folder that can be used as a template for developing new tests.
+
+To run all tests suites:
+
+   cd media-qa/tests
+   rake all
+
+To run all examples:
+
+   cd media-qa/tests
+   rake examples
+
+As new projects are added there will be rake tasks for running those projects like 
+    rake cheats
+    rake social
+    rake ign-performance 

@@ -7,3 +7,15 @@ RSpec::Core::RakeTask.new('all') do |t|
     t.rspec_opts = ["-Ilib"]
     t.pattern = 'spec/**/*.rb'
 end
+
+desc "Run examples" 
+RSpec::Core::RakeTask.new('examples') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/examples/**/*.rb'
+end
+
+desc "Run IGN stress test"
+RSpec::Core::RakeTask.new('ignstress') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/ign-perf/**/*.rb'
+end
