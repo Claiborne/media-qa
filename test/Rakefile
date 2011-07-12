@@ -19,3 +19,9 @@ RSpec::Core::RakeTask.new('ignstress') do |t|
     t.rspec_opts = ["-Ilib"]
     t.pattern = 'spec/ign-perf/**/*.rb'
 end
+
+desc "Run v1 tests"
+RSpec::Core::RakeTask.new('v1') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/v1/**/*.rb'
+end
