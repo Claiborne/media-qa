@@ -2,18 +2,18 @@ require 'rest_client'
 require 'json'
 require 'configuration'
 
-describe "hub services", :type => 'smoketest' do
+describe "hub services" do
 
-  before(:all), :type => 'smoketest' do
+  before(:all) do
 
   end
 
-  before(:each), :type => 'smoketest' do
+  before(:each) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v1.yml"
     @config = Configuration.new
   end
 
-  after(:each), :type => 'smoketest' do
+  after(:each) do
 
   end
 
