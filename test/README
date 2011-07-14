@@ -33,3 +33,6 @@ As new projects are added there will be rake tasks for running those projects li
     rake cheats
     rake social
     rake ign-performance 
+
+The test framework supports running in different environments so in order to use the proper environment you should specify it on the command line. Valid environments depend on the config file used by that project however we are standardizing on development, staging and production:
+    rake social env=staging
