@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'browser'
-reqiure '/../../lib/first_selenium'
+reqiure '/../../lib/frontpage_example'
 
 describe "IGN frontpage" do
 
