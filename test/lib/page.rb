@@ -18,6 +18,12 @@ class Page
     @@errors = errors
   end
 
+  def validate
+    @client.is_element_present('html').should be_true
+    @client.is_element_present('head').should be_true
+    @client.is_element_presnet('body').should be_true
+  end
+
   def assert_location(url)
     begin
       uri = URI.parse(@client.location)
