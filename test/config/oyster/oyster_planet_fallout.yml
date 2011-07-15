@@ -1,0 +1,7 @@
+development:
+
+staging:
+  baseurl: branchname.stg.planetfallout.gamespy.com 
+
+production:
+  baseurl: planetfallout.gamespy.com

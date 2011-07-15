@@ -1,0 +1,7 @@
+development:
+
+staging:
+  baseurl: branchname.stg.search.ign.com 
+
+production:
+  baseurl: search.ign.com 

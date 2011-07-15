@@ -1,0 +1,7 @@
+development:
+
+staging:
+  baseurl: branchname.stg.ve3d.ign.com
+
+production:
+  baseurl: ve3d.ign.com

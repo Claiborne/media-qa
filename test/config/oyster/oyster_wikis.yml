@@ -1,0 +1,7 @@
+development:
+
+staging:
+  baseurl: branchname.stg.www.ign.com 
+
+production:
+  baseurl: www.ign.com 

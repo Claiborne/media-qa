@@ -1,0 +1,7 @@
+development:
+
+staging:
+  baseurl: linapp57.in.snowball.com
+
+production:
+  baseurl: api.ign.com
