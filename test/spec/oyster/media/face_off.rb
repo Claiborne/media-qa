@@ -17,4 +17,15 @@ describe "faceoff" do
    @browser.shutdown
   end
 
+  it "should respond to faceoff pokemon" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/face-off/pokemon")                         
+   page.validate
+  end
+
+  it "should respond to faceoff leader" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/face-off/pokemon/leader")                         
+   page.validate
+  end
 end

@@ -17,4 +17,9 @@ describe "free2play" do
    @browser.shutdown
   end
 
+  it "should respond to free 2 play" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/free2play")                         
+   page.validate
+  end
 end

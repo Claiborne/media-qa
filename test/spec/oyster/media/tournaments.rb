@@ -17,4 +17,9 @@ describe "tournaments" do
    @browser.shutdown
   end
 
+  it "should respond to zelda tournament " do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/tournaments/greatest-zelda-game")                         
+   page.validate
+  end
 end

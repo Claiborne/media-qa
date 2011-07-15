@@ -17,4 +17,15 @@ describe "system_guides" do
    @browser.shutdown
   end
 
+  it "should respond to 3ds system guide" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/system-guides/3ds")                         
+   page.validate
+  end
+
+  it "should respond to 3ds basics" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/system-guides/3ds/3ds-basics")                         
+   page.validate
+  end
 end

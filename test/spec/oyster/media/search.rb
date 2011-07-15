@@ -17,4 +17,16 @@ describe "search" do
    @browser.shutdown
   end
 
+  it "should respond to search" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/")                         
+   page.validate
+  end
+
+  it "should respond to search grand theft auto" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/product?query=grand+theft+auto+iv
+")                         
+   page.validate
+  end
 end

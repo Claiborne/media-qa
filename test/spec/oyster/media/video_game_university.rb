@@ -16,5 +16,10 @@ describe "video_game_university" do
   after(:each) do
    @browser.shutdown
   end
-
+ 
+  it "should respond to video game university" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/video-game-university")                         
+   page.validate
+  end
 end

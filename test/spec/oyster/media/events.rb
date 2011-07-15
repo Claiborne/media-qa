@@ -17,4 +17,15 @@ describe "events" do
    @browser.shutdown
   end
 
+  it "should respond to events" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/events")                         
+   page.validate
+  end
+
+  it "should respond to e3" do
+   page = Page.new(@browser.client)
+   page.visit("http://#{config.options['baseurl}/events/e3")                         
+   page.validate
+  end
 end
