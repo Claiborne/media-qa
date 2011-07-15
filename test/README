@@ -36,3 +36,10 @@ As new projects are added there will be rake tasks for running those projects li
 
 The test framework supports running in different environments so in order to use the proper environment you should specify it on the command line. Valid environments depend on the config file used by that project however we are standardizing on development, staging and production:
     rake social env=staging
+
+Some staging environments support branches in the staging environment.  For these scenarios you need to provide the branch you want to test.  There is currently a hack in place to get this to work.  It takes the baseurl key in config and does a search and replace on the "branchname" pattern and replaces it with the environment variable that is set:
+    rake social env=staging branch=release-xyz
+
+sample config
+staging:
+  baseurl: branchname.stg.www.ign.com
