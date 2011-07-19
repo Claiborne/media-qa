@@ -11,7 +11,10 @@ class Configuration
     raise ConfigurationException, "Missing configuration file" unless File.exists?(@@config_path)
     environment = ENV['env'] 
     configs = YAML.load_file(@@config_path)
-    @options = configs[environment]    
+    @options = configs[environment]
+  
+    # this is a bad hack for branch substitution 
+    @options['baseurl'].sub(/branchname/, ENV['branch']) unless ENV['branch'] == nil    
   end
 end
 

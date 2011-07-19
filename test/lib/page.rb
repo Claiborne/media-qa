@@ -2,12 +2,13 @@ require 'uri'
 
 class Page
  
-  attr_accessor :client
+  attr_accessor :client, :config
  
   @@errors = []
 
-  def initialize(driver)
+  def initialize(driver, config)
     @client = driver
+    @config = config
   end
 
   def self.errors
@@ -16,6 +17,16 @@ class Page
 
   def self.errors=(errors)
     @@errors = errors
+  end
+ 
+  def wait(timeout=30000)
+    @client.wait_for_page_to_load timeout
+  end
+
+  def validate
+    @client.is_element_present('html').should be_true
+    @client.is_element_present('head').should be_true
+    @client.is_element_presnet('body').should be_true
   end
 
   def assert_location(url)

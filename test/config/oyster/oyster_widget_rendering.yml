@@ -1,0 +1,7 @@
+development:
+
+staging:
+  baseurl: branchname.stg.widgets.ign.com
+
+production:
+  baseurl: widgets.ign.com 

@@ -1,0 +1,7 @@
+development:
+
+staging:
+  baseurl: branchname.stg.grandtheftauto.ign.com 
+
+production:
+  baseurl: grandtheftauto.ign.com
