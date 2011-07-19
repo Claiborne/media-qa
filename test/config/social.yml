@@ -1,0 +1,8 @@
+development:
+
+staging:
+  baseurl: social-stg-services.ign.com
+
+production:
+  baseurl: social-services.ign.com
+

@@ -2,6 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'rspec/core/rake_task'
 
+#ENV["env"] ||= 'staging'
 desc "Run all test suites"
 RSpec::Core::RakeTask.new('all') do |t|
     t.rspec_opts = ["-Ilib"]
@@ -25,3 +26,10 @@ RSpec::Core::RakeTask.new('v1') do |t|
     t.rspec_opts = ["-Ilib"]
     t.pattern = 'spec/v1/**/*.rb'
 end
+
+desc "Run social tests"
+RSpec::Core::RakeTask.new('social') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/social/**/*.rb'
+end
+
