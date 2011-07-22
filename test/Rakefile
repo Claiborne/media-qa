@@ -33,3 +33,9 @@ RSpec::Core::RakeTask.new('social') do |t|
     t.pattern = 'spec/social/**/*.rb'
 end
 
+desc "Run prime tests"
+RSpec::Core::RakeTask.new('prime') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/prime/*.rb'
+end
+

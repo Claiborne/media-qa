@@ -1,0 +1,7 @@
+development:
+  baseurl: dev-subscriptionservices.ign.com
+
+staging:
+
+production:
+  baseurl: subscriptionservices.ign.com
