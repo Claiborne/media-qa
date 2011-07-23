@@ -1,7 +1,11 @@
-development:
-  baseurl: dev-subscriptionservices.ign.com
+dev:
+  baseurl: dev.subscriptionservices.ign.com
+  subscriber_id: 282924733
+  non_subscriber_id: 282924732
 
 staging:
 
 production:
   baseurl: subscriptionservices.ign.com
+  subscriber_id: 321156101  #email:subapi_automation_subscribed@gmail.com
+  non_subscriber_id: 321158058  #email:subapi_automation_notsubscribed@gmail.com
