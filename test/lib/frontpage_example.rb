@@ -1,1 +1,1 @@
-require 'first_selenium/frontpage'
+require File.dirname(__FILE__) + "/frontpage"
