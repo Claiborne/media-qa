@@ -6,9 +6,9 @@ class Page
  
   @@errors = []
 
-  def initialize(driver, config)
+  def initialize(driver)
     @client = driver
-    @config = config
+    #@config = config
   end
 
   def self.errors
@@ -63,6 +63,18 @@ class Page
         "#{default.call}."
       end
     }
+  end
+  
+  def assert_text(text)
+    return @client.is_text_present(text)
+  end
+  
+  def assert_element(element)
+    return @client.is_element_present(element)
+  end
+  
+  def click(element)
+    @client.click(element)
   end
  
 end

@@ -36,6 +36,6 @@ end
 desc "Run prime tests"
 RSpec::Core::RakeTask.new('prime') do |t|
     t.rspec_opts = ["-Ilib"]
-    t.pattern = 'spec/prime/*.rb'
+    t.pattern = 'spec/prime/smoke_test.rb'
 end
 
