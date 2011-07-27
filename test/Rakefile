@@ -15,6 +15,12 @@ RSpec::Core::RakeTask.new('examples') do |t|
     t.pattern = 'spec/examples/**/*.rb'
 end
 
+desc "Run oyster tests"
+RSpec::Core::RakeTask.new('oyster') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/oyster/social/social.rb'
+end
+
 desc "Run IGN stress test"
 RSpec::Core::RakeTask.new('ignstress') do |t|
     t.rspec_opts = ["-Ilib"]

@@ -18,6 +18,10 @@ class Page
   def self.errors=(errors)
     @@errors = errors
   end
+
+  def visit(url)
+    @client.open(url)
+  end
  
   def wait(timeout=30000)
     @client.wait_for_page_to_load timeout
