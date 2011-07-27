@@ -6,9 +6,9 @@ class Page
  
   @@errors = []
 
-  def initialize(driver)
+  def initialize(driver, config)
     @client = driver
-    #@config = config
+    @config = config
   end
 
   def self.errors
