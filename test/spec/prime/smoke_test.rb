@@ -1,24 +1,18 @@
-require File.dirname(__FILE__) + "/spec_helper"
+require File.dirname(__FILE__) + "/../spec_helper"
 require 'browser'
 require 'prime'
-
-shared_examples_for "Login" do
-  it "should allow a user to login" do
-    @signup.open
-    @signup.click('login')
-    @signup.login({
-      :email    => "fklun@ign.com",
-      :password => 'boxofass',
-    })
-  end
-end
 
 describe "prime" do
 
   before(:each) do
    @browser = Browser.new
    @selenium = @browser.client
-   @signup = SignupPage.new(@selenium)  
+   
+   #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/prime.yml"
+   #@config = Configuration.new
+   @config = nil
+   
+   @signup = SignupPage.new(@selenium, @config)  
   end
 
   after(:each) do
@@ -38,12 +32,23 @@ describe "prime" do
   end
   
   it "should allow a user to login" do
-    it_should_behave_like "Login"
+    @signup.open
+    @signup.click('login')
+    @signup.login({
+      :email    => "fklun@ign.com",
+      :password => 'boxofass',
+    })
     @signup.assert_text('You are logged in.').should be_true
   end
   
   it "should fail with incorrect credentials" do
-    it_should_behave_like "Login"
+    @signup.open
+    @signup.click('login')
+    @signup.login({
+      :email    => "fklun@ign.com",
+      :password => 'thewrongpassword',
+    })
+    @signup.assert_text('Account not found.').should be_true
     @signup.assert_text('You are logged in.').should be_false
   end
   
@@ -60,8 +65,6 @@ describe "prime" do
   end
   
   it "should allow an existing user to choose a payment option" do
-    it_should_behave_like "Login"
-    
+    #to be completed later
   end
-  
 end
