@@ -21,6 +21,7 @@ class Browser
          :timeout_in_second => options["timeout"]
 
     @client.start_new_browser_session
+    @client.window_maximize
    end
    
    def shutdown

@@ -6,7 +6,7 @@ module SocialMyIGNMod
     @selenium.click "emailField"
     @selenium.type "emailField", "#{acct}test@testign.com"
     @selenium.type "passwordField", "testpassword"
-    @selenium.click "signinButton"
+    @selenium.click "css=button.submit"
     @selenium.wait_for_page_to_load "40"
   end
   

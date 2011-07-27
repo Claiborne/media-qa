@@ -4,8 +4,7 @@ module SocialMyIGNPagesProfileMod
   def check_myprofile_page
   
     #Define blogroll nav links
-	#profile_br_nav = ["http://people.ign.com/clay.ign","http://www.ign.com/blogs/clay.ign","http://people.ign.com/clay.ign/games","http://people.ign.com/clay.ign/people"]
-	profile_br_nav = ["http://stg-people.ign.com/clay.ign","http://www.ign.com/blogs/clay.ign","http://stg-people.ign.com/clay.ign/games","http://stg-people.ign.com/clay.ign/people"]
+	profile_br_nav = ["http://people.ign.com/clay.ign","http://www.ign.com/blogs/clay.ign","http://people.ign.com/clay.ign/games","http://people.ign.com/clay.ign/people"]
   
 	#Check name visible in header
     text = @selenium.get_text("css=div.profileInfo div.username")

@@ -14,11 +14,10 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
   def setup
     @verification_errors = []
     @selenium = Selenium::Client::Driver.new \
-      :host => "localhost",
+      :host => "qa-server",
       :port => 4444,
-      :browser => "*chrome",
-      #:url => "http://www.ign.com/",
-	  :url => "http://stg-my.ign.com/",
+      :browser => "Firefox on Windows",
+      :url => "http://www.ign.com/",
       :timeout_in_second => 60
 
     @selenium.start_new_browser_session
@@ -53,7 +52,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	
 	#Post on somenoe's wall
 	wall_post = rand_gen
-	@selenium.open("http://stg-people.ign.com/m_qa")
+	@selenium.open("http://people.ign.com/m_qa")
 	@selenium.type "css=input#statusField", "gui_test#{wall_post}"
 	@selenium.click("css=div#btnUpdateStatus")
 	sleep 6
@@ -73,7 +72,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	sleep 6
 	
 	#Check folllow a person
-	@selenium.open("http://stg-people.ign.com/clay.ign/people")
+	@selenium.open("http://people.ign.com/clay.ign/people")
 	begin
       assert_equal "M_QA", @selenium.get_text("css=ul#friendList a.peopleUsername"), "Unable to verify follow people function works (recently added person did not appear under the list of people following)"
     rescue Test::Unit::AssertionFailedError
@@ -81,7 +80,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
     end
 	
 	#Follow a game
-	@selenium.open("http://stg-people.ign.com/clay.ign")
+	@selenium.open("http://people.ign.com/clay.ign")
 	expected_games = @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value").to_i+1
 	expected_games = expected_games.to_s
 
@@ -89,7 +88,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	@selenium.click("css=div.addToIGN")
 	
 	#Check follow a game: game-counter on profile increases by one
-	@selenium.open("http://stg-people.ign.com/clay.ign")
+	@selenium.open("http://people.ign.com/clay.ign")
 	begin
       assert_equal expected_games, @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value"), "Unable to verify follow game function works (a released game was followed and the users profile game-counter did not increase by one"
     rescue Test::Unit::AssertionFailedError
@@ -131,7 +130,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	end
 	
 	#Change profile avatar
-	@selenium.open("http://stg-my.ign.com/user/settings")
+	@selenium.open("http://my.ign.com/user/settings")
 	@selenium.click("css=button#chooseAvatar")
 	!8.times{ break if (@selenium.is_element_present("css=div#avatarPicker")); sleep 1}
 	if @selenium.is_element_present("css=div.avatar img[src*='xbox_360_controller.jpg']")
@@ -150,7 +149,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	sleep 6
 	
 	#Check image changed
-	@selenium.open("http://stg-people.ign.com/clay.ign")
+	@selenium.open("http://people.ign.com/clay.ign")
 	if avatar_img == "xbox"
 		begin
 			assert @selenium.is_element_present("css=div.profilePicture img[src*='xbox_360_controller.jpg']"), "Unable to verify avatar picture change successful (the newly selected avatar pic did not appear on My Profile page"
@@ -170,7 +169,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	sign_in("qa")
 	
 	#Check Status Update
-	@selenium.open("http://stg-people.ign.com/clay.ign")
+	@selenium.open("http://people.ign.com/clay.ign")
 	begin
 		assert @selenium.get_text("css=ul#activityList").match(/#{status_update}/), "Unable to verify status update visible by another user when other user browsing updater's wall"
 	rescue Test::Unit::AssertionFailedError
@@ -178,7 +177,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	end
 	
 	#Check wall post
-	@selenium.open("http://stg-my.ign.com/home")
+	@selenium.open("http://my.ign.com/home")
 	begin
 		assert @selenium.get_text("css=ul#activityList").match(/#{wall_post}/), "Unable to verify wall post update visible by another user when the other use browsing his MyIGN home page"
 	rescue Test::Unit::AssertionFailedError
@@ -186,7 +185,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	end
 	
 	#Check folllow a person
-	@selenium.open("http://stg-people.ign.com/m_qa/people")
+	@selenium.open("http://people.ign.com/m_qa/people")
 	@selenium.click("css=li.followSetFollowers")
 	!6.times{ break if (@selenium.is_element_present("css=li[class='followSetFollowers activeSet']")); sleep 1}
 	sleep 2
@@ -197,7 +196,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	end
 	
 	#Reply to wall post
-	@selenium.open("http://stg-my.ign.com/home")
+	@selenium.open("http://my.ign.com/home")
 	@selenium.click("css=div.activityBody a[id*='reply']")
 	reply_txt = rand_gen
 	sleep 1
@@ -208,7 +207,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	#Check wall post comment
 	log_out
 	sign_in("smoke")
-	@selenium.open("http://stg-people.ign.com/clay.ign")
+	@selenium.open("http://people.ign.com/clay.ign")
 	begin
 		assert @selenium.get_text("css=div#bodyModulesContainer").match(/#{reply_txt}/), "Unable to verify replying to wall posts work (reply not visible)"
 	rescue Test::Unit::AssertionFailedError
@@ -222,12 +221,12 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	@selenium.click("css=div.addToIGN")
 	@selenium.click("css=div.removeFromIGN") #unfollow DK
 	
-	@selenium.open("http://stg-people.ign.com/clay.ign/people")
+	@selenium.open("http://people.ign.com/clay.ign/people")
 	@selenium.click("css=a.removePersonLink") #unfollow m_qa
 	
 	#Check unfollows work
 	sleep 6
-	@selenium.open("http://stg-people.ign.com/clay.ign/people")
+	@selenium.open("http://people.ign.com/clay.ign/people")
 	@selenium.refresh
 	
 	begin
@@ -245,7 +244,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	#Block a user
 	log_out
 	sign_in("qa")
-	@selenium.open("http://stg-my.ign.com/home") 
+	@selenium.open("http://my.ign.com/home") 
 	@selenium.click("css=span.blockThisBitch")
     assert /has been blocked/ =~ @selenium.get_alert
 	sleep 8
@@ -253,7 +252,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	#Check block prevents wall posting
 	log_out
 	sign_in("smoke")
-	@selenium.open("http://stg-people.ign.com/m_qa")
+	@selenium.open("http://people.ign.com/m_qa")
 	begin
         assert !@selenium.is_element_present("css=input#statusField"), "Unable to verify blocking a user prevents that user from posting on your wall"
     rescue Test::Unit::AssertionFailedError
@@ -263,14 +262,14 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	#Unblock
 	log_out
 	sign_in("qa")
-	@selenium.open("http://stg-my.ign.com/settings")
+	@selenium.open("http://my.ign.com/settings")
 	@selenium.click("css=ul#blockedUserList div.unblock")
 	sleep 8
 	
 	#Check unblock allows wall posting
 	log_out
 	sign_in("smoke")
-	@selenium.open("http://stg-people.ign.com/m_qa")
+	@selenium.open("http://people.ign.com/m_qa")
 	begin
         assert @selenium.is_element_present("css=input#statusField"), "Unable to verify unblocking a person allows that person to post on your wall again"
     rescue Test::Unit::AssertionFailedError
@@ -314,13 +313,13 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	#sleep 8
 	
 	#Check gamercard
-	#open("http://stg-people.ign.com/#{username_val}")
+	#open("http://people.ign.com/#{username_val}")
 	#begin
 	#	assert /gameID/ =~ @selenium.get_text("css=ul#activityList"), "Unable to verify adding a gamercard though the header of a user's My Profile page generates an activity in the Activity/content roll below"
     #rescue Test::Unit::AssertionFailedError
 	#	@verification_errors << $!
     #end
-	#sleep 9
+	#fsleep 9
 	
   end
 end

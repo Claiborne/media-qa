@@ -2,7 +2,7 @@
 module SocialMyIGNMod
 
   def sign_in(acct)
-	@selenium.open "http://stg-my.ign.com/login?r=http://stg-my.ign.com/#"
+	@selenium.open "http://my.ign.com/login?r=http://my.ign.com/#"
     @selenium.click "emailField"
     @selenium.type "emailField", "#{acct}test@testign.com"
     @selenium.type "passwordField", "testpassword"

@@ -22,10 +22,6 @@ module SocialRegistrationModule
 
 	response = http.request(request)
 	
-	puts "*********RESPONSE BODY START*********"
-	puts response.body
-	puts "**********RESPONSE BODY END**********"
-	
 	resp_body = response.body.to_s
 	
 	# ASSERT BODY RESPONSE RETURNS "OK"

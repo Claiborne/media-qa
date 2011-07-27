@@ -13,9 +13,9 @@ class SocialRegistration < Test::Unit::TestCase
   def setup
     @verification_errors = []
     @selenium = Selenium::Client::Driver.new \
-      :host => "localhost",
+      :host => "qa-server",
       :port => 4444,
-      :browser => "*chrome",
+      :browser => "Firefox on Windows",
       :url => "http://www.ign.com/",
       :timeout_in_second => 60
 
