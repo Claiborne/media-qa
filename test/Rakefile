@@ -15,12 +15,6 @@ RSpec::Core::RakeTask.new('examples') do |t|
     t.pattern = 'spec/examples/**/*.rb'
 end
 
-desc "Run oyster tests"
-RSpec::Core::RakeTask.new('oyster') do |t|
-    t.rspec_opts = ["-Ilib"]
-    t.pattern = 'spec/oyster/social/social.rb'
-end
-
 desc "Run IGN stress test"
 RSpec::Core::RakeTask.new('ignstress') do |t|
     t.rspec_opts = ["-Ilib"]
@@ -42,12 +36,16 @@ end
 desc "Run prime tests"
 RSpec::Core::RakeTask.new('prime') do |t|
     t.rspec_opts = ["-Ilib"]
-    t.pattern = 'spec/prime/smoke_test.rb'
+    t.pattern = 'spec/prime/*.rb'
 end
 
-desc "Run Will's fake tests"
-RSpec::Core::RakeTask.new('willtest') do |t|
+desc "Run Topaz tests"
+RSpec::Core::RakeTask.new('topaz') do |t|
     t.rspec_opts = ["-Ilib"]
+<<<<<<< HEAD
+    t.pattern = 'spec/social/topaz_*.rb'
+=======
     t.pattern = 'spec/oyster/social/my_ign/social_myign_status_hash_linking.rb'
+>>>>>>> d93be9c5c3d3d8bcb5517a80b37cbc1535fad7c9
 end
 

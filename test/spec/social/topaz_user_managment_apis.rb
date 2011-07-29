@@ -52,7 +52,8 @@ describe "user management" do
   it "should create local (IGN) user" do
     
     email = "test_user_#{@time_stamp}@ign.com"    
-    payload = "{email:#{email}}"
+    payload = "{email:#{email},password:''}"
+
     response = RestClient.post "http://#{@config.options['baseurl']}/auth/user", payload,{:content_type => 'application/json'}
     response.code.should eql(200)
     pdata = JSON.parse(response.body)
