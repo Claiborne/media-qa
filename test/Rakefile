@@ -45,3 +45,9 @@ RSpec::Core::RakeTask.new('prime') do |t|
     t.pattern = 'spec/prime/smoke_test.rb'
 end
 
+desc "Run Will's fake tests"
+RSpec::Core::RakeTask.new('willtest') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/oyster/social/my_ign/social_myign_new_account_create.rb'
+end
+
