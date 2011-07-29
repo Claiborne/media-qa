@@ -1,0 +1,28 @@
+core -- ign.com gamespy.com
+network -- 360.ign.com
+site -- e3 (within network)
+
+all controllers are in oyster/core/controllers
+view -- in all three levels
++ no models b/c we don't have databases to deal with directly. we have services (apis) so we write that commiunication in controllers
+-includes are at the level (netwok, etc) they need to be @
+--all widgets files are in core (oyster and static)
+--all helpers are in core 
+
+
+
+HELPER -- highly repeatable logic. Such as? eg,
+
+git clean -fd
+git reset --hard HEAD
+
+rvm use ruby-1.9.2-p180
+
+
+rvm gemset create will
+rvm use ruby-1.9.2-p180@will
+gem install rspec rake selenium-client nokogiri
+ 
+ 
+ rvm gemset use will
+ 
