@@ -1,0 +1,8 @@
+development:
+
+staging:
+  baseurl: social-stg-services-vm-01.sc4.colo.fimops.com:8080
+
+production:
+  baseurl: social-services.ign.com
+
