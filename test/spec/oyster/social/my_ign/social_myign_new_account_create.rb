@@ -28,19 +28,19 @@ describe "My IGN New Account Creation" do
   
   
   it "should create a new account via the API" do
-	register_post(@email_val, @password_val, @username_val)
-	sleep 7
+    register_post(@email_val, @password_val, @username_val)
+    sleep 7
 	#Here's an example of a 'fresh' account for troubleshooting this file
 	#user name: qwqwqwqwqwqwqw44
 	#Email: williamjclaiborne@xxyyzz.com
   end
 
   it "should login and land on the cold start header" do
-	open("http://#{@baseurl}/login?r=http://#{@baseurl}/")
-	@selenium.click "emailField"
+    open("http://#{@baseurl}/login?r=http://#{@baseurl}/")
+    @selenium.click "emailField"
     @selenium.type "emailField", @email_val
     @selenium.type "passwordField", @password_val
-	click "signinButton"
+    click "signinButton"
 
 	@selenium.is_text_present("Follow your friends and the top upcoming games on IGN and be the first to know when the news breaks!").should be_true
   end
