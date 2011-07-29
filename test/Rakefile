@@ -48,6 +48,6 @@ end
 desc "Run Will's fake tests"
 RSpec::Core::RakeTask.new('willtest') do |t|
     t.rspec_opts = ["-Ilib"]
-    t.pattern = 'spec/oyster/social/my_ign/social_myign_new_account_create.rb'
+    t.pattern = 'spec/oyster/social/my_ign/social_myign_status_hash_linking.rb'
 end
 
