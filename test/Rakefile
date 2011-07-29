@@ -42,10 +42,7 @@ end
 desc "Run Topaz tests"
 RSpec::Core::RakeTask.new('topaz') do |t|
     t.rspec_opts = ["-Ilib"]
-<<<<<<< HEAD
     t.pattern = 'spec/social/topaz_*.rb'
-=======
     t.pattern = 'spec/oyster/social/my_ign/social_myign_status_hash_linking.rb'
->>>>>>> d93be9c5c3d3d8bcb5517a80b37cbc1535fad7c9
 end
 
