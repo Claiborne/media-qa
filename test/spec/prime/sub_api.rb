@@ -6,6 +6,9 @@ require 'rubygems'
 
 describe "sub_api" do
   before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../config/prime/subapi.yml"
+    @config = Configuration.new
+    
     @ads_are_not_disabled  = '{"AdsAreDisabled"=>false}'
     @ads_are_disabled      = '{"AdsAreDisabled"=>true}'
     
@@ -19,8 +22,7 @@ describe "sub_api" do
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/prime.yml"
-    @config = Configuration.new
+
   end
 
   after(:each) do

@@ -1,0 +1,7 @@
+dev:
+  baseurl: http://dev.login.ign.com
+
+staging:
+
+production:
+  baseurl: http://login.ign.com
