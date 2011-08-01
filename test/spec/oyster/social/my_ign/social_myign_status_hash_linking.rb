@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/../../../spec_helper"
 require 'browser'
-require 'social/my_ign/my_ign_mod'
+require 'social/my_ign_mod'
 
 describe "My IGN Status Hash Linking" do
 #Note: the following test cases are based on https://wiki.ign-inc.com/display/MediaQA/Regression+Test+Cases
