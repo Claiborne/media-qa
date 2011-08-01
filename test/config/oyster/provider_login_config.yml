@@ -1,0 +1,15 @@
+## YAML Template.
+---
+google:
+  username: 'Email'
+  password: 'Passwd'
+  button: 'signIn'
+yahoo:
+  username: 'username'
+  password: 'passwd'
+  button: '.save'
+
+facebook:
+  username: 'email'
+  password: 'pass'
+  button: 'login'
