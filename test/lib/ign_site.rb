@@ -2,7 +2,7 @@ require 'page'
 
 module Oyster
 module Social
-class IGN_Site < Page
+class IGNSite < Page
   def visit(url)
     @client.open(url)
     while @client.get_title == "IGN Advertisement"                                     	    		 
