@@ -2,7 +2,6 @@ require File.dirname(__FILE__) + "/../../spec_helper"
 require 'browser'
 require 'social'
 
-
 describe "social authentication" do
 
   before(:all) do

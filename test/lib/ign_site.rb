@@ -11,8 +11,8 @@ class IGN_Site < Page
   	end
   end
   
-  def visit_click(url)
-    @client.click(url)
+  def visit_click(locator)
+    @client.click(locator)
     @client.wait_for_page_to_load "40"
     while @client.get_title == "IGN Advertisement"                             	      
       @client.click("css=a")
