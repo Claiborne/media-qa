@@ -16,6 +16,7 @@ class IGN_Site < Page
     @client.wait_for_page_to_load "40"
     while @client.get_title == "IGN Advertisement"                             	      
       @client.click("css=a")
+      @client.wait_for_page_to_load "40"
 	end
   end
 end

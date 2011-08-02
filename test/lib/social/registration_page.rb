@@ -34,22 +34,6 @@ class RegistrationPage < Page
     response = http.request(request)
     
     response.body.to_s
-                
-    #resp_body = response.body.to_s
-                
-    # ASSERT BODY RESPONSE RETURNS "OK"
- 
-    #/ErrorMessage":null/.should =~ resp_body
- 
-    #/Status":1/.should =~ resp_body
- 
-    #/Status":3/.match(resp_body).should be_nil
- 
-    #/Status":4/.match(resp_body).should be_nil
- 
-    #/Status":5/.match(resp_body).should be_nil
- 
-    #/Status":8/.match(resp_body).should be_nil
   end
   
 end

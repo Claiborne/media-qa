@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + "/../../spec_helper"
 require 'browser'
 require 'ign_site'
 require 'social/registration_page'
+require 'social/login_page'
 require 'json'
 require 'net/http'
 
@@ -16,6 +17,7 @@ describe "My IGN New Account Creation" do
 	
 	@ign = Oyster::Social::IGN_Site.new @browser.client, @config
 	@reg = Oyster::Social::RegistrationPage.new @browser.client, @config
+	@login_page = Oyster::Social::LoginPage.new @browser.client, @config
 	@selenium = @browser.client
 	
 	@email_val = @reg.set_email
@@ -41,10 +43,17 @@ describe "My IGN New Account Creation" do
 
   it "should login and land on the cold start header" do
     @ign.visit "http://#{@baseurl}/login?r=http://#{@baseurl}/"
+    if @baseurl.match(/stg-/)
+      @login_page.login(@email_val, @password_val)
+    else
+      @login_page.signin(@email_val, @password_val)
+    end
+=begin
     @selenium.click "emailField"
     @selenium.type "emailField", @email_val
     @selenium.type "passwordField", @password_val
     @ign.visit_click "signinButton"
+=end
 
 	@selenium.is_text_present("Follow your friends and the top upcoming games on IGN and be the first to know when the news breaks!").should be_true
   end
