@@ -1,0 +1,36 @@
+== IGN PRIME ==
+
+All tests here are for the IGN Prime project
+
+To run all tests:
+
+	cd media-qa/test
+	rake prime env={environment}
+
+valid parameters:
+environment - dev, staging, production
+
+NOTE: Running smoke_test.rb on production will result in failures due to test credit cards not working on that environment. Only run it on the dev environment for now.
+
+Config files can be found at:
+- media-qa
+ - test
+  - config
+   - prime
+    - prime.yml
+    - subapi.yml
+    
+Lib files can be found at:
+- media-qa
+ - test
+  - lib
+   - prime
+    -signup.rb
+    
+Spec files can be found at:
+- media-qa
+ - test
+  - spec
+   - prime
+    - smoke_test.rb
+    - sub_api.rb
