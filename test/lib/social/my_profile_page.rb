@@ -22,6 +22,8 @@ module Oyster
       # TODO add is_element_present logic
       if !self.is_following?
         @client.click "css=div.socialProfileHeader div.profileInfo div[id^='myIgnFollowPerson'] div.addToIGNContainer div.addToIGN"
+      else
+        puts "already following this person"
       end
     end
 
@@ -30,6 +32,8 @@ module Oyster
       if self.is_following?
         @client.click "css=div.socialProfileHeader div.profileInfo div[id^='myIgnFollowPerson'] div.addToIGNContainer div.addToIGN"
         @client.click "css=div.socialProfileHeader div[id^='myIgnFollowPerson'] div.removeFromIGN"
+      else
+        puts "not following this person in the first place"
       end
     end
 
