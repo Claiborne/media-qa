@@ -1,1 +1,5 @@
-require 'prime/signup'
+require 'prime/signup_page'
+require 'prime/hub_page'
+require 'prime/login_page'
+require 'prime/account_page'
+require 'prime/webservice'

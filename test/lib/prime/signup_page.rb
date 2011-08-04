@@ -1,8 +1,13 @@
 require "page"
+require 'prime/webservice'
+require 'prime/sqlserver'
 
 class SignupPage < Page
+  include WebService
+  include SqlServer
+  
   def open
-    @client.open("#{@config.options['baseurl']}/subscribe/signup.aspx")  
+    @client.open("http://#{@config.options['ign_baseurl']}/subscribe/signup.aspx")  
   end
   
   def login(info)
@@ -117,4 +122,14 @@ class SignupPage < Page
     @client.click payment_type
     return card_num[rand(card_num.length - 1)]
   end  
+  
+  def disable_ads_on_receipt
+    @client.wait_for_element('_ctl0_PageBody_receiptPage_disableAdsCheckBox')
+    @client.click('_ctl0_PageBody_receiptPage_disableAdsCheckBox')
+    @client.click('_ctl0_PageBody_receiptPage_continueButton')
+    get_user_id
+    #response = RestClient.get "http://#{@config.options['api_baseurl']}/1.0/FeatureCheckService.svc/web/AdsAreDisabledCheck/JSON/#{get_user_id}", {:content_type => 'application/json'}
+    #json_response = JSON.parse(response.body).to_s
+    #puts json_response
+  end
 end

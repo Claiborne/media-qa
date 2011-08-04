@@ -13,108 +13,88 @@ describe "prime" do
    @browser = Browser.new
    @selenium = @browser.client
    
-   @signup = SignupPage.new(@selenium, @config)  
-   
+   @signup_page = SignupPage.new(@selenium, @config)
+
    @time = Time.now.to_i
   end
 
   after(:each) do
     @browser.shutdown    
   end
-  
-#  it "should delete all credit cards" do
-#    @selenium.open('http://dev.sysadmin.gamespy.com/billing/AccountsPaymentech/Search.aspx')
-#    sleep 30
-#    @selenium.type('_ctl0_PageBody_lastFourTextBox', '5557')
-#    @selenium.click('_ctl0_PageBody_deletedRadioButtonList_1')
-#    @selenium.click('_ctl0_PageBody_activeRadioButtonList_0')
-#    @selenium.click('_ctl0_PageBody_searchButton')
-#    @selenium.wait_for_element('_ctl0_PageBody_resultsDataGrid__ctl0')
-#    x=2
-#    for i in 2..201
-#      @selenium.click("//td[@id='_ctl0_PageBody_resultsDataGrid__ctl#{x}__ctl1']/a")
-#      @selenium.wait_for_element('_ctl0_PageBody_deletedDropDownList')
-#      @selenium.select('_ctl0_PageBody_deletedDropDownList', 'Yes')
-#      @selenium.select('_ctl0_PageBody_activeDropDownList1', 'No')
-#      @selenium.click('_ctl0_PageBody_updateButton')
-#      @selenium.wait_for_page_to_load('30000')
-#      if @selenium.is_text_present('CustomerProfileMessage: Error validating card/account number range')
-#        x = x+1
-#      end
-#      @selenium.open('http://dev.sysadmin.gamespy.com/billing/AccountsPaymentech/Search.aspx')
-#      @selenium.type('_ctl0_PageBody_lastFourTextBox', '5557')
-#      @selenium.click('_ctl0_PageBody_deletedRadioButtonList_1')
-#      @selenium.click('_ctl0_PageBody_activeRadioButtonList_0')
-#      @selenium.click('_ctl0_PageBody_searchButton')
-#      @selenium.wait_for_element('_ctl0_PageBody_resultsDataGrid__ctl0')
-#    end
-#  end
-  
+
   it "should have 3 subscription offerings" do
-    @signup.open
-    @signup.wait_for_element("//ul[@id='chooseplan']/li")
+    @signup_page.open
+    @signup_page.wait_for_element("//ul[@id='chooseplan']/li")
     for i in 1..3
-      @signup.assert_element("//ul[@id='chooseplan']/li[#{i}]").should be_true
+      @signup_page.assert_element("//ul[@id='chooseplan']/li[#{i}]").should be_true
     end
   end  
   
   it "should not have more than 3 subscription offerings" do
-    @signup.open
-    @signup.assert_element("//ul[@id='chooseplan']/li[4]").should be_false
+    @signup_page.open
+    @signup_page.assert_element("//ul[@id='chooseplan']/li[4]").should be_false
   end
   
   it "should allow a user to login" do
-    @signup.open
-    @signup.login({
+    @signup_page.open
+    @signup_page.login({
       :email    => "fklun@ign.com",
       :password => "boxofass"
     })
-    @signup.assert_text('You are logged in.').should be_true
+    @signup_page.wait
+    @signup_page.assert_text('You are logged in.').should be_true
   end
   
   it "should fail with incorrect credentials" do
-    @signup.open
-    @signup.login({
+    @signup_page.open
+    @signup_page.login({
       :email    => "fklun@ign.com",
       :password => "thewrongpassword"
     })
-    @signup.assert_text('Account not found.').should be_true
-    @signup.assert_text('You awefare logged in.').should be_false
+    @signup_page.assert_text('Account not found.').should be_true
+    @signup_page.assert_text('fereger').should be_false
   end
   
   it "should have 5 payment methods" do
-    @signup.open
+    @signup_page.open
     for i in 1..6
-      @signup.assert_element("//p[@class='clear margintb-10']/a[#{i}]").should be_true
+      @signup_page.assert_element("//p[@class='clear margintb-10']/a[#{i}]").should be_true
     end
   end
   
   it "should not have more than 5 payment methods" do
-    @signup.open
-    @signup.assert_element("//p[@class='clear margintb-10']/a[7]").should be_false
+    @signup_page.open
+    @signup_page.assert_element("//p[@class='clear margintb-10']/a[7]").should be_false
   end
   
   it "should allow a new user to complete a purchase" do
-    @signup.open
-    @signup.register({
+    @signup_page.open
+    @signup_page.register({
         :email =>     "fklun_#{@time}@ign.com",
         :password =>  "boxofass",
         :nickname =>  "fklun_#{@time}"
     })
-
-    @signup.fill_CC_details({
-      :card_num         => @signup.generate_card_num('Mastercard'),
-      :card_cvv         => @signup.generate_random_cvv,
+    @signup_page.fill_CC_details({
+      :card_num         => @signup_page.generate_card_num('Mastercard'),
+      :card_cvv         => @signup_page.generate_random_cvv,
       :first_name       => 'Frank',
       :last_name        => 'Klun',
       :street_address   => '3070 Bristol St.',
       :city             => 'Costa Mesa',
-      :card_zip         => @signup.generate_random_zip,
-      :card_month       => @signup.generate_random_month,
-      :card_year        => @signup.generate_random_year
+      :card_zip         => @signup_page.generate_random_zip,
+      :card_month       => @signup_page.generate_random_month,
+      :card_year        => @signup_page.generate_random_year
     })
     
-    @signup.complete_order.should be_true
-    @signup.validate_order("fklun_#{@time}").should be_true
+    @signup_page.complete_order.should be_true
+    @signup_page.validate_order("fklun_#{@time}").should be_true
+  end
+  
+  it "should allow a user to disable ads" do
+    login_page = LoginPage.new(@selenium, @config)
+    
+    login_page.disable_ads_on_ign.should be_true
+    login_page.disable_ads_on_fileplanet.should be_true
+    login_page.disable_ads_on_gamespy.should be_true
   end
 end

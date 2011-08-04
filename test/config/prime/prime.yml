@@ -1,7 +1,37 @@
 dev:
-  baseurl: http://dev.login.ign.com
+  ign_baseurl: dev.login.ign.com
+  fileplanet_baseurl: dev.login.fileplanet.com
+  gamespy_baseurl: dev.login.gamespy.com
+  api_baseurl: dev.subscriptionservices.ign.com
+  
+  prefix: dev
+  
+  database: igndevsql01.las1.colo.ignops.com
+  
+  subscriber_id: 282924733
+  non_subscriber_id: 282924732
+  
+  subscriber_feature_id: 10014
+  
+  subscriber_email: subapi_automation_subscribed@gmail.com
+  non_subscriber_email: subapi_automation_notsubscribed@gmail.com
 
 staging:
 
 production:
-  baseurl: http://login.ign.com
+  ign_baseurl: login.ign.com
+  fileplanet_baseurl: login.fileplanet.com
+  gamespy_baseurl: login.gamespy.com
+  api_baseurl: subscriptionservices.ign.com
+  
+  prefix:
+  
+  database: regsql1.las1.colo.ignops.com
+  
+  subscriber_id: 321156101  #email:subapi_automation_subscribed@gmail.com
+  non_subscriber_id: 321158058  #email:subapi_automation_notsubscribed@gmail.com
+  
+  subscriber_feature_id: 10014
+  
+  subscriber_email: subapi_automation_subscribed@gmail.com
+  non_subscriber_email: subapi_automation_notsubscribed@gmail.com
