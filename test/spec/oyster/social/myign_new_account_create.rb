@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + "/../../spec_helper"
 require 'browser'
-require 'ign_site'
 require 'social/registration_page'
 require 'social/login_page'
 require 'json'
@@ -15,7 +14,6 @@ describe "My IGN New Account Creation" do
 	@baseurl = @config.options['baseurl_myign'].to_s
 	@baseurl_people = @config.options['baseurl_myign_people'].to_s
 	
-	@ign = Oyster::Social::IGNSite.new @browser.client, @config
 	@reg = Oyster::Social::RegistrationPage.new @browser.client, @config
 	@login_page = Oyster::Social::LoginPage.new @browser.client, @config
 	@selenium = @browser.client

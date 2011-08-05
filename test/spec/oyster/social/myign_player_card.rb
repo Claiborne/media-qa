@@ -3,7 +3,6 @@ require 'browser'
 require 'social/login_page'
 require 'social/registration_page'
 require 'social/my_profile_page'
-require 'ign_site'
 require 'json'
 require 'net/http'
 
@@ -16,8 +15,7 @@ describe "My IGN Player Card" do
 	@browser = Browser.new
 	@baseurl = @config.options['baseurl_myign'].to_s
 	@baseurl_people = @config.options['baseurl_myign_people'].to_s
-	
-	@ign_site = Oyster::Social::IGNSite.new @browser.client, @config
+
 	@reg = Oyster::Social::RegistrationPage.new @browser.client, @config
 	@login_page = Oyster::Social::LoginPage.new @browser.client, @config
 	@myprofile = Oyster::Social::MyProfilePage.new @browser.client, @config

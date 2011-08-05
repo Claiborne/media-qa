@@ -80,20 +80,20 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
     end
 	
 	#Follow a game
-	@selenium.open("http://people.ign.com/clay.ign")
-	expected_games = @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value").to_i+1
-	expected_games = expected_games.to_s
+	#@selenium.open("http://people.ign.com/clay.ign")
+	#expected_games = @selenium.get_text("css=ul.profileStats li:nth-child(3) > #div.value").to_i+1
+	#expected_games = expected_games.to_s
 
-	@selenium.open("http://wii.ign.com/objects/143/14354707.html")
-	@selenium.click("css=div.addToIGN")
+	#@selenium.open("http://wii.ign.com/objects/143/14354707.html")
+	#@selenium.click("css=div.addToIGN")
 	
 	#Check follow a game: game-counter on profile increases by one
-	@selenium.open("http://people.ign.com/clay.ign")
-	begin
-      assert_equal expected_games, @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value"), "Unable to verify follow game function works (a released game was followed and the users profile game-counter did not increase by one"
-    rescue Test::Unit::AssertionFailedError
-      @verification_errors << $!
-    end
+	#@selenium.open("http://people.ign.com/clay.ign")
+	#begin
+      #assert_equal expected_games, @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value"), "Unable to verify follow game function works (a released game was followed and the users profile game-counter did not increase by one"
+    #rescue Test::Unit::AssertionFailedError
+      #@verification_errors << $!
+    #end
 	
 	#Comment on blog
 	@selenium.open("http://www.ign.com/blogs/m_qa")
@@ -235,11 +235,11 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 		@verification_errors << $!
 	end
 	
-	begin
-      assert_not_equal expected_games, @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value"), "Unable to verify unfollowing a games works"
-    rescue Test::Unit::AssertionFailedError
-      @verification_errors << $!
-    end
+	#begin
+      #assert_not_equal expected_games, @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value"), "Unable to verify unfollowing a games works"
+    #rescue Test::Unit::AssertionFailedError
+      #@verification_errors << $!
+    #end
 	
 	#Block a user
 	log_out
