@@ -5,6 +5,17 @@ module Oyster
 module Social
 class MyProfilePage < Page
 
+  include IGNSiteMod
+
+  def visit(url="http://#{@config.options['baseurl_myign_people']}/", user_name)
+     @client.open(url+user_name)
+     @client.wait_for_page_to_load
+     while @client.get_title == "IGN Advertisement"                                   	    		 
+        @client.click("css=a")
+        @client.wait_for_page_to_load "40"
+     end
+  end
+
   def create_new_psn_gamercard
   	#open "http://#{@baseurl_people}/#{@username_val}"
 	open "http://#{@config.options['baseurl_myign_people']}/clay.ign"

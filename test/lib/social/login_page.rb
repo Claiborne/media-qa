@@ -12,7 +12,7 @@ module Oyster
         @client.click("css=a")
         @client.wait_for_page_to_load "40"
      end
-    end
+  end
 
     def login(user, password)
      @client.type 'emailField', user
