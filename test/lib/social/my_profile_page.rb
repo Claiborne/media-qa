@@ -5,7 +5,7 @@ module Oyster
 module Social
 class MyProfilePage < Page
 
-  include IGNSiteMod
+  include IGNSiteMod	
 
   def visit(url="http://#{@config.options['baseurl_myign_people']}/", user_name)
      @client.open(url+user_name)

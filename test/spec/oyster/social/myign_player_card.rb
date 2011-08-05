@@ -24,7 +24,7 @@ describe "My IGN Player Card" do
 	@username_val = @reg.set_user
 	
 	#Do basic test setup: create a new My IGN account
-    #@reg.register_post(@email_val, @password_val, @username_val)
+    @reg.register_post(@email_val, @password_val, @username_val)
     
     @browser.shutdown 
   end
@@ -35,9 +35,12 @@ describe "My IGN Player Card" do
 	@myprofile = Oyster::Social::MyProfilePage.new @browser.client, @config
     
     @login_page.visit
-    #@login_page.signin(@email_val, @password_val)
-    @login_page.signin("smoketest@testign.com", "testpassword")
-    @myprofile.visit("clay.ign")
+    
+    @login_page.signin(@email_val, @password_val)
+    @myprofile.visit(@username_val)
+    
+    #@login_page.signin("smoketest@testign.com", "testpassword")
+    #@myprofile.visit("clay.ign")
   end
 
   after(:each) do
