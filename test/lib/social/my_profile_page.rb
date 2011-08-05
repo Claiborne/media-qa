@@ -8,11 +8,7 @@ class MyProfilePage < Page
   include IGNSiteMod	
 
   def visit(url="http://#{@config.options['baseurl_myign_people']}/", user_name)
-     @client.open(url+user_name)
-     while @client.get_title == "IGN Advertisement"                                   	    		 
-        @client.click("css=a")
-        @client.wait_for_page_to_load "40"
-     end
+    open(url, user_name)
   end
 
   def create_new_psn_gamercard

@@ -1,6 +1,6 @@
 module IGNSiteMod
 
-  def open(url)
+  def open(url, optional = nil)
     @client.open(url)
     while @client.get_title == "IGN Advertisement"                                     	    		 
       @client.click("css=a")
