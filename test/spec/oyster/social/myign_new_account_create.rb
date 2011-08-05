@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + "/../../spec_helper"
 require 'browser'
 require 'social/registration_page'
 require 'social/login_page'
+require 'social/my_profile_page'
 require 'json'
 require 'net/http'
 
@@ -16,6 +17,7 @@ describe "My IGN New Account Creation" do
 	
 	@reg = Oyster::Social::RegistrationPage.new @browser.client, @config
 	@login_page = Oyster::Social::LoginPage.new @browser.client, @config
+	@myprofile = Oyster::Social::MyProfilePage.new @browser.client, @config
 	@selenium = @browser.client
 	
 	#Set intance vars
@@ -41,18 +43,17 @@ describe "My IGN New Account Creation" do
 
 
   it "should login and land on the cold start header" do
-    @ign.visit "http://#{@baseurl}/login?r=http://#{@baseurl}/"
-	@login_page.signin(@email_val, @password_val)
+    @login_page.visit
+    @login_page.signin(@email_val, @password_val)
 	@selenium.is_text_present("Follow your friends and the top upcoming games on IGN and be the first to know when the news breaks!").should be_true
   end
 
   it "should generate the following activity in user's newsfeed: level 2" do
-	@ign.visit("http://#{@baseurl_people}/#{@username_val}")
+	@myprofile.visit(@username_val)
 	@selenium.get_text("css=div#bodyModulesContainer").match(/achieved level 2!/).should be_true
   end
   
   it "should generate the following activity in user's newsfeed: joined community" do
-	@ign.visit("http://#{@baseurl_people}/#{@username_val}")
 	@selenium.get_text("css=div#bodyModulesContainer").match(/joined the community/).should be_true
   end
 end  

@@ -35,7 +35,6 @@ describe "My IGN Player Card" do
 	@myprofile = Oyster::Social::MyProfilePage.new @browser.client, @config
     
     @login_page.visit
-    
     @login_page.signin(@email_val, @password_val)
     @myprofile.visit(@username_val)
     
