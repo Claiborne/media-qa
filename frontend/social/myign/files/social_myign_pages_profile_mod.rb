@@ -46,7 +46,7 @@ module SocialMyIGNPagesProfileMod
 	
 	#Check 'Games Followed' and 'People Followed' text appears in right rail
 	begin
-		assert /Games Followed/ =~ @selenium.get_text("css=div#rightRail"), "Unable to verify the user's followed games appear in the right rail of the My IGN 'My Profile' page."
+		assert /^[\s\S]*Games Followed[\s\S]*$/ =~ @selenium.get_text("css=div#rightRail"), "Unable to verify the user's followed games appear in the right rail of the My IGN 'My Profile' page #{@selenium.get_location}."
 	rescue Test::Unit::AssertionFailedError
 		@verification_errors << $!
 	end

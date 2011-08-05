@@ -48,6 +48,6 @@ module SocialMyIGNMod
   end
   
   def log_out
-	@selenium.open("http://stg-my.ign.com/logout")
+	@selenium.open("http://my.ign.com/logout")
   end
 end

@@ -14,9 +14,9 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
   def setup
     @verification_errors = []
     @selenium = Selenium::Client::Driver.new \
-      :host => "qa-server",
+      :host => "localhost",
       :port => 4444,
-      :browser => "Firefox on Windows",
+      :browser => "*firefox",
       :url => "http://www.ign.com/",
       :timeout_in_second => 60
 
@@ -152,7 +152,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	@selenium.open("http://people.ign.com/clay.ign")
 	if avatar_img == "xbox"
 		begin
-			assert @selenium.is_element_present("css=div.profilePicture img[src*='xbox_360_controller.jpg']"), "Unable to verify avatar picture change successful (the newly selected avatar pic did not appear on My Profile page"
+			assert @selenium.is_element_present("css=div.profilePicture img[src*='xbox_360_controller.jpg']"), "Unable to verify avatar picture change successful (the newly selected avatar pic did not on My Profile page"
 		rescue Test::Unit::AssertionFailedError
 			@verification_errors << $!
 		end
@@ -304,6 +304,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
     #@selenium.type "passwordField", password_val
     #@selenium.click "signinButton"
     #@selenium.wait_for_page_to_load "40"
+    
 	#open("http://people.ign.com/#{username_val}")
 	#@selenium.click "NewIdBtn"
     #@selenium.type "css=li#Editrow input.platformId", "SolidBorne"
