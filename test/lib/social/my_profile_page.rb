@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 require 'ign_site'
 require 'ign_site_mod'
+require 'page'
 
 module Oyster
 module Social
@@ -89,15 +90,8 @@ class MyProfilePage < IGNSite
 	return false
   end
   
-end
-end
-=======
-require 'page'
-
-module Oyster
- module Social
-  class MyProfilePage < Page
-
+  #################
+  
     def initialize(client,config)
       super(client,config)
     end
@@ -141,7 +135,7 @@ module Oyster
         #TODO enter text and click add button
       end
     end
-  end
- end
->>>>>>> d1401a83fce5f2368d51d68267b478554dea54d7
+  
+end
+end
 end
