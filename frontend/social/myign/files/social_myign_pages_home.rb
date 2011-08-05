@@ -22,8 +22,8 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
   def setup
     @verification_errors = []
     @selenium = Selenium::Client::Driver.new \
-      :host => "qa-server",
-      :port => 4445,
+      :host => "localhost",
+      :port => 4444,
       :browser => "*firefox",
       :url => "http://www.ign.com/",
       :timeout_in_second => 60
@@ -36,7 +36,7 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
     assert_equal [], @verification_errors
   end
   
-  def test_social_myign_pages_homehttp
+  def test_social_myign_pages
   
     #Define vars
     social_nav = {"5" => "Newsfeed", "7" => "My Profile", "9" => "Prime", "11" => "Settings", "13" => "FAQ"}
