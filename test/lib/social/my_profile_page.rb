@@ -5,11 +5,10 @@ module Oyster
 module Social
 class MyProfilePage < Page
 
-  include IGNSiteMod
+  include IGNSiteMod	
 
   def visit(url="http://#{@config.options['baseurl_myign_people']}/", user_name)
      @client.open(url+user_name)
-     @client.wait_for_page_to_load
      while @client.get_title == "IGN Advertisement"                                   	    		 
         @client.click("css=a")
         @client.wait_for_page_to_load "40"
@@ -17,8 +16,6 @@ class MyProfilePage < Page
   end
 
   def create_new_psn_gamercard
-  	#open "http://#{@baseurl_people}/#{@username_val}"
-	open "http://#{@config.options['baseurl_myign_people']}/clay.ign"
 	@client.click "NewIdBtn"    
 	@client.type "css=li#Editrow input.platformId", "psngamercard"
     @client.click "slctone"
@@ -59,6 +56,12 @@ class MyProfilePage < Page
     @client.click "slctone"
     @client.type "css=li#Editrow input.platformId", "steamgamercard"
     @client.click "steam"
+    @client.click "SaveIdBtn"
+    
+	@client.click "NewIdBtn"
+    @client.click "slctone"
+    @client.type "css=li#Editrow input.platformId", "battlenetcard"
+    @client.click "battlenet"
     @client.click "SaveIdBtn"
     
     7.times do
