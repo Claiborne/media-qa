@@ -50,6 +50,7 @@ describe "My IGN New Account Creation" do
 
   it "should generate the following activity in user's newsfeed: level 2" do
 	@myprofile.visit(@username_val)
+	sleep 5
 	@selenium.get_text("css=div#bodyModulesContainer").match(/achieved level 2!/).should be_true
   end
   

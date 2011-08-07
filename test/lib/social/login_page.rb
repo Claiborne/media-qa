@@ -1,17 +1,15 @@
 require 'page'
 require 'providers'
+require 'ign_site_mod'
 
 module Oyster
  module Social
   class LoginPage < Page
+  
+  include IGNSiteMod
  
   def visit(url="http://#{@config.options['baseurl_myign']}/login")
-     @client.open(url)
-     @client.wait_for_page_to_load
-     while @client.get_title == "IGN Advertisement"                                   	    		 
-        @client.click("css=a")
-        @client.wait_for_page_to_load "40"
-     end
+    open(url)
   end
 
     def login(user, password)

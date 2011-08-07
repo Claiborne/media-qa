@@ -52,8 +52,9 @@ RSpec::Core::RakeTask.new('ign-auth') do |t|
 end
 
 
-desc "Run the test Will is currently working on"
-RSpec::Core::RakeTask.new('willtest') do |t|
+desc "Run the rspec test Will is currently working on"
+RSpec::Core::RakeTask.new('willrspec') do |t|
     t.rspec_opts = ["-Ilib"]
-    t.pattern = 'spec/oyster/social/myign_rate_a_followed_game.rb'
+    t.pattern = 'spec/oyster/social/myign_**.rb'
 end
+

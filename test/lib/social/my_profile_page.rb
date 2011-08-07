@@ -8,7 +8,7 @@ class MyProfilePage < Page
   include IGNSiteMod	
 
   def visit(url="http://#{@config.options['baseurl_myign_people']}/", user_name)
-    open(url, user_name)
+    open(url+user_name.to_s)
   end
 
   def create_new_psn_gamercard

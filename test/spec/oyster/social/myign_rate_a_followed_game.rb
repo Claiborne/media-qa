@@ -29,9 +29,8 @@ describe "My IGN Rate A Followed Game" do
   end
   
   it "should be able to rate a followed game" do
-    @profile_page.visit("clay.ign")
 	@games_page.visit
-	sleep 4
+	@games_page.rate_a_game.should be_true
   end
 
 end
