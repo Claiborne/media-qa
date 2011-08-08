@@ -1,10 +1,10 @@
-require 'tiny_tds'
+#require 'tiny_tds'
 
 module SqlServer    
   def get_user_id
     #creates a new db object using our dev sql server
-    client = TinyTds::Client.new(:username => 'fklun', :password => 'J3d1r0xorz%', :host => 'igndevsql01.las1.colo.ignops.com', :database => 'Gametrack', :login_timeout => 60)
-     puts client.active?
+    # client = TinyTds::Client.new(:username => 'fklun', :password => 'J3d1r0xorz%', :host => 'igndevsql01.las1.colo.ignops.com', :database => 'Gametrack', :login_timeout => 60)
+     # puts client.active?
     # #opens the Gametrack DB which contains all the user information
     # db.open('Gametrack')
     # #queries the database and extracts the userID from a given email address
