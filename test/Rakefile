@@ -1,0 +1,60 @@
+require 'rubygems'
+require 'rake'
+require 'rspec/core/rake_task'
+
+#ENV["env"] ||= 'staging'
+desc "Run all test suites"
+RSpec::Core::RakeTask.new('all') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/**/*.rb'
+end
+
+desc "Run examples" 
+RSpec::Core::RakeTask.new('examples') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/examples/**/*.rb'
+end
+
+desc "Run IGN stress test"
+RSpec::Core::RakeTask.new('ignstress') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/ign-perf/**/*.rb'
+end
+
+desc "Run v1 tests"
+RSpec::Core::RakeTask.new('v1') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v1/**/*.rb'
+end
+
+desc "Run social tests"
+RSpec::Core::RakeTask.new('social') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/social/**/*.rb'
+end
+
+desc "Run prime tests"
+RSpec::Core::RakeTask.new('prime') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/prime/*.rb'
+end
+
+desc "Run Topaz tests"
+RSpec::Core::RakeTask.new('topaz') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/social/topaz_*.rb'
+end
+
+desc "Run Topaz tests"
+RSpec::Core::RakeTask.new('ign-auth') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oyster/social/topaz_*.rb'
+end
+
+
+desc "Run the rspec test Will is currently working on"
+RSpec::Core::RakeTask.new('willrspec') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oyster/social/myign_**.rb'
+end
+

@@ -21,7 +21,7 @@ describe "cheats" do
   it "should return cheats" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats"
    response.code.should eql(200)
-   data = JSON.parse(response.body)   
+   data = Nokogiri::XML(response.body)
   end
 
   ['json','xml'].each do |format|
@@ -37,45 +37,45 @@ describe "cheats" do
   end
 
   it "should return cheats for xbox 360" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats?platform=661955"
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats.json?platform=661955"
    response.code.should eql(200)
    data = JSON.parse(response.body)
   end 
 
   it "should return error for unsupported platform" do
-   response = RestClient.get ("http://#{@config.options['baseurl']}/v1/cheats?platform=-1"){|response, request, result|
+   response = RestClient.get ("http://#{@config.options['baseurl']}/v1/cheats.json?platform=-1"){|response, request, result|
    response.code.should eql(200)
    data = JSON.parse(response.body)
    }
   end
 
   it "should return cheats for retro games" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats?retro=true"
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats.json?retro=true"
    response.code.should eql(200)
    data = JSON.parse(response.body)
   end
 
   it "should return cheats sorted by publish date" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats?sort=publishDate"
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats.json?sort=publishDate"
    response.code.should eql(200)
    data = JSON.parse(response.body)
   end
 
   it "should return cheats sorted by popularity" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats?sort=popularity"
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats.json?sort=popularity"
    response.code.should eql(200)
    data = JSON.parse(response.body)
   end
 
   it "should return error for empty sort" do
-   response = RestClient.get ("http://#{@config.options['baseurl']}/v1/cheats?sort="){|response, request, result|
+   response = RestClient.get ("http://#{@config.options['baseurl']}/v1/cheats.json?sort="){|response, request, result|
    response.code.should eql(404)
    #data = JSON.parse(response.body)
    }
   end
 
   it "should return error for unsupported sort" do
-   response = RestClient.get ("http://#{@config.options['baseurl']}/v1/cheats?sort=unsupported"){|response, request, result|
+   response = RestClient.get ("http://#{@config.options['baseurl']}/v1/cheats.json?sort=unsupported"){|response, request, result|
    response.code.should eql(404)
    #data = JSON.parse(response.body)
    }
@@ -83,7 +83,7 @@ describe "cheats" do
 
   [25,75].each do |count|
    it "should return limit number of articles to #{count}" do
-     response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats?max=#{count}"
+     response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats.json?max=#{count}"
      response.code.should eql(200)
      data = JSON.parse(response.body)
    end

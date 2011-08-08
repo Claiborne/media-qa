@@ -61,7 +61,7 @@ describe "guides" do
   end
 
   it "should return guides sorted by popularity" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/guides?sort=popularity"
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/guides.json?sort=popularity"
    response.code.should eql(200)
    data = JSON.parse(response.body)
   end
