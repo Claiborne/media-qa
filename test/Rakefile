@@ -58,3 +58,14 @@ RSpec::Core::RakeTask.new('willrspec') do |t|
     t.pattern = 'spec/oyster/social/myign_**.rb'
 end
 
+desc "Run social_api tests"
+RSpec::Core::RakeTask.new('social_api') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/social_api/**/*.rb'
+end
+
+desc "Run social_test tests"
+RSpec::Core::RakeTask.new('social_test') do |t|
+    t.rspec_opts = ["-Ilib"]
+    t.pattern = 'spec/social_test/**/*.rb'
+end
