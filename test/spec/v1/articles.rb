@@ -37,7 +37,7 @@ describe "articles" do
 
      response = RestClient.get "http://#{@config.options['baseurl']}/v1/articles.#{format}"
      response.code.should eql(200)
-     puts "format - #{format} - response #{response.code}"
+     
      if format.eql?("json")
       data = JSON.parse(response.body)
      else
