@@ -19,7 +19,7 @@ describe "game videos" do
   end
 
   it "should return valid game videos" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/games/ /videos"    
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/games.json?type=videos"
    response.code.should eql(200)
    data = JSON.parse(response.body)   
   end

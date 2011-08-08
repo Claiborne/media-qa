@@ -19,7 +19,7 @@ describe "game images" do
   end
 
   it "should return valid game images" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/games/ /images"    
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/games/827005/images.json?networkid=12"
    response.code.should eql(200)
    data = JSON.parse(response.body)   
   end

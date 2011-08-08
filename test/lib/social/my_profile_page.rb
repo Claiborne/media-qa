@@ -5,20 +5,13 @@ module Oyster
 module Social
 class MyProfilePage < Page
 
-  include IGNSiteMod
+  include IGNSiteMod	
 
   def visit(url="http://#{@config.options['baseurl_myign_people']}/", user_name)
-     @client.open(url+user_name)
-     @client.wait_for_page_to_load
-     while @client.get_title == "IGN Advertisement"                                   	    		 
-        @client.click("css=a")
-        @client.wait_for_page_to_load "40"
-     end
+    open(url+user_name.to_s)
   end
 
   def create_new_psn_gamercard
-  	#open "http://#{@baseurl_people}/#{@username_val}"
-	open "http://#{@config.options['baseurl_myign_people']}/clay.ign"
 	@client.click "NewIdBtn"    
 	@client.type "css=li#Editrow input.platformId", "psngamercard"
     @client.click "slctone"
@@ -59,6 +52,12 @@ class MyProfilePage < Page
     @client.click "slctone"
     @client.type "css=li#Editrow input.platformId", "steamgamercard"
     @client.click "steam"
+    @client.click "SaveIdBtn"
+    
+	@client.click "NewIdBtn"
+    @client.click "slctone"
+    @client.type "css=li#Editrow input.platformId", "battlenetcard"
+    @client.click "battlenet"
     @client.click "SaveIdBtn"
     
     7.times do
@@ -141,6 +140,29 @@ class MyProfilePage < Page
       end
     end
 
+<<<<<<< HEAD
+    def is_user_activity_posted?(msg)
+      txt = @client.get_text("css=div.activityBody")
+
+      flag = txt.include?(msg)
+      flag
+    end
+
+    def delete_user_activity_entry(msg)
+      if self.is_user_activity_posted?(msg)
+        max = @client.get_xpath_count("//li[contains(@class,'activity')]").to_i
+        puts max
+        (1..max).each{ |i|
+          txt = @client.get_text("css=li.activity:nth-child(#{i})")
+          if txt.include?(msg)
+            @client.click "css=li.activity:nth-child(#{i}) > div.activityBody > span.deleteMe"
+            break
+          end
+        }
+      end
+    end
+
+=======
     def initialize(client,config)
       super(client,config)
     end
@@ -183,6 +205,7 @@ class MyProfilePage < Page
       if self.is_wall_post_entry_available?
         #TODO enter text and click add button
       end
+>>>>>>> 279f20f3a5e497c733cc9e40f11e6f3fcc87c73c
   end
 end
 end

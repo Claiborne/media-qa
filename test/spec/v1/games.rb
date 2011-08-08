@@ -22,7 +22,7 @@ describe "games" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v1/games.json"    
    response.code.should eql(200)
    data = JSON.parse(response.body)   
-   pp data
+
   end
 
 end
