@@ -1,0 +1,8 @@
+development:
+
+staging:
+  baseurl: linapp101-vm.sc4.colo.fimops.com:8080 
+
+production:
+  baseurl: api.ign.com
+
