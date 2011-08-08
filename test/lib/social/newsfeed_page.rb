@@ -20,6 +20,30 @@ module Oyster
       flag
     end
 
+    def is_entry_deletable?
+      flag = false
+      beg_index = 'activityRow'.length
+      if self.is_user_activity_posted?(msg)
+        max = @client.get_xpath_count("//li[contains(@class,'activity')]").to_i
+
+        (1..max).each{ |i|
+          txt = @client.get_text("css=li.activity:nth-child(#{i})")
+
+
+          if txt.include?(msg)
+            attribute = @client.get_attribute("css=li.activity:nth-child(#{i})@id")
+            puts attribute
+            activityId = attribute[beg_index,attribute.length]
+            flag = @client.is_element_present "css=li##{attribute} span#delete#{activityId}"
+            #@client.click "css=ul#activityList li:nth-child(#{i}) > div.activityBody > span.deleteMe"
+            break
+          end
+        }
+      
+      end
+      flag
+    end
+
     def delete_user_activity_entry(msg)
       beg_index = 'activityRow'.length
       if self.is_user_activity_posted?(msg)

@@ -81,6 +81,7 @@ describe "social delete button" do
    @browser.client.click("css=div#activityControl li[class^=showpeople]")
    sleep 5
    newsfeed_page.is_user_activity_posted?(msg).should be_true
+   newsfeed_page.is_entry_deletable?.should be_false
    
    
   end

@@ -100,7 +100,7 @@ describe "social authentication" do
    #actual test
    
    my_profile_page.start_following_person
-   my_profile_page.is_wall_post_entry_available?.should be_true
+   my_profile_page.is_wall_post_entry_available?.should be_false
    @browser.client.click("css=a:contains('Sign Out')")
 
   end
