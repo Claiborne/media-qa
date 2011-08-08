@@ -32,10 +32,7 @@ module Oyster
         @client.click("css=a")
         @client.wait_for_page_to_load "40"
       end
-<<<<<<< HEAD
-      
-=======
->>>>>>> 279f20f3a5e497c733cc9e40f11e6f3fcc87c73c
+
     end
 
     def signup

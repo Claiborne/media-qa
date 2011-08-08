@@ -140,7 +140,7 @@ class MyProfilePage < Page
       end
     end
 
-<<<<<<< HEAD
+
     def is_user_activity_posted?(msg)
       txt = @client.get_text("css=div.activityBody")
 
@@ -162,7 +162,7 @@ class MyProfilePage < Page
       end
     end
 
-=======
+
     def initialize(client,config)
       super(client,config)
     end
@@ -205,7 +205,7 @@ class MyProfilePage < Page
       if self.is_wall_post_entry_available?
         #TODO enter text and click add button
       end
->>>>>>> 279f20f3a5e497c733cc9e40f11e6f3fcc87c73c
+
   end
 end
 end
