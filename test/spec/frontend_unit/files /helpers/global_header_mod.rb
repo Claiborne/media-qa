@@ -112,17 +112,7 @@ module GlobalHeaderMod
         @verification_errors << $!
     end
 	begin
-        assert @selenium.is_element_present("css=div#corp-networkLinks a[href=http://www.teamxbox.com/]"), "Unable to verify Global header 'TeamXbox' corp nav link working on #{descript}"
-    rescue Test::Unit::AssertionFailedError
-        @verification_errors << $!
-    end
-	begin
         assert @selenium.is_element_present("css=div#corp-networkLinks a[href=http://www.gamestats.com/]"), "Unable to verify Global header 'GameStats' corp nav link working on #{descript}"
-    rescue Test::Unit::AssertionFailedError
-        @verification_errors << $!
-    end
-	begin
-        assert @selenium.is_element_present("css=div#corp-networkLinks a[href*=http://www.direct2drive.com]"), "Unable to verify Global header 'FilePlanet' corp nav link working on #{descript}"
     rescue Test::Unit::AssertionFailedError
         @verification_errors << $!
     end
@@ -131,11 +121,6 @@ module GlobalHeaderMod
     rescue Test::Unit::AssertionFailedError
         @verification_errors << $!
 	end
-	begin
-        assert /IGN Entertainment Games/ =~ @selenium.get_text("css=div#corp-networkLinks"), "Unable to verify 'IGN Entertainment Games' text present in Global header corp links on #{descript}"
-    rescue Test::Unit::AssertionFailedError
-        @verification_errors << $!
-    end
 	
 	# GLOBAL SEARCH
 	begin

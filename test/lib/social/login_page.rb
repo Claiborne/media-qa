@@ -1,24 +1,26 @@
 require 'page'
 require 'providers'
+require 'ign_site_mod'
 
 module Oyster
  module Social
   class LoginPage < Page
+  
+  include IGNSiteMod
  
   def visit(url="http://#{@config.options['baseurl_myign']}/login")
-     @client.open(url)
-     @client.wait_for_page_to_load
-    end
+    open(url)
+  end
 
     def login(user, password)
      @client.type 'emailField', user
      @client.type 'passwordField', password
      @client.click "//button[@class='submit']"
-	 while @client.get_title == "IGN Advertisement"                                     	    		 
+     @client.wait_for_page_to_load "40"
+	 while @client.get_title == "IGN Advertisement"                                   	    		 
         @client.click("css=a")
         @client.wait_for_page_to_load "40"
      end
-    @client.wait_for_page_to_load "40"
     end
     
     def signin(user, password)
@@ -30,7 +32,10 @@ module Oyster
         @client.click("css=a")
         @client.wait_for_page_to_load "40"
       end
+<<<<<<< HEAD
       
+=======
+>>>>>>> 279f20f3a5e497c733cc9e40f11e6f3fcc87c73c
     end
 
     def signup

@@ -5,7 +5,7 @@ module SocialMyIGNPagesPrimeMod
   
 	#Check text is present
 	begin
-		assert /Exclusive Game Betas/ =~ @selenium.get_text("css=h2[class='hub-hdr-icon hub-gun']"), "Unable to verify content displays on MyIGN Prime page ('Exclusive Game Betas' text not found)"
+		assert /Game Betas/ =~ @selenium.get_text("css=h2[class='hub-hdr-icon hub-gun']"), "Unable to verify content displays on MyIGN Prime page ('Exclusive Game Betas' text not found)"
 	rescue Test::Unit::AssertionFailedError
 		@verification_errors << $!
 	end

@@ -4,8 +4,7 @@ module SocialMyIGNPagesProfileMod
   def check_myprofile_page
   
     #Define blogroll nav links
-	#profile_br_nav = ["http://people.ign.com/clay.ign","http://www.ign.com/blogs/clay.ign","http://people.ign.com/clay.ign/games","http://people.ign.com/clay.ign/people"]
-	profile_br_nav = ["http://stg-people.ign.com/clay.ign","http://www.ign.com/blogs/clay.ign","http://stg-people.ign.com/clay.ign/games","http://stg-people.ign.com/clay.ign/people"]
+	profile_br_nav = ["http://people.ign.com/clay.ign","http://www.ign.com/blogs/clay.ign","http://people.ign.com/clay.ign/games","http://people.ign.com/clay.ign/people"]
   
 	#Check name visible in header
     text = @selenium.get_text("css=div.profileInfo div.username")
@@ -46,11 +45,11 @@ module SocialMyIGNPagesProfileMod
 	end
 	
 	#Check 'Games Followed' and 'People Followed' text appears in right rail
-	begin
-		assert /Games Followed/ =~ @selenium.get_text("css=div#rightRail"), "Unable to verify the user's followed games appear in the right rail of the My IGN 'My Profile' page."
-	rescue Test::Unit::AssertionFailedError
-		@verification_errors << $!
-	end
+	#begin
+		#assert /Games Followed/ =~ @selenium.get_text("css=div#rightRail"), "Unable to verify the user's followed games appear in the right rail of the My IGN 'My Profile' page #{@selenium.get_location}."
+	#rescue Test::Unit::AssertionFailedError
+		#@verification_errors << $!
+	#end
 	begin
 		assert /People Followed/ =~ @selenium.get_text("css=div#rightRail"), "Unable to verify the user's followed people appear in the right rail of the My IGN 'My Profile' page."
 	rescue Test::Unit::AssertionFailedError

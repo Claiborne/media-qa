@@ -2,11 +2,11 @@
 module SocialMyIGNMod
 
   def sign_in(acct)
-	@selenium.open "http://stg-my.ign.com/login?r=http://stg-my.ign.com/"
+	@selenium.open "http://my.ign.com/login?r=http://my.ign.com/#"
     @selenium.click "emailField"
     @selenium.type "emailField", "#{acct}test@testign.com"
     @selenium.type "passwordField", "testpassword"
-    @selenium.click "css=button.submit"
+    @selenium.click "signinButton"
     @selenium.wait_for_page_to_load "40"
   end
   
@@ -48,6 +48,6 @@ module SocialMyIGNMod
   end
   
   def log_out
-	@selenium.open("http://stg-my.ign.com/logout")
+	@selenium.open("http://my.ign.com/logout")
   end
 end

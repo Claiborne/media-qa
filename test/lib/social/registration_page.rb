@@ -36,6 +36,10 @@ class RegistrationPage < Page
     response.body.to_s
   end
   
+  def create_new_account
+    
+  end
+  
 end
 end
 end

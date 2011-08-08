@@ -22,10 +22,10 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
   def setup
     @verification_errors = []
     @selenium = Selenium::Client::Driver.new \
-      :host => "qa-server",
+      :host => "localhost",
       :port => 4444,
-      :browser => "Firefox on Windows",
-	  :url => "http://stg-my.ign.com/",
+      :browser => "*firefox",
+      :url => "http://www.ign.com/",
       :timeout_in_second => 60
 
     @selenium.start_new_browser_session
@@ -36,7 +36,7 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
     assert_equal [], @verification_errors
   end
   
-  def test_social_myign_pages_homehttp
+  def test_social_myign_pages
   
     #Define vars
     social_nav = {"5" => "Newsfeed", "7" => "My Profile", "9" => "Prime", "11" => "Settings", "13" => "FAQ"}
@@ -50,13 +50,17 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
 	
     #Open IGN.com
     @selenium.open "/"
+
+    #Click "MyIGN" link in global nav
+    @selenium.click("css=li#navItem-myign a.nav-lnk")
+    @selenium.wait_for_page_to_load "40"
 	
     #Check global header
     global_header(@selenium.get_location)
 	
     #Check title and url
     verify_title("My Newsfeed","when clicknig MyIGN in the global nav")
-	verify_url("http://stg-my.ign.com/home","clicking the Newsfeed link in the MyIGN nav")
+    verify_url("http://my.ign.com/home","clicking the Newsfeed link in the MyIGN nav")
 	
     #Check MyIGN nav: link text
     social_nav.each do |k,v|
@@ -72,7 +76,7 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
       assert @selenium.is_element_present("css=div#updateStatusContainer input#statusField[type='text']"), "Unable to verify the status-update text field appears on the MyIGN homepage"
     rescue Test::Unit::AssertionFailedError
       @verification_errors << $!
-      end
+    end
 
     #Check blogroll nav contain links Show All, Blog, Games, People
     blogroll_nav.each do |k,v|
@@ -129,9 +133,9 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
       #Check text in first entry: string > 27
 	  if @selenium.is_element_present("css=ul#activityList li.activity span.activityContent")
 		text = @selenium.get_text("css=ul#activityList li.activity span.activityContent")
-			if text.length > 27 then bool = "true" 
-				else bool = ""
-			end
+		if text.length > 27 then bool = "true" 
+			else bool = ""
+		end
 		begin
 			assert_equal "true", bool, "Unable to verify any text content appears in the in the '#{blogroll_nav_text[x]}' blogroll of the MyIGN homepage"
 		rescue Test::Unit::AssertionFailedError
@@ -143,16 +147,16 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
 		rescue Test::Unit::AssertionFailedError
 			@verification_errors << $!
 		end
-	  end
 		
-      #Check image in first entry: img src *= http
-      begin
-        assert @selenium.is_element_present("css=ul#activityList li.activity a img[src*='http']"), "Unable to verify any images appears in the in the '#{blogroll_nav_text[x]}' blogroll of the MyIGN homepage"
-      rescue Test::Unit::AssertionFailedError
-        @verification_errors << $!
-      end
-      x+=1
-    end
+		#Check image in first entry: img src *= http
+		begin
+			assert @selenium.is_element_present("css=ul#activityList li.activity a img[src*='http']"), "Unable to verify any images appears in the in the '#{blogroll_nav_text[x]}' blogroll of the MyIGN homepage"
+		rescue Test::Unit::AssertionFailedError
+			@verification_errors << $!
+		end
+		x+=1
+	  end
+	end
 	
     #
     #ITERATE THROUGH MyIGN NAV, CHECKING EACH PAGE
@@ -165,8 +169,7 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
       @selenium.wait_for_page_to_load "40"
 	
       verify_title("My Newsfeed","clicking the MyIGN logo in the MyIGN nav")
-      #verify_url("http://my.ign.com/home","clicking the MyIGN logo in the MyIGN nav")
-	  verify_url("http://stg-my.ign.com/home","clicking the MyIGN logo in the MyIGN nav")
+      verify_url("http://my.ign.com/home","clicking the MyIGN logo in the MyIGN nav")
 	
     #NEWSFEED
 	
@@ -175,8 +178,8 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
       @selenium.wait_for_page_to_load "40"
 
       verify_title("My Newsfeed","clicking the Newsfeed link in the MyIGN nav")
-      #verify_url("http://my.ign.com/home","clicking the Newsfeed link in the MyIGN nav")
-	  verify_url("http://stg-my.ign.com/home","clicking the Newsfeed link in the MyIGN nav")
+      verify_url("http://my.ign.com/home","clicking the Newsfeed link in the MyIGN nav")
+	  
     #MY PROFILE
 	
       #Click My Profile link in MyIGN nav
@@ -184,8 +187,7 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
       @selenium.wait_for_page_to_load "40"
 	
       verify_title("Profile","clicking the Profile link in the MyIGN nav")
-      #verify_url("http://people.ign.com/","clicking the Profile link in the MyIGN nav")
-	  verify_url("http://stg-people.ign.com/","clicking the Profile link in the MyIGN nav")
+      verify_url("http://people.ign.com/","clicking the Profile link in the MyIGN nav")
 		
       check_myprofile_page
 	
@@ -196,8 +198,7 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
       @selenium.wait_for_page_to_load "40"
 		
       verify_title("Prime","clicking the Prime link in the MyIGN nav")
-      #verify_url("http://my.ign.com/prime/hub","clicking the Prime link in the MyIGN nav")
-	  verify_url("http://stg-my.ign.com/prime/hub","clicking the Prime link in the MyIGN nav")	
+      verify_url("http://my.ign.com/prime/hub","clicking the Prime link in the MyIGN nav")
 		
       check_prime_page
 	
@@ -219,8 +220,7 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
       @selenium.wait_for_page_to_load "40"
 	
       verify_title("FAQ","clicking the FAQ link in the MyIGN nav")
-      #verify_url("http://my.ign.com/help","clicking the FAQ link in the MyIGN nav")
-	  verify_url("http://stg-my.ign.com/help","clicking the FAQ link in the MyIGN nav")
+      verify_url("http://my.ign.com/help","clicking the FAQ link in the MyIGN nav")
 		
       check_faq_page
 		
@@ -229,7 +229,7 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
     #
 	
     #Signout
-    open("http://stg-my.ign.com/logout?r=http://stg-my.ign.com/")
+    open("http://my.ign.com/logout?r=http://my.ign.com/")
 	
     #Click "MyIGN" link in global nav
     #@selenium.click("css=li#navItem-myign a.nav-lnk")
@@ -238,6 +238,5 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
     #Check logged-out landing page
     verify_title("Get Started with My IGN","clicking the MyIGN link in the global nav while signed out")
     verify_url("http://my.ign.com/get-started","clicking the MyIGN link in the global nav while signed out")
-	
   end
 end

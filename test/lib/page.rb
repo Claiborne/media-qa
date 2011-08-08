@@ -80,5 +80,9 @@ class Page
   def click(element)
     @client.click(element)
   end
+  
+  def wait_for_element(element)
+    @client.wait_for_element(element)
+  end
  
 end

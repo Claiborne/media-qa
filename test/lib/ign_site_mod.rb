@@ -1,9 +1,6 @@
-require 'page'
+module IGNSiteMod
 
-module Oyster
-module Social
-class IGNSite < Page
-  def visit(url)
+  def open(url)
     @client.open(url)
     while @client.get_title == "IGN Advertisement"                                     	    		 
       @client.click("css=a")
@@ -11,7 +8,7 @@ class IGNSite < Page
   	end
   end
   
-  def visit_click(locator)
+  def click(locator)
     @client.click(locator)
     @client.wait_for_page_to_load "40"
     while @client.get_title == "IGN Advertisement"                             	      
@@ -19,6 +16,14 @@ class IGNSite < Page
       @client.wait_for_page_to_load "40"
 	end
   end
-end
-end
+  
+  def refresh
+  	@client.refresh
+    @client.wait_for_page_to_load "40"
+    while @client.get_title == "IGN Advertisement"                                     	    		 
+      @client.click("css=a")
+      @client.wait_for_page_to_load "40"
+  	end
+  end
+  
 end

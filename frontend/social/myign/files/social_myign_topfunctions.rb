@@ -14,9 +14,9 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
   def setup
     @verification_errors = []
     @selenium = Selenium::Client::Driver.new \
-      :host => "qa-server",
+      :host => "localhost",
       :port => 4444,
-      :browser => "Firefox on Windows",
+      :browser => "*firefox",
       :url => "http://www.ign.com/",
       :timeout_in_second => 60
 
@@ -80,26 +80,26 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
     end
 	
 	#Follow a game
-	@selenium.open("http://people.ign.com/clay.ign")
-	expected_games = @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value").to_i+1
-	expected_games = expected_games.to_s
+	#@selenium.open("http://people.ign.com/clay.ign")
+	#expected_games = @selenium.get_text("css=ul.profileStats li:nth-child(3) > #div.value").to_i+1
+	#expected_games = expected_games.to_s
 
-	@selenium.open("http://wii.ign.com/objects/143/14354707.html")
-	@selenium.click("css=div.addToIGN")
+	#@selenium.open("http://wii.ign.com/objects/143/14354707.html")
+	#@selenium.click("css=div.addToIGN")
 	
 	#Check follow a game: game-counter on profile increases by one
-	@selenium.open("http://people.ign.com/clay.ign")
-	begin
-      assert_equal expected_games, @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value"), "Unable to verify follow game function works (a released game was followed and the users profile game-counter did not increase by one"
-    rescue Test::Unit::AssertionFailedError
-      @verification_errors << $!
-    end
+	#@selenium.open("http://people.ign.com/clay.ign")
+	#begin
+      #assert_equal expected_games, @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value"), "Unable to verify follow game function works (a released game was followed and the users profile game-counter did not increase by one"
+    #rescue Test::Unit::AssertionFailedError
+      #@verification_errors << $!
+    #end
 	
 	#Comment on blog
-	@selenium.open("http://www.ign.com/blogs/m_qa")
-	@selenium.click("css=div#content div.post a.titlelink")
-	@selenium.wait_for_page_to_load "40"
-	sleep 6
+	#@selenium.open("http://www.ign.com/blogs/m_qa")
+	#@selenium.click("css=div#content div.post a.titlelink")
+	#@selenium.wait_for_page_to_load "40"
+	#sleep 6
 	#blog_comment = rand_gen
 	#@selenium.focus "css=div#comment"
 	#@selenium.type_keys "css=div#comment", "gui_test#{blog_comment}"
@@ -116,18 +116,18 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	#end
 	
 	#Check Disqus text field 
-	begin
-		assert @selenium.is_element_present("css=div.dsq-textarea iframe"), "Unable to verify the Disqus application is visible on blog article pages"
-	rescue Test::Unit::AssertionFailedError
-		@verification_errors << $!
-	end
+	#begin
+		#assert @selenium.is_element_present("css=div.dsq-textarea iframe"), "Unable to verify the Disqus application is visible on blog article pages"
+	#rescue Test::Unit::AssertionFailedError
+		#@verification_errors << $!
+	#end
 	
 	#Check Disqus comments
-	begin
-		assert @selenium.is_element_present("css=div.dsq-full-comment div[id*='dsq-comment-text-']"), "Unable to verify the Disqus comments are visible on blog article pages"
-	rescue Test::Unit::AssertionFailedError
-		@verification_errors << $!
-	end
+	#begin
+		#assert @selenium.is_element_present("css=div.dsq-full-comment div[id*='dsq-comment-text-']"), "Unable to verify the Disqus comments are visible on blog article pages"
+	#rescue Test::Unit::AssertionFailedError
+		#@verification_errors << $!
+	#end
 	
 	#Change profile avatar
 	@selenium.open("http://my.ign.com/user/settings")
@@ -152,7 +152,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 	@selenium.open("http://people.ign.com/clay.ign")
 	if avatar_img == "xbox"
 		begin
-			assert @selenium.is_element_present("css=div.profilePicture img[src*='xbox_360_controller.jpg']"), "Unable to verify avatar picture change successful (the newly selected avatar pic did not appear on My Profile page"
+			assert @selenium.is_element_present("css=div.profilePicture img[src*='xbox_360_controller.jpg']"), "Unable to verify avatar picture change successful (the newly selected avatar pic did not on My Profile page"
 		rescue Test::Unit::AssertionFailedError
 			@verification_errors << $!
 		end
@@ -235,11 +235,11 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
 		@verification_errors << $!
 	end
 	
-	begin
-      assert_not_equal expected_games, @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value"), "Unable to verify unfollowing a games works"
-    rescue Test::Unit::AssertionFailedError
-      @verification_errors << $!
-    end
+	#begin
+      #assert_not_equal expected_games, @selenium.get_text("css=ul.profileStats li:nth-child(3) > div.value"), "Unable to verify unfollowing a games works"
+    #rescue Test::Unit::AssertionFailedError
+      #@verification_errors << $!
+    #end
 	
 	#Block a user
 	log_out
@@ -304,6 +304,7 @@ class SocialMyIGNTopFunctions < Test::Unit::TestCase
     #@selenium.type "passwordField", password_val
     #@selenium.click "signinButton"
     #@selenium.wait_for_page_to_load "40"
+    
 	#open("http://people.ign.com/#{username_val}")
 	#@selenium.click "NewIdBtn"
     #@selenium.type "css=li#Editrow input.platformId", "SolidBorne"
