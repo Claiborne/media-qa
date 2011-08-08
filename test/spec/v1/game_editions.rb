@@ -19,7 +19,7 @@ describe "game editions" do
   end
 
   it "should return valid game editions" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/games/ /editions"    
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/games/827005/editions.json?networkid=12"
    response.code.should eql(200)
    data = JSON.parse(response.body)   
   end

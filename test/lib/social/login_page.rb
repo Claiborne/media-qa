@@ -25,11 +25,12 @@ module Oyster
       @client.type "emailField", user
       @client.type "passwordField", password
       @client.click "signinButton"
+      @client.wait_for_page_to_load
       while @client.get_title == "IGN Advertisement"                                     	    		 
         @client.click("css=a")
         @client.wait_for_page_to_load "40"
       end
-      @client.wait_for_page_to_load
+      
     end
 
     def signup

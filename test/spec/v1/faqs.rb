@@ -28,20 +28,25 @@ describe "faqs" do
     it "should return faqs in #{format} format" do
      response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs.#{format}"
      response.code.should eql(200)
-     data = JSON.parse(response.body)  
+     if format.eql?('json')
+      data = JSON.parse(response.body)
+     else
+       data = Nokogiri::XML(response.body)
+     end
     end
   end
 
   it "should return faqs for xbox 360" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs?platform="     
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs?platform=661955"
    response.code.should eql(200)
    data = JSON.parse(response.body)
   end 
 
   it "should return error for unsupported platform" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs?platform=-1"
+   response = RestClient.get("http://#{@config.options['baseurl']}/v1/faqs?platform=-1"){|response, request, result|
    response.code.should eql(200)
    data = JSON.parse(response.body)
+   }
   end
 
   it "should return faqs for retro games" do
@@ -63,15 +68,17 @@ describe "faqs" do
   end
 
   it "should return error for empty sort" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs?sort="
-   response.code.should eql(200)
-   data = JSON.parse(response.body)
+   response = RestClient.get("http://#{@config.options['baseurl']}/v1/faqs?sort="){|response, request, result|
+   response.code.should eql(404)
+   #data = JSON.parse(response.body)
+   }
   end
 
   it "should return error for unsupported sort" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs?sort=unsupported"
-   response.code.should eql(200)
-   data = JSON.parse(response.body)
+   response = RestClient.get("http://#{@config.options['baseurl']}/v1/faqs?sort=unsupported"){|response, request, result|
+   response.code.should eql(404)
+   #data = JSON.parse(response.body)
+   }
   end
 
   [25,75].each do |count|

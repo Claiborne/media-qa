@@ -47,6 +47,28 @@ module Oyster
         #TODO enter text and click add button
       end
     end
+
+    def is_user_activity_posted?(msg)
+      txt = @client.get_text("css=div.activityBody")
+
+      flag = txt.include?(msg)
+      flag
+    end
+
+    def delete_user_activity_entry(msg)
+      if self.is_user_activity_posted?(msg)
+        max = @client.get_xpath_count("//li[contains(@class,'activity')]").to_i
+        puts max
+        (1..max).each{ |i|
+          txt = @client.get_text("css=li.activity:nth-child(#{i})")
+          if txt.include?(msg)
+            @client.click "css=li.activity:nth-child(#{i}) > div.activityBody > span.deleteMe"
+            break
+          end
+        }
+      end
+    end
+
   end
  end
 end

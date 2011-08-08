@@ -18,22 +18,20 @@ describe "channels" do
 
   end
 
-  it "should return valid channel" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/channels/"    
-   response.code.should eql(200)
-   data = JSON.parse(response.body)   
-  end
+  
 
   it "should return error for empty channel" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/channels"              
-   response.code.should eql(200)
-   data = JSON.parse(response.body)
+   response = RestClient.get ("http://#{@config.options['baseurl']}/v1/channels"){|response, request, result|
+   response.code.should eql(500)
+   #data = JSON.parse(response.body)
+   }
   end 
 
   it "should return error for invalid channel" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/channels/0"              
-   response.code.should eql(200)
-   data = JSON.parse(response.body)
+   response = RestClient.get ("http://#{@config.options['baseurl']}/v1/channels/0") {|response, request, result|
+   response.code.should eql(404)
+   #data = JSON.parse(response.body)
+   }
   end 
 
   ['json','xml'].each do |format|
