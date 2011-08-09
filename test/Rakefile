@@ -54,13 +54,8 @@ end
 
 desc "Run the rspec test Will is currently working on"
 RSpec::Core::RakeTask.new('willrspec') do |t|
-<<<<<<< HEAD
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/social/myign_**.rb'
-=======
-    t.rspec_opts = ["-Ilib"]
-    t.pattern = 'spec/oyster/social/testtest.rb'
->>>>>>> clay
 end
 
 desc "Run social_api tests"
