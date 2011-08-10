@@ -53,12 +53,14 @@ class MyProfilePage < Page
     @client.type "css=li#Editrow input.platformId", "steamgamercard"
     @client.click "steam"
     @client.click "SaveIdBtn"
+    refresh
     
 	@client.click "NewIdBtn"
     @client.click "slctone"
     @client.type "css=li#Editrow input.platformId", "battlenetcard"
     @client.click "battlenet"
     @client.click "SaveIdBtn"
+    refresh
     
     7.times do
       refresh
