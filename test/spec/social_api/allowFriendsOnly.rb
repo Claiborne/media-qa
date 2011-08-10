@@ -128,7 +128,7 @@ it "should not allow non-friends to post on the wall" do
 "verb"=>"POST",
 "actorId"=>"1778592",
 "targets"=>[{"type"=>"PERSON","objectId"=>"1723480"}]})
-esponse = RestClient.post("http://#{@config.options['baseurl']}/v1.0/social/rest/activities/1778592/@self?st=1778592:1778592:0:ign.com:my.ign.com:0:0", jdata, {:content_type => 'application/json'}){|response, request, result|
+response = RestClient.post("http://#{@config.options['baseurl']}/v1.0/social/rest/activities/1778592/@self?st=1778592:1778592:0:ign.com:my.ign.com:0:0", jdata, {:content_type => 'application/json'}){|response, request, result|
 response.code.should eql(403)
 puts '403 cannot post to the wall'
 
