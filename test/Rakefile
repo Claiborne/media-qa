@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'rspec/core/rake_task'
 
-#ENV["env"] ||= 'staging'
+ENV["env"] ||= 'staging'
 desc "Run all test suites"
 RSpec::Core::RakeTask.new('all') do |t|
     t.rspec_opts = ["-Ilib"]
