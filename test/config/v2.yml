@@ -1,0 +1,7 @@
+development:
+
+staging:
+  baseurl: api.ign.com
+
+production:
+ baseurl: api.ign.com

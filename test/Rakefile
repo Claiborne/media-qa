@@ -27,6 +27,12 @@ RSpec::Core::RakeTask.new('v1') do |t|
     t.pattern = 'spec/v1/**/*.rb'
 end
 
+desc "Run v2 tests"
+RSpec::Core::RakeTask.new('v2') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v2/**/*.rb'    
+end
+
 desc "Run social tests"
 RSpec::Core::RakeTask.new('social') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
@@ -49,13 +55,6 @@ desc "Run Topaz tests"
 RSpec::Core::RakeTask.new('ign-auth') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/social/topaz_*.rb'
-end
-
-
-desc "Run the rspec test Will is currently working on"
-RSpec::Core::RakeTask.new('willrspec') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/social/myign_**.rb'
 end
 
 desc "Run social_api tests"
