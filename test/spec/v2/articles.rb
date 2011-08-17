@@ -57,7 +57,11 @@ describe "articles" do
      response.code.should eql(200)
      if format.eql?("json")
       data = JSON.parse(response.body)
-     end
+      data.length.should > 0
+     else format.eql?("html")
+      data = Nokogiri::XML(response.body)
+      data.to_s.length.should > 0
+    end
     end
   end
 
@@ -66,6 +70,7 @@ describe "articles" do
      response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.#{format}"
      response.code.should eql(200)
      data = Nokogiri::XML(response.body)
+     data.to_s.length.should > 0
     end
   end
   
