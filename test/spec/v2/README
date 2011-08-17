@@ -1,0 +1,4 @@
+To run v2 for production: rake v2 env=production SPEC_OPTS="-t prd"
+
+To run v2 for staging: rake v2 SPEC_OPTS="-t stg"
+
