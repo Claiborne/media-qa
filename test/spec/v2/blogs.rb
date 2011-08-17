@@ -94,5 +94,19 @@ describe "blogs" do
    data = JSON.parse(response.body)
    data.length.should > 0
   end
+  
+  it "should return blog articles by author name", :prd => true, :stg => false do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?blog_name=clay.ign"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end
+  
+  it "should return a blog entry", :prd => true, :stg => false do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?slug=smoke-test-722&blog_name=clay.ign&per_page=1"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end  
 end
 

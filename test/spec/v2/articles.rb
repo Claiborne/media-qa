@@ -206,11 +206,4 @@ describe "articles" do
    data = JSON.parse(response.body)
    data.length.should > 0
   end
-  
-  it "should return articles by blog author name", :prd => true, :stg => false do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?blog_name=clay.ign"
-   response.code.should eql(200)
-   data = JSON.parse(response.body)
-   data.length.should > 0
-  end
 end
