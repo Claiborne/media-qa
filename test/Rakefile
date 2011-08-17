@@ -68,3 +68,9 @@ RSpec::Core::RakeTask.new('social_test') do |t|
     t.rspec_opts = ["-Ilib"]
     t.pattern = 'spec/social_test/**/*.rb'
 end
+
+desc "Run Will's temp tests"
+RSpec::Core::RakeTask.new('will') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v2/blogs.rb'    
+end
