@@ -18,11 +18,28 @@ describe "articles" do
   after(:each) do
 
   end
-
+  
+  #Since no articles currently have values for the following parameters, these parameters will return no articles at this time. No test cases for these parameters have yet been added.
+  
+  #Also, at the time of this writting, most v2 article use cases have not been fully defined
+  
+  #TODO: topics parameter
+  
+  #TODO: topics_all parameter
+  
+  #TODO: sort parameter other than publish_date when more values are implemented 
+  
+  #TODO since parameter
+  
+  #TODO object_platform parameter
+  
+  #TODO fields parameter
+  
   it "should return valid articles" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json"
    response.code.should eql(200)
    data = JSON.parse(response.body)
+   data.length.should > 0
   end
 
   ['json','xml', 'html'].each do |format|
@@ -36,92 +53,159 @@ describe "articles" do
      end
     end
   end
-
-  it "should return valid articles filtered by franchise id" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?franchiseId=865020"
+  
+  it "should return articles by page" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?page=2"
    response.code.should eql(200)
    data = JSON.parse(response.body)
+   data.length.should > 0
   end
-
-  it "should return valid articles filtered by network id" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?networkId=12"
+  
+  it "should return ten articles" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?per_page=10"
    response.code.should eql(200)
    data = JSON.parse(response.body)
+   data.length.should > 0
   end
-
-  ['reviews', 'previews', 'features', 'news', 'promotions', 'videos', 'images'].each do |type|
-    it "should return valid articles filtered by #{type}" do
-     response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?types=#{type}"
-     response.code.should eql(200)
-     data = JSON.parse(response.body)
-    end
-  end
-
-  it "should return valid articles filtered by all types" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?types=reviews,previews,features,news,promotions,videos,images"
+  
+  it "should return twenty-five articles" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?per_page=25"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
-
-  it "should return default for empty type" do
-   response = RestClient.get ("http://#{@config.options['baseurl']}/v2/articles.json?types=")
+   data.length.should > 0
+  end  
+  
+  it "should return articles tagged with xbox-360" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?tags=xbox-360"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-   
-  end
-
-  it "should return articles sorted by popularity" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?sort=popularity"
+   data.length.should > 0
+  end  
+  
+  it "should return articles tagged with metal-gear-solid-peace-walker" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?tags=metal-gear-solid-peace-walker"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
-
-  it "should return articles sorted by published date" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?sort=publishDate"
+   data.length.should > 0
+  end  
+  
+  it "should return articles tagged with xbox-360" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?tags=xbox-360"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
-
-  it "should return articles sorted in descending order" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?order=desc"
+   data.length.should > 0
+  end  
+  
+  it "should return articles tagged with xbox-360 and metal-gear-solid-peace-walker" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?all_tags=true&tags=metal-gear-solid-peace-walker,xbox-360"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
-
-  it "should return articles sorted in ascending order" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?order=asc"
+   data.length.should > 0
+  end  
+  
+  it "should return articles with a category of xbox-360" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?categories=xbox-360"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
+   data.length.should > 0
+  end  
 
-  it "should return articles 25 articles" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?max=25"
+  it "should return articles with a category of video" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?categories=video"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
-
-  it "should return articles 75 articles" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?max=75"
+   data.length.should > 0
+  end 
+  
+  it "should return articles with a category of xbox-360 and video" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?all_categories=true&categories=xbox-360,video"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
-
-  it "should return article count satisfying condition" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?getCount"
+   data.length.should > 0
+  end 
+  
+  it "should return articles by newest first" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?sort=publish_date&order=desc"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
-
-  it "should return articles filtered by channel id" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?channelId=543"
+   data.length.should > 0
+  end 
+  
+  it "should return articles by oldest first" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?sort=publish_date&order=asc"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
-
- it "should return articles filtered by hub id" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?hubId=544"
+   data.length.should > 0
+  end 
+  
+  it "should return Halo: Reach articles using legacy object id" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?legacy_object_id=14276699"
    response.code.should eql(200)
    data = JSON.parse(response.body)
-  end
+   data.length.should > 0
+  end 
+  
+  it "should return articles published at and before the specified date" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?end_date=20110101"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end 
+  
+  it "should return articles published at and from the specified date" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?start_date=20110101"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end 
+  
+  it "should return published articles" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?state=published"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end 
+  
+  it "should return draft articles" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?state=draft"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end 
+  
+  it "should return articles by author id" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?author_id=1852577"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end 
+
+  it "should return articles by external id" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?external_id=1579"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end 
+  
+  it "should return articles by slug" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?slug=metal-gear"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end 
+  
+  it "should return articles by post type" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?post_type=post"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end 
+  
+  it "should return articles by blog author name" do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?blog_name=clay.ign"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end  
 end
 

@@ -24,7 +24,7 @@ class SocialMyIGNPagesHome < Test::Unit::TestCase
     @selenium = Selenium::Client::Driver.new \
       :host => "localhost",
       :port => 4444,
-      :browser => "*firefox",
+      :browser => "*chrome",
       :url => "http://www.ign.com/",
       :timeout_in_second => 60
 
