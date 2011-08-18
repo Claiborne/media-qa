@@ -18,7 +18,7 @@ describe "blogs" do
 
   end
   
-  it "should return blogs", :prd => true, :stg => true do
+  it "should return blogs" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json"
    response.code.should eql(200)
    data = JSON.parse(response.body)
@@ -26,7 +26,7 @@ describe "blogs" do
   end
 
   ['json','xml'].each do |format|
-    it "should return blogs in #{format} format", :prd => true, :stg => true do
+    it "should return blogs in #{format} format" do
      response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.#{format}"
      response.code.should eql(200)
      if format.eql?("json")
@@ -39,74 +39,53 @@ describe "blogs" do
     end
   end
   
-  it "should return blogs sorted by by most page views", :prd => true, :stg => true do
+  it "should return blogs sorted by by most page views" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?sort=page_views"
    response.code.should eql(200)
    data = JSON.parse(response.body)
    data.length.should > 0
   end
   
-  it "should return blogs sorted by most unique visitors", :prd => true, :stg => true do
+  it "should return blogs sorted by most unique visitors" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?sort=unique_visitors"
    response.code.should eql(200)
    data = JSON.parse(response.body)
    data.length.should > 0
   end
 
-  it "should return blogs alphabetically sorted by author", :prd => true, :stg => true do
+  it "should return blogs alphabetically sorted by author" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?sort=path&order=asc"
    response.code.should eql(200)
    data = JSON.parse(response.body)
    data.length.should > 0
   end
   
-  it "should return five blog entires", :prd => true, :stg => true do
+  it "should return five blog entires" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?per_page=5"
    response.code.should eql(200)
    data = JSON.parse(response.body)
    data.length.should > 0
   end
   
-  it "should return thirty blog entires", :prd => true, :stg => true do
+  it "should return thirty blog entires" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?per_page=30"
    response.code.should eql(200)
    data = JSON.parse(response.body)
    data.length.should > 0
   end
   
-  it "should return blogs by page", :prd => true, :stg => true do
+  it "should return blogs by page" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?page=2"
    response.code.should eql(200)
    data = JSON.parse(response.body)
    data.length.should > 0
   end
 
-  it "should return blogs by author path", :prd => true, :stg => true do
+  it "should return blogs by author path" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?path=clay.ign"
    response.code.should eql(200)
    data = JSON.parse(response.body)
    data.length.should > 0
   end
-  
-  it "should return blogs for /blogs/user-name", :prd => true, :stg => false do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?blog_name=clay.ign&per_page=5&page=1"
-   response.code.should eql(200)
-   data = JSON.parse(response.body)
-   data.length.should > 0
-  end
-  
-  it "should return blog articles by author name", :prd => true, :stg => false do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?blog_name=clay.ign"
-   response.code.should eql(200)
-   data = JSON.parse(response.body)
-   data.length.should > 0
-  end
-  
-  it "should return a blog entry", :prd => true, :stg => false do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?slug=smoke-test-722&blog_name=clay.ign&per_page=1"
-   response.code.should eql(200)
-   data = JSON.parse(response.body)
-   data.length.should > 0
-  end  
 end
 
