@@ -50,20 +50,6 @@ describe "articles" do
    data = JSON.parse(response.body)
    data.length.should > 0
   end
-
-  ['json','html'].each do |format|
-    it "should return articles in #{format} format" do
-     response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.#{format}"
-     response.code.should eql(200)
-     if format.eql?("json")
-      data = JSON.parse(response.body)
-      data.length.should > 0
-     else format.eql?("html")
-      data = Nokogiri::XML(response.body)
-      data.to_s.length.should > 0
-    end
-    end
-  end
   
   it "should return articles by page" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?page=2"
@@ -142,7 +128,7 @@ describe "articles" do
    data.length.should > 0
   end
   
-  it "should return Halo: Reach articles using legacy object id", :prd => true do
+  it "should return articles using legacy object id", :prd => true do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?legacy_object_id=14276699"
    response.code.should eql(200)
    data = JSON.parse(response.body)
@@ -193,6 +179,20 @@ describe "articles" do
   
   it "should return articles by slug", :prd => true do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?slug=metal-gear"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end
+  
+  it "should return blog articles for a user's blog page", :prd => true, :social => true do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?blog_name=clay.ign&per_page=5&page=1"
+   response.code.should eql(200)
+   data = JSON.parse(response.body)
+   data.length.should > 0
+  end
+  
+  it "should return a specific blog article", :prd => true, :social => true do
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?slug=smoke-test-722&blog_name=clay.ign&per_page=1"
    response.code.should eql(200)
    data = JSON.parse(response.body)
    data.length.should > 0
