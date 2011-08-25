@@ -9,6 +9,11 @@ RSpec::Core::RakeTask.new('all') do |t|
     t.pattern = 'spec/**/*.rb'
 end
 
+RSpec::Core::RakeTask.new('oauth2') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oauth2/**/*.rb'
+end
+
 desc "Run examples" 
 RSpec::Core::RakeTask.new('examples') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]

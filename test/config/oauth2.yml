@@ -1,0 +1,8 @@
+development:
+  baseurl: localhost:8080
+
+staging:
+  baseurl: api.ign.com
+
+production:
+ baseurl: api.ign.com
