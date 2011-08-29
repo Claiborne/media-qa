@@ -24,20 +24,6 @@ describe "blogs" do
    data = JSON.parse(response.body)
    data.length.should > 0
   end
-
-  ['json','xml'].each do |format|
-    it "should return blogs in #{format} format" do
-     response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.#{format}"
-     response.code.should eql(200)
-     if format.eql?("json")
-      data = JSON.parse(response.body)
-      data.length.should > 0
-     else format.eql?("xml")
-      data = Nokogiri::XML(response.body)
-      data.to_s.length.should > 0
-    end
-    end
-  end
   
   it "should return blogs sorted by by most page views" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?sort=page_views"
