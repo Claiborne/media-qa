@@ -69,8 +69,14 @@ RSpec::Core::RakeTask.new('social_test') do |t|
     t.pattern = 'spec/social_test/**/*.rb'
 end
 
-desc "Run Will's temp tests"
-RSpec::Core::RakeTask.new('will') do |t|
+desc "Run v2 articles"
+RSpec::Core::RakeTask.new('v2articles') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v2/articles.rb'    
+end
+
+desc "Run v2 blogs"
+RSpec::Core::RakeTask.new('v2blogs') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/v2/blogs.rb'    
 end
