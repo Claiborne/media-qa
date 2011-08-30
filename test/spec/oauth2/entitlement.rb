@@ -34,13 +34,13 @@ describe "oauth2 entitlement" do
   end
 
    it "should create return error for missing name parameter" do
-    begin
-      RestClient.post "http://#{@config.options['baseurl']}/entitlement", { description: 'test entitlement' }
-    rescue => e
-      e.response.code.should eql(400)
-      data = JSON.parse(e.response.body)
+     lambda { 
+        RestClient.post "http://#{@config.options['baseurl']}/entitlement", { description: 'test entitlement' }
+     }.should raise_error(Exception) { |error| 
+      error.response.code.should eql(400)
+      data = JSON.parse(error.response.body)
       data['error'].should eql('invalid_request')
-    end
+     }
 
      @db.collection('entitlements').find().count().should eql(0)
 
@@ -55,13 +55,13 @@ describe "oauth2 entitlement" do
   end
 
   it "should create return error for empty name  parameter" do
-    begin
-      RestClient.post "http://#{@config.options['baseurl']}/entitlement", { name: '', description: 'test entitlement'}
-    rescue => e
-      e.response.code.should eql(400)
-      data = JSON.parse(e.response.body)
-      data['error'].should eql('invalid_request') 
-    end
+      lambda { 
+        RestClient.post "http://#{@config.options['baseurl']}/entitlement", { name: '', description: 'test entitlement' }
+     }.should raise_error(Exception) { |error| 
+      error.response.code.should eql(400)
+      data = JSON.parse(error.response.body)
+      data['error'].should eql('invalid_request')
+     }   
 
     @db.collection('entitlements').find().count().should eql(0)
 
@@ -119,12 +119,13 @@ describe "oauth2 entitlement" do
  end
 
   it "should error on invalid entitlement" do
-   begin
-     RestClient.delete "http://#{@config.options['baseurl']}/entitlement?name=blogs"
-   rescue => e
-     e.response.code.should eql(400)
-     data = JSON.parse(e.response.body)
-     data['error'].should eql('invalid_scope')
-   end
+      lambda { 
+        RestClient.delete "http://#{@config.options['baseurl']}/entitlement?name=blogs"
+      }.should raise_error(Exception) { |error| 
+      error.response.code.should eql(400)
+      data = JSON.parse(error.response.body)
+      data['error'].should eql('invalid_scope')
+     }
  end
+
 end
