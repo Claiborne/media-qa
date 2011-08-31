@@ -37,6 +37,8 @@ describe "articles" do
   
   #TODO verify .js format
   
+  ##TODO defaults
+  
   #TODO change tech to production
   
   ################################
@@ -57,6 +59,13 @@ describe "articles" do
     data.each do |article|
       article['post_type'].should == 'article'
     end
+  end
+  
+  it "should return articles by slug", :prd => true do
+    response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?slug=metal-gear"
+    response.code.should eql(200)
+    data = JSON.parse(response.body)
+    data.length.should > 0
   end
 
   it "should return articles by page" do
@@ -157,14 +166,14 @@ describe "articles" do
     data.length.should > 0
   end
   
-  it "should return published articles" do
+  it "should return articles with a state of published" do
     response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?state=published"
     response.code.should eql(200)
     data = JSON.parse(response.body)
     data.length.should > 0
   end
   
-  it "should return draft articles" do
+  it "should return articles with a state of draft" do
     response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?state=draft"
     response.code.should eql(200)
     data = JSON.parse(response.body)
@@ -185,13 +194,6 @@ describe "articles" do
     data.length.should > 0
   end
   
-  it "should return articles by slug", :prd => true do
-    response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?slug=metal-gear"
-    response.code.should eql(200)
-    data = JSON.parse(response.body)
-    data.length.should > 0
-  end
-  
   it "should return blog articles for a user's blog page", :prd => true, :social => true do
     response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?blog_name=clay.ign&per_page=5&page=1"
     response.code.should eql(200)
@@ -205,35 +207,4 @@ describe "articles" do
     data = JSON.parse(response.body)
     data.length.should > 0
   end
-  
-  ################################
-  #Tech
-  ################################
-  
-  # Channel pages
-  
-  it "should not return a blank Tech blogroll", :stg => true, :tech => true do
-    response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
-    data = JSON.parse(response.body)
-    data.length.should > 0
-  end
-  
-  # Category pages
-  
-  ['3ds', 'android', 'home-theatre', 'ipad', 'ipod', 'iphone', 'lifestyle', 'mac', 'wii-u', 'pc', 'ps-vita', 'ps3', 'xbox-360', 'wp7'].each do |category|
-    it "should not return a blank Tech/#{category} blogroll", :stg => true, :tech => true do
-      response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&tags=#{category}&sort=publish_date&order=desc"
-      data = JSON.parse(response.body)
-      data.length.should > 0
-    end
-  end
-  
-  # Article page
-  
-  it "should not return a blank sample Tech article (slug=report-iphone-5-coming-to-sprint)", :stg => true, :tech => true do
-    response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?post_type=article&slug=report-iphone-5-coming-to-sprint"
-    data = JSON.parse(response.body)
-    data.length.should > 0
-  end
-
 end
