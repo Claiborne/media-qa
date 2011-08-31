@@ -4,7 +4,7 @@ module Assert
 #Begin v2
 #####################
 
-  def 200_and_not_blank(url)
+  def check_200_and_not_blank(url)
     response = RestClient.get "http://#{@config.options['baseurl']}#{url}"
     response.code.should eql(200)
     data = JSON.parse(response.body)
@@ -61,4 +61,7 @@ module Assert
       article['state'].should == 'published'     
     end
   end
+#####################
+#End v2
+#####################
 end

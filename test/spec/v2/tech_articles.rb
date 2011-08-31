@@ -24,7 +24,12 @@ describe "tech channel blogroll" do #TODO defaults
   end
 
   it "should return 200 and not be blank", :stg => true do
-    200_and_not_blank("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
+    check_200_and_not_blank("v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
+    #response = RestClient.get "http://#{@config.options['baseurl']}v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
+    #puts "http://#{@config.options['baseurl']}v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
+    #response.code.should eql(200)
+    #data = JSON.parse(response.body)
+    #data.length.should > 0
   end
 
   it "should return articles with a slug", :stg => true do
@@ -49,6 +54,8 @@ describe "tech channel blogroll" do #TODO defaults
 end
 
 describe "tech topic blogroll" do
+ 
+  include Assert
 
   before(:all) do
 
@@ -66,16 +73,16 @@ describe "tech topic blogroll" do
   
   ['3ds', 'android', 'home-theatre', 'ipad', 'ipod', 'iphone', 'lifestyle', 'mac', 'wii-u', 'pc', 'ps-vita', 'ps3', 'xbox-360', 'wp7'].each do |topic|
     
-    it "should not return a blank Tech/#{topic} blogroll", :stg => true do
-      response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&tags=#{topic}&sort=publish_date&order=desc"
-      data = JSON.parse(response.body)
-      data.length.should > 0
+    it "should return 200 and not be blank for #{topic}", :stg => true do
+      check_200_and_not_blank("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&tags=#{topic}&sort=publish_date&order=desc")
     end
   
   end  
 end
   
 describe "tech article page" do
+
+  include Assert
 
   before(:all) do
 
@@ -91,9 +98,7 @@ describe "tech article page" do
   
   end
   
-  it "should not return a blank sample Tech article (slug=report-iphone-5-coming-to-sprint)", :stg => true do
-    response = RestClient.get "http://#{@config.options['baseurl']}/v2/articles.json?post_type=article&slug=report-iphone-5-coming-to-sprint"
-    data = JSON.parse(response.body)
-    data.length.should > 0
+  it "should return 200 and not be blank using slug report-iphone-5-coming-to-sprint", :stg => true do
+    check_200_and_not_blank("/v2/articles.json?post_type=article&slug=report-iphone-5-coming-to-sprint")
   end
 end
