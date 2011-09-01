@@ -21,8 +21,10 @@ wishList = true
 released = true
 unreleased = false
 rating = "6"
-gamercard_activity_id = ""
- 
+accounts_id = "WII_ID"
+gamerCard_type = "GAMER_CARD"
+
+
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
     @config = Configuration.new
@@ -272,10 +274,29 @@ it "should delete mediaItem from activities" do
   puts "verified that mediaItem is removed from activities"
 end
 
-#it "should follow one gamercard" do
-  #jdata = JSON.generate({accounts:[{id:1,accountType:"wii_id",key1:"test",key2:"","isGamerCard":"true"}]})
-  #response = RestClient.put "http://#{@config.options['baseurl']}/v1.0/social/rest/people/#{person_id[0].to_s}/@self?st=#{person_id[0].to_s}:#{person_id[0].to_s}:0:ign.com:my.ign.com:0:0",jdata, {:content_type => 'application/json'}
-  #gamercard_activity_id= JSON.parse(response.body)["entry"]
-  #data = JSON.parse(response.body)
-#end
+ it "should follow one gamercard" do
+  jdata = JSON.generate({"accounts"=>[{"id"=>1,"accountType"=>"wii_id","key1"=>"test","key2"=>"","isGamerCard"=>"true"}]})
+  puts jdata
+  response = RestClient.put "http://#{@config.options['baseurl']}/v1.0/social/rest/people/#{person_id[0].to_s}/@self?st=#{person_id[0].to_s}:#{person_id[0].to_s}:0:ign.com:my.ign.com:0:0",jdata, {:content_type => 'application/json'}
+  data = JSON.parse(response.body)
+end
+
+it "should return valid response code for activities after the gamercard is added" do
+         response = RestClient.get "http://#{@config.options['baseurl']}/v1.0/social/rest/activities/#{person_id[0].to_s}/@self"
+         response.code.should eql(200)
+         data = JSON.parse(response.body)
+  end
+  
+it " should valid the gamercard entry in people@self" do
+  response = RestClient.get "http://#{@config.options['baseurl']}/v1.0/social/rest/people/#{person_id[0].to_s}/@self"
+  data = JSON.parse(response.body)
+  accounts_id.should eql(data["entry"][0]["accounts"][1]["accountType"])
+end
+
+it " should valid the gamercard entry in activities@self" do
+  response = RestClient.get "http://#{@config.options['baseurl']}/v1.0/social/rest/activities/#{person_id[0].to_s}/@self"
+  data = JSON.parse(response.body)
+  accounts_id.should eql(data["entry"][1]["activityObjects"][0]["objectTitle"])
+  gamerCard_type.should eql(data["entry"][1]["activityObjects"][0]["type"])
+end
 end
