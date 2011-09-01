@@ -5,7 +5,7 @@ require 'configuration'
 require 'Time'
 require 'assert'
 
-describe "tech channel blogroll" do #TODO defaults
+describe "tech channel blogroll" do
 
   include Assert
 
@@ -24,33 +24,61 @@ describe "tech channel blogroll" do #TODO defaults
   end
 
   it "should return 200 and not be blank", :stg => true do
-    check_200_and_not_blank("v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
-    #response = RestClient.get "http://#{@config.options['baseurl']}v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
-    #puts "http://#{@config.options['baseurl']}v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
-    #response.code.should eql(200)
-    #data = JSON.parse(response.body)
-    #data.length.should > 0
-  end
-
-  it "should return articles with a slug", :stg => true do
-    articles_with_a_slug("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=&order=desc")
+    check_200_and_not_blank("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
   end
   
+  it "should return articles with a slug key present", :stg => true do
+    check_key_exists("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=&order=desc", "slug")
+  end
+  
+  it "should return articles with a slug value present", :stg => true do
+    check_key_value_exists("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=&order=desc", "slug")
+  end
+  
+  it "should return articles with a blogroll key present", :stg => true do
+    check_key_exists("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=&order=desc", "blogroll")
+  end
+  
+  it "should return articles with a blogroll image_url key present", :stg => true do
+    check_key_within_key_exists("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=&order=desc", "blogroll", "image_url")
+  end
+  
+  it "should return articles with a blogroll headline key present", :stg => true do
+    check_key_within_key_exists("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=&order=desc", "blogroll", "headline")
+  end
+  
+  it "should return articles with a blogroll summary key present", :stg => true do
+    check_key_within_key_exists("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=&order=desc", "blogroll", "summary")
+  end
+  
+  it "should return articles with a blogroll id key present", :stg => true do
+    check_key_within_key_exists("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=&order=desc", "blogroll", "id")
+  end
+
   it "should return ten articles", :stg => true do
-    ten_articles("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
+    article_count("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc",10)
   end
   
   it "should return articles with a post_type of article", :stg => true do
-    articles_with_a_post_type_of_article("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
-  end
-  
-  it "should return articles sorted by publish date", :stg => true do
-    articles_sorted_by_publish_date("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
+    check_key_eql_a_value("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc", "post_type", "article")
   end
   
   it "should return articles in a published state by default ", :stg => true do
-    articles_in_a_published_state_by_default("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
+    check_key_eql_a_value("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc", "state", "published")
   end
+  
+  it "should return articles with a category of tech", :stg => true do
+    check_category("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc", "tech")
+  end
+  
+  it "should return articles with a publish_date key present", :stg => true do
+    check_key_exists("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=&order=desc", "publish_date")
+  end
+  
+  it "should return articles sorted by publish date", :stg => true do
+    check_sorted_by_publish_date("/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
+  end
+  
 end
 
 describe "tech topic blogroll" do
@@ -97,7 +125,7 @@ describe "tech article page" do
   after(:each) do
   
   end
-  
+
   it "should return 200 and not be blank using slug report-iphone-5-coming-to-sprint", :stg => true do
     check_200_and_not_blank("/v2/articles.json?post_type=article&slug=report-iphone-5-coming-to-sprint")
   end
