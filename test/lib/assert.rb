@@ -26,6 +26,18 @@ module Assert
     end
   end
   
+  #Check that the value to a key within a key exists
+  def check_key_within_key_value_exists(url, top_key inner_key)
+    response = RestClient.get "http://#{@config.options['baseurl']}#{url}"
+    data = JSON.parse(response.body)  
+    data.each do |article|
+      article[top_key].each do |article_key|
+        article_key[inner_key].should_not be_nil
+        article_key[inner_key].length.should > 0
+      end
+    end
+  end
+  
   #Check that the value to a specific key is not nil and it's length is > 0 for all articles returned
   def check_key_value_exists(url, key)
     response = RestClient.get "http://#{@config.options['baseurl']}#{url}"
@@ -43,7 +55,7 @@ module Assert
     data.count.should == count.to_i
   end
   
-  #Check that a specific key equals a specific value
+  #Check that a specific key equals a specific value for all articles
   def check_key_eql_a_value(url, key, value)
     response = RestClient.get "http://#{@config.options['baseurl']}#{url}"
     data = JSON.parse(response.body)  
@@ -72,17 +84,16 @@ module Assert
     end
   end
   
-  #Check that the category is a specific value
-  def check_category(url, category)
+  #Check the value of a key within a key for all articles
+  def check_key_within_key_value(url, top_key inner_key, value)
   
     slug_tech = false
 
     response = RestClient.get "http://#{@config.options['baseurl']}#{url}"
     data = JSON.parse(response.body)
     data.each do |article|
-      article['categories'].each do |slug_value|
-        puts slug_value['slug']
-        if slug_value['slug'] == category
+      article[top_key].each do |slug_value|
+        if slug_value[inner_key] == value
           slug_tech = true
         end
       end
