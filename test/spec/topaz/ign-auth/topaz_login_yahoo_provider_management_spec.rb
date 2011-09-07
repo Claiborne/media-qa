@@ -1,19 +1,19 @@
-require File.dirname(__FILE__) + "/../spec_helper"
+require File.dirname(__FILE__) + "/../../spec_helper"
 require 'rest_client'
 require 'json'
 require 'configuration'
 require 'rubygems'
 
-describe "login google provider management" do
+describe "login yahoo provider management" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/topaz_api.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/topaz_api.yml"
     @config = Configuration.new
-    
+
     now = Time.now
     @time_stamp = now.strftime("%Y%m%d%H%M%S")
 
-    @provider = 'google'
+    @provider = 'yahoo'
     @email = "test_user_#{@time_stamp}_#{Random.rand(100000-999999)}@#{@provider}.com"
     @password = "igntest@123"
     payload = "{email:#{@email},provider:#{@provider}}"
@@ -22,11 +22,11 @@ describe "login google provider management" do
     local_data = JSON.parse(response.body)
     local_data['status'].should == 'ok'
     @provider_user_id = local_data['entry']
-    
+
   end
 
   before(:each) do
-     
+
   end
 
   after(:each) do
@@ -49,7 +49,7 @@ describe "login google provider management" do
     data = JSON.parse(response.body)
     data['status'].should == 'ok'
     data['entry']['loginCount'].should eql(last_login_count+1)
-    
+
   end
 
   it "should return an error message when provider is incorrect" do
@@ -90,9 +90,11 @@ describe "login google provider management" do
   end
 
   it "should return an error message when email is malformed" do
+
     malformed_email = @email.gsub(/@/,'')
     payload = "{email:#{malformed_email},provider:#{@provider}}"
     expected_error_msg = "Challenge failed for #{malformed_email}"
+    
     response = RestClient.post "http://#{@config.options['baseurl']}/auth/login/provider", payload,{:content_type => 'application/json'}
     response.code.should eql(200)
 
@@ -108,7 +110,7 @@ describe "login google provider management" do
       payload = "{active:false}"
       response = RestClient.post "http://#{@config.options['baseurl']}/auth/user/#{@provider_user_id}", payload,{:content_type => 'application/json'}
       response.code.should eql(200)
-      
+
       payload = "{email:#{@email},provider:#{@provider}}"
       expected_error_msg = "The user #{@provider_user_id} is disabled"
       response = RestClient.post "http://#{@config.options['baseurl']}/auth/login/provider", payload,{:content_type => 'application/json'}

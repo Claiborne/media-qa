@@ -1,19 +1,19 @@
-require File.dirname(__FILE__) + "/../spec_helper"
+require File.dirname(__FILE__) + "/../../spec_helper"
 require 'rest_client'
 require 'json'
 require 'configuration'
 require 'rubygems'
 
-describe "login yahoo provider management" do
+describe "login facebook provider management" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/topaz_api.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/topaz_api.yml"
     @config = Configuration.new
 
     now = Time.now
     @time_stamp = now.strftime("%Y%m%d%H%M%S")
 
-    @provider = 'yahoo'
+    @provider = 'facebook'
     @email = "test_user_#{@time_stamp}_#{Random.rand(100000-999999)}@#{@provider}.com"
     @password = "igntest@123"
     payload = "{email:#{@email},provider:#{@provider}}"
@@ -90,18 +90,15 @@ describe "login yahoo provider management" do
   end
 
   it "should return an error message when email is malformed" do
-
     malformed_email = @email.gsub(/@/,'')
     payload = "{email:#{malformed_email},provider:#{@provider}}"
     expected_error_msg = "Challenge failed for #{malformed_email}"
-    
     response = RestClient.post "http://#{@config.options['baseurl']}/auth/login/provider", payload,{:content_type => 'application/json'}
     response.code.should eql(200)
 
     data = JSON.parse(response.body)
     data['status'].should == 'error'
     data['entry'].should eql(expected_error_msg)
-
   end
 
 

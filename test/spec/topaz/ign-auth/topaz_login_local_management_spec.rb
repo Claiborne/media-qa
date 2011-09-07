@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + "/../spec_helper"
+require File.dirname(__FILE__) + "/../../spec_helper"
 require 'rest_client'
 require 'json'
 require 'configuration'
@@ -7,7 +7,7 @@ require 'rubygems'
 describe "login local management" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/topaz_api.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/topaz_api.yml"
     @config = Configuration.new
     now = Time.now
     @time_stamp = now.strftime("%Y%m%d%H%M%S")

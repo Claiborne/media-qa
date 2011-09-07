@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + "/../spec_helper"
+require File.dirname(__FILE__) + "/../../spec_helper"
 require 'rest_client'
 require 'json'
 require 'configuration'
@@ -11,7 +11,7 @@ describe "oauth2 admin" do
 
   before(:each) do
     RestClient.log = '/tmp/myrestcalls.log' 
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/oauth2.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oauth2.yml"
     @config = Configuration.new
     
     @conn = Mongo::Connection.new
