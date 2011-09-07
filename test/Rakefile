@@ -3,12 +3,14 @@ require 'rake'
 require 'rspec/core/rake_task'
 
 ENV["env"] ||= 'staging'
+
 desc "Run all test suites"
 RSpec::Core::RakeTask.new('all') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/**/*.rb'
 end
 
+desc "" 
 RSpec::Core::RakeTask.new('oauth2') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oauth2/**/*.rb'
@@ -92,8 +94,3 @@ RSpec::Core::RakeTask.new('techapi') do |t|
     t.pattern = 'spec/v2/tech_articles.rb'    
 end
 
-desc "Run dev test"
-RSpec::Core::RakeTask.new('test') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/test.rb'    
-end
