@@ -22,12 +22,12 @@ module Assert
     response = RestClient.get "http://#{@config.options['baseurl']}#{url}"
     data = JSON.parse(response.body)  
     data.each do |article|
-      article[top_key].has_key?(inner_key).should be_true
+      article[top_key][0].has_key?(inner_key).should be_true
     end
   end
   
   #Check that the value to a key within a key exists
-  def check_key_within_key_value_exists(url, top_key inner_key)
+  def check_key_within_key_value_exists(url, top_key, inner_key)
     response = RestClient.get "http://#{@config.options['baseurl']}#{url}"
     data = JSON.parse(response.body)  
     data.each do |article|
@@ -44,7 +44,7 @@ module Assert
     data = JSON.parse(response.body)  
     data.each do |article|
       article[key].should_not be_nil
-      article[key].length.should > 0
+      article[key].to_s.length.should > 0
     end
   end
   
@@ -79,13 +79,13 @@ module Assert
     
     publish_dates.each_index do |d|      
       if d != 0
-        (publish_dates[d] >= publish_dates[d-1]).should be_true
+        (publish_dates[d] <= publish_dates[d-1]).should be_true
       end
     end
   end
   
   #Check the value of a key within a key for all articles
-  def check_key_within_key_value(url, top_key inner_key, value)
+  def check_key_within_key_value(url, top_key, inner_key, value)
   
     slug_tech = false
 
