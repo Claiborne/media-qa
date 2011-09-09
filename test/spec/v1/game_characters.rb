@@ -21,7 +21,8 @@ describe "game characters" do
   it "should return valid game characters" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v1/games/827005/characters.json?networkid=12"
    response.code.should eql(200)
-   data = JSON.parse(response.body)   
+   data = JSON.parse(response.body)
+   data['characters'].should have_key('character')
   end
 
 end

@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + "/../spec_helper"
 require 'rest_client'
 require 'json'
 require 'configuration'
+require 'time'
 
 describe "faqs" do
 
@@ -37,9 +38,18 @@ describe "faqs" do
   end
 
   it "should return faqs for xbox 360" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs.json?platform=661955"
+   platform_id="661955"
+   flag=true
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs.json?platform=#{platform_id}"
    response.code.should eql(200)
    data = JSON.parse(response.body)
+   data['faqSummaries']['faqSummary'].each do |item|
+     if !item['@platformId'].eql?(platform_id)
+       flag = false
+       break
+     end
+   end
+   flag.should be_true
   end 
 
   it "should return error for unsupported platform" do
@@ -59,6 +69,15 @@ describe "faqs" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs.json?sort=publishDate"
    response.code.should eql(200)
    data = JSON.parse(response.body)
+   date_list = Array.new
+   flag = true
+   data['faqSummaries']['faqSummary'].each do |item|
+     date_list << Time.parse(item['@lastPublishDate'])
+   end
+   for idx in (0..date_list.length-2)
+     flag = false unless date_list[idx] >= date_list[idx+1]
+   end
+   flag.should be_true
   end
 
   it "should return faqs sorted by popularity" do
@@ -86,6 +105,7 @@ describe "faqs" do
      response = RestClient.get "http://#{@config.options['baseurl']}/v1/faqs.json?max=#{count}"
      response.code.should eql(200)
      data = JSON.parse(response.body)
+     data['faqSummaries']['faqSummary'].length.should <= count
    end
   end
 

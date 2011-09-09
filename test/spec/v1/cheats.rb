@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + "/../spec_helper"
 require 'rest_client'
 require 'json'
 require 'configuration'
+require 'time'
 
 describe "cheats" do
 
@@ -37,9 +38,18 @@ describe "cheats" do
   end
 
   it "should return cheats for xbox 360" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats.json?platform=661955"
+   platform_id='661955'
+   response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats.json?platform=#{platform_id}"
    response.code.should eql(200)
+   flag = true
    data = JSON.parse(response.body)
+   data['cheatSummaries']['cheatSummary'].each do |item|
+     if !item['@platformId'].eql?(platform_id)
+       flag = false
+       break
+     end
+   end
+   flag.should be_true
   end 
 
   it "should return error for unsupported platform" do
@@ -59,6 +69,15 @@ describe "cheats" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats.json?sort=publishDate"
    response.code.should eql(200)
    data = JSON.parse(response.body)
+   date_list = Array.new
+   flag = true
+   data['cheatSummaries']['cheatSummary'].each do |item|
+     date_list << Time.parse(item['publishDate'])
+   end
+   for idx in (0..date_list.length-2)
+     flag = false unless date_list[idx] >= date_list[idx+1]
+   end
+   flag.should be_true
   end
 
   it "should return cheats sorted by popularity" do
@@ -86,6 +105,7 @@ describe "cheats" do
      response = RestClient.get "http://#{@config.options['baseurl']}/v1/cheats.json?max=#{count}"
      response.code.should eql(200)
      data = JSON.parse(response.body)
+     data['cheatSummaries']['cheatSummary'].length.should <= count
    end
   end
 

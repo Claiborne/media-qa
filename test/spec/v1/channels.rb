@@ -35,9 +35,15 @@ describe "channels" do
   end 
 
   ['json','xml'].each do |format|
-    it "should return valid channel" do
+    it "should return valid channel in #{format} format" do
      response = RestClient.get "http://#{@config.options['baseurl']}/v1/channels/542.#{format}"              
      response.code.should eql(200)
+     if format.eql?("json")
+      data = JSON.parse(response.body)
+     else
+       data = Nokogiri::XML(response.body)
+     
+     end
     end
   end 
 end
