@@ -1,4 +1,5 @@
 development:
+  baseurl: localhost:8080
 
 staging:
   baseurl: social-stg-services-vm-01.sc4.colo.fimops.com:8080
