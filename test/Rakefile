@@ -100,4 +100,3 @@ RSpec::Core::RakeTask.new('techapi') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/v2/tech_articles.rb'    
 end
-
