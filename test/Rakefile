@@ -13,8 +13,15 @@ end
 desc "" 
 RSpec::Core::RakeTask.new('oauth2') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oauth2/**/*.rb'
+    t.pattern = 'spec/topaz/oauth2/**/*.rb'
 end
+
+desc "topaz - entitlement services"
+RSpec::Core::RakeTask.new('entitlement_services') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/topaz/entitlement_services/**/*.rb'
+end
+
 
 desc "Run examples" 
 RSpec::Core::RakeTask.new('examples') do |t|
@@ -53,9 +60,9 @@ RSpec::Core::RakeTask.new('prime') do |t|
 end
 
 desc "Run Topaz tests"
-RSpec::Core::RakeTask.new('topaz') do |t|
+RSpec::Core::RakeTask.new('authentication-services') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/social/topaz_*.rb'
+    t.pattern = 'spec/topaz/ign-auth/topaz_*.rb'
 end
 
 desc "Run Topaz tests"
