@@ -1,8 +1,12 @@
 module Assert
 
-  #Check API response is 200 and not blank
-  def check_200_and_not_blank(response, data)
+  #Check API response is 200
+  def check_200(response, data)
     response.code.should eql(200)
+  end
+  
+  #Check API response body is not blank
+  def check_not_blank(response, data)
     data.length.should > 0
   end
   
@@ -77,7 +81,7 @@ module Assert
     end
   end
   
-  #Check the value of a key within a key for all articles. Useful for checking if articles are of a certain category or certain tag
+  #Check the value of a key within an array for all articles. Useful for array's with multipule of the same keys (like slug). Useful for checking if articles are of a certain category or certain tag
   #Example {top_key : [ {inner_key: value, other_key: other_value} ] }
   def check_key_value_within_array_contains(response, data, top_key, inner_key, value)
 

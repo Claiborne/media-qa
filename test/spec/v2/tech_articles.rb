@@ -1,11 +1,14 @@
-require File.dirname(__FILE__) + "/../spec_helper"
+require 'rspec'
 require 'rest_client'
 require 'json'
 require 'configuration'
 require 'Time'
 require 'assert'
+require 'tech_nav'
 
-describe "tech channel blogroll" do
+include TechNav
+
+describe "tech api use cases - tech homepage blogroll" do
 
   include Assert
   
@@ -26,8 +29,12 @@ describe "tech channel blogroll" do
 
   end
 
-  it "should return 200 and not be blank", :stg => true do
-    check_200_and_not_blank(@response, @data)
+  it "should return 200", :stg => true do
+    check_200(@response, @data)
+  end
+  
+  it "should not be blank", :stg => true do
+    check_not_blank(@response, @data)
   end
   
   it "should return articles with a slug key present", :stg => true do
@@ -120,9 +127,9 @@ describe "tech channel blogroll" do
     
 end
 
-['3ds', 'android', 'home-theatre', 'ipad', 'ipod', 'iphone', 'lifestyle', 'mac', 'wii-u', 'pc', 'ps-vita', 'ps3', 'xbox-360', 'wp7'].each do |topic|
-
-describe "tech/#{topic} blogroll" do
+@topic = return_tech_nav
+@topic.each do |topic|
+describe "tech api use cases - tech/#{topic} blogroll" do
  
   include Assert
 
@@ -130,7 +137,7 @@ describe "tech/#{topic} blogroll" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
     
-    @url = "/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&tags=#{topic}&sort=publish_date&order=desc"
+    @url = "/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&sort=publish_date&order=desc"
     @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
     @data = JSON.parse(@response.body)  
   end
@@ -143,8 +150,12 @@ describe "tech/#{topic} blogroll" do
 
   end
     
-  it "should return 200 and not be blank", :stg => true do
-    check_200_and_not_blank(@response, @data)
+  it "should return 200", :stg => true do
+    check_200(@response, @data)
+  end
+  
+  it "should not be blank", :stg => true do
+    check_not_blank(@response, @data)
   end
     
   it "should return articles tagged #{topic}", :stg => true do
@@ -183,8 +194,8 @@ describe "tech/#{topic} blogroll" do
     check_key_exists(@response, @data, "headline")
   end
 
-  it "should return ten articles", :stg => true do
-    article_count(@response, @data, 10)
+  it "should return 20 articles by default", :stg => true do
+    article_count(@response, @data, 20)
   end
   
   it "should return articles with a post_type of article", :stg => true do
@@ -237,7 +248,7 @@ describe "tech/#{topic} blogroll" do
 end  
 end
   
-describe "tech article page" do
+describe "tech api use cases - v2 article page (slug=report-iphone-5-coming-to-sprint)" do
 
   include Assert
 
@@ -258,8 +269,12 @@ describe "tech article page" do
   
   end
 
-  it "should return 200 and not be blank using slug report-iphone-5-coming-to-sprint", :stg => true do
-    check_200_and_not_blank(@response, @data)
+  it "should return 200", :stg => true do
+    check_200(@response, @data)
+  end
+  
+  it "should not be blank", :stg => true do
+    check_not_blank(@response, @data)
   end
   
   it "should return an article with a slug key present", :stg => true do

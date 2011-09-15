@@ -93,3 +93,9 @@ RSpec::Core::RakeTask.new('techapi') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/v2/tech_articles.rb'    
 end
+
+desc "Run Tech frontend tests"
+RSpec::Core::RakeTask.new('techfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oyster/media/tech.rb'  
+end
