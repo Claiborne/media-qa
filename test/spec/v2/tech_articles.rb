@@ -18,7 +18,7 @@ describe "tech api use cases - tech homepage blogroll" do
     
     @url = "/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
     @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
-    @data = JSON.parse(@response.body)  
+    @data = JSON.parse(@response.body)
   end
 
   before(:each) do
