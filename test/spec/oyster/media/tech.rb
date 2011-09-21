@@ -12,23 +12,6 @@ include TechNav
 include Blogrollv2Articles
 include DiscoverMore
 
-describe "tech frontend - link checker" do
-
-  before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
-    @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/tech"
-    @doc = Nokogiri::HTML(open(@page))
-  end
-
-  before(:each) do
-    
-  end
-
-  after(:each) do
-
-  end
-
 describe "tech frontend - tech home page" do
   
   before(:all) do
@@ -46,6 +29,18 @@ describe "tech frontend - tech home page" do
 
   end
 
+  it "should have at least one css file", :stg => true do
+    @doc.css("link[@href*='.css']").count.should > 0
+  end
+  
+  it "should not have any css files that return 400 or 500", :stg => true do
+    @doc.css("link[@href*='.css']").each do |css|
+      response = RestClient.get css.attribute('href').to_s
+      response.code.should_not eql(/4\d\d/)
+      response.code.should_not eql(/5\d\d/)
+    end
+  end 
+
   it "should not be missing the global header widget", :stg => true do
     @doc.at_css('div#ign-header').should be_true
   end
@@ -53,9 +48,9 @@ describe "tech frontend - tech home page" do
   it "should not be missing the global footer widget", :stg => true do
     @doc.at_css('div#ignFooter-container').should be_true
   end
-  
+
   context "blogroll widget" do
-  
+
     it "should not be missing from the page", :stg => true do
       widget_blogroll_v2_articles_check_not_missing(@doc)
     end
@@ -63,7 +58,7 @@ describe "tech frontend - tech home page" do
     it "should be 10 blogroll entries", :stg => true do
       widget_blogroll_v2_articles_check_num_entries(@doc, 10)
     end
-  
+
     it "shoud display author name", :stg => true do
       widget_blogroll_v2_articles_check_author_name(@doc, 10)
     end
@@ -75,11 +70,11 @@ describe "tech frontend - tech home page" do
     it "shoud display comments link", :stg => true do
       widget_blogroll_v2_articles_check_comments_link(@doc, 10)
     end
-    
+
     it "shoud display headline", :stg => true do
       widget_blogroll_v2_articles_check_headline(@doc, 10)
     end
-    
+
     it "shoud display article summary", :stg => true do
       widget_blogroll_v2_articles_check_article_summary(@doc, 10)
     end
@@ -94,7 +89,7 @@ describe "tech frontend - tech home page" do
     
       widget_blogroll_v2_articles_check_matches_article_api(@doc, 10, "http://#{config.options['baseurl']}/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
     end
-  end  
+  end
   
   context "discover more widget" do
   
@@ -146,6 +141,18 @@ describe "tech frontend - tech/#{topic} page" do
   after(:each) do
 
   end
+  
+  it "should have at least one css file", :stg => true do
+    @doc.css("link[@href*='.css']").count.should > 0
+  end
+  
+  it "should not have any css files that return 400 or 500", :stg => true do
+    @doc.css("link[@href*='.css']").each do |css|
+      response = RestClient.get css.attribute('href').to_s
+      response.code.should_not eql(/4\d\d/)
+      response.code.should_not eql(/5\d\d/)
+    end
+  end     
   
   it "should not be missing the global header widget", :stg => true do
     @doc.at_css('div#ign-header').should be_true
@@ -216,6 +223,18 @@ describe "tech frontend - v2 article page" do
 
   end
   
+  it "should have at least one css file", :stg => true do
+    @doc.css("link[@href*='.css']").count.should > 0
+  end
+  
+  it "should not have any css files that return 400 or 500", :stg => true do
+    @doc.css("link[@href*='.css']").each do |css|
+      response = RestClient.get css.attribute('href').to_s
+      response.code.should_not eql(/4\d\d/)
+      response.code.should_not eql(/5\d\d/)
+    end
+  end  
+  
   it "should not be missing the global header widget", :stg => true do
     @doc.at_css('div#ign-header').should be_true
   end
@@ -241,4 +260,3 @@ describe "tech frontend - v2 article page" do
     Nokogiri::HTML(open("http://#{@config.options['baseurl']}/articles/2011/08/24/report-iphone-5-coming-to-sprint")).at_css('div.pager_list').should be_false
   end
 end
-=end

@@ -4,11 +4,11 @@ module Blogrollv2Articles
   def check_not_blank(doc, num, element)
     i = 0
     doc.css(element).each do |element_instance|
-      if element_instance.text.length < 5
+      if element_instance.text.length <  5
         i = i+1
       end
     end
-    i.should be < num
+    i.should be < num*0.7
   end
   
   def widget_blogroll_v2_articles_check_not_missing(doc)

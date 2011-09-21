@@ -95,7 +95,7 @@ RSpec::Core::RakeTask.new('v2blogs') do |t|
     t.pattern = 'spec/v2/blogs.rb'    
 end
 
-desc "Run Tech API use cases"
+desc "Run Tech API tests"
 RSpec::Core::RakeTask.new('techapi') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/v2/tech_articles.rb'    
