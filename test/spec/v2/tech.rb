@@ -6,11 +6,10 @@ require 'Time'
 require 'assert'
 require 'tech_nav'
 
+include Assert
 include TechNav
 
-describe "tech api use cases - tech homepage blogroll" do
-
-  include Assert
+describe "tech api - homepage blogroll widget" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
@@ -28,8 +27,9 @@ describe "tech api use cases - tech homepage blogroll" do
   after(:each) do
 
   end
-
+  
   it "should return 200", :stg => true do
+    puts @url
     check_200(@response, @data)
   end
   
@@ -124,15 +124,20 @@ describe "tech api use cases - tech homepage blogroll" do
   it "should return articles with an id value present", :stg => true do
     check_key_value_exists(@response, @data, "id")
   end
+  
+  it "should return only unique entries", :stg => true do
+    check_no_duplicates(@response, @data)
+  end
     
 end
 
-@topic = return_tech_nav
-@topic.each do |topic|
-describe "tech api use cases - tech/#{topic} blogroll" do
- 
-  include Assert
-
+describe "tech api - topic blogroll widget" do
+  
+  @topic = return_tech_nav
+  @topic.each do |topic|
+  
+  context "tech/#{topic}" do
+  
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
@@ -151,6 +156,8 @@ describe "tech api use cases - tech/#{topic} blogroll" do
   end
     
   it "should return 200", :stg => true do
+    puts topic
+    puts "http://#{@config.options['baseurl']}#{@url}"
     check_200(@response, @data)
   end
   
@@ -158,8 +165,12 @@ describe "tech api use cases - tech/#{topic} blogroll" do
     check_not_blank(@response, @data)
   end
     
-  it "should return articles tagged #{topic}", :stg => true do
+  it "should return articles tagged as #{topic}", :stg => true do
     check_key_value_within_array_contains(@response, @data, "tags", "slug", topic)
+  end
+  
+  it "should return an article with a category of tech", :stg => true do
+    check_key_value_within_array_contains(@response, @data, "categories", "slug", "tech")
   end
     
   it "should return articles with a slug key present", :stg => true do
@@ -194,7 +205,7 @@ describe "tech api use cases - tech/#{topic} blogroll" do
     check_key_exists(@response, @data, "headline")
   end
 
-  it "should return 20 articles by default", :stg => true do
+  it "should return 20 articles", :stg => true do
     article_count(@response, @data, 20)
   end
   
@@ -243,14 +254,18 @@ describe "tech api use cases - tech/#{topic} blogroll" do
   end
     
   it "should return articles with an id value present", :stg => true do
-  check_key_value_exists(@response, @data, "id")
+    check_key_value_exists(@response, @data, "id")
   end
-end  
-end
   
-describe "tech api use cases - v2 article page (slug=report-iphone-5-coming-to-sprint)" do
+  it "should return only unique entries", :stg => true do
+    check_no_duplicates(@response, @data)
+  end
+  
+  end
+  end  
+end
 
-  include Assert
+describe "tech api - v2 article call (slug=report-iphone-5-coming-to-sprint)" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
@@ -277,6 +292,10 @@ describe "tech api use cases - v2 article page (slug=report-iphone-5-coming-to-s
     check_not_blank(@response, @data)
   end
   
+  it "should return only one article", :stg => true do
+    article_count(@response, @data, 1)
+  end
+
   it "should return an article with a slug key present", :stg => true do
     check_key_exists(@response, @data, "slug")
   end
@@ -372,5 +391,74 @@ describe "tech api use cases - v2 article page (slug=report-iphone-5-coming-to-s
   it "should return an article with an id value present", :stg => true do
     check_key_value_exists(@response, @data, "id")
   end   
-  
 end
+
+describe "tech api - discover more widget" do
+
+  @topic = return_tech_nav
+  @topic.each do |topic|
+    
+    context "when tag is #{topic}" do
+      
+      before(:all) do
+
+        Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+        @config = Configuration.new
+
+        @url = "/v2/articles.json?post_type=article&per_page=2&categories=tech&tags=#{topic}"
+        @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
+        @data = JSON.parse(@response.body)
+      end
+
+      before(:each) do
+
+      end
+
+      after(:each) do
+
+      end
+
+      it "should return 200", :stg => true do
+        check_200(@response, @data)
+      end
+
+      it "should not be blank", :stg => true do
+        check_not_blank(@response, @data)
+      end
+ 
+      it "should return articles with a slug key present", :stg => true do
+        check_key_exists(@response, @data, "slug")
+      end
+
+      it "should return articles with a slug value present", :stg => true do
+        check_key_value_exists(@response, @data, "slug")
+      end
+  
+      it "should return 2 articles", :stg => true do
+        article_count(@response, @data, 2)
+      end
+
+      it "should return an article with a category of tech", :stg => true do
+        check_key_value_within_array_contains(@response, @data, "categories", "slug", "tech")
+      end
+
+      it "should return articles tagged as #{topic}", :stg => true do
+        check_key_value_within_array_contains(@response, @data, "tags", "slug", topic)
+      end
+      
+      it "should return articles with a headline key present", :stg => true do
+        check_key_exists(@response, @data, "headline")
+      end
+
+      it "should return articles with a value in the headline key", :stg => true do
+        headline = []
+        @data.each do |article|
+          headline << article['headline']
+        end
+      headline.compact.to_s.length.should be > 2
+      end #it
+
+    end #end context
+  end #end topic iteration
+end #end describe
+
