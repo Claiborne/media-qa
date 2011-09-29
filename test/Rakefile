@@ -107,3 +107,9 @@ RSpec::Core::RakeTask.new('techfrontend') do |t|
     t.pattern = 'spec/oyster/media/tech.rb'  
 end
 
+desc "Run Tech test tests"
+RSpec::Core::RakeTask.new('techtest') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oyster/media/TEST.rb'  
+end
+

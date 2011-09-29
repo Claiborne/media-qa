@@ -5,12 +5,22 @@ require 'open-uri'
 require 'tech_nav'
 require 'rest_client'
 require 'json'
+require 'ads'
 require 'widget/blogroll_v2_articles'
 require 'widget/discover_more'
+require 'widget/cover_stories_main'
+require 'widget/cover_stories_extra'
+require 'widget/tag_cover_stories'
+require 'widget/vert_nav'
 
+include VertNav
+include CoverStoriesMain
+include CoverStoriesExtra
+include TagCoverStories
 include TechNav
 include Blogrollv2Articles
 include DiscoverMore
+include Ads
 
 describe "tech frontend - home page" do
 
@@ -48,25 +58,43 @@ describe "tech frontend - home page" do
   it "should not be missing the global footer widget", :stg => true do
     @doc.at_css('div#ignFooter-container').should be_true
   end
+  
+  context "main cover-stories widget" do
+    
+    widget_cover_stories_main
+    
+  end
 
   context "blogroll widget" do
 
     widget_blogroll_v2_articles(10, "/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
     
   end
+  
+  context "vertical navigation widget" do
+    
+    widget_vert_nav("tech", topic)
+  
+  end
 
   context "discover more widget" do
   
     widget_discover_more
 
-  end 
+  end
+
+  context "ads" do
+  
+    ads_on_tech_page
+  
+  end
 
 end
 
 @topic = return_tech_nav
 @topic.each do |topic|
   
-describe "tech frontend - #{topic} topic page" do
+describe "tech frontend - #{topic} tag page" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
@@ -82,10 +110,8 @@ describe "tech frontend - #{topic} topic page" do
   after(:each) do
 
   end
-  
+
   it "should have at least one css file", :stg => true do
-    puts topic
-    puts "http://#{@config.options['baseurl']}/tech/#{topic}"
     @doc.css("head link[@href*='.css']").count.should > 0
   end
   
@@ -104,12 +130,25 @@ describe "tech frontend - #{topic} topic page" do
   it "should not be missing the global footer widget", :stg => true do
     @doc.at_css('div#ignFooter-container').should be_true
   end
-  
+
   context "blogroll widget" do
   
     widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&sort=publish_date&order=desc")
   
-  end  
+  end 
+  
+  context "discover more widget" do
+  
+    widget_discover_more
+
+  end
+
+  context "ads" do
+  
+    ads_on_tech_page
+  
+  end
+
 end
 end
 
@@ -129,7 +168,7 @@ describe "tech frontend - v2 article page" do
   after(:each) do
 
   end
-  
+
   it "should have at least one css file", :stg => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
@@ -167,4 +206,11 @@ describe "tech frontend - v2 article page" do
     Nokogiri::HTML(open("http://#{@config.options['baseurl']}/articles/2011/08/24/report-iphone-5-coming-to-sprint")).at_css('div.pager_list').should be_false
   end
 
+  context "ads" do
+  
+    ads_on_v2_article
+  
+  end
 end
+
+

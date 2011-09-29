@@ -6,7 +6,7 @@ module DiscoverMore
   end
   
   def widget_discover_more_check_title(doc)
-    doc.css('div.slider-holder span.subHeader').text.length.should be > 5
+    doc.css('div.slider-holder span.subHeader').text.strip.length.should be > 5
   end
   
   def widget_discover_more_check_img_not_400_or_500(doc)
@@ -28,7 +28,7 @@ module DiscoverMore
   end
   
   def widget_discover_more_check_article_links(doc)
-    doc.at_css('div.slider-holder div.description ul.list a').text.length.should be > 5
+    doc.at_css('div.slider-holder div.description ul.list a').text.strip.length.should be > 5
   end
   
   def widget_discover_more_check_article_links_not_400_or_500(doc)
@@ -46,6 +46,7 @@ module DiscoverMore
   end
   
   def widget_discover_more
+    
     it "should not be missing from the page", :stg => true do
       widget_discover_more_check_not_missing(@doc)
     end

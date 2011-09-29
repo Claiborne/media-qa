@@ -455,7 +455,7 @@ describe "tech api - discover more widget" do
         @data.each do |article|
           headline << article['headline']
         end
-      headline.compact.to_s.length.should be > 2
+      headline.compact.to_s.strip.length.should be > 2
       end #it
 
     end #end context

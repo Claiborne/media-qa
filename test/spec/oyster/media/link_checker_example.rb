@@ -28,11 +28,13 @@ describe "tech frontend - link checker" do
   after(:each) do
 
   end
+=begin
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech"
     @doc = Nokogiri::HTML(open(@page))
-@doc.css('a').each do |link|
+        
+  @doc.css("a[@href*='http']").each do |link|
   it "should check all links #{link.attribute('href')}" do
       current_link = link.attribute('href')
       if current_link.to_s.match(/http/)
@@ -42,5 +44,17 @@ describe "tech frontend - link checker" do
         response.code.should_not eql(/5\d\d/)
       end
   end
+  
+  
+  it "should not have any broken http links", :stg => true do
+    @doc.css("div.cat-coverStories a[@href*='http']").each do |link|
+      response = RestClient.get link.attribute('href').to_s
+      response.code.should_not eql(/4\d\d/)
+      response.code.should_not eql(/5\d\d/)
+    end  
+  end
+  
+  
 end
+=end
 end

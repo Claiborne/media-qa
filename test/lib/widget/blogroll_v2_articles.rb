@@ -4,10 +4,11 @@ module Blogrollv2Articles
   def check_not_blank(doc, num, element)
     i = 0
     doc.css(element).each do |element_instance|
-      if element_instance.text.length <  5
+      if element_instance.text.strip.length <  5
         i = i+1
       end
     end
+    doc.css(element).count.should > 0
     i.should be < num*0.7
   end
   
@@ -55,13 +56,20 @@ module Blogrollv2Articles
       frontend_titles << article.text
     end
     titles = api_titles + frontend_titles
-    puts titles
-    titles.uniq.count.should be <= num+2
-    puts "--------"
-    puts titles.uniq
+    titles.uniq.count.should be <= num+3
+  end
+  
+  def widget_blogroll_v2_articles_check_no_duplicates(doc)
+    headline = []
+    doc.css('div.listElmnt-articleContent a.listElmnt-storyHeadline').each do |entry|
+      headline << entry.attribute('href')
+    end
+    headline.count.should > 0
+    headline.count.should eql(headline.uniq.count)
   end
   
   def widget_blogroll_v2_articles(num, call)
+
     it "should not be missing from the page", :stg => true do
       widget_blogroll_v2_articles_check_not_missing(@doc)
     end
@@ -93,13 +101,17 @@ module Blogrollv2Articles
     it "shoud display read more link in article summary", :stg => true do
       widget_blogroll_v2_articles_check_read_more(@doc, num)
     end
-    
+
+    it "should display only unique entries", :stg => true do
+      widget_blogroll_v2_articles_check_no_duplicates(@doc)
+    end
+
     it "should display the same articles as the api returns", :stg => true do
       Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
       config = Configuration.new
     
       widget_blogroll_v2_articles_check_matches_article_api(@doc, num, "http://#{config.options['baseurl']}#{call}")
     end
+
   end
-  
 end
