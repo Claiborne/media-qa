@@ -95,15 +95,21 @@ RSpec::Core::RakeTask.new('v2blogs') do |t|
     t.pattern = 'spec/v2/blogs.rb'    
 end
 
-desc "Run Tech API use cases"
+desc "Run Tech API tests"
 RSpec::Core::RakeTask.new('techapi') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/tech_articles.rb'    
+    t.pattern = 'spec/v2/tech.rb'    
 end
 
 desc "Run Tech frontend tests"
 RSpec::Core::RakeTask.new('techfrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/media/tech.rb'  
+end
+
+desc "Run Tech test tests"
+RSpec::Core::RakeTask.new('techtest') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oyster/media/TEST.rb'  
 end
 

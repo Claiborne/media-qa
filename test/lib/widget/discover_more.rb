@@ -6,7 +6,7 @@ module DiscoverMore
   end
   
   def widget_discover_more_check_title(doc)
-    doc.css('div.slider-holder span.subHeader').text.length.should be > 5
+    doc.css('div.slider-holder span.subHeader').text.strip.length.should be > 5
   end
   
   def widget_discover_more_check_img_not_400_or_500(doc)
@@ -28,7 +28,7 @@ module DiscoverMore
   end
   
   def widget_discover_more_check_article_links(doc)
-    doc.at_css('div.slider-holder div.description ul.list a').text.length.should be > 5
+    doc.at_css('div.slider-holder div.description ul.list a').text.strip.length.should be > 5
   end
   
   def widget_discover_more_check_article_links_not_400_or_500(doc)
@@ -44,5 +44,36 @@ module DiscoverMore
     response.code.should_not eql(/4\d\d/)
     response.code.should_not eql(/5\d\d/)
   end
-
+  
+  def widget_discover_more
+    
+    it "should not be missing from the page", :stg => true do
+      widget_discover_more_check_not_missing(@doc)
+    end
+    
+    it "should display a title", :stg => true do
+      widget_discover_more_check_title(@doc)
+    end
+    
+    it "should display an non-broken image", :stg => true do
+      widget_discover_more_check_img_not_400_or_500(@doc)
+    end
+    
+    it "should have next and prev links that are not 400 or 500", :stg => true do
+      widget_discover_more_check_next_and_prev_links_not_400_or_500(@doc)
+    end
+    
+    it "should display text links to articles", :stg => true do
+      widget_discover_more_check_article_links(@doc)
+    end
+    
+    it "should display text links to articles that are not 400 or 500", :stg => true do
+      widget_discover_more_check_article_links_not_400_or_500(@doc)
+    end
+    
+    it "should link to a category or topic page that is not 400 or 500", :stg => true do
+      widget_discover_more_check_news_and_updates_link_not_400_or_500(@doc)
+    end  
+  end
+  
 end

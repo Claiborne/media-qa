@@ -85,16 +85,23 @@ module Assert
   #Example {top_key : [ {inner_key: value, other_key: other_value} ] }
   def check_key_value_within_array_contains(response, data, top_key, inner_key, value)
 
-  slug_tech = false
-
     data.each do |article|
+    slug_tech = false
       article[top_key].each do |slug_value|
         if slug_value[inner_key] == value
           slug_tech = true
         end
-      end
+      end 
+      slug_tech.should be_true
     end 
-    slug_tech.should be_true
+  end
+  
+  def check_no_duplicates(response, data)
+    slug = []
+    data.each do |article|
+      slug << article['slug']
+    end
+  slug.count.should eql(slug.uniq.count)
   end
   
 end
