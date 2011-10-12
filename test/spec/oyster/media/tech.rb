@@ -6,6 +6,7 @@ require 'tech_nav'
 require 'rest_client'
 require 'json'
 require 'ads'
+require 'open_page'
 require 'widget/blogroll_v2_articles'
 require 'widget/discover_more'
 require 'widget/cover_stories_main'
@@ -14,6 +15,7 @@ require 'widget/tag_cover_stories'
 require 'widget/vert_nav'
 require 'widget/wiki_updates'
 
+include OpenPage
 include VertNav
 include CoverStoriesMain
 include CoverStoriesExtra
@@ -30,7 +32,7 @@ describe "tech frontend - home page" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech"
-    @doc = Nokogiri::HTML(open(@page))
+    @doc = nokogiri_open(@page)
   end
 
   before(:each) do
@@ -103,7 +105,7 @@ describe "tech frontend - #{topic} tag page" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech/#{topic}"
-    @doc = Nokogiri::HTML(open(@page))
+    @doc = nokogiri_open(@page)
   end
 
   before(:each) do
@@ -179,7 +181,7 @@ describe "tech frontend - v2 article page" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/articles/2011/09/21/gears-of-war-3-dolby-7-1-surround-sound-headset-review"
-    @doc = Nokogiri::HTML(open(@page))
+    @doc = nokogiri_open(@page)
   end
 
   before(:each) do
