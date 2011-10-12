@@ -1,6 +1,6 @@
 require 'rspec'
 require 'configuration'
-require 'Nokogiri'
+require 'nokogiri'
 require 'open-uri'
 require 'tech_nav'
 require 'rest_client'
@@ -12,6 +12,7 @@ require 'widget/cover_stories_main'
 require 'widget/cover_stories_extra'
 require 'widget/tag_cover_stories'
 require 'widget/vert_nav'
+require 'widget/wiki_updates'
 
 include VertNav
 include CoverStoriesMain
@@ -21,6 +22,7 @@ include TechNav
 include Blogrollv2Articles
 include DiscoverMore
 include Ads
+include WikiUpdates
 
 describe "tech frontend - home page" do
 
@@ -64,6 +66,12 @@ describe "tech frontend - home page" do
     widget_cover_stories_main
     
   end
+  
+  context "extra cover-stories widget" do
+    
+    widget_cover_stories_extra
+    
+  end
 
   context "blogroll widget" do
 
@@ -71,11 +79,6 @@ describe "tech frontend - home page" do
     
   end
   
-  context "vertical navigation widget" do
-    
-    widget_vert_nav("tech", topic)
-  
-  end
 
   context "discover more widget" do
   
@@ -137,10 +140,28 @@ describe "tech frontend - #{topic} tag page" do
   
   end 
   
+  context "vertical navigation widget" do
+    
+    widget_vert_nav("tech", topic)
+  
+  end
+  
+  context "tag cover stories widget" do
+    
+    widget_tag_cover_stories
+  
+  end
+  
   context "discover more widget" do
   
     widget_discover_more
 
+  end
+  
+  context "Wiki Updates Widget" do
+    
+    widget_wiki_updates
+    
   end
 
   context "ads" do

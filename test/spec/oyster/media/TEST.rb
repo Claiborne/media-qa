@@ -12,6 +12,7 @@ require 'widget/cover_stories_main'
 require 'widget/cover_stories_extra'
 require 'widget/tag_cover_stories'
 require 'widget/vert_nav'
+require 'widget/wiki_updates'
 
 include VertNav
 include CoverStoriesMain
@@ -21,6 +22,7 @@ include TechNav
 include Blogrollv2Articles
 include DiscoverMore
 include Ads
+include WikiUpdates
 
 describe "tech frontend - home page" do
 
@@ -39,15 +41,12 @@ describe "tech frontend - home page" do
 
   end
   
-  context "extra cover-stories widget" do
   
-    widget_cover_stories_extra
-  
-  end
 
 end
 
-@topic = return_tech_nav
+#@topic = return_tech_nav
+@topic = ['wii-u']
 @topic.each do |topic|
   
 describe "tech frontend - #{topic} tag page" do
@@ -67,7 +66,12 @@ describe "tech frontend - #{topic} tag page" do
 
   end
   
-
+  context "Wiki Updates Widget" do
+    
+    widget_wiki_updates
+    
+  end
+  
 end
 end
 
@@ -76,8 +80,14 @@ describe "tech frontend - v2 article page" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/articles/2011/09/21/gears-of-war-3-dolby-7-1-surround-sound-headset-review"
+    @page = "http://#{@config.options['baseurl']}/articles/2011/10/04/whats-new-about-the-iphone-4s"
     @doc = Nokogiri::HTML(open(@page))
+#
+#
+#
+#
+#    
+    @doc = Nokogiri::HTML(open("http://tech.stg.www.ign.com/articles/2011/10/04/whats-new-about-the-iphone-4s"))
   end
 
   before(:each) do

@@ -4,7 +4,7 @@ module Blogrollv2Articles
   def check_not_blank(doc, num, element)
     i = 0
     doc.css(element).each do |element_instance|
-      if element_instance.text.strip.length <  5
+      if element_instance.text.delete("^a-zA-Z").length <  1
         i = i+1
       end
     end
@@ -26,10 +26,6 @@ module Blogrollv2Articles
   
   def widget_blogroll_v2_articles_check_timestamp(doc, num_of_entries)
     check_not_blank(doc, num_of_entries, "div#ign-blogroll div.listElmnt-date")
-  end
-  
-  def widget_blogroll_v2_articles_check_comments_link(doc, num_of_entries)
-    check_not_blank(doc, num_of_entries, "div#ign-blogroll a.listElmnt-iconsComments")
   end
   
   def widget_blogroll_v2_articles_check_headline(doc, num_of_entries)
@@ -84,10 +80,6 @@ module Blogrollv2Articles
     
     it "shoud display timestamp", :stg => true do
       widget_blogroll_v2_articles_check_timestamp(@doc, num)
-    end
-    
-    it "shoud display comments link", :stg => true do
-      widget_blogroll_v2_articles_check_comments_link(@doc, num)
     end
 
     it "shoud display headline", :stg => true do

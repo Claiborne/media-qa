@@ -112,4 +112,3 @@ RSpec::Core::RakeTask.new('techtest') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/media/TEST.rb'  
 end
-

@@ -11,14 +11,14 @@ module Assert
   end
   
   #Check that a specific key exists for all articles returned
-  def check_key_exists(response, data, key)
+  def check_key_exists_for_all(response, data, key)
     data.each do |article|
       article.has_key?(key).should be_true
     end
   end
   
   #Check that the value to a specific key is not nil and it's length is > 0 for all articles returned
-  def check_key_value_exists(response, data, key)
+  def check_key_value_exists_for_all(response, data, key)
     data.each do |article|
       article[key].should_not be_nil
       article[key].to_s.length.should > 0
@@ -27,7 +27,7 @@ module Assert
   
   #Check that a speficic key within another key exists for all articles returned
   # Example: {top_key: {inner_key: value} }
-  def check_key_within_key_exists(response, data, top_key, inner_key)
+  def check_key_within_key_exists_for_all(response, data, top_key, inner_key)
     data.each do |article|
       article[top_key].has_key?(inner_key).should be_true
     end
@@ -35,7 +35,7 @@ module Assert
   
   #Check that a specific key exists for all articles. This key is within an array, and the array is the value of a higher key
   #Example: {top_key: [ {inner_key: value} ] }
-  def check_key_within_array_exists(response, data, top_key, inner_key)
+  def check_key_within_array_exists_for_all(response, data, top_key, inner_key)
     data.each do |article|
       article[top_key][0].has_key?(inner_key).should be_true
     end
@@ -43,7 +43,7 @@ module Assert
   
   #Check that the value to a key exists for all articles. This key-value pair is within an array, and the array is the value of a higher key
   #Example: {top_key: [ {inner_key: value} ] }
-  def check_value_of_key_within_array_exists(response, data, top_key, inner_key) 
+  def check_value_of_key_within_array_exists_for_all(response, data, top_key, inner_key) 
     data.each do |article|
       article[top_key][0][inner_key].should_not be_nil
       article[top_key][0][inner_key].length.should > 0
@@ -57,7 +57,7 @@ module Assert
   
   #Check that a key's value equals a specific value for all articles
   #Example {key: value}
-  def check_key_value_equals(response, data, key, value)
+  def check_key_value_equals_for_all(response, data, key, value)
     data.each do |article|
       article[key].should_not be_nil
       article[key].should == value
@@ -81,9 +81,9 @@ module Assert
     end
   end
   
-  #Check the value of a key within an array for all articles. Useful for array's with multipule of the same keys (like slug). Useful for checking if articles are of a certain category or certain tag
+  #CHECK CATEGORY or TAG. Check the value of a key within an array for all articles. Useful for array's with multipule of the same keys (like slug).
   #Example {top_key : [ {inner_key: value, other_key: other_value} ] }
-  def check_key_value_within_array_contains(response, data, top_key, inner_key, value)
+  def check_key_value_within_array_contains_for_all(response, data, top_key, inner_key, value)
 
     data.each do |article|
     slug_tech = false
