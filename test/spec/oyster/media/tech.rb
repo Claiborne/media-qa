@@ -41,7 +41,7 @@ describe "tech frontend - home page" do
 
   end
 
-  it "should have at least one css file", :stg => true do
+  it "should have at least one css file", :stg => true, :code => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
 
@@ -53,11 +53,11 @@ describe "tech frontend - home page" do
     end
   end 
 
-  it "should not be missing the global header widget", :stg => true do
+  it "should not be missing the global header widget", :stg => true, :code => true do
     @doc.at_css('div#ign-header').should be_true
   end
   
-  it "should not be missing the global footer widget", :stg => true do
+  it "should not be missing the global footer widget", :stg => true, :code => true do
     @doc.at_css('div#ignFooter-container').should be_true
   end
   
@@ -114,7 +114,7 @@ describe "tech frontend - #{topic} tag page" do
 
   end
 
-  it "should have at least one css file", :stg => true do
+  it "should have at least one css file", :stg => true, :code => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
   
@@ -126,11 +126,11 @@ describe "tech frontend - #{topic} tag page" do
     end
   end     
   
-  it "should not be missing the global header widget", :stg => true do
+  it "should not be missing the global header widget", :stg => true, :code => true do
     @doc.at_css('div#ign-header').should be_true
   end
   
-  it "should not be missing the global footer widget", :stg => true do
+  it "should not be missing the global footer widget", :stg => true, :code => true do
     @doc.at_css('div#ignFooter-container').should be_true
   end
 
@@ -190,7 +190,7 @@ describe "tech frontend - v2 article page" do
 
   end
 
-  it "should have at least one css file", :stg => true do
+  it "should have at least one css file", :stg => true, :code => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
   
@@ -202,24 +202,24 @@ describe "tech frontend - v2 article page" do
     end
   end  
   
-  it "should not be missing the global header widget", :stg => true do
+  it "should not be missing the global header widget", :stg => true, :code => true do
     @doc.at_css('div#ign-header').should be_true
   end
   
-  it "should not be missing the global footer widget", :stg => true do
+  it "should not be missing the global footer widget", :stg => true, :code => true do
     @doc.at_css('div#ignFooter-container').should be_true
   end
   
-  it "should not be missing the two share this widgets", :stg => true do
+  it "should not be missing the two share this widgets", :stg => true, :code => true do
     (@doc.css("div[class*='shareThis addthis_toolbox']").count == 2).should be_true
 
   end
   
-  it "should not be missing the discus comments widget", :stg => true do
+  it "should not be missing the discus comments widget", :stg => true, :code => true do
     @doc.at_css('div#disqus_thread').should be_true
   end
   
-  it "should not be missing the pagination widget when more than one page exists", :stg => true do
+  it "should not be missing the pagination widget when more than one page exists", :stg => true, :code => true do
     @doc.at_css('div.pager_list').should be_true
   end
   

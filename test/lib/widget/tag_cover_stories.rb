@@ -2,7 +2,7 @@ module TagCoverStories
   
   def widget_tag_cover_stories
     
-    it "should not be missing from the page", :stg => true do
+    it "should not be missing from the page", :stg => true, :code => true do
       @doc.at_css('div.tgs-topStories div.tgs-storyItems').should be_true
     end
 

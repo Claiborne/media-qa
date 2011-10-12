@@ -2,7 +2,7 @@ module VertNav
   
   def widget_vert_nav(category, tag)
     
-    it "should not be missing from the page", :stg => true do
+    it "should not be missing from the page", :stg => true, :code => true do
       @doc.at_css('div.vn-container ul li').should be_true
     end
     

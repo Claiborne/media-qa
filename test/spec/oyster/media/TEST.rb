@@ -1,6 +1,6 @@
 require 'rspec'
 require 'configuration'
-require 'Nokogiri'
+require 'nokogiri'
 require 'open-uri'
 require 'tech_nav'
 require 'rest_client'

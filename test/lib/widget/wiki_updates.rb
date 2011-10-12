@@ -2,7 +2,7 @@ module WikiUpdates
   
   def widget_wiki_updates
     
-    it "should not be missing from the page", :stg => true do
+    it "should not be missing from the page", :stg => true, :code => true do
       @doc.at_css('div.wikiUpdates').should be_true
     end
     

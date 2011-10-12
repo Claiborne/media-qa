@@ -3,7 +3,7 @@ module CoverStoriesExtra
   
   def widget_cover_stories_extra
 
-    it "should not be missing from the page", :stg => true do
+    it "should not be missing from the page", :stg => true, :code => true do
       @doc.css('div.extra-coverStories').should be_true
     end
 

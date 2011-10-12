@@ -66,7 +66,7 @@ module Blogrollv2Articles
   
   def widget_blogroll_v2_articles(num, call)
 
-    it "should not be missing from the page", :stg => true do
+    it "should not be missing from the page", :stg => true, :code => true do
       widget_blogroll_v2_articles_check_not_missing(@doc)
     end
   

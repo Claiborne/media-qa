@@ -47,7 +47,7 @@ module DiscoverMore
   
   def widget_discover_more
     
-    it "should not be missing from the page", :stg => true do
+    it "should not be missing from the page", :stg => true, :code => true do
       widget_discover_more_check_not_missing(@doc)
     end
     

@@ -2,7 +2,7 @@ module CoverStoriesMain
   
   def widget_cover_stories_main
 
-    it "should not be missing from the page", :stg => true do
+    it "should not be missing from the page", :stg => true, :code => true do
       @doc.at_css('div.cat-coverStories').should be_true
     end
 
