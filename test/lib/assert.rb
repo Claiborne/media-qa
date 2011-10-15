@@ -26,10 +26,19 @@ module Assert
   end
   
   #Check that a speficic key within another key exists for all articles returned
-  # Example: {top_key: {inner_key: value} }
+  #Example: {top_key: {inner_key: value} }
   def check_key_within_key_exists_for_all(response, data, top_key, inner_key)
     data.each do |article|
       article[top_key].has_key?(inner_key).should be_true
+    end
+  end
+  
+  #Check that the value to a key exists for all articles. This key-value pair is within an hash, and the hash is the value of a higher key
+  #Example: {top_key: {inner_key: value} }
+  def check_value_of_key_within_hash_exists_for_all(response, data, top_key, inner_key) 
+    data.each do |article|
+      article[inner_key].should_not be_nil
+      article[inner_key].length.should > 0
     end
   end
   

@@ -14,7 +14,11 @@ require 'widget/cover_stories_extra'
 require 'widget/tag_cover_stories'
 require 'widget/vert_nav'
 require 'widget/wiki_updates'
+require 'widget/video_interrupt'
+require 'widget/popular_articles_interrupt'
 
+include PopularArticlesInterrupt
+include VideoInterrupt
 include OpenPage
 include VertNav
 include CoverStoriesMain
@@ -26,7 +30,7 @@ include DiscoverMore
 include Ads
 include WikiUpdates
 
-describe "tech frontend - home page" do
+describe "Tech Home Page" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
@@ -42,56 +46,57 @@ describe "tech frontend - home page" do
   after(:each) do
 
   end
+  
+  it "should not return 400 or 500", :code => true do
+    @doc
+  end
 
-  it "should have at least one css file", :stg => true, :code => true do
+  it "should have at least one css file", :code => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
 
-  it "should not have any css files that return 400 or 500", :stg => true do
+  it "should not have any css files that return 400 or 500" do
     @doc.css("link[@href*='.css']").each do |css|
-      response = RestClient.get css.attribute('href').to_s
+      response = rest_client_open css.attribute('href').to_s
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
     end
   end 
 
-  it "should not be missing the global header widget", :stg => true, :code => true do
+  it "should not be missing the global header widget", :code => true do
     @doc.at_css('div#ign-header').should be_true
   end
   
-  it "should not be missing the global footer widget", :stg => true, :code => true do
+  it "should not be missing the global footer widget", :code => true do
     @doc.at_css('div#ignFooter-container').should be_true
   end
   
-  context "main cover-stories widget" do
-    
+  context "Main Cover Stories Widget" do
     widget_cover_stories_main
-    
   end
   
-  context "extra cover-stories widget" do
-    
+  context "Extra Cover Stories Widget" do
     widget_cover_stories_extra
-    
   end
 
-  context "blogroll widget" do
-
+  context "Blogroll Widget" do
     widget_blogroll_v2_articles(10, "/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
-    
   end
   
-
-  context "discover more widget" do
+  context "Video Interrupt Widget" do
+    widget_video_interrupt
+  end
   
+  context "Popular Article Interrupt Widget" do
+    widget_popular_articles_interrupt
+  end
+
+  context "Discover More Widget" do
     widget_discover_more
-
   end
 
-  context "ads" do
-  
+  context "Ads" do
     ads_on_tech_page
-  
   end
 
 end
@@ -99,7 +104,7 @@ end
 @topic = return_tech_nav
 @topic.each do |topic|
   
-describe "tech frontend - #{topic} tag page" do
+describe "Tech #{topic} Topic Page" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
@@ -115,67 +120,59 @@ describe "tech frontend - #{topic} tag page" do
   after(:each) do
 
   end
+  
+  it "should not return 400 or 500", :code => true do
+    @doc
+  end
 
-  it "should have at least one css file", :stg => true, :code => true do
+  it "should have at least one css file", :code => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
   
-  it "should not have any css files that return 400 or 500", :stg => true do
+  it "should not have any css files that return 400 or 500" do
     @doc.css("link[@href*='.css']").each do |css|
-      response = RestClient.get css.attribute('href').to_s
+      response = rest_client_open css.attribute('href').to_s
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
     end
   end     
   
-  it "should not be missing the global header widget", :stg => true, :code => true do
+  it "should not be missing the global header widget", :code => true do
     @doc.at_css('div#ign-header').should be_true
   end
   
-  it "should not be missing the global footer widget", :stg => true, :code => true do
+  it "should not be missing the global footer widget", :code => true do
     @doc.at_css('div#ignFooter-container').should be_true
   end
 
-  context "blogroll widget" do
-  
+  context "Blogroll Widget" do
     widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&sort=publish_date&order=desc")
-  
   end 
   
-  context "vertical navigation widget" do
-    
+  context "Vertical Navigation Widget" do
     widget_vert_nav("tech", topic)
-  
   end
   
-  context "tag cover stories widget" do
-    
+  context "Tag Cover Stories Widget" do
     widget_tag_cover_stories
-  
   end
   
-  context "discover more widget" do
-  
+  context "Discover More Widget" do
     widget_discover_more
-
   end
   
   context "Wiki Updates Widget" do
-    
     widget_wiki_updates
-    
   end
 
-  context "ads" do
-  
+  context "Ads" do
     ads_on_tech_page
-  
   end
 
 end
 end
 
-describe "tech frontend - v2 article page" do
+describe "Tech v2 Article Page" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
@@ -191,48 +188,50 @@ describe "tech frontend - v2 article page" do
   after(:each) do
 
   end
+  
+  it "should not return 400 or 500", :code => true do
+    @doc
+  end
 
-  it "should have at least one css file", :stg => true, :code => true do
+  it "should have at least one css file", :code => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
   
-  it "should not have any css files that return 400 or 500", :stg => true do
+  it "should not have any css files that return 400 or 500" do
     @doc.css("link[@href*='.css']").each do |css|
-      response = RestClient.get css.attribute('href').to_s
+      response = rest_client_open css.attribute('href').to_s
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
     end
   end  
   
-  it "should not be missing the global header widget", :stg => true, :code => true do
+  it "should not be missing the global header widget", :code => true do
     @doc.at_css('div#ign-header').should be_true
   end
   
-  it "should not be missing the global footer widget", :stg => true, :code => true do
+  it "should not be missing the global footer widget", :code => true do
     @doc.at_css('div#ignFooter-container').should be_true
   end
   
-  it "should not be missing the two share this widgets", :stg => true, :code => true do
+  it "should not be missing the two share this widgets", :code => true do
     (@doc.css("div[class*='shareThis addthis_toolbox']").count == 2).should be_true
 
   end
   
-  it "should not be missing the discus comments widget", :stg => true, :code => true do
+  it "should not be missing the discus comments widget", :code => true do
     @doc.at_css('div#disqus_thread').should be_true
   end
   
-  it "should not be missing the pagination widget when more than one page exists", :stg => true, :code => true do
+  it "should not be missing the pagination widget when more than one page exists", :code => true do
     @doc.at_css('div.pager_list').should be_true
   end
   
-  it "should not display the pagination widget when only one page exists", :stg => true do
+  it "should not display the pagination widget when only one page exists" do
     Nokogiri::HTML(open("http://#{@config.options['baseurl']}/articles/2011/08/24/report-iphone-5-coming-to-sprint")).at_css('div.pager_list').should be_false
   end
 
-  context "ads" do
-  
+  context "Ads" do
     ads_on_v2_article
-  
   end
 end
 

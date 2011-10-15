@@ -41,7 +41,7 @@ module Blogrollv2Articles
   end
   
   def widget_blogroll_v2_articles_check_matches_article_api(doc, num, api)
-    data = JSON.parse((RestClient.get api).body)
+    data = JSON.parse((rest_client_open(api)).body)
     api_titles = []
     data.each do |article|
       api_titles << article['blogroll']['headline']
@@ -52,7 +52,7 @@ module Blogrollv2Articles
       frontend_titles << article.text
     end
     titles = api_titles + frontend_titles
-    titles.uniq.count.should be <= num+3
+    titles.uniq.count.should be <= num+2
   end
   
   def widget_blogroll_v2_articles_check_no_duplicates(doc)
@@ -66,39 +66,39 @@ module Blogrollv2Articles
   
   def widget_blogroll_v2_articles(num, call)
 
-    it "should not be missing from the page", :stg => true, :code => true do
+    it "should not be missing from the page", :code => true do
       widget_blogroll_v2_articles_check_not_missing(@doc)
     end
   
-    it "should have #{num} blogroll entries", :stg => true do
+    it "should have #{num} blogroll entries" do
       widget_blogroll_v2_articles_check_num_entries(@doc, num)
     end
 
-    it "shoud display author name", :stg => true do
+    it "shoud display author name" do
       widget_blogroll_v2_articles_check_author_name(@doc, num)
     end
     
-    it "shoud display timestamp", :stg => true do
+    it "shoud display timestamp" do
       widget_blogroll_v2_articles_check_timestamp(@doc, num)
     end
 
-    it "shoud display headline", :stg => true do
+    it "shoud display headline", :code => true do
       widget_blogroll_v2_articles_check_headline(@doc, num)
     end
 
-    it "shoud display article summary", :stg => true do
+    it "shoud display article summary", :code => true do
       widget_blogroll_v2_articles_check_article_summary(@doc, num)
     end
     
-    it "shoud display read more link in article summary", :stg => true do
+    it "shoud display read more link in article summary" do
       widget_blogroll_v2_articles_check_read_more(@doc, num)
     end
 
-    it "should display only unique entries", :stg => true do
+    it "should display only unique entries", :code => true do
       widget_blogroll_v2_articles_check_no_duplicates(@doc)
     end
 
-    it "should display the same articles as the api returns", :stg => true do
+    it "should display the same articles as the api returns" do
       Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
       config = Configuration.new
     

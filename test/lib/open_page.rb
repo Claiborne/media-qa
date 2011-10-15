@@ -16,7 +16,18 @@ def nokogiri_open(page)
 end#end def
 
 def rest_client_open(page)
-  
+  stitial_count = 0
+  rest_doc = RestClient.get(page)
+  while Nokogiri::HTML(rest_doc.body).at_css('div#disable')
+    rest_doc = RestClient.get(page)
+    stitial_count +=1
+    if stitial_count > 2
+      rest_doc = RestClient.get(page+"?special=noads")
+    elsif stitial_count > 3
+      raise "An endless stitial loop prevented this test case from running"
+    end
+  end#end while
+  return rest_doc
 end
 
 end

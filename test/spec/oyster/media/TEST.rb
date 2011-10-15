@@ -6,6 +6,7 @@ require 'tech_nav'
 require 'rest_client'
 require 'json'
 require 'ads'
+require 'open_page'
 require 'widget/blogroll_v2_articles'
 require 'widget/discover_more'
 require 'widget/cover_stories_main'
@@ -13,7 +14,13 @@ require 'widget/cover_stories_extra'
 require 'widget/tag_cover_stories'
 require 'widget/vert_nav'
 require 'widget/wiki_updates'
+require 'widget/video_interrupt'
 
+require 'widget/popular_articles_interrupt'
+include PopularArticlesInterrupt
+
+include VideoInterrupt
+include OpenPage
 include VertNav
 include CoverStoriesMain
 include CoverStoriesExtra
@@ -30,7 +37,7 @@ describe "tech frontend - home page" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech"
-    @doc = Nokogiri::HTML(open(@page))
+    @doc = nokogiri_open(@page)
   end
 
   before(:each) do
@@ -41,7 +48,9 @@ describe "tech frontend - home page" do
 
   end
   
-  
+  context "Popular Article Interrupt Widget" do
+    widget_popular_articles_interrupt
+  end
 
 end
 
@@ -55,7 +64,7 @@ describe "tech frontend - #{topic} tag page" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech/#{topic}"
-    @doc = Nokogiri::HTML(open(@page))
+    @doc = nokogiri_open(@page)
   end
 
   before(:each) do
@@ -66,11 +75,6 @@ describe "tech frontend - #{topic} tag page" do
 
   end
   
-  context "Wiki Updates Widget" do
-    
-    widget_wiki_updates
-    
-  end
   
 end
 end
@@ -81,13 +85,7 @@ describe "tech frontend - v2 article page" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/articles/2011/10/04/whats-new-about-the-iphone-4s"
-    @doc = Nokogiri::HTML(open(@page))
-#
-#
-#
-#
-#    
-    @doc = Nokogiri::HTML(open("http://tech.stg.www.ign.com/articles/2011/10/04/whats-new-about-the-iphone-4s"))
+    @doc = nokogiri_open(@page)
   end
 
   before(:each) do
@@ -97,6 +95,8 @@ describe "tech frontend - v2 article page" do
   after(:each) do
 
   end
+  
+
 
 end
 
