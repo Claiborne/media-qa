@@ -30,7 +30,7 @@ include DiscoverMore
 include Ads
 include WikiUpdates
 
-describe "Tech Home Page" do
+describe "Tech HomePage:" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
@@ -71,40 +71,40 @@ describe "Tech Home Page" do
     @doc.at_css('div#ignFooter-container').should be_true
   end
   
-  context "Main Cover Stories Widget" do
+  context "Tech Nav (Discover More Expanded) Widget" do
+    wiget_discover_more_expanded
+  end
+  
+  context "Main Cover Stories Widget:" do
     widget_cover_stories_main
   end
   
-  context "Extra Cover Stories Widget" do
+  context "Extra Cover Stories Widget:" do
     widget_cover_stories_extra
   end
 
-  context "Blogroll Widget" do
+  context "Blogroll Widget:" do
     widget_blogroll_v2_articles(10, "/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
   end
   
-  context "Video Interrupt Widget" do
+  context "Video Interrupt Widget:" do
     widget_video_interrupt
   end
   
-  context "Popular Article Interrupt Widget" do
+  context "Popular Article Interrupt Widget:" do
     widget_popular_articles_interrupt
   end
 
-  context "Discover More Widget" do
-    widget_discover_more
-  end
-
-  context "Ads" do
-    ads_on_tech_page
-  end
+  #context "Ads" do
+    #ads_on_tech_page
+  #end
 
 end
 
 @topic = return_tech_nav
 @topic.each do |topic|
   
-describe "Tech #{topic} Topic Page" do
+describe "Tech #{topic} Topic Page:" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
@@ -145,34 +145,36 @@ describe "Tech #{topic} Topic Page" do
     @doc.at_css('div#ignFooter-container').should be_true
   end
 
-  context "Blogroll Widget" do
+  context "Blogroll Widget:" do
     widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&sort=publish_date&order=desc")
   end 
   
-  context "Vertical Navigation Widget" do
+  context "Vertical Navigation Widget:" do
     widget_vert_nav("tech", topic)
   end
   
-  context "Tag Cover Stories Widget" do
-    widget_tag_cover_stories
+  context "Tag Cover Stories Widget:" do
+   widget_tag_cover_stories
   end
   
-  context "Discover More Widget" do
+  context "Discover More Widget:" do
     widget_discover_more
   end
   
-  context "Wiki Updates Widget" do
-    widget_wiki_updates
+  if topic != 'lifestyle'
+    context "Wiki Updates Widget:" do
+      widget_wiki_updates
+    end
   end
 
-  context "Ads" do
-    ads_on_tech_page
-  end
+  #context "Ads" do
+    #ads_on_tech_page
+  #end
 
 end
 end
 
-describe "Tech v2 Article Page" do
+describe "Tech v2 Article Page:" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
@@ -222,17 +224,38 @@ describe "Tech v2 Article Page" do
     @doc.at_css('div#disqus_thread').should be_true
   end
   
-  it "should not be missing the pagination widget when more than one page exists", :code => true do
-    @doc.at_css('div.pager_list').should be_true
+  it "should not be missing the pagination widget when more than one page exists"#, :code => true do
+   #@doc.at_css('div.pager_list').should be_true
+  #end
+  
+  it "should not be missing the tech vertical navigation", :code => true do
+    
   end
   
   it "should not display the pagination widget when only one page exists" do
     Nokogiri::HTML(open("http://#{@config.options['baseurl']}/articles/2011/08/24/report-iphone-5-coming-to-sprint")).at_css('div.pager_list').should be_false
   end
-
-  context "Ads" do
-    ads_on_v2_article
+  
+  it "should display the discover more widget" do
+    @doc.at_css('div.slider-holder div.slider').should be_true
   end
+  
+  context "Vert Nav Widget" do
+    it "should not be missing from the page", :code => true do
+      @doc.at_css('div.vn-container ul li').should be_true
+    end
+    
+    it "should display all components", :code => true do
+      @doc.at_css('div.vn-container ul li.vn-follow').should be_true
+      @doc.at_css('div.vn-container ul li.vn-categoryItem a').should be_true
+      @doc.css('div.vn-container ul li.vn-navItem a').count.should > 3
+    end
+  end
+  
+
+  #context "Ads:" do
+    #ads_on_v2_article
+  #end
 end
 
 

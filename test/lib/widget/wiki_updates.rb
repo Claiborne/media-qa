@@ -6,6 +6,8 @@ module WikiUpdates
       @doc.at_css('div.wikiUpdates').should be_true
     end
     
+    #####if @doc.at_css('div.wikiUpdates').should do
+    
     it "should contain links to recently updated Wiki pages" do
       @doc.css("div.wikiUpdates ul a.itemLink[href*='/wikis/']").count.should > 0
     end

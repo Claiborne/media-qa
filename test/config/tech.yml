@@ -4,6 +4,6 @@ staging:
   baseurl: tech.stg.www.ign.com
 
 production:
- baseurl:
+ baseurl: www.ign.com
      
     

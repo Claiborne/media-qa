@@ -20,9 +20,9 @@ module TagCoverStories
       end
     end
     
-    it "should display text for each preview" do
+    it "should display text for each preview blurb" do
       @doc.css('div.tgs-storyItems ul li a span').each do |preview|
-        preview.text.gsub(preview.css('strong').text,"").delete("^a-zA-Z").length.should > 1
+        preview.text.delete("^a-zA-Z").length.should > 1
       end
     end
 
@@ -83,11 +83,11 @@ module TagCoverStories
     end
     
     it "should have at least one <a> tag" do
-      @doc.css('div.tgs-storyItems a').count.should > 1
+      @doc.css('div.tgs-storyItems a').count.should > 0
     end
     
     it "should have at least one <img> tag" do
-      puts @doc.css('div.tgs-storyItems img').count.should > 1
+      @doc.css('div.tgs-topStories img').count.should > 0
     end
     
   end

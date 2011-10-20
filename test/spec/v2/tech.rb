@@ -8,7 +8,7 @@ require 'tech_nav'
 
 include Assert
 include TechNav
-=begin
+
 describe "Tech Api: Home Page Blogroll Widget Service Call" do
   
   before(:all) do
@@ -29,7 +29,6 @@ describe "Tech Api: Home Page Blogroll Widget Service Call" do
   end
   
   it "should return 200", :stg => true do
-    puts @url
     check_200(@response, @data)
   end
   
@@ -410,7 +409,36 @@ describe "Tech Api: v2 Article Service Call (slug=report-iphone-5-coming-to-spri
     check_key_value_exists_for_all(@response, @data, "id")
   end   
 end
+=begin
+describe "Tech Api: Topic Nav Widget Service Call" do
+  
+  @topic = return_tech_nav
+  @topic.each do |topic|
+  
+  context "Tech #{topic} Topic Page" do
+  
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = Configuration.new
+    
+    @url = "/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=xbox-360,news&all_tags=true&sort=publish_date&order=desc"
+    @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
+    @data = JSON.parse(@response.body)  
+  end
 
+  before(:each) do
+    
+  end
+
+  after(:each) do
+
+  end
+    
+  it "should return 200", :stg => true do
+    check_200(@response, @data)
+  end
+end
+=end ###END PROBLEM WITHIN
 describe "Tech Api: Discover More Widget Service Call" do
 
   @topic = return_tech_nav
@@ -544,7 +572,6 @@ describe "Tech Api: Home Page Blogroll Video Interrupt Playlist Service Call" do
   end
 
 end
-=end
 
 describe "Tech Api: Home Page Blogroll Popular Articles Interrupt Service Call" do
   
@@ -608,4 +635,3 @@ describe "Tech Api: Home Page Blogroll Popular Articles Interrupt Service Call" 
   end
 
 end
-

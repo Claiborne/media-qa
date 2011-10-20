@@ -19,7 +19,7 @@ module CoverStoriesExtra
           response.code.should_not eql(/4\d\d/)
           response.code.should_not eql(/5\d\d/)
         else
-          response = rest_client_open @page.gsub(/[a-zA-Z0-9_]*\z/,"")+img_link.gsub(" ","%20")
+          response = rest_client_open @page.gsub(/[a-zA-Z0-9-]*\z/,"")+img_link.gsub(" ","%20")
           response.code.should_not eql(/4\d\d/)
           response.code.should_not eql(/5\d\d/)
         end
@@ -34,22 +34,16 @@ module CoverStoriesExtra
           response.code.should_not eql(/4\d\d/)
           response.code.should_not eql(/5\d\d/)
         else
-          response = rest_client_open @page.gsub(/[a-zA-Z0-9_]*\z/,"")+a_link.gsub(" ","%20")
+          response = rest_client_open @page.gsub(/[a-zA-Z0-9-]*\z/,"")+a_link.gsub(" ","%20")
           response.code.should_not eql(/4\d\d/)
           response.code.should_not eql(/5\d\d/)
         end
       end
     end
 
-    it "should display paragraph text for each cover story slot" do
-      @doc.css('div.extra-coverStories div.extra-storyItem p').each do |paragraph|  
-        paragraph.text.delete("^a-zA-Z").length.should > 1
-      end
-    end
-
-    it "should not have more than one image per slot" do
+    it "should not one image per slot" do
       @doc.css('div.extra-coverStories div.extra-storyItem').each do |slot|
-        slot.css('img').count.should < 2
+        slot.css('img').count.should == 1
       end
     end
     

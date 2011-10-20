@@ -47,15 +47,13 @@ describe "tech frontend - home page" do
   after(:each) do
 
   end
-  
-  context "Popular Article Interrupt Widget" do
-    widget_popular_articles_interrupt
+  context "Ads" do
+    ads_on_tech_page
   end
-
 end
 
 #@topic = return_tech_nav
-@topic = ['wii-u']
+@topic = ['ipad']
 @topic.each do |topic|
   
 describe "tech frontend - #{topic} tag page" do
@@ -74,8 +72,9 @@ describe "tech frontend - #{topic} tag page" do
   after(:each) do
 
   end
-  
-  
+  context "Ads" do
+    ads_on_tech_page
+  end
 end
 end
 
@@ -96,7 +95,9 @@ describe "tech frontend - v2 article page" do
 
   end
   
-
+  context "Ads" do
+    ads_on_v2_article
+  end
 
 end
 

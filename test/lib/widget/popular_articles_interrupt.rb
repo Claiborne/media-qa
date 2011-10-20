@@ -21,7 +21,7 @@ module PopularArticlesInterrupt
     end
     
     it "should dispay a title" do
-      @doc.at_css('div.pa-header').text.delete("^a-zA-Z").length.should > 0
+      @doc.at_css('div.popularArticles h2.popularArticlesHeader').text.delete("^a-zA-Z").length.should > 0
     end
     
     it "should contain at least three slots for articles" do
