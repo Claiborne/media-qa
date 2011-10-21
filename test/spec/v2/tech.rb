@@ -48,7 +48,7 @@ describe "Tech Api: Home Page Blogroll Widget Service Call" do
     check_key_exists_for_all(@response, @data, "blogroll")
   end
   
-  it "should return articles with a blogroll image_url key present", :stg => true do
+  it "should return articles with a blogroll image_url key present", :prd => true do
     check_key_within_key_exists_for_all(@response, @data, "blogroll", "image_url")
   end
   
@@ -190,7 +190,7 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
     check_key_exists_for_all(@response, @data, "blogroll")
   end
   
-  it "should return articles with a blogroll image_url key present", :stg => true do
+  it "should return articles with a blogroll image_url key present", :prd => true do
     check_key_within_key_exists_for_all(@response, @data, "blogroll", "image_url")
   end
   
@@ -210,7 +210,7 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
     check_key_exists_for_all(@response, @data, "headline")
   end
 
-  it "should return 20 articles", :stg => true do
+  it "should return 20 articles", :prd => true do
     article_count(@response, @data, 20)
   end
   
@@ -319,7 +319,7 @@ describe "Tech Api: v2 Article Service Call (slug=report-iphone-5-coming-to-spri
     check_key_exists_for_all(@response, @data, "blogroll")
   end
   
-  it "should return an article with a blogroll image_url key present", :stg => true do
+  it "should return an article with a blogroll image_url key present", :prd => true do
     check_key_within_key_exists_for_all(@response, @data, "blogroll", "image_url")
   end
   

@@ -19,7 +19,7 @@ describe "authors" do
 
   end
   
-  it "should return authors", :prd => true do
+  it "should return authors" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v2/authors.json"
    response.code.should eql(200)
    data = JSON.parse(response.body)

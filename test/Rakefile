@@ -41,12 +41,6 @@ RSpec::Core::RakeTask.new('v1') do |t|
     t.pattern = 'spec/v1/**/*.rb'
 end
 
-desc "Run v2 tests"
-RSpec::Core::RakeTask.new('v2') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/**/*.rb'    
-end
-
 desc "Run social tests"
 RSpec::Core::RakeTask.new('social') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
@@ -83,6 +77,18 @@ RSpec::Core::RakeTask.new('social_test') do |t|
     t.pattern = 'spec/social_test/**/*.rb'
 end
 
+desc "Run Tech frontend tests"
+RSpec::Core::RakeTask.new('techfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oyster/media/tech.rb'  
+end
+
+desc "Run v2 tests"
+RSpec::Core::RakeTask.new('v2') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v2/**/*.rb'    
+end
+
 desc "Run v2 articles"
 RSpec::Core::RakeTask.new('v2articles') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
@@ -96,19 +102,7 @@ RSpec::Core::RakeTask.new('v2blogs') do |t|
 end
 
 desc "Run Tech API tests"
-RSpec::Core::RakeTask.new('techapi') do |t|
+RSpec::Core::RakeTask.new('v2tech') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/v2/tech.rb'    
-end
-
-desc "Run Tech frontend tests"
-RSpec::Core::RakeTask.new('techfrontend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/tech.rb'  
-end
-
-desc "Run Tech test tests"
-RSpec::Core::RakeTask.new('techtest') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/TEST.rb'  
 end
