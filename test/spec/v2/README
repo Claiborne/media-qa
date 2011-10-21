@@ -1,3 +1,5 @@
 To run v2 for production: rake v2articles env=production SPEC_OPTS="--tag ~stg"
 
 To run v2 for staging: rake v2articles SPEC_OPTS="--tag ~prd"
+
+To run with tags: rake name_in_rake SPEC_OPTS="--tag name_of_tag"
