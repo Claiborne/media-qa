@@ -14,9 +14,8 @@ describe "Tech Api: Home Page Blogroll Widget Service Call" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
-    
-    @url = "/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
-    @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
+    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
+    @response = RestClient.get @url
     @data = JSON.parse(@response.body)
   end
 
@@ -26,6 +25,10 @@ describe "Tech Api: Home Page Blogroll Widget Service Call" do
 
   after(:each) do
 
+  end
+  
+  it "", :smoke => true do
+    puts @url
   end
   
   it "should return 200", :stg => true do
@@ -146,9 +149,8 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
-    
-    @url = "/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&all_tags=true&sort=publish_date&order=desc"
-    @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
+    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&all_tags=true&sort=publish_date&order=desc"
+    @response = RestClient.get @url
     @data = JSON.parse(@response.body)  
   end
 
@@ -159,10 +161,12 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
   after(:each) do
 
   end
+  
+  it "", :smoke => true do
+    puts @url
+  end
     
   it "should return 200", :stg => true do
-    puts topic
-    puts "http://#{@config.options['baseurl']}#{@url}"
     check_200(@response, @data)
   end
   
@@ -276,14 +280,13 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
   end  
 end
 
-describe "Tech Api: v2 Article Service Call (slug=report-iphone-5-coming-to-sprint)" do
+describe "Tech Api: v2 Article Service Call" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
-    
-    @url = "/v2/articles.json?post_type=article&slug=report-iphone-5-coming-to-sprint"
-    @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
+    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&slug=report-iphone-5-coming-to-sprint"
+    @response = RestClient.get @url
     @data = JSON.parse(@response.body)  
   end
   
@@ -293,6 +296,10 @@ describe "Tech Api: v2 Article Service Call (slug=report-iphone-5-coming-to-spri
 
   after(:each) do
   
+  end
+  
+  it "", :smoke => true do
+    puts @url
   end
 
   it "should return 200", :stg => true do
@@ -409,36 +416,7 @@ describe "Tech Api: v2 Article Service Call (slug=report-iphone-5-coming-to-spri
     check_key_value_exists_for_all(@response, @data, "id")
   end   
 end
-=begin
-describe "Tech Api: Topic Nav Widget Service Call" do
-  
-  @topic = return_tech_nav
-  @topic.each do |topic|
-  
-  context "Tech #{topic} Topic Page" do
-  
-  before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
-    
-    @url = "/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=xbox-360,news&all_tags=true&sort=publish_date&order=desc"
-    @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
-    @data = JSON.parse(@response.body)  
-  end
 
-  before(:each) do
-    
-  end
-
-  after(:each) do
-
-  end
-    
-  it "should return 200", :stg => true do
-    check_200(@response, @data)
-  end
-end
-=end ###END PROBLEM WITHIN
 describe "Tech Api: Discover More Widget Service Call" do
 
   @topic = return_tech_nav
@@ -450,9 +428,8 @@ describe "Tech Api: Discover More Widget Service Call" do
 
         Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
         @config = Configuration.new
-
-        @url = "/v2/articles.json?post_type=article&per_page=2&categories=tech&tags=#{topic}"
-        @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
+        @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&per_page=2&categories=tech&tags=#{topic}"
+        @response = RestClient.get @url
         @data = JSON.parse(@response.body)
       end
 
@@ -462,6 +439,10 @@ describe "Tech Api: Discover More Widget Service Call" do
 
       after(:each) do
 
+      end
+      
+      it "", :smoke => true do
+        puts @url
       end
 
       it "should return 200", :stg => true do
@@ -523,9 +504,8 @@ describe "Tech Api: Home Page Blogroll Video Interrupt Playlist Service Call" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
-    
-    @url = "/v2/playlists/ign-tech.json?"
-    @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
+    @url = "http://#{@config.options['baseurl']}"+"/v2/playlists/ign-tech.json?"
+    @response = RestClient.get @url
     @data = JSON.parse(@response.body)
   end
 
@@ -535,6 +515,10 @@ describe "Tech Api: Home Page Blogroll Video Interrupt Playlist Service Call" do
 
   after(:each) do
 
+  end
+  
+  it "", :smoke => true do
+    puts @url
   end
   
   it "should return 200", :prd => true do
@@ -578,9 +562,8 @@ describe "Tech Api: Home Page Blogroll Popular Articles Interrupt Service Call" 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
-    
-    @url = "/v2/articles.json?post_type=article&sort=popularity&categories=tech&per_page=6"
-    @response = RestClient.get "http://#{@config.options['baseurl']}#{@url}"
+    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&sort=popularity&categories=tech&per_page=6"
+    @response = RestClient.get @url
     @data = JSON.parse(@response.body)
   end
 
@@ -590,6 +573,10 @@ describe "Tech Api: Home Page Blogroll Popular Articles Interrupt Service Call" 
 
   after(:each) do
 
+  end
+  
+  it "", :smoke => true do
+    puts @url
   end
   
   it "should return 200", :stg => true do
