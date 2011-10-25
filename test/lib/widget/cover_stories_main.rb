@@ -6,7 +6,7 @@ module CoverStoriesMain
       @doc.at_css('div.cat-coverStories').should be_true
     end
     
-    it "should display once on the page", :code => true do
+    it "should be on the page only once", :code => true do
       @doc.css('div.cat-coverStories').count.should == 1
     end
 
@@ -60,7 +60,7 @@ module CoverStoriesMain
     end
 
     it "should have at least one <a> tag" do
-      @doc.css('div.cat-coverStories a').count.should > 1
+      @doc.css('div.cat-coverStories a').count.should > 0
     end
 
   end

@@ -6,6 +6,10 @@ module CoverStoriesExtra
     it "should not be missing from the page", :code => true do
       @doc.css('div.extra-coverStories').should be_true
     end
+    
+    it "should be on the page only once", :code => true do
+      @doc.css('div.extra-coverStories').count.should == 1
+    end
 
     it "should contain four slots for four cover stories" do
       @doc.css('div.extra-coverStories div.extra-storyItem').count.should == 4
@@ -41,7 +45,7 @@ module CoverStoriesExtra
       end
     end
 
-    it "should not one image per slot" do
+    it "should have one image per slot" do
       @doc.css('div.extra-coverStories div.extra-storyItem').each do |slot|
         slot.css('img').count.should == 1
       end
@@ -49,12 +53,12 @@ module CoverStoriesExtra
     
     it "should have at least one link per slot" do
       @doc.css('div.extra-coverStories div.extra-storyItem').each do |slot|
-        slot.css('a').count.should > 1
+        slot.css('a').count.should > 0
       end
     end
     
     it "should have at least one <a> tag" do
-      @doc.css('div.extra-coverStories a').count.should > 1
+      @doc.css('div.extra-coverStories a').count.should > 0
     end
     
     it "should have at least one <img> tag" do
@@ -62,7 +66,13 @@ module CoverStoriesExtra
     end
 
     it "should display text" do
-      @doc.css('div.extra-coverStories').text.delete("^a-zA-Z").length.should > 1
+      @doc.css('div.extra-coverStories').text.delete("^a-zA-Z").length.should > 0
+    end
+    
+    it "should display text in each slot" do
+      @doc.css('div.extra-coverStories div.extra-storyItem').each do |slot|
+        slot.text.delete("^a-zA-Z").length.should > 0
+      end
     end
 
   end

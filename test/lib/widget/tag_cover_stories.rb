@@ -5,6 +5,10 @@ module TagCoverStories
     it "should not be missing from the page", :code => true do
       @doc.at_css('div.tgs-topStories div.tgs-storyItems').should be_true
     end
+    
+    it "should be on the page only once", :code => true do
+      @doc.css('div.tgs-topStories div.tgs-storyItems').count.should == 1
+    end
 
     it "should have three slots for three stories" do
       @doc.css('div.tgs-topStories div.tgs-storyItems ul li').count.should == 3

@@ -53,11 +53,15 @@ module DiscoverMore
       widget_discover_more_check_not_missing(@doc)
     end
     
+    it "should be on the page only once", :code => true do
+      @doc.css('div.slider-holder div.slider').count.should == 1
+    end
+    
     it "should display a title" do
       widget_discover_more_check_title(@doc)
     end
     
-    it "should display an non-broken image" do
+    it "should display a non-broken image" do
       widget_discover_more_check_img_not_400_or_500(@doc)
     end
     
@@ -78,6 +82,10 @@ module DiscoverMore
     
     it "should not be missing from the page", :code => true do
       @doc.at_css('div.topicTiles').should be_true
+    end
+    
+    it "should be on the page only once" do
+      @doc.css('div.topicTiles').count.should == 1
     end
     
     it "should contain the same number of links and images as are tech tag pages", :code => true do

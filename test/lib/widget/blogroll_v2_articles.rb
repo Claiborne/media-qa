@@ -12,97 +12,65 @@ module Blogrollv2Articles
     i.should be < num*0.7
   end
   
-  def widget_blogroll_v2_articles_check_not_missing(doc)
-    doc.at_css('div#ign-blogroll').should be_true
-  end
-  
-  def widget_blogroll_v2_articles_check_num_entries(doc, num_of_entries)
-    doc.css('div#ign-blogroll div.listElmnt-articleContent').count.should eql(num_of_entries)
-  end
-
-  def widget_blogroll_v2_articles_check_author_name(doc, num_of_entries)
-    check_not_blank(doc, num_of_entries, "div#ign-blogroll div.listElmnt-authors")
-  end
-  
-  def widget_blogroll_v2_articles_check_timestamp(doc, num_of_entries)
-    check_not_blank(doc, num_of_entries, "div#ign-blogroll div.listElmnt-date")
-  end
-  
-  def widget_blogroll_v2_articles_check_headline(doc, num_of_entries)
-    check_not_blank(doc, num_of_entries, "div#ign-blogroll a.listElmnt-storyHeadline")
-  end
-  
-  def widget_blogroll_v2_articles_check_article_summary(doc, num_of_entries)
-    check_not_blank(doc, num_of_entries, "div#ign-blogroll p.listElmnt-summary")
-  end
-  
-  def widget_blogroll_v2_articles_check_read_more(doc, num_of_entries)
-    check_not_blank(doc, num_of_entries, "div#ign-blogroll a.moreLink")
-  end
-  
-  def widget_blogroll_v2_articles_check_matches_article_api(doc, num, api)
-    data = JSON.parse((rest_client_open(api)).body)
-    api_titles = []
-    data.each do |article|
-      api_titles << article['blogroll']['headline']
-    end
-    
-    frontend_titles = []
-    doc.css("div#ign-blogroll a.listElmnt-storyHeadline").each do |article|
-      frontend_titles << article.text
-    end
-    titles = api_titles + frontend_titles
-    titles.uniq.count.should be <= num+2
-  end
-  
-  def widget_blogroll_v2_articles_check_no_duplicates(doc)
-    headline = []
-    doc.css('div.listElmnt-articleContent a.listElmnt-storyHeadline').each do |entry|
-      headline << entry.attribute('href')
-    end
-    headline.count.should > 0
-    headline.count.should eql(headline.uniq.count)
-  end
-  
   def widget_blogroll_v2_articles(num, call)
 
-    it "should not be missing from the page", :code => true do
-      widget_blogroll_v2_articles_check_not_missing(@doc)
+    it "should not be missing from the page", :smoke => true do
+      @doc.at_css('div#ign-blogroll').should be_true
+    end
+    
+    it "should be on the page only once" do
+      @doc.css('div#ign-blogroll').count.should == 1
     end
   
     it "should have #{num} blogroll entries" do
-      widget_blogroll_v2_articles_check_num_entries(@doc, num)
+      @doc.css('div#ign-blogroll div.listElmnt-articleContent').count.should eql(num)
     end
 
-    it "shoud display author name" do
-      widget_blogroll_v2_articles_check_author_name(@doc, num)
+    it "shoud display the authors' names" do
+      check_not_blank(@doc, num, "div#ign-blogroll div.listElmnt-authors")
     end
     
-    it "shoud display timestamp" do
-      widget_blogroll_v2_articles_check_timestamp(@doc, num)
+    it "shoud display the articles' timestamps" do
+      check_not_blank(@doc, num, "div#ign-blogroll div.listElmnt-date")
     end
 
-    it "shoud display headline", :code => true do
-      widget_blogroll_v2_articles_check_headline(@doc, num)
+    it "shoud display the articles' headlines", :code => true do
+      check_not_blank(@doc, num, "div#ign-blogroll a.listElmnt-storyHeadline")
     end
 
-    it "shoud display article summary", :code => true do
-      widget_blogroll_v2_articles_check_article_summary(@doc, num)
+    it "shoud display articles' summaries", :code => true do
+      check_not_blank(@doc, num, "div#ign-blogroll p.listElmnt-summary")
     end
     
-    it "shoud display read more link in article summary" do
-      widget_blogroll_v2_articles_check_read_more(@doc, num)
+    it "shoud display the read more links" do
+      check_not_blank(@doc, num, "div#ign-blogroll a.moreLink")
     end
 
     it "should display only unique entries", :code => true do
-      widget_blogroll_v2_articles_check_no_duplicates(@doc)
+      headline = []
+      @doc.css('div.listElmnt-articleContent a.listElmnt-storyHeadline').each do |entry|
+        headline << entry.attribute('href')
+      end
+      headline.count.should > 0
+      headline.count.should eql(headline.uniq.count)
     end
 
     it "should display the same articles as the api returns" do
       Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
       config = Configuration.new
     
-      widget_blogroll_v2_articles_check_matches_article_api(@doc, num, "http://#{config.options['baseurl']}#{call}")
+      data = JSON.parse((rest_client_open("http://#{config.options['baseurl']}#{call}")).body)
+      api_titles = []
+      data.each do |article|
+        api_titles << article['blogroll']['headline']
+      end
+
+      frontend_titles = []
+      @doc.css("div#ign-blogroll a.listElmnt-storyHeadline").each do |article|
+        frontend_titles << article.text
+      end
+      titles = api_titles + frontend_titles
+      titles.uniq.count.should be <= num+2
     end
 
   end

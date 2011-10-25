@@ -6,7 +6,7 @@ module VideoInterrupt
       @doc.at_css('div.vidPlayListContainer').should be_true
     end
     
-    it "should appear once on the page", :code => true do
+    it "should be on the page only once", :code => true do
       @doc.css('div.vidPlayListContainer').count.should == 1
     end
     

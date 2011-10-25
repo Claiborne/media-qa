@@ -2,17 +2,23 @@ module ObjectScore
   
   def widget_object_score
     
-    it "should not be missing from the page if an article has a review score" do
+    it "should not be missing from a article has a review score" do
       @doc.at_css('div.ratingScoreBoxContainer div.ratingScoreBox').should be_true
     end
     
-    it "should only appear once if an article has a review score" do
-      @doc.css('div.ratingScoreBoxContainer div.ratingScoreBox').should == 1
+    it "should be on the page only once if an article has a review score" do
+      @doc.css('div.ratingScoreBoxContainer div.ratingScoreBox').count.should == 1
     end
     
-    it "should not appear on an article with no review score" do
-      @doc.css('div.ratingScoreBoxContainer div.ratingScoreBox').should == 1
+    it "should display a text score" do
+      @doc.at_css('div.ratingScoreBoxContainer div.rsb-scoreText').text.delete('^a-zA-Z').length.should > 0
     end
+    
+    it "should display a numberic score" do
+      @doc.at_css('div.ratingScoreBoxContainer div.rsb-scoreNumber').text.delete('^0-9').length.should > 0
+    end
+    
+    it "should not appear on an article with no review score"
 
   end 
 end

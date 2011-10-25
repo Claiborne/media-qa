@@ -3,7 +3,11 @@ module VertNav
   def widget_vert_nav(category, tag)
        
     it "should not be missing from the page", :code => true do
-      @doc.at_css('div.vn-container ul li').should be_true
+      @doc.at_css('div.vn-container').should be_true
+    end
+    
+    it "should be on the page only once", :code => true do
+      @doc.css('div.vn-container').count.should == 1
     end
     
     it "should display all components", :code => true do

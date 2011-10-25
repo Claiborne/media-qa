@@ -60,3 +60,11 @@ Some staging environments support branches in the staging environment.  For thes
 sample config
 staging:
   baseurl: branchname.stg.www.ign.com
+
+Using Tags:
+
+To run v2 for production: rake v2 env=production
+
+To run v2 for staging: rake v2 SPEC_OPTS="--tag ~prd"
+
+To run with tags: rake v2 SPEC_OPTS="--tag name_of_tag"

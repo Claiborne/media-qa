@@ -6,7 +6,7 @@ module PopularArticlesInterrupt
       @doc.at_css('div.popularArticles').should be_true
     end
     
-    it "should appear once on the page" do
+    it "should be on the page only once" do
       @doc.css('div.popularArticles').count.should == 1
     end
     
@@ -17,7 +17,7 @@ module PopularArticlesInterrupt
           headlines << a.text
         end
       end
-      headlines.delete("^a-zA-Z").length.should > 1
+      headlines.delete("^a-zA-Z").length.should > 0
     end
     
     it "should dispay a title" do
