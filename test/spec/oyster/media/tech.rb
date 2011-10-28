@@ -255,26 +255,19 @@ describe "Tech v2 Article Page:" do
     @doc.css('div#disqus_thread').count.should == 1
   end
   
-  it "should include the wiki updates widget once" do
-    @doc.css('div.wikiUpdates').count.should == 1
-  end
-  
+  widget_wiki_updates_smoke
+
   it "should not display the pagination widget when only one page exists" do
-    Nokogiri::HTML(open("http://#{@config.options['baseurl']}/articles/2011/08/24/report-iphone-5-coming-to-sprint")).at_css('div.pager_list').should be_false
+    @doc.at_css('div.pager_list').should be_false
   end
   
-  it "should include the discover more widget once" do
-    @doc.css('div.slider-holder div.slider').count.should == 1
-  end
+  widget_discover_more_smoke
   
-  it "should include the video interrupt widget once" do
-    @doc.css('div.vidPlayListContainer').count.should == 1
-  end
+  widget_video_interrupt_smoke
   
   context "Vert Nav Widget:" do
-    it "should be on the page once", :code => true do
-      @doc.at_css('div.vn-container').count.should == 1
-    end
+    
+    widget_discover_more_smoke
     
     it "should include all components", :code => true do
       @doc.at_css('div.vn-container ul li.vn-follow').should be_true
@@ -288,9 +281,9 @@ describe "Tech v2 Article Page:" do
   end
   
   it "should not display the object score box widget when no review score exists" do
-    page = "http://#{@config.options['baseurl']}/articles/2011/10/24/apple-upgrades-macbook-pro-line"
-    doc = nokogiri_open(page)
-    doc.css('div.ratingScoreBoxContainer div.ratingScoreBox').count.should == 0
+    page2 = "http://#{@config.options['baseurl']}/articles/2011/10/24/apple-upgrades-macbook-pro-line"
+    doc2 = nokogiri_open(page2)
+    doc2.css('div.ratingScoreBoxContainer div.ratingScoreBox').count.should == 0
   end
   
   it "should not be missing the pagination widget when more than one page exists"

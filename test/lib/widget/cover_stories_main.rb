@@ -1,14 +1,18 @@
 module CoverStoriesMain
   
+  def widget_cover_stories_main_smoke
+    it "should be on the page only once", :code => true do
+      @doc.css('div.cat-coverStories').count.should == 1
+    end
+  end
+  
   def widget_cover_stories_main
 
     it "should not be missing from the page", :code => true do
       @doc.at_css('div.cat-coverStories').should be_true
     end
     
-    it "should be on the page only once", :code => true do
-      @doc.css('div.cat-coverStories').count.should == 1
-    end
+    widget_cover_stories_main_smoke
 
     it "should contain three slots for three cover stories" do
       @doc.css('div.cat-coverStories a').count.should == 3

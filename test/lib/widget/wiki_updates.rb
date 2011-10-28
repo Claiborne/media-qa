@@ -1,14 +1,18 @@
 module WikiUpdates
   
+  def widget_wiki_updates_smoke
+    it "should be on the page only once", :code => true do
+      @doc.css('div.wikiUpdates').count.should == 1
+    end
+  end
+  
   def widget_wiki_updates
     
     it "should not be missing from the page", :code => true do
       @doc.at_css('div.wikiUpdates').should be_true
     end
     
-    it "should be on the page only once", :code => true do
-      @doc.css('div.wikiUpdates').count.should == 1
-    end
+    widget_wiki_updates_smoke
     
     it "should contain links to recently updated Wiki pages" do
       @doc.css("div.wikiUpdates ul a.itemLink[href*='/wikis/']").count.should > 0

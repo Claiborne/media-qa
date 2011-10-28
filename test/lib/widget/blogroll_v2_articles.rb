@@ -12,15 +12,19 @@ module Blogrollv2Articles
     i.should be < num*0.7
   end
   
+  def widget_blogroll_v2_articles_smoke
+    it "should be on the page only once" do
+      @doc.css('div#ign-blogroll').count.should == 1
+    end
+  end
+  
   def widget_blogroll_v2_articles(num, call)
 
     it "should not be missing from the page", :smoke => true do
       @doc.at_css('div#ign-blogroll').should be_true
     end
     
-    it "should be on the page only once" do
-      @doc.css('div#ign-blogroll').count.should == 1
-    end
+    widget_blogroll_v2_articles_smoke
   
     it "should have #{num} blogroll entries" do
       @doc.css('div#ign-blogroll div.listElmnt-articleContent').count.should eql(num)
@@ -53,6 +57,16 @@ module Blogrollv2Articles
       end
       headline.count.should > 0
       headline.count.should eql(headline.uniq.count)
+    end
+    
+    it "should not contain headline links that 400 or 500" do
+      
+    end
+    
+    it "should not contain any read more links that 400 or 500"
+    
+    it "should contain headline links that only return a response code of 200" do
+      
     end
 
     it "should display the same articles as the api returns" do

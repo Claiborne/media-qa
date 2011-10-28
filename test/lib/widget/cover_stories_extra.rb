@@ -1,5 +1,10 @@
 module CoverStoriesExtra
 
+  def widget_cover_stories_extra_smoke
+    it "should be on the page only once", :code => true do
+      @doc.css('div.extra-coverStories').count.should == 1
+    end
+  end
   
   def widget_cover_stories_extra
 
@@ -7,9 +12,7 @@ module CoverStoriesExtra
       @doc.css('div.extra-coverStories').should be_true
     end
     
-    it "should be on the page only once", :code => true do
-      @doc.css('div.extra-coverStories').count.should == 1
-    end
+    widget_cover_stories_extra_smoke
 
     it "should contain four slots for four cover stories" do
       @doc.css('div.extra-coverStories div.extra-storyItem').count.should == 4

@@ -105,7 +105,7 @@ module Assert
     end 
   end
   
-  def check_no_duplicates(response, data)
+  def check_no_duplicates_by_slug(response, data)
     slug = []
     data.each do |article|
       slug << article['slug']

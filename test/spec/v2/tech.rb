@@ -134,7 +134,7 @@ describe "Tech Api: Home Page Blogroll Widget Service Call" do
   end
   
   it "should return only unique entries", :stg => true do
-    check_no_duplicates(@response, @data)
+    check_no_duplicates_by_slug(@response, @data)
   end
     
 end
@@ -273,7 +273,7 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
   end
   
   it "should return only unique entries", :stg => true do
-    check_no_duplicates(@response, @data)
+    check_no_duplicates_by_slug(@response, @data)
   end
   
   end

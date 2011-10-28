@@ -1,14 +1,21 @@
 module PopularArticlesInterrupt
   
+  require 'link_checker'
+  include LinkChecker
+  
+  def widget_popular_articles_interrupt_smoke
+    it "should be on the page only once" do
+      @doc.css('div.popularArticles').count.should == 1
+    end
+  end
+  
   def widget_popular_articles_interrupt
     
     it "should not be missing from the page" do
       @doc.at_css('div.popularArticles').should be_true
     end
     
-    it "should be on the page only once" do
-      @doc.css('div.popularArticles').count.should == 1
-    end
+    widget_popular_articles_interrupt_smoke
     
     it "should not be blank" do
       headlines = ""
@@ -36,6 +43,14 @@ module PopularArticlesInterrupt
           false.should be_true
         end
       end
+    end
+    
+    it "should not contain any broken links" do
+      check_for_broken_links('div.popularArticles')
+    end
+    
+    it "should contain links that only return a response code of 200" do
+      check_links_200('div.popularArticles')
     end
 
   end 

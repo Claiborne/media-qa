@@ -1,14 +1,21 @@
 module VideoInterrupt
   
+  require 'link_checker'
+  include LinkChecker
+  
+  def widget_video_interrupt_smoke
+    it "should be on the page only once", :code => true do
+      @doc.css('div.vidPlayListContainer').count.should == 1
+    end
+  end
+  
   def widget_video_interrupt
     
     it "should not be missing from the page", :code => true do
       @doc.at_css('div.vidPlayListContainer').should be_true
     end
     
-    it "should be on the page only once", :code => true do
-      @doc.css('div.vidPlayListContainer').count.should == 1
-    end
+    widget_video_interrupt_smoke
     
     it "should display an image for the selected video", :code => true do
       @doc.at_css('div.vidPlayListContainer img').attribute('src').to_s.match(/http/).should be_true
@@ -28,21 +35,11 @@ module VideoInterrupt
     end
     
     it "should not contain broken images" do
-      @doc.css('div.vidPlayListContainer img').each do |img|
-        img_src = img.attribute('src').to_s
-        response = rest_client_open img_src
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
-      end
+      check_for_broken_images('div.vidPlayListContainer')
     end
     
     it "should not contain broken links" do
-      @doc.css('div.vidPlayListContainer a').each do |a|
-        a_href = a.attribute('href').to_s
-        response = rest_client_open a_href
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
-      end
+      check_for_broken_links('div.vidPlayListContainer')
     end
     
   end
