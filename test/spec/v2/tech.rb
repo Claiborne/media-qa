@@ -213,9 +213,17 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
   it "should return articles with a headline key present", :stg => true do
     check_key_exists_for_all(@response, @data, "headline")
   end
+  
+  if topic == 'wii-u'
+    
+    it "should return 20 articles"
+    
+  else
 
-  it "should return 20 articles", :prd => true do
-    article_count(@response, @data, 20)
+    it "should return 20 articles", :prd => true do
+      article_count(@response, @data, 20)
+    end
+    
   end
   
   it "should return articles with a post_type of article", :stg => true do
