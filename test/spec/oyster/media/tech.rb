@@ -166,10 +166,10 @@ describe "Tech #{topic} Topic Page:" do
   it "should include the article submission widget once" do
     @doc.css('a.postNews').count.should == 1
   end
-
+    
   context "Blogroll Widget:" do
     widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&sort=publish_date&order=desc")
-  end 
+  end
   
   context "Vertical Navigation Widget:" do
     widget_vert_nav("tech", topic)

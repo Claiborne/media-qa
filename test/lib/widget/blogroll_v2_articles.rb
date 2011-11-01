@@ -25,9 +25,17 @@ module Blogrollv2Articles
     end
     
     widget_blogroll_v2_articles_smoke
+    
+    if call.match(/&tags=wii-u&/)
+      
+      it "should have #{num} blogroll entries"
+        
+    else
   
-    it "should have #{num} blogroll entries" do
-      @doc.css('div#ign-blogroll div.listElmnt-articleContent').count.should eql(num)
+      it "should have #{num} blogroll entries" do
+        @doc.css('div#ign-blogroll div.listElmnt-articleContent').count.should eql(num)
+      end
+    
     end
 
     it "shoud display the authors' names" do
