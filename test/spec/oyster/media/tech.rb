@@ -63,9 +63,9 @@ describe "Tech HomePage:" do
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
     end
-  end 
+  end
 
-  it "should include the  global header widget once", :code => true do
+  it "should include the global header widget once", :exp => true do
     @doc.css('div#ign-header').count.should == 1
   end
   
@@ -248,7 +248,7 @@ describe "Tech v2 Article Page:" do
   end
   
   it "should include two share this widgets", :code => true do
-    (@doc.css("div[class*='shareThis addthis_toolbox']").count == 2).should be_true
+    (@doc.css("div[class*='addthis_toolbox']").count == 2).should be_true
   end
   
   it "should include the discus comments widget once", :code => true do

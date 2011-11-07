@@ -17,13 +17,13 @@ module VertNav
     
     widget_vert_nav_smoke
     
-    it "should display all components", :code => true do
+    it "should display all components", :ts => true do
       @doc.at_css('div.vn-container ul li.vn-follow').should be_true
       @doc.at_css('div.vn-container ul li.vn-categoryItem a').should be_true
       if tag == 'lifestyle'
         @doc.css('div.vn-container ul li.vn-navItem a').count.should > 1
       else
-        @doc.css('div.vn-container ul li.vn-navItem a').count.should > 3
+        @doc.css('div.vn-container ul li.vn-navItem a').count.should > 4
       end
     end  
 
