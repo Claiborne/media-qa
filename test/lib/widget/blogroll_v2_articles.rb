@@ -1,7 +1,7 @@
 module Blogrollv2Articles
 #spec file requires Nokogiri, rspec, rest_client, and json
 
-  def check_not_blank(doc, num, element)
+  def check_is_not_blank(doc, num, element)
     i = 0
     doc.css(element).each do |element_instance|
       if element_instance.text.delete("^a-zA-Z").length <  1
@@ -39,23 +39,23 @@ module Blogrollv2Articles
     end
 
     it "shoud display the authors' names" do
-      check_not_blank(@doc, num, "div#ign-blogroll div.listElmnt-authors")
+      check_is_not_blank(@doc, num, "div#ign-blogroll div.listElmnt-authors")
     end
     
     it "shoud display the articles' timestamps" do
-      check_not_blank(@doc, num, "div#ign-blogroll div.listElmnt-date")
+      check_is_not_blank(@doc, num, "div#ign-blogroll div.listElmnt-date")
     end
 
     it "shoud display the articles' headlines", :code => true do
-      check_not_blank(@doc, num, "div#ign-blogroll a.listElmnt-storyHeadline")
+      check_is_not_blank(@doc, num, "div#ign-blogroll a.listElmnt-storyHeadline")
     end
 
     it "shoud display articles' summaries", :code => true do
-      check_not_blank(@doc, num, "div#ign-blogroll p.listElmnt-summary")
+      check_is_not_blank(@doc, num, "div#ign-blogroll p.listElmnt-summary")
     end
     
     it "shoud display the read more links" do
-      check_not_blank(@doc, num, "div#ign-blogroll a.moreLink")
+      check_is_not_blank(@doc, num, "div#ign-blogroll a.moreLink")
     end
 
     it "should display only unique entries", :code => true do
