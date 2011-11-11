@@ -1,0 +1,6 @@
+require 'test/unit'
+require 'files/social_blog_new_post'
+require 'files/social_blog_video_post'
+require 'files/social_blog_format_post_quick'
+#require 'files/social_blog_format_post'
+require 'files/social_blog_header_customize'

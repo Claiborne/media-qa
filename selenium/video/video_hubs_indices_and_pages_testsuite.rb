@@ -1,0 +1,5 @@
+require 'test/unit'
+require 'files/video_hub_and_player_pages'
+require 'files/video_series_index'
+require 'files/video_series_gallery_page'
+require 'files/video_game_video_index'

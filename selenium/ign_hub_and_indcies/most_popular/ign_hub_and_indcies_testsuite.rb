@@ -1,0 +1,7 @@
+require 'test/unit'
+require 'files/SmokeTestv3'
+#require 'files/MovieNewsToVideo'
+#require 'files/TopReviewedGames'
+#require 'files/TopUpcomingGames'
+#require 'files/Xbox360TopStories'
+#require 'files/MainPage360BlogRoll'
