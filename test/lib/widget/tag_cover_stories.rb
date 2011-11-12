@@ -4,18 +4,18 @@ module TagCoverStories
   include LinkChecker
   
   def widget_tag_cover_stories_smoke
-    it "should be on the page only once", :code => true do
+    it "should be on the page only once", :smoke => true do
       @doc.css('div.tgs-topStories div.tgs-storyItems').count.should == 1
     end
   end
   
   def widget_tag_cover_stories
     
-    it "should not be missing from the page", :code => true do
+    widget_tag_cover_stories_smoke
+    
+    it "should not be missing from the page", :smoke => true do
       @doc.at_css('div.tgs-topStories div.tgs-storyItems').should be_true
     end
-    
-    widget_tag_cover_stories_smoke
 
     it "should have three slots for three stories" do
       @doc.css('div.tgs-topStories div.tgs-storyItems ul li').count.should == 3
@@ -37,11 +37,11 @@ module TagCoverStories
       end
     end
 
-    it "should not have any broken links" do
+    it "should not have any broken links", :spam => true do
       check_for_broken_links('div.tgs-storyItems')
     end
   
-    it "should not have any broken images" do
+    it "should not have any broken images", :spam => true do
       check_for_broken_images('div.tgs-storyItems')
     end
 
@@ -55,7 +55,7 @@ module TagCoverStories
       header_text < @doc.css('div.tgs-storyItems ul li a').count
     end
     
-    it "should display an image" do
+    it "should display an image", :smoke => true do
       @doc.at_css("div.tgs-storyDisplay img[@src*='http']").should be_true
     end
 
@@ -63,7 +63,7 @@ module TagCoverStories
       @doc.css("div.tgs-storyItems ul li a[@href*='http']").count.should == 3
     end
     
-    it "should link to content in the image slot" do
+    it "should link to content in the image slot", :smoke => true do
       @doc.at_css("div.tgs-storyDisplay a[@href*='http']").should be_true
     end
     
@@ -71,11 +71,11 @@ module TagCoverStories
       @doc.css("div.tgs-storyItems ul li a[@href*='http']").count.should > 0
     end
     
-    it "should have at least one <a> tag" do
+    it "should have at least one <a> tag", :smoke => true do
       @doc.css('div.tgs-storyItems a').count.should > 0
     end
     
-    it "should have at least one <img> tag" do
+    it "should have at least one <img> tag", :smoke => true do
       @doc.css('div.tgs-topStories img').count.should > 0
     end
     

@@ -49,15 +49,15 @@ describe "Tech HomePage:" do
 
   end
   
-  it "should not return 400 or 500", :code => true do
+  it "should not return 400 or 500", :smoke => true do
     @doc
   end
 
-  it "should include at least one css file", :code => true do
+  it "should include at least one css file", :smoke => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
 
-  it "should not include any css files that return 400 or 500" do
+  it "should not include any css files that return 400 or 500", :smoke => true do
     @doc.css("link[@href*='.css']").each do |css|
       response = rest_client_open css.attribute('href').to_s
       response.code.should_not eql(/4\d\d/)
@@ -65,11 +65,11 @@ describe "Tech HomePage:" do
     end
   end
 
-  it "should include the global header widget once", :exp => true do
+  it "should include the global header widget once", :smoke => true do
     @doc.css('div#ign-header').count.should == 1
   end
   
-  it "should include the global footer widget once", :code => true do
+  it "should include the global footer widget once", :smoke => true do
     @doc.css('div#ignFooter-container').count.should == 1
   end
   
@@ -109,10 +109,6 @@ describe "Tech HomePage:" do
     widget_popular_articles_interrupt
   end
 
-  #context "Ads" do
-    #ads_on_tech_page
-  #end
-
 end
 
 @topic = return_tech_nav
@@ -135,15 +131,15 @@ describe "Tech #{topic} Topic Page:" do
 
   end
   
-  it "should not return 400 or 500", :code => true do
+  it "should not return 400 or 500", :smoke => true do
     @doc
   end
 
-  it "should include at least one css file", :code => true do
+  it "should include at least one css file", :smoke => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
   
-  it "should not include any css files that return 400 or 500" do
+  it "should not include any css files that return 400 or 500", :smoke => true do
     @doc.css("link[@href*='.css']").each do |css|
       response = rest_client_open css.attribute('href').to_s
       response.code.should_not eql(/4\d\d/)
@@ -151,11 +147,11 @@ describe "Tech #{topic} Topic Page:" do
     end
   end     
   
-  it "should include the global header widget once ", :code => true do
+  it "should include the global header widget once ", :smoke => true do
     @doc.css('div#ign-header').count.should == 1
   end
   
-  it "should include the global footer widget once", :code => true do
+  it "should include the global footer widget once", :smoke => true do
     @doc.css('div#ignFooter-container').count.should == 1
   end
   
@@ -195,10 +191,6 @@ describe "Tech #{topic} Topic Page:" do
     end
   end
 
-  #context "Ads" do
-    #ads_on_tech_page
-  #end
-
 end
 end
 
@@ -219,15 +211,15 @@ describe "Tech v2 Article Page:" do
 
   end
   
-  it "should not return 400 or 500", :code => true do
+  it "should not return 400 or 500", :smoke => true do
     @doc
   end
 
-  it "should include at least one css file", :code => true do
+  it "should include at least one css file", :smoke => true do
     @doc.css("head link[@href*='.css']").count.should > 0
   end
   
-  it "should not include any css files that return 400 or 500" do
+  it "should not include any css files that return 400 or 500", :smoke => true do
     @doc.css("link[@href*='.css']").each do |css|
       response = rest_client_open css.attribute('href').to_s
       response.code.should_not eql(/4\d\d/)
@@ -239,19 +231,19 @@ describe "Tech v2 Article Page:" do
     @doc.at_css('div.article_byLine div.article_author').text.delete('^a-zA-Z').length.should > 2
   end
   
-  it "should include the global header widget once", :code => true do
+  it "should include the global header widget once", :smoke => true do
     @doc.css('div#ign-header').count.should == 1
   end
   
-  it "should include the global footer widget once", :code => true do
+  it "should include the global footer widget once", :smoke => true do
     @doc.css('div#ignFooter-container').count.should == 1
   end
   
-  it "should include two share this widgets", :code => true do
+  it "should include two share this widgets" do
     (@doc.css("div[class*='addthis_toolbox']").count == 2).should be_true
   end
   
-  it "should include the discus comments widget once", :code => true do
+  it "should include the discus comments widget once", :smoke => true do
     @doc.css('div#disqus_thread').count.should == 1
   end
   
@@ -269,7 +261,7 @@ describe "Tech v2 Article Page:" do
     
     widget_discover_more_smoke
     
-    it "should include all components", :code => true do
+    it "should include all components", :smoke => true do
       @doc.at_css('div.vn-container ul li.vn-follow').should be_true
       @doc.at_css('div.vn-container ul li.vn-categoryItem a').should be_true
       @doc.css('div.vn-container ul li.vn-navItem a').count.should > 3
@@ -287,9 +279,5 @@ describe "Tech v2 Article Page:" do
   end
   
   it "should not be missing the pagination widget when more than one page exists"
-
-  #context "Ads:" do
-    #ads_on_v2_article
-  #end
   
 end

@@ -13,29 +13,25 @@ module Blogrollv2Articles
   end
   
   def widget_blogroll_v2_articles_smoke
-    it "should be on the page only once" do
+    it "should be on the page only once", :smoke => true do
       @doc.css('div#ign-blogroll').count.should == 1
     end
   end
   
   def widget_blogroll_v2_articles(num, call)
+    
+    widget_blogroll_v2_articles_smoke
 
     it "should not be missing from the page", :smoke => true do
       @doc.at_css('div#ign-blogroll').should be_true
     end
     
-    widget_blogroll_v2_articles_smoke
-    
     if call.match(/&tags=wii-u&/)
-      
       it "should have #{num} blogroll entries"
-        
     else
-  
-      it "should have #{num} blogroll entries" do
+      it "should have #{num} blogroll entries", :smoke => true do
         @doc.css('div#ign-blogroll div.listElmnt-articleContent').count.should eql(num)
       end
-    
     end
 
     it "shoud display the authors' names" do
@@ -46,11 +42,11 @@ module Blogrollv2Articles
       check_is_not_blank(@doc, num, "div#ign-blogroll div.listElmnt-date")
     end
 
-    it "shoud display the articles' headlines", :code => true do
+    it "shoud display the articles' headlines", :smoke => true do
       check_is_not_blank(@doc, num, "div#ign-blogroll a.listElmnt-storyHeadline")
     end
 
-    it "shoud display articles' summaries", :code => true do
+    it "shoud display articles' summaries", :smoke => true do
       check_is_not_blank(@doc, num, "div#ign-blogroll p.listElmnt-summary")
     end
     
@@ -58,7 +54,7 @@ module Blogrollv2Articles
       check_is_not_blank(@doc, num, "div#ign-blogroll a.moreLink")
     end
 
-    it "should display only unique entries", :code => true do
+    it "should display only unique entries", :smoke => true do
       headline = []
       @doc.css('div.listElmnt-articleContent a.listElmnt-storyHeadline').each do |entry|
         headline << entry.attribute('href')
@@ -67,15 +63,11 @@ module Blogrollv2Articles
       headline.count.should eql(headline.uniq.count)
     end
     
-    it "should not contain headline links that 400 or 500" do
-      
-    end
+    it "should not contain headline links that 400 or 500"
     
     it "should not contain any read more links that 400 or 500"
     
-    it "should contain headline links that only return a response code of 200" do
-      
-    end
+    it "should contain headline links that only return a response code of 200"
 
     it "should display the same articles as the api returns" do
       Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"

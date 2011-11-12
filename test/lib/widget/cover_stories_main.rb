@@ -1,18 +1,18 @@
 module CoverStoriesMain
   
   def widget_cover_stories_main_smoke
-    it "should be on the page only once", :code => true do
+    it "should be on the page only once", :smoke => true do
       @doc.css('div.cat-coverStories').count.should == 1
     end
   end
   
   def widget_cover_stories_main
-
-    it "should not be missing from the page", :code => true do
-      @doc.at_css('div.cat-coverStories').should be_true
-    end
     
     widget_cover_stories_main_smoke
+
+    it "should not be missing from the page", :smoke => true do
+      @doc.at_css('div.cat-coverStories').should be_true
+    end
 
     it "should contain three slots for three cover stories" do
       @doc.css('div.cat-coverStories a').count.should == 3
@@ -25,7 +25,7 @@ module CoverStoriesMain
       end
     end
 
-    it "should not have any broken images" do
+    it "should not have any broken images", :spam => true do
       @doc.css('div.cat-coverStories a').each do |a|
         link = a.attribute('style').to_s.match(/http:\/\/[^']*/).to_s
         response = rest_client_open link
@@ -34,7 +34,7 @@ module CoverStoriesMain
       end
     end
 
-    it "should not have any broken links" do
+    it "should not have any broken links", :spam => true do
       @doc.css('div.cat-coverStories a').each do |a|
         link = a.attribute('href').to_s
         response = rest_client_open link
@@ -52,6 +52,8 @@ module CoverStoriesMain
         headline.text.delete("^a-zA-Z").length.should > 0
       end
     end
+    
+    it "should display text"
 
     it "should display headlines" do
       error_rate = 0
@@ -63,7 +65,7 @@ module CoverStoriesMain
       error_rate.should < 3
     end
 
-    it "should have at least one <a> tag" do
+    it "should have at least one <a> tag", :smoke => true do
       @doc.css('div.cat-coverStories a').count.should > 0
     end
 
