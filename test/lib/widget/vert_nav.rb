@@ -31,7 +31,7 @@ module VertNav
       @doc.at_css('div.vn-container li.vn-categoryItem a').attribute('href').text.match("/#{category}/#{tag}").should be_true
     end
 
-    it "should not have any broken links"" do", :spam => true do
+    it "should not have any broken links", :spam => true do
       check_for_broken_links('div.vn-container')
     end
   

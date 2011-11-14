@@ -17,16 +17,32 @@ end#end def
 
 def rest_client_open(page)
   stitial_count = 0
+  ############
+  begin
   rest_doc = RestClient.get(page)
+  rescue
+  raise Exception.new("ERROR HERE without encountering a stitial: "+page.to_s)
+  end
+  ############
   while Nokogiri::HTML(rest_doc.body).at_css('div#disable')
-    sleep 1
+    ############
+    begin
     rest_doc = RestClient.get(page)
+    rescue
+    raise Exception.new("ERROR HERE WITH encountering a stitial: "+page.to_s)
+    end
+    ############
     stitial_count +=1
     if stitial_count > 3
       raise "An endless stitial loop prevented this test case from running"
     elsif stitial_count > 2
-      sleep 1
+      ############
+      begin
       rest_doc = RestClient.get(page+"?special=noads")
+      rescue
+      raise Exception.new("ERROR HERE with ?special=noads: "+page.to_s)
+      end
+      ############
     end
   end#end while
   return rest_doc
