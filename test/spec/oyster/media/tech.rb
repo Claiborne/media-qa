@@ -49,6 +49,10 @@ describe "Tech HomePage:" do
 
   end
   
+  it "should test something", :test => true do
+    rest_client_open('http://www.ign.com/sdfss')
+  end
+  
   it "should not return 400 or 500", :smoke => true do
     @doc
   end
