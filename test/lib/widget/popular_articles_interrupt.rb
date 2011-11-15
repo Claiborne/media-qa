@@ -45,8 +45,8 @@ module PopularArticlesInterrupt
       end
     end
     
-    it "should not contain any broken links", :spam => true do
-      check_for_broken_links('div.popularArticles')
+    it "should contain links that only return a 200", :spam => true do
+      check_links_200('div.popularArticles')
     end
     
     it "should contain links that only return a response code of 200", :spam => true do

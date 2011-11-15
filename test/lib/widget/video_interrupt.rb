@@ -38,8 +38,8 @@ module VideoInterrupt
       check_for_broken_images('div.vidPlayListContainer')
     end
     
-    it "should not contain broken links", :spam => true do
-      check_for_broken_links('div.vidPlayListContainer')
+    it "should only contain links only that return a 200", :spam => true do
+      check_links_200('div.vidPlayListContainer')
     end
     
   end

@@ -1,5 +1,8 @@
 module CoverStoriesMain
   
+  require 'link_checker'
+  include LinkChecker
+  
   def widget_cover_stories_main_smoke
     it "should be on the page only once", :smoke => true do
       @doc.css('div.cat-coverStories').count.should == 1
@@ -26,21 +29,11 @@ module CoverStoriesMain
     end
 
     it "should not have any broken images", :spam => true do
-      @doc.css('div.cat-coverStories a').each do |a|
-        link = a.attribute('style').to_s.match(/http:\/\/[^']*/).to_s
-        response = rest_client_open link
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
-      end
+      check_for_broken_images('div.cat-coverStories')
     end
 
-    it "should not have any broken links", :spam => true do
-      @doc.css('div.cat-coverStories a').each do |a|
-        link = a.attribute('href').to_s
-        response = rest_client_open link
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
-      end
+    it "should contain links that only return a 200", :spam => true do
+      check_links_200('div.cat-coverStories')
     end
     
     it "should have three headline spans" do

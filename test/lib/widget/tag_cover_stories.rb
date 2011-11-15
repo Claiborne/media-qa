@@ -37,8 +37,8 @@ module TagCoverStories
       end
     end
 
-    it "should not have any broken links", :spam => true do
-      check_for_broken_links('div.tgs-storyItems')
+    it "should contain links that only return a 200", :spam => true do
+      check_links_200('div.tgs-storyItems')
     end
   
     it "should not have any broken images", :spam => true do

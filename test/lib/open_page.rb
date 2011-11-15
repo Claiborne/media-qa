@@ -16,20 +16,21 @@ def nokogiri_open(page)
 end#end def
 
 def rest_client_open(page)
+  puts page ########
   stitial_count = 0
   ############
   begin
   rest_doc = RestClient.get(page)
-  rescue
-  raise Exception.new("ERROR HERE without encountering a stitial: "+page.to_s)
+  rescue => e
+  raise Exception.new("#{e.http_code} Error on page without encountering a stitial: "+page.to_s)
   end
   ############
   while Nokogiri::HTML(rest_doc.body).at_css('div#disable')
     ############
     begin
     rest_doc = RestClient.get(page)
-    rescue
-    raise Exception.new("ERROR HERE WITH encountering a stitial: "+page.to_s)
+    rescue => e
+    raise Exception.new("#{e.http_code} Error on page WITH encountering a stitial: "+page.to_s)
     end
     ############
     stitial_count +=1
@@ -39,8 +40,8 @@ def rest_client_open(page)
       ############
       begin
       rest_doc = RestClient.get(page+"?special=noads")
-      rescue
-      raise Exception.new("ERROR HERE with ?special=noads: "+page.to_s)
+    rescue => e
+    raise Exception.new("#{e.http_code} Error on page with special=stital: "+page.to_s)
       end
       ############
     end

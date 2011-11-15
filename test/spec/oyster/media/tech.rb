@@ -49,7 +49,13 @@ describe "Tech HomePage:" do
 
   end
   
+  it "should throw a 404" do
+    rest_client_open('http://www.ign.com/sfsd/')
+    sleep 2
+  end
+  
   it "should not return 400 or 500", :smoke => true do
+    sleep 4
     @doc
   end
 

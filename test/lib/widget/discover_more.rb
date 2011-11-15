@@ -28,11 +28,7 @@ module DiscoverMore
       @doc.css('div.slider-holder span.subHeaderSection').text.delete("^a-zA-Z").length.should be > 0
     end
     
-    it "should not contain broken links", :spam => true do
-      check_for_broken_links('div.slider-holder')
-    end
-    
-    it "should contain links that only return a response code of 200", :spam => true do
+    it "should contain links that only return a 200", :spam => true do
       check_links_200('div.slider-holder')
     end
     
@@ -69,13 +65,10 @@ module DiscoverMore
       check_for_broken_images('div.topicTiles')
     end
     
-    it "should contain links that only return a response code of 200", :spam => true do
+    it "should contain links that only return a 200", :spam => true do
       check_links_200('div.topicTiles')
     end
     
-    #it "should not contain any broken links", :spam => true do
-      #check_for_broken_links('div.topicTiles')
-    #end
   end  
   
 end
