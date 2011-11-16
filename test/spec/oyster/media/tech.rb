@@ -17,7 +17,9 @@ require 'widget/wiki_updates'
 require 'widget/video_interrupt'
 require 'widget/popular_articles_interrupt'
 require 'widget/object_score'
+require'fe_smoke_checker'
 
+include FeSmokeChecker
 include ObjectScore
 include PopularArticlesInterrupt
 include VideoInterrupt
@@ -31,9 +33,6 @@ include Blogrollv2Articles
 include DiscoverMore
 include Ads
 include WikiUpdates
-
-require'fe_smoke_checker'
-include FeSmokeChecker
 
 describe "Tech HomePage:" do
 
@@ -52,12 +51,8 @@ describe "Tech HomePage:" do
 
   end
   
-  it "should return 200", :test => true do
-    rest_client_open('www.ign.com/sdsfs')
-  end
-  
   it "should return 200", :smoke => true do
-    @doc.response.code.should eql(200)
+    rest_client_open(@page).code.should eql(200)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -139,7 +134,7 @@ describe "Tech #{topic} Topic Page:" do
   end
   
   it "should return 200", :smoke => true do
-    @doc.response.code.should eql(200)
+    rest_client_open(@page).code.should eql(200)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -219,7 +214,7 @@ describe "Tech v2 Article Page:" do
   end
   
   it "should return 200", :smoke => true do
-    @doc.response.code.should eql(200)
+    rest_client_open(@page).code.should eql(200)
   end
 
   it "should include at least one css file", :smoke => true do

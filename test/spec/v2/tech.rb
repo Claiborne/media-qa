@@ -9,21 +9,18 @@ require 'tech_nav'
 include Assert
 include TechNav
 
-describe "Tech Api: Home Page Blogroll Widget Service Call" do
+describe "Tech Homepage -> Blogroll-Widget Service Call" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}"+"/v2/articlese.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
-    #@url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
+    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
     puts @url
-    #####
     begin 
-    @response = RestClient.get @url
+      @response = RestClient.get @url
     rescue => e
-    raise 
+      raise Exception.new(e.message+" "+@url)
     end
-    ####
     @data = JSON.parse(@response.body)
   end
 
@@ -53,10 +50,6 @@ describe "Tech Api: Home Page Blogroll Widget Service Call" do
   
   it "should return articles with a blogroll key present" do
     check_key_exists_for_all(@response, @data, "blogroll")
-  end
-  
-  it "should return articles with a blogroll image_url key present", :prd => true do
-    check_key_within_key_exists_for_all(@response, @data, "blogroll", "image_url")
   end
   
   it "should return articles with a blogroll headline key present" do
@@ -143,7 +136,7 @@ describe "Tech Api: Home Page Blogroll Widget Service Call" do
     
 end
 
-describe "Tech Api: Topic Blogroll Widget Service Call" do
+describe "Tech Topic-Pages -> Blogroll-Widget Service Call" do
   
   @topic = return_tech_nav
   @topic.each do |topic|
@@ -155,7 +148,11 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&all_tags=true&sort=publish_date&order=desc"
     puts @url
-    @response = RestClient.get @url
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
     @data = JSON.parse(@response.body)
   end
 
@@ -193,10 +190,6 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
   
   it "should return articles with a blogroll key present" do
     check_key_exists_for_all(@response, @data, "blogroll")
-  end
-  
-  it "should return articles with a blogroll image_url key present", :prd => true do
-    check_key_within_key_exists_for_all(@response, @data, "blogroll", "image_url")
   end
   
   it "should return articles with a blogroll headline key present" do
@@ -289,141 +282,7 @@ describe "Tech Api: Topic Blogroll Widget Service Call" do
   end  
 end
 
-describe "Tech Api: v2 Article Service Call" do
-
-  before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&slug=report-iphone-5-coming-to-sprint"
-    puts @url
-    @response = RestClient.get @url
-    @data = JSON.parse(@response.body)  
-  end
-  
-  before(:each) do
-    
-  end
-
-  after(:each) do
-  
-  end
-
-  it "should return 200" do
-    check_200(@response, @data)
-  end
-  
-  it "should not be blank" do
-    check_not_blank(@response, @data)
-  end
-  
-  it "should return only one article" do
-    article_count(@response, @data, 1)
-  end
-
-  it "should return an article with a slug key present" do
-    check_key_exists_for_all(@response, @data, "slug")
-  end
-  
-  it "should return an article with a slug value present" do
-    check_key_value_exists_for_all(@response, @data, "slug")
-  end
-  
-  it "should return an article with a blogroll key present" do
-    check_key_exists_for_all(@response, @data, "blogroll")
-  end
-  
-  it "should return an article with a blogroll image_url key present"#, :prd => true do
-    #check_key_within_key_exists_for_all(@response, @data, "blogroll", "image_url")
-  #end
-  
-  it "should return an article with a blogroll headline key present" do
-    check_key_within_key_exists_for_all(@response, @data, "blogroll", "headline")
-  end
-  
-  it "should return an article with a blogroll summary key present" do
-    check_key_within_key_exists_for_all(@response, @data, "blogroll", "summary")
-  end
-  
-  it "should return an article with a blogroll id key present" do
-    check_key_within_key_exists_for_all(@response, @data, "blogroll", "id")
-  end
-  
-  it "should return an article with a headline key present" do
-    check_key_exists_for_all(@response, @data, "headline")
-  end
-  
-  it "should return an article with a headline value present" do
-    check_key_value_exists_for_all(@response, @data, "headline")
-  end
-  
-  it "should return an article with a post_type of article" do
-    check_key_value_equals_for_all(@response, @data, "post_type", "article")
-  end
-  
-  it "should return an article in a published state by default " do
-    check_key_value_equals_for_all(@response, @data, "state", "published")
-  end
-  
-  it "should return an article with a category of tech" do
-    check_key_value_within_array_contains_for_all(@response, @data, "categories", "slug", "tech")
-  end
-  
-  it "should return an article with a publish_date key present" do
-    check_key_exists_for_all(@response, @data, "publish_date")
-  end
-  
-  it "should return articles with a publish_date value matching yyyy/mm/dd/" do
-    @data.each do |article|
-      article['publish_date'].match(/\A\d\d\d\d-\d\d-\d\dT/).should be_true
-    end
-  end
-  
-  it "should return an article with a full_text_pages key" do
-    check_key_exists_for_all(@response, @data, "full_text_pages")
-  end
-  
-  it "should return an article with a full_text_pages value" do
-    check_key_value_exists_for_all(@response, @data, "full_text_pages")
-  end
-  
-  it "should return an article with number_of_pages key present" do
-    check_key_exists_for_all(@response, @data, "number_of_pages")
-  end
-  
-  it "should return an article with number_of_pages value present" do
-    check_key_value_exists_for_all(@response, @data, "number_of_pages")
-  end
-  
-  it "should return an article with an authors key present" do
-    check_key_exists_for_all(@response, @data, "authors")
-  end
-  
-  it "should return an article with an author author_name value present" do
-    check_value_of_key_within_array_exists_for_all(@response, @data, "authors", "author_name")
-  end
-  
-  it "should return an article with an authors author_name key present" do
-    check_key_within_array_exists_for_all(@response, @data, "authors", "author_name")
-  end
-  
-  it "should return an article with an authors author_id key present" do
-    check_key_within_array_exists_for_all(@response, @data, "authors", "author_id")
-  end
-  
-  it "should return an article with an authors id key present" do
-    check_key_within_array_exists_for_all(@response, @data, "authors", "id")
-  end
-  
- it "should return an article with an id key present" do
-    check_key_exists_for_all(@response, @data, "id")
-  end
-    
-  it "should return an article with an id value present" do
-    check_key_value_exists_for_all(@response, @data, "id")
-  end   
-end
-
-describe "Tech Api: Discover More Widget Service Call" do
+describe "Tech Topic-Page -> Discover-More-Widget Service Call" do
 
   @topic = return_tech_nav
   @topic.each do |topic|
@@ -435,7 +294,11 @@ describe "Tech Api: Discover More Widget Service Call" do
         @config = Configuration.new
         @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&per_page=2&categories=tech&tags=#{topic}"
         puts @url
-        @response = RestClient.get @url
+        begin 
+          @response = RestClient.get @url
+        rescue => e
+          raise Exception.new(e.message+" "+@url)
+        end
         @data = JSON.parse(@response.body)
       end
 
@@ -501,14 +364,18 @@ describe "Tech Api: Discover More Widget Service Call" do
   end #end topic iteration
 end #end describe
 
-describe "Tech Api: Home Page Blogroll Video Interrupt Playlist Service Call" do
+describe "Tech Homepage -> Video-Playlist-Interrupt Service Call" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}"+"/v2/playlists/ign-tech.json?"
     puts @url
-    @response = RestClient.get @url
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
     @data = JSON.parse(@response.body)
   end
 
@@ -556,14 +423,18 @@ describe "Tech Api: Home Page Blogroll Video Interrupt Playlist Service Call" do
 
 end
 
-describe "Tech Api: Home Page Blogroll Popular Articles Interrupt Service Call" do
+describe "Tech Homepage -> Popular-Articles-Interrupt Service Call" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&sort=popularity&categories=tech&per_page=6"
     puts @url
-    @response = RestClient.get @url
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
     @data = JSON.parse(@response.body)
   end
 
