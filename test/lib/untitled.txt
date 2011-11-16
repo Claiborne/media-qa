@@ -1,8 +1,0 @@
-<html>
-<body>
-
-<object id="vid_4e9ccc848e88c50249000018" class="ign-videoplayer" width="480" height="270" data="http://media.ign.com/ev/prod/embed.swf" type="application/x-shockwave-flash"><param name="movie" value="http://media.ign.com/ev/prod/embed.swf" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="bgcolor" value="#000000" /><param name="flashvars" value="url=http://www.ign.com/videos/2011/11/14/ign-live-presents-wwe-12"/></object><div style="width:480px"><a href="http://www.ign.com/videos/games/wwe-12-ps3-109900">More WWE 12 Videos</a></div>
-
-</body>
-</html>
-

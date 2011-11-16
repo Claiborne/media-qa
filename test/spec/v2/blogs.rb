@@ -68,7 +68,7 @@ describe "blogs" do
   end
 
   it "should return blogs by author path" do
-   response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?path=clay.ign"
+   response = RestClient.get "http://#{@config.options['baseurl']}/v2/blogs.json?path=slyclaiborne"
    response.code.should eql(200)
    data = JSON.parse(response.body)
    data.length.should > 0

@@ -32,6 +32,9 @@ include DiscoverMore
 include Ads
 include WikiUpdates
 
+require'fe_smoke_checker'
+include FeSmokeChecker
+
 describe "Tech HomePage:" do
 
   before(:all) do
@@ -49,12 +52,12 @@ describe "Tech HomePage:" do
 
   end
   
-  it "should test something", :test => true do
-    rest_client_open('http://www.ign.com/sdfss')
+  it "should return 200", :test => true do
+    rest_client_open('www.ign.com/sdsfs')
   end
   
-  it "should not return 400 or 500", :smoke => true do
-    @doc
+  it "should return 200", :smoke => true do
+    @doc.response.code.should eql(200)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -135,8 +138,8 @@ describe "Tech #{topic} Topic Page:" do
 
   end
   
-  it "should not return 400 or 500", :smoke => true do
-    @doc
+  it "should return 200", :smoke => true do
+    @doc.response.code.should eql(200)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -215,8 +218,8 @@ describe "Tech v2 Article Page:" do
 
   end
   
-  it "should not return 400 or 500", :smoke => true do
-    @doc
+  it "should return 200", :smoke => true do
+    @doc.response.code.should eql(200)
   end
 
   it "should include at least one css file", :smoke => true do

@@ -7,14 +7,12 @@ def nokogiri_open(page)
   rescue => e
     raise Exception.new("#{e.message} on "+page.to_s )
   end#end Exception
-  sleep 1
   while nok_doc.at_css('div#disable')
     begin
       nok_doc = Nokogiri::HTML(open(page))
     rescue => e
       raise Exception.new("#{e.message} (after skipping a stitial) on "+page.to_s )
     end#end Exception
-    sleep 1
     stitial_count +=1
     if stitial_count > 3
       raise Exception.new("An endless stitial loop on #{page} prevented this test case from running")
@@ -22,7 +20,7 @@ def nokogiri_open(page)
       begin
         nok_doc = Nokogiri::HTML(open(page+"?special=noads"))
       rescue => e
-        raise Exception.new("#{e.message} (with special=stital) on "+page.to_s )
+        raise Exception.new("#{e.message} (with special=stital) on "+page.to_s)
       end#end Exception
     end
   end#end while
@@ -34,7 +32,7 @@ def rest_client_open(page)
   begin
     rest_doc = RestClient.get(page)
   rescue => e
-    raise Exception.new("#{e.message} on "+page.to_s)############
+    raise Exception.new("#{e.message} on "+page.to_s+" "+e.http_body+" "+e.inspect)
   end#end Exception
   while Nokogiri::HTML(rest_doc.body).at_css('div#disable')
     begin

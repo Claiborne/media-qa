@@ -3,7 +3,7 @@ require 'rest_client'
 require 'json'
 require 'configuration'
 
-describe "articles" do
+describe "Articles" do
 
   before(:all) do
 
