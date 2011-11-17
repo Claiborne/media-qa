@@ -83,7 +83,7 @@ describe "Tech HomePage:" do
     wiget_discover_more_expanded
   end
   
-  context "Main Cover Stories Widget:" do
+  context "Main Cover Stories Widget:", :test => true do
     widget_cover_stories_main
   end
   
