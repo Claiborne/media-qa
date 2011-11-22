@@ -38,7 +38,7 @@ module TagCoverStories
     end
 
     it "should contain links that only return a 200", :spam => true do
-      check_links_200('div.tgs-storyItems')
+      check_links_not_301_home('div.tgs-storyItems')
     end
   
     it "should not have any broken images", :spam => true do

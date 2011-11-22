@@ -33,7 +33,7 @@ module CoverStoriesMain
     end
 
     it "should contain links that only return a 200", :spam => true do
-      check_links_200('div.cat-coverStories')
+      check_links_not_301_home('div.cat-coverStories')
     end
     
     it "should have three headline spans" do
@@ -46,7 +46,9 @@ module CoverStoriesMain
       end
     end
     
-    it "should display text"
+    it "should display text" do
+      should_display_text('div.cat-coverStories')
+    end
 
     it "should display headlines" do
       error_rate = 0

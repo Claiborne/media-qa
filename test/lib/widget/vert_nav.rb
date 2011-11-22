@@ -32,7 +32,7 @@ module VertNav
     end
 
     it "should contain links that only return a 200", :spam => true do
-      check_links_200('div.vn-container')
+      check_links_not_301('div.vn-container')
     end
   
     it "should not have any broken images", :spam => true do

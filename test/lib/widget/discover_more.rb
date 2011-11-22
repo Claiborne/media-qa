@@ -29,7 +29,7 @@ module DiscoverMore
     end
     
     it "should contain links that only return a 200", :spam => true do
-      check_links_200('div.slider-holder')
+      check_links_not_301_home('div.slider-holder')
     end
     
     it "should not display broken images", :spam => true do
@@ -66,7 +66,7 @@ module DiscoverMore
     end
     
     it "should contain links that only return a 200", :spam => true do
-      check_links_200('div.topicTiles')
+      check_links_not_301('div.topicTiles')
     end
     
   end  

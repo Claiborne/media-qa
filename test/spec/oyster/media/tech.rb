@@ -52,7 +52,7 @@ describe "Tech HomePage:" do
   end
   
   it "should return 200", :smoke => true do
-    rest_client_open(@page).code.should eql(200)
+    rest_client_not_310_open(@page).code.should eql(200)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -64,9 +64,10 @@ describe "Tech HomePage:" do
       response = rest_client_open css.attribute('href').to_s
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
+      response.code.should eql(200)
     end
   end
-
+  
   it "should include the global header widget once", :smoke => true do
     @doc.css('div#ign-header').count.should == 1
   end
@@ -83,7 +84,7 @@ describe "Tech HomePage:" do
     wiget_discover_more_expanded
   end
   
-  context "Main Cover Stories Widget:", :test => true do
+  context "Main Cover Stories Widget:" do
     widget_cover_stories_main
   end
   
@@ -134,7 +135,7 @@ describe "Tech #{topic} Topic Page:" do
   end
   
   it "should return 200", :smoke => true do
-    rest_client_open(@page).code.should eql(200)
+    rest_client_not_310_open(@page).code.should eql(200)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -146,6 +147,7 @@ describe "Tech #{topic} Topic Page:" do
       response = rest_client_open css.attribute('href').to_s
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
+      response.code.should eql(200)
     end
   end     
   
@@ -214,7 +216,7 @@ describe "Tech v2 Article Page:" do
   end
   
   it "should return 200", :smoke => true do
-    rest_client_open(@page).code.should eql(200)
+    rest_client_not_301_home_open(@page).code.should eql(200)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -226,6 +228,7 @@ describe "Tech v2 Article Page:" do
       response = rest_client_open css.attribute('href').to_s
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
+      response.code.should eql(200)
     end
   end  
   

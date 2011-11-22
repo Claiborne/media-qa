@@ -39,7 +39,7 @@ module VideoInterrupt
     end
     
     it "should only contain links only that return a 200", :spam => true do
-      check_links_200('div.vidPlayListContainer')
+      check_links_not_301_home('div.vidPlayListContainer')
     end
     
   end

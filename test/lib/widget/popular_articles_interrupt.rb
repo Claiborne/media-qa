@@ -46,12 +46,8 @@ module PopularArticlesInterrupt
     end
     
     it "should contain links that only return a 200", :spam => true do
-      check_links_200('div.popularArticles')
+      check_links_not_301_home('div.popularArticles')
     end
     
-    it "should contain links that only return a response code of 200", :spam => true do
-      check_links_200('div.popularArticles')
-    end
-
   end 
 end

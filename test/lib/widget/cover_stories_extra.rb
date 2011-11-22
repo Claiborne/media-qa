@@ -26,7 +26,7 @@ module CoverStoriesExtra
     end
 
     it "should contain links that only return a 200", :spam => true do
-      check_links_200('div.extra-coverStories')
+      check_links_not_301_home('div.extra-coverStories')
     end
 
     it "should have one image per slot" do
