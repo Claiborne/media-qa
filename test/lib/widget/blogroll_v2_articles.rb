@@ -63,11 +63,19 @@ module Blogrollv2Articles
       headline.count.should eql(headline.uniq.count)
     end
     
-    it "should not contain headline links that 400 or 500"
-    
-    it "should not contain any read more links that 400 or 500"
-    
-    it "should contain headline links that only return a response code of 200"
+    it "should contain first two headline links that return 200", :spam => true do
+      link = @doc.at_css("div#ign-blogroll div:nth-child(1).listElmnt-article div.listElmnt-articleContent h3 a").attribute("href").to_s
+      response = rest_client_not_301_home_open link
+      response.code.should_not eql(/4\d\d/)
+      response.code.should_not eql(/5\d\d/)
+      response.code.should eql(200)
+
+      link = @doc.at_css("div#ign-blogroll div:nth-child(2).listElmnt-article div.listElmnt-articleContent h3 a").attribute("href").to_s
+      response = rest_client_not_301_home_open link
+      response.code.should_not eql(/4\d\d/)
+      response.code.should_not eql(/5\d\d/)
+      response.code.should eql(200)
+    end
 
     it "should display the same articles as the api returns" do
       Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"

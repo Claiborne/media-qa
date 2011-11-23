@@ -46,7 +46,7 @@ module CoverStoriesMain
       end
     end
     
-    it "should display text" do
+    it "should display text", :smoke => true do
       should_display_text('div.cat-coverStories')
     end
 

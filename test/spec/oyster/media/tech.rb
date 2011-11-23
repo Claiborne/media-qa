@@ -283,6 +283,4 @@ describe "Tech v2 Article Page:" do
     doc2.css('div.ratingScoreBoxContainer div.ratingScoreBox').count.should == 0
   end
   
-  it "should not be missing the pagination widget when more than one page exists"
-  
 end

@@ -13,11 +13,13 @@ module LinkChecker
         response = rest_client_open link
         response.code.should_not eql(/4\d\d/)
         response.code.should_not eql(/5\d\d/)
+        response.code.should eql(200)
       else
         link = a.attribute('href').to_s
         response = rest_client_open link
         response.code.should_not eql(/4\d\d/)
         response.code.should_not eql(/5\d\d/)
+        response.code.should eql(200)
       end
     end
   end
@@ -29,6 +31,7 @@ module LinkChecker
       response = rest_client_open img_src
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
+      response.code.should eql(200)
     end
   end
   
