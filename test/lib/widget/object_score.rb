@@ -1,5 +1,8 @@
 module ObjectScore
   
+  require 'fe_checker'
+  include FeChecker
+  
   def widget_object_score_smoke
     it "should be on the page only once if an article has a review score", :smoke => true do
       @doc.css('div.ratingScoreBoxContainer div.ratingScoreBox').count.should == 1
@@ -9,6 +12,10 @@ module ObjectScore
   def widget_object_score
     
     widget_object_score_smoke
+    
+    it "should display text", :smoke => true do
+      check_display_text('div.ratingScoreBoxContainer div.ratingScoreBox')
+    end
     
     it "should not be missing from a article has a review score", :smoke => true do
       @doc.at_css('div.ratingScoreBoxContainer div.ratingScoreBox').should be_true

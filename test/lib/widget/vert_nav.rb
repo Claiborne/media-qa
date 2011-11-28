@@ -1,7 +1,7 @@
 module VertNav
   
-  require 'link_checker'
-  include LinkChecker
+  require 'fe_checker'
+  include FeChecker
   
   def widget_vert_nav_smoke
     it "should be on the page only once", :smoke => true do
@@ -15,6 +15,18 @@ module VertNav
        
     it "should not be missing from the page", :smoke => true do
       @doc.at_css('div.vn-container').should be_true
+    end
+    
+    it "should display text", :smoke => true do
+      check_display_text('div.vn-container')
+    end
+
+    it "should have at least one link", :smoke => true do
+      check_have_a_link('div.vn-container')
+    end
+    
+    it "should have at least one image", :smoke => true do
+      check_have_an_img('div.vn-container')
     end
     
     it "should display all components", :smoke => true do

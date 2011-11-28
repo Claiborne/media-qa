@@ -1,7 +1,7 @@
 module PopularArticlesInterrupt
   
-  require 'link_checker'
-  include LinkChecker
+  require 'fe_checker'
+  include FeChecker
   
   def widget_popular_articles_interrupt_smoke
     it "should be on the page only once", :smoke => true do
@@ -15,6 +15,14 @@ module PopularArticlesInterrupt
     
     it "should not be missing from the page", :smoke => true do
       @doc.at_css('div.popularArticles').should be_true
+    end
+    
+    it "should display text", :smoke => true do
+      check_display_text('div.popularArticles')
+    end
+
+    it "should have at least one link", :smoke => true do
+      check_have_a_link('div.popularArticles')
     end
     
     it "should not be blank", :smoke => true do

@@ -1,5 +1,7 @@
 module Blogrollv2Articles
-#spec file requires Nokogiri, rspec, rest_client, and json
+
+  require 'fe_checker'
+  include FeChecker
 
   def check_is_not_blank(doc, num, element)
     i = 0
@@ -21,9 +23,17 @@ module Blogrollv2Articles
   def widget_blogroll_v2_articles(num, call)
     
     widget_blogroll_v2_articles_smoke
-
+    
     it "should not be missing from the page", :smoke => true do
       @doc.at_css('div#ign-blogroll').should be_true
+    end
+    
+    it "should display text", :smoke => true do
+      check_display_text('div#ign-blogroll')
+    end
+
+    it "should have at least one link", :smoke => true do
+      check_have_a_link('div#ign-blogroll')
     end
     
     if call.match(/&tags=wii-u&/)

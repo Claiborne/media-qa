@@ -1,7 +1,7 @@
 module CoverStoriesExtra
   
-  require 'link_checker'
-  include LinkChecker
+  require 'fe_checker'
+  include FeChecker
 
   def widget_cover_stories_extra_smoke
     it "should be on the page only once", :smoke => true do
@@ -11,10 +11,22 @@ module CoverStoriesExtra
   
   def widget_cover_stories_extra
     
-     widget_cover_stories_extra_smoke
-
+    widget_cover_stories_extra_smoke
+     
     it "should not be missing from the page", :smoke => true do
-      @doc.css('div.extra-coverStories').should be_true
+       @doc.css('div.extra-coverStories').should be_true
+    end
+     
+    it "should display text", :smoke => true do
+       check_display_text('div.extra-coverStories')
+    end
+
+    it "should have at least one link", :smoke => true do
+       check_have_a_link('div.extra-coverStories')
+    end
+
+    it "should have at least one image", :smoke => true do
+       check_have_an_img('div.extra-coverStories')
     end
 
     it "should contain four slots for four cover stories", :smoke => true do

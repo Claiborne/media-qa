@@ -1,7 +1,7 @@
 module CoverStoriesMain
   
-  require 'link_checker'
-  include LinkChecker
+  require 'fe_checker'
+  include FeChecker
   
   def widget_cover_stories_main_smoke
     it "should be on the page only once", :smoke => true do
@@ -15,6 +15,14 @@ module CoverStoriesMain
 
     it "should not be missing from the page", :smoke => true do
       @doc.at_css('div.cat-coverStories').should be_true
+    end
+    
+    it "should display text", :smoke => true do
+       check_display_text('div.cat-coverStories')
+    end
+
+    it "should have at least one link", :smoke => true do
+       check_have_a_link('div.cat-coverStories')
     end
 
     it "should contain three slots for three cover stories" do
@@ -45,10 +53,6 @@ module CoverStoriesMain
         headline.text.delete("^a-zA-Z").length.should > 0
       end
     end
-    
-    it "should display text", :smoke => true do
-      should_display_text('div.cat-coverStories')
-    end
 
     it "should display headlines" do
       error_rate = 0
@@ -58,10 +62,6 @@ module CoverStoriesMain
         end
       end
       error_rate.should < 3
-    end
-
-    it "should have at least one <a> tag", :smoke => true do
-      @doc.css('div.cat-coverStories a').count.should > 0
     end
 
   end

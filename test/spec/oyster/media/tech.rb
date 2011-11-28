@@ -7,6 +7,7 @@ require 'rest_client'
 require 'json'
 require 'ads'
 require 'open_page'
+require 'fe_checker'
 require 'widget/blogroll_v2_articles'
 require 'widget/discover_more'
 require 'widget/cover_stories_main'
@@ -17,13 +18,12 @@ require 'widget/wiki_updates'
 require 'widget/video_interrupt'
 require 'widget/popular_articles_interrupt'
 require 'widget/object_score'
-require 'fe_smoke_checker'
-require 'global_header'
-require 'global_footer'
+require 'widget/global_header'
+require 'widget/global_footer'
 
 include GlobalFooter
 include GlobalHeader
-include FeSmokeChecker
+include FeChecker
 include ObjectScore
 include PopularArticlesInterrupt
 include VideoInterrupt
@@ -54,22 +54,17 @@ describe "Tech HomePage:" do
   after(:each) do
 
   end
-  
+
   it "should return 200", :smoke => true do
-    rest_client_not_310_open(@page).code.should eql(200)
+    check_return_200_without_301(@page)
   end
 
   it "should include at least one css file", :smoke => true do
-    @doc.css("head link[@href*='.css']").count.should > 0
+    check_include_at_least_one_css_file(@doc)
   end
 
   it "should not include any css files that return 400 or 500", :smoke => true do
-    @doc.css("link[@href*='.css']").each do |css|
-      response = rest_client_open css.attribute('href').to_s
-      response.code.should_not eql(/4\d\d/)
-      response.code.should_not eql(/5\d\d/)
-      response.code.should eql(200)
-    end
+    check_css_files(@doc)
   end
   
   context "Global Header Widget:" do
@@ -139,20 +134,15 @@ describe "Tech #{topic} Topic Page:" do
   end
   
   it "should return 200", :smoke => true do
-    rest_client_not_310_open(@page).code.should eql(200)
+    check_return_200_without_301(@page)
   end
 
   it "should include at least one css file", :smoke => true do
-    @doc.css("head link[@href*='.css']").count.should > 0
+    check_include_at_least_one_css_file(@doc)
   end
   
   it "should not include any css files that return 400 or 500", :smoke => true do
-    @doc.css("link[@href*='.css']").each do |css|
-      response = rest_client_open css.attribute('href').to_s
-      response.code.should_not eql(/4\d\d/)
-      response.code.should_not eql(/5\d\d/)
-      response.code.should eql(200)
-    end
+    check_css_files(@doc)
   end     
   
   context "Global Header Widget:" do
@@ -220,20 +210,15 @@ describe "Tech v2 Article Page:" do
   end
   
   it "should return 200", :smoke => true do
-    rest_client_not_301_home_open(@page).code.should eql(200)
+    check_return_200_without_310_to_home(@page)
   end
 
   it "should include at least one css file", :smoke => true do
-    @doc.css("head link[@href*='.css']").count.should > 0
+    check_include_at_least_one_css_file(@doc)
   end
   
   it "should not include any css files that return 400 or 500", :smoke => true do
-    @doc.css("link[@href*='.css']").each do |css|
-      response = rest_client_open css.attribute('href').to_s
-      response.code.should_not eql(/4\d\d/)
-      response.code.should_not eql(/5\d\d/)
-      response.code.should eql(200)
-    end
+    check_css_files(@doc)
   end  
   
   it "should display the author's name" do

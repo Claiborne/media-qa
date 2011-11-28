@@ -1,7 +1,7 @@
 module TagCoverStories
   
-  require 'link_checker'
-  include LinkChecker
+  require 'fe_checker'
+  include FeChecker
   
   def widget_tag_cover_stories_smoke
     it "should be on the page only once", :smoke => true do
@@ -15,6 +15,18 @@ module TagCoverStories
     
     it "should not be missing from the page", :smoke => true do
       @doc.at_css('div.tgs-topStories div.tgs-storyItems').should be_true
+    end
+    
+    it "should display text", :smoke => true do
+      check_display_text('div.tgs-topStories')
+    end
+
+    it "should have at least one link", :smoke => true do
+      check_have_a_link('div.tgs-topStories')
+    end
+    
+    it "should have at least one image", :smoke => true do
+      check_have_an_img('div.tgs-topStories')
     end
 
     it "should have three slots for three stories" do
