@@ -17,8 +17,12 @@ require 'widget/wiki_updates'
 require 'widget/video_interrupt'
 require 'widget/popular_articles_interrupt'
 require 'widget/object_score'
-require'fe_smoke_checker'
+require 'fe_smoke_checker'
+require 'global_header'
+require 'global_footer'
 
+include GlobalFooter
+include GlobalHeader
 include FeSmokeChecker
 include ObjectScore
 include PopularArticlesInterrupt
@@ -68,19 +72,19 @@ describe "Tech HomePage:" do
     end
   end
   
-  it "should include the global header widget once", :smoke => true do
-    @doc.css('div#ign-header').count.should == 1
+  context "Global Header Widget:" do
+    widget_global_header
   end
   
-  it "should include the global footer widget once", :smoke => true do
-    @doc.css('div#ignFooter-container').count.should == 1
+  context "Global Footer Widget:" do
+    widget_global_footer
   end
   
   it "should include the follow us widget once" do
     @doc.css('div.followBox').count.should == 1
   end
   
-  context "Tech Nav (Discover More Expanded) Widget" do
+  context "Tech Nav Widget:" do
     wiget_discover_more_expanded
   end
   
@@ -151,12 +155,12 @@ describe "Tech #{topic} Topic Page:" do
     end
   end     
   
-  it "should include the global header widget once ", :smoke => true do
-    @doc.css('div#ign-header').count.should == 1
+  context "Global Header Widget:" do
+    widget_global_header
   end
   
-  it "should include the global footer widget once", :smoke => true do
-    @doc.css('div#ignFooter-container').count.should == 1
+  context "Global Footer Widget:" do
+    widget_global_footer
   end
   
   it "should include the follow us widget once" do
@@ -236,12 +240,12 @@ describe "Tech v2 Article Page:" do
     @doc.at_css('div.article_byLine div.article_author').text.delete('^a-zA-Z').length.should > 2
   end
   
-  it "should include the global header widget once", :smoke => true do
-    @doc.css('div#ign-header').count.should == 1
+  context "Global Header Widget:" do
+    widget_global_header
   end
   
-  it "should include the global footer widget once", :smoke => true do
-    @doc.css('div#ignFooter-container').count.should == 1
+  context "Global Footer Widget:" do
+    widget_global_footer
   end
   
   it "should include two share this widgets" do
