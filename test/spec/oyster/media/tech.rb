@@ -5,7 +5,6 @@ require 'open-uri'
 require 'tech_nav'
 require 'rest_client'
 require 'json'
-require 'ads'
 require 'open_page'
 require 'fe_checker'
 require 'widget/blogroll_v2_articles'
@@ -35,7 +34,6 @@ include TagCoverStories
 include TechNav
 include Blogrollv2Articles
 include DiscoverMore
-include Ads
 include WikiUpdates
 
 describe "Tech HomePage:" do

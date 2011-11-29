@@ -4,11 +4,69 @@ require 'rspec/core/rake_task'
 
 ENV["env"] ||= 'staging'
 
-desc "Run all test suites"
-RSpec::Core::RakeTask.new('all') do |t|
+############# ALL ############# 
+
+# RUN ALL
+
+# RUN ALL SMOKE
+
+# RUN ALL FRONTEND 
+
+# RUN ALL FRONTEND SMOKE
+
+# RUN ALL BACKEND 
+
+# RUN ALL BACKEND SMOKE
+
+############# V2 ############# 
+
+desc "Run v2 tests"
+RSpec::Core::RakeTask.new('v2') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/**/*.rb'
+    t.pattern = 'spec/v2/**/*.rb'    
 end
+
+desc "Run v2 articles"
+RSpec::Core::RakeTask.new('v2articles') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v2/articles.rb'    
+end
+
+desc "Run v2 blogs"
+RSpec::Core::RakeTask.new('v2blogs') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v2/blogs.rb'    
+end
+
+############# TECH ############# 
+
+desc "Run Tech Frontend and API tests"
+RSpec::Core::RakeTask.new('techall') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = ['spec/oyster/media/tech.rb', 'spec/v2/tech.rb']  
+end
+
+desc "Run Tech frontend tests"
+RSpec::Core::RakeTask.new('techfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oyster/media/tech.rb'  
+end
+
+desc "Run Tech API tests"
+RSpec::Core::RakeTask.new('techapi') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v2/tech.rb'    
+end
+
+############# LEGACY ############# 
+
+desc "Run Tech Frontend and API tests"
+RSpec::Core::RakeTask.new('legacyhubsfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = ['spec/legacy/legacy_hubs.rb']  
+end
+
+############# DEPRECATED / INVALID ############# 
 
 desc "" 
 RSpec::Core::RakeTask.new('oauth2') do |t|
@@ -75,40 +133,4 @@ desc "Run social_test tests"
 RSpec::Core::RakeTask.new('social_test') do |t|
     t.rspec_opts = ["-Ilib"]
     t.pattern = 'spec/social_test/**/*.rb'
-end
-
-desc "Run v2 tests"
-RSpec::Core::RakeTask.new('v2') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/**/*.rb'    
-end
-
-desc "Run v2 articles"
-RSpec::Core::RakeTask.new('v2articles') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/articles.rb'    
-end
-
-desc "Run v2 blogs"
-RSpec::Core::RakeTask.new('v2blogs') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/blogs.rb'    
-end
-
-desc "Run Tech frontend tests"
-RSpec::Core::RakeTask.new('techfrontend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/tech.rb'  
-end
-
-desc "Run Tech API tests"
-RSpec::Core::RakeTask.new('techapi') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/tech.rb'    
-end
-
-desc "Run Tech Frontend and API tests"
-RSpec::Core::RakeTask.new('techall') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/tech.rb', 'spec/v2/tech.rb']  
 end
