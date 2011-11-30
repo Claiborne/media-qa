@@ -31,7 +31,14 @@ module VideoHubSlotter
     
     it "should have three slots and three links", :smoke => true do
       @doc.css('ul#video-hub div.grid_8').count.should == 3
+    end
+    
+    it "should have three links", :smoke => true do
       @doc.css("ul#video-hub div.grid_8 a[href*='http']").count.should == 3
+    end
+    
+    it "should have three images", :smoke => true do
+      @doc.css("ul#video-hub div.grid_8 img[src*='http']").count.should == 3
     end
     
     it "should contain links that only return a 200", :smoke => true do
