@@ -74,7 +74,7 @@ describe "#{hub} :" do
   after(:each) do
 
   end
-  ###TEST CODE CANGE
+
   it "should return 200", :smoke => true do
     check_return_200_without_301(@page)
   end

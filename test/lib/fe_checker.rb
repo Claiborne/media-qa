@@ -84,7 +84,6 @@ module FeChecker
         response.code.should_not eql(/5\d\d/)
       else
         link = a.attribute('href').to_s
-        link = a.attribute('href').to_s
         response = rest_client_not_301_home_open link
         response.code.should_not eql(/4\d\d/)
         response.code.should_not eql(/5\d\d/)
@@ -103,7 +102,6 @@ module FeChecker
         response.code.should_not eql(/4\d\d/)
         response.code.should_not eql(/5\d\d/)
       else
-        link = a.attribute('href').to_s
         link = a.attribute('href').to_s
         response = rest_client_not_310_open link
         response.code.should_not eql(/4\d\d/)
