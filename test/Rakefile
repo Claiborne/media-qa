@@ -8,6 +8,16 @@ ENV["env"] ||= 'staging'
 
 # RUN ALL
 
+desc "Run all tests"
+RSpec::Core::RakeTask.new('all') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = [
+      'spec/legacy/*.rb',
+      'spec/oyster/media/*.rb',
+      'spec/v2/*.rb',
+      ]  
+end
+
 # RUN ALL SMOKE
 
 # RUN ALL FRONTEND 
