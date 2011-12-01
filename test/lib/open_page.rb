@@ -86,9 +86,7 @@ def rest_client_not_310_open(page)
   begin
     rest_doc = rest_client_not_310(page)
   rescue => e
-    #####################
-    raise Exception.new("#{e.message} on "+page.to_s+" "+e.http_body+" "+e.inspect+" "+e.backtrace.to_s)
-    #####################
+    raise Exception.new("#{e.message} on "+page.to_s)
   end#end Exception
   while Nokogiri::HTML(rest_doc.body).at_css('div#disable')
     begin
