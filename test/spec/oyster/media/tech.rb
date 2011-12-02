@@ -52,7 +52,7 @@ describe "Tech HomePage:" do
   after(:each) do
 
   end
-
+  
   it "should return 200", :smoke => true do
     check_return_200_without_301(@page)
   end
@@ -208,7 +208,7 @@ describe "Tech v2 Article Page:" do
   end
   
   it "should return 200", :smoke => true do
-    check_return_200_without_310_to_home(@page)
+    check_return_200_without_301_to_home(@page)
   end
 
   it "should include at least one css file", :smoke => true do

@@ -22,10 +22,10 @@ module FeChecker
   end
   
   def check_return_200_without_301(page)
-    rest_client_not_310_open(page).code.should eql(200)
+    rest_client_not_301_open(page).code.should eql(200)
   end
   
-  def check_return_200_without_310_to_home(page)
+  def check_return_200_without_301_to_home(page)
     rest_client_not_301_home_open(page).code.should eql(200)
   end
   
@@ -50,14 +50,10 @@ module FeChecker
       if a.attribute('js-href')
         link = a.attribute('js-href').to_s
         response = rest_client_open link
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
         response.code.should eql(200)
       else
         link = a.attribute('href').to_s
         response = rest_client_open link
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
         response.code.should eql(200)
       end
     end
@@ -68,8 +64,6 @@ module FeChecker
     @doc.css("#{locator} img").each do |img|
       img_src = img.attribute('src').to_s
       response = rest_client_open img_src
-      response.code.should_not eql(/4\d\d/)
-      response.code.should_not eql(/5\d\d/)
       response.code.should eql(200)
     end
   end
@@ -80,14 +74,10 @@ module FeChecker
       if a.attribute('js-href')
         link = a.attribute('js-href').to_s
         response = rest_client_not_301_home_open link
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
+        response.code.should eql(200)
       else
         link = a.attribute('href').to_s
         response = rest_client_not_301_home_open link
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
-        response.code.should_not eql(/3\d\d/)
         response.code.should eql(200)
       end
     end
@@ -98,15 +88,11 @@ module FeChecker
     @doc.css("#{locator} a").each do |a|
       if a.attribute('js-href')
         link = a.attribute('js-href').to_s
-        response = rest_client_not_310_open link
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
+        response = rest_client_not_301_open link
+        response.code.should eql(200)
       else
         link = a.attribute('href').to_s
-        response = rest_client_not_310_open link
-        response.code.should_not eql(/4\d\d/)
-        response.code.should_not eql(/5\d\d/)
-        response.code.should_not eql(/3\d\d/)
+        response = rest_client_not_301_open link
         response.code.should eql(200)
       end
     end
