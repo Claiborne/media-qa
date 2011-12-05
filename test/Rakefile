@@ -22,6 +22,16 @@ end
 
 # RUN ALL FRONTEND 
 
+desc "Run all frontend tests"
+RSpec::Core::RakeTask.new('frontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = [
+      'spec/legacy/*.rb',
+      'spec/oyster/media/*.rb',
+      ]  
+end
+
+
 # RUN ALL FRONTEND SMOKE
 
 # RUN ALL BACKEND 
