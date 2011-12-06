@@ -4,8 +4,8 @@ module CoverStoriesExtra
   include FeChecker
 
   def widget_cover_stories_extra_smoke
-    it "should be on the page only once", :smoke => true do
-      @doc.css('div.extra-coverStories').count.should == 1
+    it "should not be missing from the page", :smoke => true do
+       @doc.css('div.extra-coverStories').should be_true
     end
   end
   
@@ -13,8 +13,8 @@ module CoverStoriesExtra
     
     widget_cover_stories_extra_smoke
      
-    it "should not be missing from the page", :smoke => true do
-       @doc.css('div.extra-coverStories').should be_true
+    it "should be on the page once", :smoke => true do
+      @doc.css('div.extra-coverStories').count.should == 1
     end
      
     it "should display text", :smoke => true do

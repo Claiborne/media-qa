@@ -4,8 +4,8 @@ module GlobalFooter
   include FeChecker
   
   def widget_global_footer_smoke
-    it "should be on the page only once", :smoke => true do
-      @doc.css('div.ignFooter-content').count.should == 1
+    it "should not be missing from the page", :smoke => true do
+      @doc.at_css('div.ignFooter-content').should be_true
     end
   end
   
@@ -13,8 +13,8 @@ module GlobalFooter
     
     widget_global_footer_smoke
     
-    it "should not be missing from the page", :smoke => true do
-      @doc.at_css('div.ignFooter-content').should be_true
+    it "should be on the page once", :smoke => true do
+      @doc.css('div.ignFooter-content').count.should == 1
     end
     
     it "should display text", :smoke => true do

@@ -15,14 +15,18 @@ module Blogrollv2Articles
   end
   
   def widget_blogroll_v2_articles_smoke
-    it "should be on the page only once", :smoke => true do
-      @doc.css('div#ign-blogroll').count.should == 1
+    it "should not be missing from the page", :smoke => true do
+      @doc.at_css('div#ign-blogroll').should be_true
     end
   end
   
   def widget_blogroll_v2_articles(num, call)
     
     widget_blogroll_v2_articles_smoke
+    
+    it "should be on the page once", :smoke => true do
+      @doc.css('div#ign-blogroll').count.should == 1
+    end
     
     it "should not be missing from the page", :smoke => true do
       @doc.at_css('div#ign-blogroll').should be_true

@@ -4,8 +4,8 @@ module TagCoverStories
   include FeChecker
   
   def widget_tag_cover_stories_smoke
-    it "should be on the page only once", :smoke => true do
-      @doc.css('div.tgs-topStories div.tgs-storyItems').count.should == 1
+    it "should not be missing from the page", :smoke => true do
+      @doc.at_css('div.tgs-topStories div.tgs-storyItems').should be_true
     end
   end
   
@@ -13,8 +13,8 @@ module TagCoverStories
     
     widget_tag_cover_stories_smoke
     
-    it "should not be missing from the page", :smoke => true do
-      @doc.at_css('div.tgs-topStories div.tgs-storyItems').should be_true
+    it "should be on the page once", :smoke => true do
+      @doc.css('div.tgs-topStories div.tgs-storyItems').count.should == 1
     end
     
     it "should display text", :smoke => true do
