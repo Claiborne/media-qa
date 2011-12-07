@@ -8,7 +8,26 @@ module Assert
   #Check API response body is not blank
   def check_not_blank(response, data)
     data.length.should > 0
+    data.to_s.length.should > 0
   end
+  
+  #Check API body response returns desired number of indices
+  def check_indices(response, data, num)
+    data.length.should == num
+  end
+  
+  #Check an API body response returns a specific key with a non nil and non blank value
+  def check_key(response, data, key)
+    data[key.to_s].should be_true
+    data[key.to_s].should_not be_nil
+    data[key.to_s].to_s.length.should > 0
+  end
+  
+  #Check an API body response returns a specific key with a specific value
+  def check_key_equals(response, data, key, val)
+    data[key].should == val
+  end
+
   
   #Check that a specific key exists for all articles returned
   def check_key_exists_for_all(response, data, key)
@@ -17,7 +36,7 @@ module Assert
     end
   end
   
-  #Check that the value to a specific key is not nil and it's length is > 0 for all articles returned
+  #Check that the value to a specific key's value is not nil and it's length is > 0 for all articles returned
   def check_key_value_exists_for_all(response, data, key)
     data.each do |article|
       article[key].should_not be_nil

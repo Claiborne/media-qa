@@ -1,8 +1,8 @@
-require File.dirname(__FILE__) + "/../spec_helper"
+require 'rspec'
+require 'nokogiri'
+require 'configuration'
 require 'rest_client'
 require 'json'
-require 'configuration'
-require 'rspec'
 require 'time'
 require 'assert'
 
@@ -11,12 +11,11 @@ include Assert
 describe "Articles - v2/articles" do
 
   before(:all) do
-
+    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = Configuration.new
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
     
   end
 

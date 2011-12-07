@@ -15,10 +15,9 @@ RSpec::Core::RakeTask.new('all') do |t|
       'spec/legacy/*.rb',
       'spec/oyster/media/*.rb',
       'spec/v2/*.rb',
+      'spec/v3/**/*.rb',
       ]  
 end
-
-# RUN ALL SMOKE
 
 # RUN ALL FRONTEND 
 
@@ -31,12 +30,24 @@ RSpec::Core::RakeTask.new('frontend') do |t|
       ]  
 end
 
+# RUN ALL BACKEND
 
-# RUN ALL FRONTEND SMOKE
+desc "Run all backend tests"
+RSpec::Core::RakeTask.new('backend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = [
+      'spec/v2/**/*.rb',
+      'spec/v3/**/*.rb',
+      ]  
+end
 
-# RUN ALL BACKEND 
+############# V3 ############# 
 
-# RUN ALL BACKEND SMOKE
+desc "Run v3 tests"
+RSpec::Core::RakeTask.new('v3') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v3/**/*.rb'    
+end
 
 ############# V2 ############# 
 

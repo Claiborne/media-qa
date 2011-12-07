@@ -6,12 +6,11 @@ require 'configuration'
 describe "Authors - /v2/authors" do
 
   before(:all) do
-
+    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = Configuration.new
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
     
   end
 

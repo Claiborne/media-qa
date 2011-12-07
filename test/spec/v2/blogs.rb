@@ -6,12 +6,12 @@ require 'configuration'
 describe "Blogs - /v2/blogs" do
 
   before(:all) do
-
+    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = Configuration.new
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
+
   end
 
   after(:each) do
