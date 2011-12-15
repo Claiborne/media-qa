@@ -8,6 +8,9 @@ require 'assert'
 
 include Assert
 
+### iterate for similar calls like state/published
+### have a testsuite good for all calls (like state/discovered)
+
 describe "V3 Video API: Defaults" do
 
   before(:all) do
@@ -105,4 +108,10 @@ describe "V3 Video API: Defaults" do
     end  
   end
   
+  it "should retun an asset key that is not null" do
+    ##TODO TEST /state/discovered not nil fails when null
+  end
+  
 end
+
+
