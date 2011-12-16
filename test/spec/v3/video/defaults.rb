@@ -11,12 +11,20 @@ include Assert
 ### iterate for similar calls like state/published
 ### have a testsuite good for all calls (like state/discovered)
 
+[ "", 
+  "/state/published",
+  "?metadata.state=published&metadata.networks=ign",
+  "/network/ign",
+  "/state/published?metadata.networks=ign",
+  "?sortOrder=asc&sortBy=metadata.name",
+  "?fields=metadata.name,metadata.networks,videoId"].each do |call|
+
 describe "V3 Video API: Defaults" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}"
+    @url = "http://#{@config.options['baseurl']}#{call}"
     puts @url
     begin 
       @response = RestClient.get @url
@@ -112,6 +120,7 @@ describe "V3 Video API: Defaults" do
     ##TODO TEST /state/discovered not nil fails when null
   end
   
+end
 end
 
 
