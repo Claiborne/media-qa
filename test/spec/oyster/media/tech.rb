@@ -97,7 +97,7 @@ describe "Tech HomePage:" do
     end
     
     it "should include a functional load more button" do
-      @doc.css('div#ign-blogroll button#loadMore').attribute('data-url').to_s.should == "http://widgets.ign.com/global/page/blogrollv2articles.jsonp?post_type=article&page=2&per_page=10&categories=tech&callback=?"
+      @doc.css('div.blogrollv2Container button#loadMore').attribute('data-url').to_s.should == "http://widgets.ign.com/global/page/blogrollv2articles.jsonp?post_type=article&page=2&per_page=10&categories=tech&callback=?"
     end
   end
   

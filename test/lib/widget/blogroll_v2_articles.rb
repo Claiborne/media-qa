@@ -16,7 +16,7 @@ module Blogrollv2Articles
   
   def widget_blogroll_v2_articles_smoke
     it "should not be missing from the page", :smoke => true do
-      @doc.at_css('div#ign-blogroll').should be_true
+      @doc.at_css('div.blogrollv2Container').should be_true
     end
   end
   
@@ -25,47 +25,47 @@ module Blogrollv2Articles
     widget_blogroll_v2_articles_smoke
     
     it "should be on the page once", :smoke => true do
-      @doc.css('div#ign-blogroll').count.should == 1
+      @doc.css('div.blogrollv2Container').count.should == 1
     end
     
     it "should not be missing from the page", :smoke => true do
-      @doc.at_css('div#ign-blogroll').should be_true
+      @doc.at_css('div.blogrollv2Container').should be_true
     end
     
     it "should display text", :smoke => true do
-      check_display_text('div#ign-blogroll')
+      check_display_text('div.blogrollv2Container')
     end
 
     it "should have at least one link", :smoke => true do
-      check_have_a_link('div#ign-blogroll')
+      check_have_a_link('div.blogrollv2Container')
     end
     
     if call.match(/&tags=wii-u&/)
       it "should have #{num} blogroll entries"
     else
       it "should have #{num} blogroll entries", :smoke => true do
-        @doc.css('div#ign-blogroll div.listElmnt-articleContent').count.should eql(num)
+        @doc.css('div.blogrollv2Container div.listElmnt-articleContent').count.should eql(num)
       end
     end
 
     it "shoud display the authors' names" do
-      check_is_not_blank(@doc, num, "div#ign-blogroll div.listElmnt-authors")
+      check_is_not_blank(@doc, num, "div.blogrollv2Container div.listElmnt-authors")
     end
     
     it "shoud display the articles' timestamps" do
-      check_is_not_blank(@doc, num, "div#ign-blogroll div.listElmnt-date")
+      check_is_not_blank(@doc, num, "div.blogrollv2Container div.listElmnt-date")
     end
 
     it "shoud display the articles' headlines", :smoke => true do
-      check_is_not_blank(@doc, num, "div#ign-blogroll a.listElmnt-storyHeadline")
+      check_is_not_blank(@doc, num, "div.blogrollv2Container a.listElmnt-storyHeadline")
     end
 
     it "shoud display articles' summaries", :smoke => true do
-      check_is_not_blank(@doc, num, "div#ign-blogroll p.listElmnt-summary")
+      check_is_not_blank(@doc, num, "div.blogrollv2Container p.listElmnt-summary")
     end
     
     it "shoud display the read more links" do
-      check_is_not_blank(@doc, num, "div#ign-blogroll a.moreLink")
+      check_is_not_blank(@doc, num, "div.blogrollv2Container a.moreLink")
     end
 
     it "should display only unique entries", :smoke => true do
@@ -78,13 +78,13 @@ module Blogrollv2Articles
     end
     
     it "should contain first two headline links that return 200", :spam => true do
-      link = @doc.at_css("div#ign-blogroll div:nth-child(1).listElmnt-article div.listElmnt-articleContent h3 a").attribute("href").to_s
+      link = @doc.at_css("div.blogrollv2Container div:nth-child(1).listElmnt-article div.listElmnt-articleContent h3 a").attribute("href").to_s
       response = rest_client_not_301_home_open link
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
       response.code.should eql(200)
 
-      link = @doc.at_css("div#ign-blogroll div:nth-child(2).listElmnt-article div.listElmnt-articleContent h3 a").attribute("href").to_s
+      link = @doc.at_css("div.blogrollv2Container div:nth-child(2).listElmnt-article div.listElmnt-articleContent h3 a").attribute("href").to_s
       response = rest_client_not_301_home_open link
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
@@ -102,7 +102,7 @@ module Blogrollv2Articles
       end
 
       frontend_titles = []
-      @doc.css("div#ign-blogroll a.listElmnt-storyHeadline").each do |article|
+      @doc.css("div.blogrollv2Container a.listElmnt-storyHeadline").each do |article|
         frontend_titles << article.text
       end
       titles = api_titles + frontend_titles
