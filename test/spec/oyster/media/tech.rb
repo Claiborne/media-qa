@@ -93,7 +93,7 @@ describe "Tech HomePage:" do
     widget_blogroll_v2_articles(10, "/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
     
     it "should include the load more button ocne" do
-      @doc.css('div#ign-blogroll button#loadMore').count.should == 1
+      @doc.css('div.blogrollv2Container button#loadMore').count.should == 1
     end
     
     it "should include a functional load more button" do
