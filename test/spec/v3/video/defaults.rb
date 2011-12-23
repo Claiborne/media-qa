@@ -14,11 +14,11 @@ include Assert
 [ "", 
   "/state/published",
   "?metadata.state=published&metadata.networks=ign",
-  "/network/ign",
-  "/state/published?metadata.networks=ign",
-  "?sortOrder=asc&sortBy=metadata.name",
-  "?fields=metadata.name,metadata.networks,videoId"].each do |call|
-
+  "/network/ign?metadata.state=published",
+  "/state/published?metadata.networks=ign&?metadata.state=published",
+  "?sortOrder=asc&sortBy=metadata.name&?metadata.state=published",
+  "?metadata.state=published&fields=metadata.name,metadata.networks,videoId"].each do |call|
+##################################################################
 describe "V3 Video API: Defaults" do
 
   before(:all) do
@@ -50,7 +50,7 @@ describe "V3 Video API: Defaults" do
     check_not_blank(@response, @data)
   end
   
-  it "should return six indices" do
+  it "should return an hash with six indices" do
     check_indices(@response, @data, 6)
   end
   
@@ -102,25 +102,33 @@ describe "V3 Video API: Defaults" do
     @data['data'].length.should == 20
   end
   
-  it "should return a videoId for all videos" do
-    check_key_exists_for_all(@response, @data['data'], "videoId")
+  ["videoId",
+    "assets",
+    "thumbnails", 
+    "objectRelations", 
+    "metadata", 
+    "tags", 
+    "category"].each do |k| 
+    it "should return videos with a #{k} key", :test => true do
+      check_key_exists_for_all(@response, @data['data'], k)
+    end
   end
   
   it "should not return any blank or nil videoId values" do
     check_key_value_exists_for_all(@response, @data['data'], "videoId")
   end
   
-  it "should return a videoId with a hash value for all videos" do
+  it "should return videos with a hash videoId value" do
     @data['data'].each do |video|
       video['videoId'].match(/^[0-9a-f]{24,32}$/).should be_true  
     end  
   end
   
-  it "should retun an asset key that is not null" do
-    ##TODO TEST /state/discovered not nil fails when null
-  end
-  
 end
 end
+
+##################################################################
+
+
 
 
