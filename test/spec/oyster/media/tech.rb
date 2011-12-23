@@ -96,8 +96,8 @@ describe "Tech HomePage:" do
       @doc.css('div.blogrollv2Container button#loadMore').count.should == 1
     end
     
-    it "should include a functional load more button" do
-      @doc.css('div.blogrollv2Container button#loadMore').attribute('data-url').to_s.should == "http://widgets.ign.com/global/page/blogrollv2articles.jsonp?post_type=article&page=2&per_page=10&categories=tech&callback=?"
+    it "should include a functional load more button", :test => true do
+      @doc.css('div.blogrollv2Container button#loadMore').attribute('data-url').to_s.match(/http:\/\/widgets.ign.com\/global\/page\/blogrollv2articles.jsonp\?post_type=article&page=2&per_page=10&categories=tech/).should be_true
     end
   end
   
