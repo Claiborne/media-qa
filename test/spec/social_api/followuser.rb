@@ -44,7 +44,7 @@ it "should register a new user" do
 @time_stamp = Time.now.to_s 
 @email = "socialuser2_#{Random.rand(100-9999)}@ign.com"
 @key1 = "102353437#{Random.rand(10-1000)}"
-jdata = JSON.generate({"email"=>"#{@email}","nickname"=>"#{@nickname}","accounts"=>[{"accountType"=>"fedreg","key1"=>"#{@key1}","key2"=>""}]})
+jdata = JSON.generate({"email"=>"#{@email}","nickname"=>"#{@nickname}","accounts"=>[{"accountType"=>"topaz","key1"=>"1234578","key2"=>"local"}]})
 response = RestClient.post "http://#{@config.options['baseurl']}/v1.0/social/rest/reg",jdata, {:content_type => 'application/json'}
 person_id= JSON.parse(response.body)["entry"]
 #puts 'response complete'

@@ -75,3 +75,9 @@ RSpec::Core::RakeTask.new('v3') do |t|
     t.rspec_opts = ["-Ilib"]
     t.pattern = 'spec/v3/**/*.rb'
 end
+
+desc "Run follow user test"
+RSpec::Core::RakeTask.new('status_oauth') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/social_api/status_oauth.rb'  
+end
