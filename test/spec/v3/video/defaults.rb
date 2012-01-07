@@ -50,7 +50,7 @@ describe "V3 Video API: Defaults" do
     check_not_blank(@response, @data)
   end
   
-  it "should return an hash with six indices" do
+  it "should return a hash with six indices" do
     check_indices(@response, @data, 6)
   end
   
@@ -109,7 +109,7 @@ describe "V3 Video API: Defaults" do
     "metadata", 
     "tags", 
     "category"].each do |k| 
-    it "should return videos with a #{k} key", :test => true do
+    it "should return videos with a #{k} key" do
       check_key_exists_for_all(@response, @data['data'], k)
     end
   end
@@ -129,6 +129,82 @@ end
 
 ##################################################################
 
+describe "V3 Video API: Get Video By Slug" do
 
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/slug/metal-gear-solid-hd-collection-video-review"
+    puts @url
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+    
+  end
+
+  it "should return 200", :test => true do
+    check_200(@response, @data)
+  end
+  
+  it "should not return blank", :test => true do
+    check_not_blank(@response, @data)
+  end
+  
+  it "should return a hash with 11 indices", :test => true do
+    check_indices(@response, @data, 11)
+  end
+  
+  ["videoId",
+    "assets",
+    "thumbnails", 
+    "objectRelations", 
+    "metadata", 
+    "promo",
+    "tags", 
+    "extra",
+    "refs",
+    "category",
+    "system"].each do |k| 
+    it "should return a video with a #{k} key", :test => true do
+      check_key(@response, @data, k)
+    end
+  end
+  
+  it "should return 7 assets", :test => true do
+    @data['assets'].length.should == 7
+  end
+  
+  ["downloadable",
+    "url",
+    "bitrate",
+    "height",
+    "width",].each do |k| 
+    it "should return a #{k} key for each asset", :test => true do
+      check_key_exists_for_all(@response, @data['assets'], k)
+    end
+  end
+  
+  ### val should not be nil; also check if null==nil !!
+  
+  ["styleUrl",
+    "url",
+    "height",
+    "width",].each do |k| 
+    it "should return a #{k} key for each asset", :test => true do
+      check_key_exists_for_all(@response, @data['thumbnails'], k)
+    end
+  end
+  
+end
 
 
