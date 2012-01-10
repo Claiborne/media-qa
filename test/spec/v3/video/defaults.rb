@@ -303,12 +303,10 @@ describe "V3 Video API: Get Video By Slug" do
     if k == "mezzanineUrl"
       it "should return a non-nil, non-blank value for the #{k} key in system", :prd => true do
         check_key(@response, @data['system'], k)
-        puts "should not dosplay----------"
       end
     else
       it "should return a non-nil, non-blank value for the #{k} key in system" do
         check_key(@response, @data['system'], k)
-        puts k
       end
     end
   end
