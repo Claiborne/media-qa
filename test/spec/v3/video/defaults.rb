@@ -19,6 +19,9 @@ include Assert
   "?sortOrder=asc&sortBy=metadata.name&?metadata.state=published",
   "?metadata.state=published&fields=metadata.name,metadata.networks,videoId"].each do |call|
 ##################################################################
+
+##################################################################
+
 describe "V3 Video API: Defaults" do
 
   before(:all) do
@@ -129,6 +132,8 @@ end
 
 ##################################################################
 
+##################################################################
+
 describe "V3 Video API: Get Video By Slug" do
 
   before(:all) do
@@ -152,15 +157,15 @@ describe "V3 Video API: Get Video By Slug" do
     
   end
 
-  it "should return 200", :test => true do
+  it "should return 200" do
     check_200(@response, @data)
   end
   
-  it "should not return blank", :test => true do
+  it "should not return blank" do
     check_not_blank(@response, @data)
   end
   
-  it "should return a hash with 11 indices", :test => true do
+  it "should return a hash with 11 indices" do
     check_indices(@response, @data, 11)
   end
   
@@ -175,16 +180,16 @@ describe "V3 Video API: Get Video By Slug" do
     "refs",
     "category",
     "system"].each do |k| 
-    it "should return a video with a #{k} key", :test => true do
+    it "should return a video with a #{k} key" do
       check_key(@response, @data, k)
     end
   end
   
-  it "should return 7 assets", :test => true do
+  it "should return 7 assets" do
     @data['assets'].length.should == 7
   end
   
-  it "should return a video with a videoId of 4eb87cb98e88c57b65000008", :test => true do
+  it "should return a video with a videoId of 4eb87cb98e88c57b65000008" do
     @data['videoId'].should eql("4eb87cb98e88c57b65000008")
   end
   
@@ -193,7 +198,7 @@ describe "V3 Video API: Get Video By Slug" do
     "bitrate",
     "height",
     "width",].each do |k| 
-    it "should return a #{k} key for each asset", :test => true do
+    it "should return a #{k} key for each asset" do
       check_key_exists_for_all(@response, @data['assets'], k)
     end
   end
@@ -203,7 +208,7 @@ describe "V3 Video API: Get Video By Slug" do
     "bitrate",
     "height",
     "width",].each do |k| 
-    it "should return a non-nil, non-blak value for the #{k} key for each asset", :test => true do
+    it "should return a non-nil, non-blak value for the #{k} key for each asset" do
       check_key_value_exists_for_all(@response, @data['assets'], k)
     end
   end
@@ -212,7 +217,7 @@ describe "V3 Video API: Get Video By Slug" do
     "url",
     "height",
     "width",].each do |k| 
-    it "should return a #{k} key for each thumbnail", :test => true do
+    it "should return a #{k} key for each thumbnail" do
       check_key_exists_for_all(@response, @data['thumbnails'], k)
     end
   end
@@ -221,7 +226,7 @@ describe "V3 Video API: Get Video By Slug" do
     "url",
     "height",
     "width",].each do |k| 
-    it "should return a non-nil, non-blank value for the #{k} key for each thumbnail", :test => true do
+    it "should return a non-nil, non-blank value for the #{k} key for each thumbnail" do
       check_key_value_exists_for_all(@response, @data['thumbnails'], k)
     end
   end
@@ -233,7 +238,7 @@ describe "V3 Video API: Get Video By Slug" do
     "legacyId",
     "platform",
     "objectType"].each do |k|
-    it "should return a non-nil, non-blank value for the #{k} key in objectRelations", :test => true do
+    it "should return a non-nil, non-blank value for the #{k} key in objectRelations" do
       check_key(@response, @data['objectRelations'][0], k)
     end
   end
@@ -258,24 +263,60 @@ describe "V3 Video API: Get Video By Slug" do
     "downloadable",
     "creator",
     "origin"].each do |k|
-    it "should return a non-nil, non-blank value for the #{k} key in metadata", :test => true do
+    it "should return a non-nil, non-blank value for the #{k} key in metadata" do
       check_key(@response, @data['metadata'], k)
     end
   end
   
-  it "should return 14 slug keys for tags ", :test => true do
+  it "should return 14 slug keys for tags" do
     check_key_exists_for_all(@response, @data['tags'], 'slug')
     @data['tags'].length.should == 14
   end
     
-  it "should return a non-nil, non-blank value for the slug keys in tags", :test => true do
+  it "should return a non-nil, non-blank value for the slug keys in tags" do
     check_key_value_exists_for_all(@response, @data['tags'], 'slug')
   end
   
-  it "should return an article tagged as 'review' with a tagType of 'classification'", :test => true do
+  it "should return an article tagged as 'review' with a tagType of 'classification'" do
     @data['tags'][4].should eql({"slug"=>"review", "tagType"=>"classification", "displayName"=>"Review"})
+  end
+  
+  ["videoSeries",
+    "regions"].each do |k|
+    it "should return a non-nil, non-blank value for the #{k} key in extra" do
+      check_key(@response, @data['extra'], k)
+    end
+  end
+  
+  ["youtubeChannelIds",
+    "legacyArticleIds"].each do |k|
+    it "should return a non-nil, non-blank value for the #{k} key in refs" do
+      check_key(@response, @data['refs'], k)
+    end
+  end
+  
+  ["encodingProfile",
+    "watermarkProfile",
+    "mezzanineUrl",
+    "createdAt",
+    "updatedAt"].each do |k|
+    if k == "mezzanineUrl"
+      it "should return a non-nil, non-blank value for the #{k} key in system", :prd => true do
+        check_key(@response, @data['system'], k)
+        puts "should not dosplay----------"
+      end
+    else
+      it "should return a non-nil, non-blank value for the #{k} key in system" do
+        check_key(@response, @data['system'], k)
+        puts k
+      end
+    end
   end
 
 end
+
+##################################################################
+
+##################################################################
 
 
