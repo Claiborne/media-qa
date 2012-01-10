@@ -184,6 +184,10 @@ describe "V3 Video API: Get Video By Slug" do
     @data['assets'].length.should == 7
   end
   
+  it "should return a video with a videoId of 4eb87cb98e88c57b65000008", :test => true do
+    @data['videoId'].should eql("4eb87cb98e88c57b65000008")
+  end
+  
   ["downloadable",
     "url",
     "bitrate",
@@ -194,17 +198,84 @@ describe "V3 Video API: Get Video By Slug" do
     end
   end
   
-  ### val should not be nil; also check if null==nil !!
+  ["downloadable",
+    "url",
+    "bitrate",
+    "height",
+    "width",].each do |k| 
+    it "should return a non-nil, non-blak value for the #{k} key for each asset", :test => true do
+      check_key_value_exists_for_all(@response, @data['assets'], k)
+    end
+  end
   
   ["styleUrl",
     "url",
     "height",
     "width",].each do |k| 
-    it "should return a #{k} key for each asset", :test => true do
+    it "should return a #{k} key for each thumbnail", :test => true do
       check_key_exists_for_all(@response, @data['thumbnails'], k)
     end
   end
   
+  ["styleUrl",
+    "url",
+    "height",
+    "width",].each do |k| 
+    it "should return a non-nil, non-blank value for the #{k} key for each thumbnail", :test => true do
+      check_key_value_exists_for_all(@response, @data['thumbnails'], k)
+    end
+  end
+  
+  ["commonName",
+    "objectTypeId",
+    "objectName",
+    "contentRating",
+    "legacyId",
+    "platform",
+    "objectType"].each do |k|
+    it "should return a non-nil, non-blank value for the #{k} key in objectRelations", :test => true do
+      check_key(@response, @data['objectRelations'][0], k)
+    end
+  end
+
+  ["name",
+    "description",
+    "publishDate",
+    "title",
+    "longTitle",
+    "duration",
+    "url",
+    "locale",
+    "slug",
+    "ageGate",
+    "classification",
+    "subClassification",
+    "networks",
+    "state",
+    "noads",
+    "prime",
+    "subscription",
+    "downloadable",
+    "creator",
+    "origin"].each do |k|
+    it "should return a non-nil, non-blank value for the #{k} key in metadata", :test => true do
+      check_key(@response, @data['metadata'], k)
+    end
+  end
+  
+  it "should return 14 slug keys for tags ", :test => true do
+    check_key_exists_for_all(@response, @data['tags'], 'slug')
+    @data['tags'].length.should == 14
+  end
+    
+  it "should return a non-nil, non-blank value for the slug keys in tags", :test => true do
+    check_key_value_exists_for_all(@response, @data['tags'], 'slug')
+  end
+  
+  it "should return an article tagged as 'review' with a tagType of 'classification'", :test => true do
+    @data['tags'][4].should eql({"slug"=>"review", "tagType"=>"classification", "displayName"=>"Review"})
+  end
+
 end
 
 

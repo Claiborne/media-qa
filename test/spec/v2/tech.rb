@@ -14,7 +14,7 @@ describe "Tech Homepage -> Blogroll-Widget Service Call" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
+    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
     puts @url
     begin 
       @response = RestClient.get @url
@@ -146,7 +146,7 @@ describe "Tech Topic-Pages -> Blogroll-Widget Service Call" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&all_tags=true&sort=publish_date&order=desc"
+    @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&page=1&per_page=20&tags=tech,#{topic}&all_tags=true&sort=publish_date&order=desc"
     puts @url
     begin 
       @response = RestClient.get @url

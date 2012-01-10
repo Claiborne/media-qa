@@ -18,7 +18,6 @@ module Assert
   
   #Check an API body response returns a specific key with a non nil and non blank value
   def check_key(response, data, key)
-    data[key.to_s].should be_true
     data[key.to_s].should_not be_nil
     data[key.to_s].to_s.length.should > 0
   end
@@ -27,7 +26,6 @@ module Assert
   def check_key_equals(response, data, key, val)
     data[key].should == val
   end
-
   
   #Check that a specific key exists for all articles returned
   def check_key_exists_for_all(response, data, key)
@@ -91,6 +89,10 @@ module Assert
       article[key].should == value
     end
   end
+  
+  
+  #          BELOW ARE DEPRECATED METHODS FOR V2 ONLY          #
+  
   
   #Check the all articles returned are sorted by publish date, newest first
   def check_sorted_by_publish_date(response, data)

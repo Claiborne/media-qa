@@ -90,7 +90,7 @@ describe "Tech HomePage:" do
   end
 
   context "Blogroll Widget:" do
-    widget_blogroll_v2_articles(10, "/v2/articles.json?post_type=article&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
+    widget_blogroll_v2_articles(10, "/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
     
     it "should include the load more button ocne" do
       @doc.css('div.blogrollv2Container button#loadMore').count.should == 1
@@ -160,7 +160,7 @@ describe "Tech #{topic} Topic Page:" do
   end
     
   context "Blogroll Widget:" do
-    widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&page=1&per_page=20&categories=tech&tags=#{topic}&sort=publish_date&order=desc")
+    widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=20&tags=tech,#{topic}&sort=publish_date&order=desc")
   end
   
   context "Vertical Navigation Widget:" do
