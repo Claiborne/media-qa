@@ -29,8 +29,8 @@ module LegacyBlogroll
        check_have_an_img('div#all-news div.headlines')
     end
     
-    it "should populate 12 entires", :smoke => true do
-      @doc.css('div#all-news > div.headlines').count.should == 12
+    it "should populate 12 or 15 entires", :smoke => true do
+      (@doc.css('div#all-news > div.headlines').count == 12 || @doc.css('div#all-news > div.headlines').count == 15 ).should be_true
     end
     
   end

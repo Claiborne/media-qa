@@ -40,7 +40,7 @@ module Blogrollv2Articles
       check_have_a_link('div.blogrollv2Container')
     end
     
-    if call.match(/&tags=wii-u&/)
+    if call.match(/&tags=tech,wii-u&/)
       it "should have #{num} blogroll entries"
     else
       it "should have #{num} blogroll entries", :smoke => true do

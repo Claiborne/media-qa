@@ -175,10 +175,6 @@ describe "Tech Topic-Pages -> Blogroll-Widget Service Call" do
   it "should return articles tagged as #{topic}" do
     check_key_value_within_array_contains_for_all(@response, @data, "tags", "slug", topic)
   end
-  
-  it "should return an article with a category of tech" do
-    check_key_value_within_array_contains_for_all(@response, @data, "categories", "slug", "tech")
-  end
     
   it "should return articles with a slug key present" do
     check_key_exists_for_all(@response, @data, "slug")

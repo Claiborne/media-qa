@@ -179,7 +179,7 @@ describe "#{video_player_page}" do
   context "Video Player Header Wrapper:" do
     
     it "should not be missing from the page", :smoke => true do
-      @doc.css("div#header-wrapper").should be_true
+      @doc.css("div#header-wrapper div").should be_true
     end
   
     it "should display text", :smoke => true do

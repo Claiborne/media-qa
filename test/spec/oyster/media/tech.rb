@@ -160,7 +160,7 @@ describe "Tech #{topic} Topic Page:" do
   end
     
   context "Blogroll Widget:" do
-    widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=20&tags=tech,#{topic}&sort=publish_date&order=desc")
+    widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=20&tags=tech,#{topic}&all_tags=true&sort=publish_date&order=desc")
   end
   
   context "Vertical Navigation Widget:" do
