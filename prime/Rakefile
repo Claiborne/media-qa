@@ -3,32 +3,32 @@ require 'rake'
 require 'rake/testtask'
 require 'selenium/rake/tasks'
 
-SELENIUM_RC_JAR = Dir[File.dirname(__FILE__) + "/server/selenium-server*.jar"].first
+#SELENIUM_RC_JAR = Dir[File.dirname(__FILE__) + "/server/selenium-server*.jar"].first
 
-Selenium::Rake::RemoteControlStartTask.new(:'rc:start') do |rc|
-  rc.port = 4444
-  rc.timeout_in_seconds = 60
-  rc.background = true
-  rc.wait_until_up_and_running = true
-  rc.jar_file = SELENIUM_RC_JAR
-  #rc.additional_args << "-firefoxProfileTemplate FirefoxPrimeUser"
-end
-
-Selenium::Rake::RemoteControlStopTask.new(:'rc:stop') do |rc|
-  rc.host = "localhost"
-  rc.port = 4444
-  rc.timeout_in_seconds = 60
-end
-
-# Restart selenium server task
-desc "Restart Selenium Remote Control"
-task :'rc:restart' do
- Rake::Task[:"rc:stop"].execute [] rescue nil
- Rake::Task[:"rc:start"].execute []
-end
+# Selenium::Rake::RemoteControlStartTask.new(:'rc:start') do |rc|
+  # rc.port = 4444
+  # rc.timeout_in_seconds = 60
+  # rc.background = true
+  # rc.wait_until_up_and_running = true
+  # rc.jar_file = SELENIUM_RC_JAR
+  # #rc.additional_args << "-firefoxProfileTemplate FirefoxPrimeUser"
+# end
+# 
+# Selenium::Rake::RemoteControlStopTask.new(:'rc:stop') do |rc|
+  # rc.host = "localhost"
+  # rc.port = 4444
+  # rc.timeout_in_seconds = 60
+# end
+# 
+# # Restart selenium server task
+# desc "Restart Selenium Remote Control"
+# task :'rc:restart' do
+ # Rake::Task[:"rc:stop"].execute [] rescue nil
+ # Rake::Task[:"rc:start"].execute []
+# end
 
 Rake::TestTask.new(:'run_test') do |t|
     t.libs << 'lib' << 'lib/helpers' << 'config'
-    t.test_files = FileList['functional/suites/test_ad*.rb']
+    t.test_files = FileList['functional/suites/vindicia_checkout_chrome.rb']
     t.verbose = true
 end

@@ -1,12 +1,13 @@
-require "test/unit/assertions"
-gem "selenium-client"
-require "selenium/client"
+require "rubygems"
+gem "test-unit"
+require "test/unit"
+require "selenium-webdriver"
 
 class Page
-
+	
   attr_accessor :client
      @@verification_errors = []
-
+	
   def self.errors
      @@verification_errors
   end
@@ -14,19 +15,16 @@ class Page
   def self.errors=(errors)
      @@verification_errors = errors
   end
-  
-  def visit(url)
-    @client.open(url)
-  end   
 
-  def assert_text(text)
+  def assert_text(text, xpath)
     begin
-      if !@client.is_text_present(text)
+      if !@client.find_element(:xpath => xpath).text.include? text
         puts("FAIL: Could not locate text: #{text} Current URL: #{@client.get_location}\n")
         raise "#{text} not found"
       end
     rescue Test::Unit::AssertionFailedError
     end
+    return true
   end
   
   def assert_element(element)
@@ -53,8 +51,19 @@ class Page
     @client.key_press element, key
   end
   
-  def locate_text(text)
-    return @client.is_text_present(text)
+  def get_text(location, identifier)
+  	case identifier
+  	when "class"
+  		return @client.find_element(:class, location).text
+  	when "id"
+  		return @client.find_element(:id, location).text
+  	when "xpath"
+  		return @client.find_element(:xpath, location).text
+  	end    
+  end
+  
+  def get_text_by_id(location)
+  	return @client.find_element(:id, location).text
   end
   
   def locate_element(element)
