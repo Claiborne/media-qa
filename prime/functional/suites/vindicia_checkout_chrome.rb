@@ -84,27 +84,25 @@ class CheckoutCreditCard < Test::Unit::TestCase
 		subscribe_page.continue
 		payment_page.choose_card_type("Visa")
 		payment_page.fill_cc_details({
-      :card_num         => payment_page.generate_card_num("Visa"),
-      :card_cvv         => payment_page.generate_random_cvv,
-      :name       			=> 'Frank Klun',
-      :street_address   => '625 2nd. Street',
-      :city             => 'San Francisco',
-      :state						=> 'CA',
-      :zip_code         => payment_page.generate_random_zip,
-      :card_month       => payment_page.generate_random_month,
-      :card_year        => payment_page.generate_random_year
-      })    
-    payment_page.submit_order
-    assert_true(receipt_page.is_displayed)
-    assert_true(receipt_page.order_date)
-    assert_true(receipt_page.account_name("fk-auto-#{@time}"))
-    assert_true(receipt_page.package_name("Prime - Annual"))
-    
-    #verify receipt
-    #verify autobill created for account
-    vindicia = VindiciaAPI.new
-    package_name = vindicia.get_autobill_desc("fk-auto-#{@time}@ign.com")
-    assert_true(vindicia.verify_transaction(package_name, "Prime-Annual"))
+			:card_num         => payment_page.generate_card_num("Visa"),
+			:card_cvv         => payment_page.generate_random_cvv,
+			:name       			=> 'Frank Klun',
+			:street_address   => '625 2nd. Street',
+			:city             => 'San Francisco',
+			:state						=> 'CA',
+			:zip_code         => payment_page.generate_random_zip,
+			:card_month       => payment_page.generate_random_month,
+			:card_year        => payment_page.generate_random_year
+		})    
+		payment_page.submit_order
+		assert_true(receipt_page.is_displayed)
+		assert_true(receipt_page.order_date)
+		assert_true(receipt_page.account_name("fk-auto-#{@time}"))
+		assert_true(receipt_page.package_name("Prime - Annual"))
+
+		vindicia = VindiciaAPI.new
+		package_name = vindicia.get_autobill_desc("fk-auto-#{@time}@ign.com")
+		assert_true(vindicia.verify_transaction(package_name, "Prime-Annual"))
 	end
 	
 	# def test_mastercard_transaction_chrome
