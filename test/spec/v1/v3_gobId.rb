@@ -23,7 +23,7 @@ before(:all) do
 
   end
  it "should return 20 videos" do
-    response = RestClient.get "http://#{@config.options['baseurl']}/v3/videos?count=100"
+    response = RestClient.get "http://#{@config.options['baseurl']}/v3/videos?count=500"
     response.code.should eql(200)
     data = JSON.parse(response.body)["data"]
     data.each do |entry|
@@ -33,25 +33,21 @@ before(:all) do
               first_page_items << block["legacyId"]
             end
           end
-        end
-     #first_page_items << data["objectRelations"]["legacyId"] 
+        end     
     end
   puts first_page_items.size
   
-  first_page_items.each do |legacyId|
-    #puts "Response code for #{legacyId}"
+  first_page_items.each do |legacyId|    
     response = RestClient.get "http://api.ign.com/v1/games/#{legacyId}"    
     data = JSON.parse(response.body)["game"]
-    #puts data
-    #puts "Total videos for #{legacyId} is #{data['totalVideos']}"
-    if data["totalVideos"] === 0
-     tab << data["legacyId"]
-     
-    puts "Zero videos for legacyId #{legacyId}"
+      if data["totalVideos"] === 0
+         tab << legacyId
     end    
       end
-      puts tab.size
+      puts "Unique Items size #{tab.uniq.size}"      
+      tab.uniq.each do |unique_id|
+        puts "Zero videos for LegacyId #{unique_id}"
+      end      
     end
-
  end
  
