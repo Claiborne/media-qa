@@ -1,0 +1,9 @@
+development:
+
+staging:
+  baseurl: staging-videoapi.ign.com
+
+production:
+  baseurl: video-api.ign.com
+
+
