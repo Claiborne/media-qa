@@ -1,8 +1,8 @@
 development:
 
 staging:
-  baseurl: staging-videoapi.ign.com/v3/videos  
+  baseurl: staging-videoapi.ign.com 
 
 production:
-  baseurl: video-api.ign.com/v3/videos
+  baseurl: video-api.ign.com
 
