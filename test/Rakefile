@@ -174,11 +174,11 @@ RSpec::Core::RakeTask.new('social_test') do |t|
     t.pattern = 'spec/social_test/**/*.rb'
 end
 
-desc "Run v3 tests"
-RSpec::Core::RakeTask.new('v3') do |t|
-    t.rspec_opts = ["-Ilib"]
-    t.pattern = 'spec/v3/**/*.rb'
-end
+#desc "Run v3 tests"
+#RSpec::Core::RakeTask.new('v3') do |t|
+    #t.rspec_opts = ["-Ilib"]
+    #t.pattern = 'spec/v3/**/*.rb'
+#end
 
 desc "Run follow user test"
 RSpec::Core::RakeTask.new('status_oauth') do |t|
