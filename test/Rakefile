@@ -174,14 +174,19 @@ RSpec::Core::RakeTask.new('social_test') do |t|
     t.pattern = 'spec/social_test/**/*.rb'
 end
 
-desc "Run v3 tests"
-RSpec::Core::RakeTask.new('v3') do |t|
-    t.rspec_opts = ["-Ilib"]
-    t.pattern = 'spec/v3/**/*.rb'
-end
+#desc "Run v3 tests"
+#RSpec::Core::RakeTask.new('v3') do |t|
+   # t.rspec_opts = ["-Ilib"]
+   # t.pattern = 'spec/v3/**/*.rb'
+#end
 
 desc "Run follow user test"
 RSpec::Core::RakeTask.new('status_oauth') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/social_api/status_oauth.rb'  
+end
+desc "Run gobID for v3 test"
+RSpec::Core::RakeTask.new('v3_gobId') do |t|
+  t.rspec_opts = ["-Ilib", "--format documentation","--color"]
+  t.pattern = 'spec/v1/v3_gobId.rb'
 end
