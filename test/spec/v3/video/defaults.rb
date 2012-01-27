@@ -27,7 +27,7 @@ describe "V3 Video API: Defaults" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}#{call}"
+    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
     puts @url
     begin 
       @response = RestClient.get @url
@@ -139,7 +139,7 @@ describe "V3 Video API: Get Video By Slug" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/slug/metal-gear-solid-hd-collection-video-review"
+    @url = "http://#{@config.options['baseurl']}/v3/videos/slug/metal-gear-solid-hd-collection-video-review"
     puts @url
     begin 
       @response = RestClient.get @url
