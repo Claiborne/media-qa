@@ -5,25 +5,29 @@
 ###################################################
 
 class VindiciaSubscribePage < Page
-  
-  #include ScreenshotHelper 
-  #include SqlServer
-
-	def visit
-		@client.get "http://fklun.dev.s.ign.com/subscribe"
-		#@client.get "http://s.ign.com/subscribe"
+	
+	def visit(baseurl)
+		@client.get "http://#{baseurl}/subscribe"
 	end  
-
+	
 	def select_subscription(plan_name)
-		case plan_name
-		when 'Prime - Quarterly'
-			plan_id = 'plan-Prime - Quarterly'
-		when 'Prime - Annual'
-			plan_id = 'plan-Prime - Annual'
-		when 'Prime 2 Year'
-			plan_id = 'plan-Prime - 2 Year'
+		# case plan_name
+		# when 'Prime - Free Trial'
+			# plan_id = 'plan-Prime 30 Day Trial'
+		# when 'Prime 30 Day Trial'
+		# when 'Prime - Annual'
+			# plan_id = 'plan-Prime - Annual'
+		# when 'Prime - 2 Year'
+			# plan_id = 'plan-Prime - 2 Year'
+		# end
+		plan_id = "plan-" + plan_name
+		#the xpath is different for packages that don't have a sign-up bonus hence the two different paths
+		#if it fails it will try the next path
+		begin 
+			@client.find_element(:xpath, "//ul[@id='chooseplan']/li/div/div/label[@for='#{plan_id}']").click
+		rescue
+			@client.find_element(:xpath, "//ul[@id='chooseplan']/li/div/label[@for='#{plan_id}']").click
 		end
-		@client.find_element(:xpath, "//ul[@id='chooseplan']/li/div/div/label[@for='#{plan_id}']").click
 	end
 
 	def enter_promo_code(code)
@@ -53,5 +57,19 @@ class VindiciaSubscribePage < Page
   	
 	def continue		
 		@client.find_element(:id, "continueBtn").click  		
+	end
+	
+	def is_displayed
+		puts "Is Subscribe Page displayed?"
+  	begin
+  		if @client.find_element(:class,"prime-hdrtext").text.include? "Sign-up"
+ 				puts "Yes!"
+ 				return true
+ 			else
+ 				raise "Subscribe Page page not displayed"
+ 			end
+ 		rescue Exception=>e
+ 			puts e
+ 		end
 	end
 end

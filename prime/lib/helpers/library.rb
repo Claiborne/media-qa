@@ -1,7 +1,0 @@
-require 'browser'
-require 'page'
-require 'subscribe'
-require 'prime_payment'
-require 'custom_time'
-require 'topaz'
-require 'account'

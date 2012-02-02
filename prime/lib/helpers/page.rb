@@ -2,6 +2,7 @@ require "rubygems"
 gem "test-unit"
 require "test/unit"
 require "selenium-webdriver"
+require "library"
 
 class Page
 	
@@ -25,6 +26,16 @@ class Page
     rescue Test::Unit::AssertionFailedError
     end
     return true
+  end
+  
+  def assert_action_true(assertion)
+  	begin 
+  		if !assertion
+  			raise "assertion is false"
+  		end
+  	rescue Exception=>e
+  		puts e
+  	end
   end
   
   def assert_element(element)

@@ -55,7 +55,6 @@ class VindiciaPrimePayment < Page
 	end
 	
 	def submit_order
-		puts "submitting order"
 		@client.find_element(:id, "completeBtn").click
 	end
 	
@@ -70,7 +69,6 @@ class VindiciaPrimePayment < Page
       when "Discover"
         card_num = Array['6011000990139424']
     end
-    puts card_num[rand(card_num.length - 1)]
     return card_num[rand(card_num.length - 1)]
   end
   
@@ -93,18 +91,5 @@ class VindiciaPrimePayment < Page
     random_year = rand(10) + time_var.year + 1
     return random_year.to_s
   end
-  
-  def is_displayed
-		puts "Is Payment Info Page displayed?"
-  	begin
-  		if @client.find_element(:class,"prime-hdrtext").text.include? "Payment Info"
- 				puts "Yes!"
- 				return true
- 			else
- 				raise "Payment Info Page page not displayed"
- 			end
- 		rescue Exception=>e
- 			puts e
- 		end
-	end
+
 end

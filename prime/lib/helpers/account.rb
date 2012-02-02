@@ -19,17 +19,17 @@ class VindiciaAPI < Page
 	
 	def get_autobill_desc(email)
 		autobill = Vindicia::AutoBill.fetch_by_email(email)
-		return autobill[1][0].billing_plan.description
+		return autobill[1][0].product.description
 	end
 	
 	def verify_transaction(package_name, expected_name)
-		begin
-			return package_name.include? expected_name
-		rescue
-			puts "Transaction not verified in CashBox"
-			puts "Expected Package: #{expected_name}"
-			puts "Returned Package: #{package_name}"
-			return false
-		end
+			puts "Does Transaction appear in CashBox?"
+			if package_name.include? expected_name
+				puts "Yes!"
+			else
+				puts "Transaction does not appear in CashBox!"
+				puts "Expected Package: #{expected_name}"
+				puts "Returned Package: #{package_name}"
+			end
 	end
 end

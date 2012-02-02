@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'rake'
-require 'rake/testtask'
-require 'selenium/rake/tasks'
+require 'rspec/core/rake_task'
 
 #SELENIUM_RC_JAR = Dir[File.dirname(__FILE__) + "/server/selenium-server*.jar"].first
 
@@ -27,8 +26,14 @@ require 'selenium/rake/tasks'
  # Rake::Task[:"rc:start"].execute []
 # end
 
-Rake::TestTask.new(:'run_test') do |t|
-    t.libs << 'lib' << 'lib/helpers' << 'config'
-    t.test_files = FileList['functional/suites/vindicia_checkout_chrome.rb']
-    t.verbose = true
+# Rake::TestTask.new(:'run_test') do |t|
+    # t.libs << 'lib' << 'lib/helpers' << 'config'
+    # t.test_files = FileList['functional/suites/vindicia_checkout_chrome.rb']
+    # t.verbose = true
+# end
+
+desc "Run Vindicia smoke test"
+RSpec::Core::RakeTask.new('vindicia_smoke') do |t|
+	t.rspec_opts = ["-Ilib","--format documentation","--color"]
+	t.pattern = 'functional/suites/vindicia_checkout_headless.rb'    
 end

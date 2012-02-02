@@ -8,12 +8,10 @@ class Browser
    #@@config_path = File.dirname(__FILE__) + "/selenium_firefox.yml"
 
    def self.type=(browser)
-   	puts "browser self is #{browser}"
     @@browser_type = browser
    end
 
    def initialize
-   	puts "browser is #{@@browser_type}"
    	case @@browser_type
    	when "Chrome"
    		@client = Selenium::WebDriver.for :chrome
@@ -21,6 +19,9 @@ class Browser
    		@client = Selenium::WebDriver.for :firefox
    	when "IE"
    		@client = Selenium::WebDriver.for :ie
+   	when "Headless"
+   		caps = Selenium::WebDriver::Remote::Capabilities.htmlunit(:javascript_enabled => true)
+   		@client = Selenium::WebDriver.for :remote, :url => "http://localhost:4444/wd/hub", :desired_capabilities => caps
    	end
    	@client.manage.timeouts.implicit_wait = 10
      # raise ConfigurationException, "Missing configuration file" unless File.exists?(@@config_path)
