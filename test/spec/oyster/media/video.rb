@@ -181,15 +181,7 @@ describe "#{video_player_page}" do
     it "should not be missing from the page", :smoke => true do
       @doc.css("div#header-wrapper div").should be_true
     end
-  
-    it "should display text", :smoke => true do
-      check_display_text("div#header-wrapper")
-    end
-
-    it "should have at least one link", :smoke => true do
-      check_have_a_link("div#header-wrapper")
-    end
-  
+    
   end# end context
   
 end# end describe
