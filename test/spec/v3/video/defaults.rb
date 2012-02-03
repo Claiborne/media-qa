@@ -8,9 +8,6 @@ require 'assert'
 
 include Assert
 
-### iterate for similar calls like state/published
-### have a testsuite good for all calls (like state/discovered)
-
 [ "", 
   "/state/published",
   "?metadata.state=published&metadata.networks=ign",
@@ -22,7 +19,7 @@ include Assert
 
 ##################################################################
 
-describe "V3 Video API: Defaults" do
+describe "V3 Video API: Smoke Tests" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
@@ -46,62 +43,68 @@ describe "V3 Video API: Defaults" do
   end
 
   it "should return 200" do
-    check_200(@response, @data)
+    check_200(@response)
   end
   
-  it "should not return blank" do
-    check_not_blank(@response, @data)
+  it "should not be blank" do
+    check_not_blank(@data)
   end
   
   it "should return a hash with six indices" do
-    check_indices(@response, @data, 6)
+    check_indices(@data, 6)
   end
   
-  it "shoud return a count key-value" do
-    check_key(@response, @data, 'count')
+  it "shoud return count with a non-nil, non-blank value" do
+    @data['count'].should_not be_nil
+    @data['count'].to_s.length.should > 0
   end
   
   it "should return count with a value of 20" do
-    check_key_equals(@response, @data, 'count', 20)
+    @data['count'].should == 20
   end
   
-  it "shoud return a start key-value" do
-    check_key(@response, @data, 'start')
+  it "shoud return start with a non-nil, non-blank value" do
+    @data['start'].should_not be_nil
+    @data['start'].to_s.length.should > 0
   end
   
   it "should return start with a value of 0" do
-    check_key_equals(@response, @data, 'start', 0)
+    @data['start'].should == 0
   end
   
-  it "shoud return an 'end' key-value" do
-    check_key(@response, @data, 'end')
+  it "shoud return end with a non-nil, non-blank value" do
+    @data['end'].should_not be_nil
+    @data['end'].to_s.length.should > 0
   end
   
   it "should return end with a value of 19" do
-    check_key_equals(@response, @data, 'end', 19)
+    @data['end'].should == 19
   end
   
-  it "shoud return an isMore key-value" do
-    check_key(@response, @data, 'isMore')
+  it "shoud return isMore with a non-nil, non-blank value" do
+    @data['isMore'].should_not be_nil
+    @data['isMore'].to_s.length.should > 0
   end
   
   it "should return isMore with a value of true" do
-    check_key_equals(@response, @data, 'isMore', true)
+    @data['isMore'].should == true
   end
   
-  it "shoud return a total key-valye" do
-    check_key(@response, @data, 'total')
+  it "shoud return total with a non-nil, non-blank value" do
+    @data['total'].should_not be_nil
+    @data['total'].to_s.length.should > 0
   end
   
   it "should return total with a value greater than 20" do
     @data['total'].should > 20
   end
   
-  it "shoud return a data key-valye" do
-    check_key(@response, @data, 'data')
+  it "shoud return data with a non-nil, non-blank value" do
+    @data['data'].should_not be_nil
+    @data['data'].to_s.length.should > 0
   end
   
-  it "should return data with a length of 20" do
+  it "should return data with an array length of 20" do
     @data['data'].length.should == 20
   end
   
@@ -112,16 +115,21 @@ describe "V3 Video API: Defaults" do
     "metadata", 
     "tags", 
     "category"].each do |k| 
-    it "should return videos with a #{k} key" do
-      check_key_exists_for_all(@response, @data['data'], k)
+    it "should return #{k} for all videos" do
+      @data['data'].each do |article|
+        article.has_key?(k).should be_true
+      end
     end
   end
   
-  it "should not return any blank or nil videoId values" do
-    check_key_value_exists_for_all(@response, @data['data'], "videoId")
+  it "should not return any blank or nil values for videoId" do
+    @data['data'].each do |article|
+      article['videoId'].should_not be_nil
+      article['videoId'].to_s.length.should > 0
+    end
   end
   
-  it "should return videos with a hash videoId value" do
+  it "should return a hash value for all videoIds" do
     @data['data'].each do |video|
       video['videoId'].match(/^[0-9a-f]{24,32}$/).should be_true  
     end  
@@ -134,7 +142,7 @@ end
 
 ##################################################################
 
-describe "V3 Video API: Get Video By Slug" do
+describe "V3 Video API: Get A Single Video By Slug" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
@@ -158,15 +166,15 @@ describe "V3 Video API: Get Video By Slug" do
   end
 
   it "should return 200" do
-    check_200(@response, @data)
+    check_200(@response)
   end
   
-  it "should not return blank" do
-    check_not_blank(@response, @data)
+  it "should not be blank" do
+    check_not_blank(@data)
   end
   
   it "should return a hash with 11 indices" do
-    check_indices(@response, @data, 11)
+    check_indices(@data, 11)
   end
   
   ["videoId",
@@ -181,7 +189,8 @@ describe "V3 Video API: Get Video By Slug" do
     "category",
     "system"].each do |k| 
     it "should return a video with a #{k} key" do
-      check_key(@response, @data, k)
+      @data[k].should_not be_nil
+      @data[k].to_s.length.should > 0
     end
   end
   
@@ -199,7 +208,9 @@ describe "V3 Video API: Get Video By Slug" do
     "height",
     "width",].each do |k| 
     it "should return a #{k} key for each asset" do
-      check_key_exists_for_all(@response, @data['assets'], k)
+      @data['assets'].each do |article|
+        article.has_key?(k).should be_true
+      end
     end
   end
   
@@ -208,8 +219,11 @@ describe "V3 Video API: Get Video By Slug" do
     "bitrate",
     "height",
     "width",].each do |k| 
-    it "should return a non-nil, non-blak value for the #{k} key for each asset" do
-      check_key_value_exists_for_all(@response, @data['assets'], k)
+    it "should return a non-nil, non-blak value for the #{k} key of each asset" do
+      @data['assets'].each do |article|
+        article[k].should_not be_nil
+        article[k].to_s.length.should > 0
+      end
     end
   end
   
@@ -218,7 +232,9 @@ describe "V3 Video API: Get Video By Slug" do
     "height",
     "width",].each do |k| 
     it "should return a #{k} key for each thumbnail" do
-      check_key_exists_for_all(@response, @data['thumbnails'], k)
+      @data['thumbnails'].each do |article|
+        article.has_key?(k).should be_true
+      end
     end
   end
   
@@ -226,8 +242,11 @@ describe "V3 Video API: Get Video By Slug" do
     "url",
     "height",
     "width",].each do |k| 
-    it "should return a non-nil, non-blank value for the #{k} key for each thumbnail" do
-      check_key_value_exists_for_all(@response, @data['thumbnails'], k)
+    it "should return a non-nil, non-blank value for the #{k} key of each thumbnail" do
+      @data['thumbnails'].each do |article|
+        article[k].should_not be_nil
+        article[k].to_s.length.should > 0
+      end
     end
   end
   
@@ -238,8 +257,9 @@ describe "V3 Video API: Get Video By Slug" do
     "legacyId",
     "platform",
     "objectType"].each do |k|
-    it "should return a non-nil, non-blank value for the #{k} key in objectRelations" do
-      check_key(@response, @data['objectRelations'][0], k)
+    it "should return a non-nil, non-blank value for the #{k} key of each objectRelations" do
+      @data['objectRelations'][0][k].should_not be_nil
+      @data['objectRelations'][0][k].to_s.length.should > 0
     end
   end
 
@@ -264,17 +284,23 @@ describe "V3 Video API: Get Video By Slug" do
     "creator",
     "origin"].each do |k|
     it "should return a non-nil, non-blank value for the #{k} key in metadata" do
-      check_key(@response, @data['metadata'], k)
+      @data['metadata'][k].should_not be_nil
+      @data['metadata'][k].to_s.length.should > 0
     end
   end
-  
-  it "should return 14 slug keys for tags" do
-    check_key_exists_for_all(@response, @data['tags'], 'slug')
+
+  it "should return 14 slugs for tags" do
+    @data['tags'].each do |article|
+      article.has_key?('slug').should be_true
+    end
     @data['tags'].length.should == 14
   end
-    
+
   it "should return a non-nil, non-blank value for the slug keys in tags" do
-    check_key_value_exists_for_all(@response, @data['tags'], 'slug')
+    @data['tags'].each do |article|
+      article['slug'].should_not be_nil
+      article['slug'].to_s.length.should > 0
+    end
   end
   
   it "should return an article tagged as 'review' with a tagType of 'classification'" do
@@ -284,14 +310,16 @@ describe "V3 Video API: Get Video By Slug" do
   ["videoSeries",
     "regions"].each do |k|
     it "should return a non-nil, non-blank value for the #{k} key in extra" do
-      check_key(@response, @data['extra'], k)
+      @data['extra'][k].should_not be_nil
+      @data['extra'][k].to_s.length.should > 0
     end
   end
   
   ["youtubeChannelIds",
     "legacyArticleIds"].each do |k|
     it "should return a non-nil, non-blank value for the #{k} key in refs" do
-      check_key(@response, @data['refs'], k)
+      @data['refs'][k].should_not be_nil
+      @data['refs'][k].to_s.length.should > 0
     end
   end
   
@@ -302,11 +330,13 @@ describe "V3 Video API: Get Video By Slug" do
     "updatedAt"].each do |k|
     if k == "mezzanineUrl"
       it "should return a non-nil, non-blank value for the #{k} key in system", :prd => true do
-        check_key(@response, @data['system'], k)
+        @data['system'][k].should_not be_nil
+        @data['system'][k].to_s.length.should > 0
       end
     else
       it "should return a non-nil, non-blank value for the #{k} key in system" do
-        check_key(@response, @data['system'], k)
+        @data['system'][k].should_not be_nil
+        @data['system'][k].to_s.length.should > 0
       end
     end
   end
@@ -316,5 +346,52 @@ end
 ##################################################################
 
 ##################################################################
+
+describe "V3 Video API: Get Published Videos in Published State using /state/published" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/v3/videos/state/published"
+    puts @url
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+    
+  end
+    
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  it "should return a hash with six indices" do
+    check_indices(@data, 6)
+  end
+    
+  it "should return only published videos" do
+    @data['data'].each do |k|
+      k['metadata']['state'].should == "published"
+    end
+  end
+  
+end
+
+
+
+
 
 

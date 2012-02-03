@@ -1,20 +1,22 @@
 module Assert
-
+  
   #Check API response is 200
-  def check_200(response, data)
+  def check_200(response)
     response.code.should eql(200)
   end
   
-  #Check API response body is not blank
-  def check_not_blank(response, data)
+  #Check API does not return a blank json
+  def check_not_blank(data)
     data.length.should > 0
     data.to_s.length.should > 0
   end
   
-  #Check API body response returns desired number of indices
-  def check_indices(response, data, num)
+  #Check API json returns
+  def check_indices(data, num)
     data.length.should == num
   end
+  
+  #          BELOW ARE DEPRECATED METHODS AND SHOULD NOT BE USED          #
   
   #Check an API body response returns a specific key with a non nil and non blank value
   def check_key(response, data, key)

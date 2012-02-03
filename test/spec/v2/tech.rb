@@ -33,11 +33,11 @@ describe "Tech Homepage -> Blogroll-Widget Service Call" do
   end
   
   it "should return 200" do
-    check_200(@response, @data)
+    check_200(@response)
   end
   
   it "should not be blank" do
-    check_not_blank(@response, @data)
+    check_not_blank(@data)
   end
   
   it "should return articles with a slug key present" do
@@ -165,11 +165,11 @@ describe "Tech Topic-Pages -> Blogroll-Widget Service Call" do
   end
     
   it "should return 200" do
-    check_200(@response, @data)
+    check_200(@response)
   end
   
   it "should not be blank" do
-    check_not_blank(@response, @data)
+    check_not_blank(@data)
   end
     
   it "should return articles tagged as #{topic}" do
@@ -307,11 +307,11 @@ describe "Tech Topic-Page -> Discover-More-Widget Service Call" do
       end
 
       it "should return 200" do
-        check_200(@response, @data)
+        check_200(@response)
       end
 
       it "should not be blank" do
-        check_not_blank(@response, @data)
+        check_not_blank(@data)
       end
  
       it "should return articles with a slug key present" do
@@ -384,11 +384,11 @@ describe "Tech Homepage -> Video-Playlist-Interrupt Service Call" do
   end
   
   it "should return 200", :prd => true do
-    check_200(@response, @data)
+    check_200(@response)
   end
   
   it "should not be blank", :prd => true do
-    check_not_blank(@response, @data)
+    check_not_blank(@data)
   end
   
   it "should return one 'videos' key", :prd => true do
@@ -443,11 +443,11 @@ describe "Tech Homepage -> Popular-Articles-Interrupt Service Call" do
   end
   
   it "should return 200" do
-    check_200(@response, @data)
+    check_200(@response)
   end
   
   it "should not be blank" do
-    check_not_blank(@response, @data)
+    check_not_blank(@data)
   end
   
   it "should return articles with a slug key present" do
