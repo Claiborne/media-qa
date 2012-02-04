@@ -9,15 +9,12 @@ require 'assert'
 include Assert
 
 [ "", 
-  "/state/published",
+  "state/published",
   "?metadata.state=published&metadata.networks=ign",
-  "/network/ign?metadata.state=published",
-  "/state/published?metadata.networks=ign&?metadata.state=published",
-  "?sortOrder=asc&sortBy=metadata.name&?metadata.state=published",
+  "network/ign?metadata.state=published",
+  "state/published?metadata.networks=ign&metadata.state=published",
+  "?sortOrder=asc&sortBy=metadata.name&metadata.state=published",
   "?metadata.state=published&fields=metadata.name,metadata.networks,videoId"].each do |call|
-##################################################################
-
-##################################################################
 
 describe "V3 Video API: Smoke Tests" do
 
@@ -334,12 +331,73 @@ end
 
 ##################################################################
 
-describe "V3 Video API: Get Published Videos in Published State using /state/published" do
+
+  
+[ "state/published",
+  "?metadata.state=published&metadata.networks=ign",
+  "network/ign?metadata.state=published",
+  "state/published?metadata.networks=ign",
+  "?sortOrder=asc&sortBy=metadata.name&metadata.state=published",
+  "?metadata.state=published&fields=metadata.name,metadata.networks,videoId,metadata.state"].each do |call|
+    
+describe "V3 Video API: Get Videos in Published State" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/state/published"
+    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
+    puts @url
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+    
+  end
+    
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  it "should return a hash with six indices" do
+    check_indices(@data, 6)
+  end
+    
+  it "should return only published videos" do
+    @data['data'].each do |k|
+      k['metadata']['state'].should == "published"
+    end
+  end
+end
+end
+
+##################################################################
+
+##################################################################
+
+[ "state/published?count=35",
+  "state/published?startIndex=36&count=35",
+  "network/ign?count=35&metadata.state=published",
+  "network/ign?startIndex=36&count=35&metadata.state=published"].each do |call|
+
+describe "V3 Video API: Get Videos Using Count and Start Index" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
     puts @url
     begin 
       @response = RestClient.get @url
@@ -375,12 +433,26 @@ describe "V3 Video API: Get Published Videos in Published State using /state/pub
     end
   end
   
+  it "should return a count value of 35" do
+    @data['count'].should == 35
+  end
+  
+  it "should return 35 videos" do
+    @data['data'].length.should == 35
+  end
+  
+  if call.match(/startIndex=36/)
+    it "should return start with a value of 36" do
+      @data['start'].should == 36
+    end
+    
+    it "should return end with a value of 70" do
+      @data['end'].should == 70
+    end
+    
+  end
 end
-
-##################################################################
-
-##################################################################
-
+end
 
 
 
