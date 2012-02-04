@@ -55,6 +55,7 @@ describe "V3 Video API: Smoke Tests" do
   end
   
   it "shoud return count with a non-nil, non-blank value" do
+    @data.has_key?('count').should be_true
     @data['count'].should_not be_nil
     @data['count'].to_s.length.should > 0
   end
@@ -64,6 +65,7 @@ describe "V3 Video API: Smoke Tests" do
   end
   
   it "shoud return start with a non-nil, non-blank value" do
+    @data.has_key?('start').should be_true
     @data['start'].should_not be_nil
     @data['start'].to_s.length.should > 0
   end
@@ -73,6 +75,7 @@ describe "V3 Video API: Smoke Tests" do
   end
   
   it "shoud return end with a non-nil, non-blank value" do
+    @data.has_key?('end').should be_true
     @data['end'].should_not be_nil
     @data['end'].to_s.length.should > 0
   end
@@ -82,6 +85,7 @@ describe "V3 Video API: Smoke Tests" do
   end
   
   it "shoud return isMore with a non-nil, non-blank value" do
+    @data.has_key?('isMore').should be_true
     @data['isMore'].should_not be_nil
     @data['isMore'].to_s.length.should > 0
   end
@@ -89,8 +93,9 @@ describe "V3 Video API: Smoke Tests" do
   it "should return isMore with a value of true" do
     @data['isMore'].should == true
   end
-  
+
   it "shoud return total with a non-nil, non-blank value" do
+    @data.has_key?('total').should be_true
     @data['total'].should_not be_nil
     @data['total'].to_s.length.should > 0
   end
@@ -100,6 +105,7 @@ describe "V3 Video API: Smoke Tests" do
   end
   
   it "shoud return data with a non-nil, non-blank value" do
+    @data.has_key?('data').should be_true
     @data['data'].should_not be_nil
     @data['data'].to_s.length.should > 0
   end
@@ -188,13 +194,14 @@ describe "V3 Video API: Get A Single Video By Slug" do
     "refs",
     "category",
     "system"].each do |k| 
-    it "should return a video with a #{k} key" do
+    it "should return a video with #{k} data" do
+      @data.has_key?(k).should be_true
       @data[k].should_not be_nil
       @data[k].to_s.length.should > 0
     end
   end
   
-  it "should return 7 assets" do
+  it "should return a video with 7 assets" do
     @data['assets'].length.should == 7
   end
   
@@ -207,20 +214,9 @@ describe "V3 Video API: Get A Single Video By Slug" do
     "bitrate",
     "height",
     "width",].each do |k| 
-    it "should return a #{k} key for each asset" do
+    it "should return #{k} asset data with a non-nil, non-blank value" do
       @data['assets'].each do |article|
         article.has_key?(k).should be_true
-      end
-    end
-  end
-  
-  ["downloadable",
-    "url",
-    "bitrate",
-    "height",
-    "width",].each do |k| 
-    it "should return a non-nil, non-blak value for the #{k} key of each asset" do
-      @data['assets'].each do |article|
         article[k].should_not be_nil
         article[k].to_s.length.should > 0
       end
@@ -231,19 +227,9 @@ describe "V3 Video API: Get A Single Video By Slug" do
     "url",
     "height",
     "width",].each do |k| 
-    it "should return a #{k} key for each thumbnail" do
+    it "should return #{k} thumbnail data with a non-nil, non-blank value" do
       @data['thumbnails'].each do |article|
         article.has_key?(k).should be_true
-      end
-    end
-  end
-  
-  ["styleUrl",
-    "url",
-    "height",
-    "width",].each do |k| 
-    it "should return a non-nil, non-blank value for the #{k} key of each thumbnail" do
-      @data['thumbnails'].each do |article|
         article[k].should_not be_nil
         article[k].to_s.length.should > 0
       end
@@ -257,7 +243,8 @@ describe "V3 Video API: Get A Single Video By Slug" do
     "legacyId",
     "platform",
     "objectType"].each do |k|
-    it "should return a non-nil, non-blank value for the #{k} key of each objectRelations" do
+    it "should return #{k} objectRelations data with a non-nil, non-blank value" do
+      @data['objectRelations'][0].has_key?(k).should be_true
       @data['objectRelations'][0][k].should_not be_nil
       @data['objectRelations'][0][k].to_s.length.should > 0
     end
@@ -283,33 +270,30 @@ describe "V3 Video API: Get A Single Video By Slug" do
     "downloadable",
     "creator",
     "origin"].each do |k|
-    it "should return a non-nil, non-blank value for the #{k} key in metadata" do
+    it "should return #{k} metadata with a non-nil, non-blank value" do
+      @data['metadata'].has_key?(k).should be_true
       @data['metadata'][k].should_not be_nil
       @data['metadata'][k].to_s.length.should > 0
     end
   end
 
-  it "should return 14 slugs for tags" do
+  it "should return tag data with 14 non-nil, non-blank slugs" do
     @data['tags'].each do |article|
       article.has_key?('slug').should be_true
-    end
-    @data['tags'].length.should == 14
-  end
-
-  it "should return a non-nil, non-blank value for the slug keys in tags" do
-    @data['tags'].each do |article|
       article['slug'].should_not be_nil
       article['slug'].to_s.length.should > 0
     end
+    @data['tags'].length.should == 14
   end
   
-  it "should return an article tagged as 'review' with a tagType of 'classification'" do
+  it "should return a video tagged as 'review' with a tagType of 'classification'" do
     @data['tags'][4].should eql({"slug"=>"review", "tagType"=>"classification", "displayName"=>"Review"})
   end
   
   ["videoSeries",
     "regions"].each do |k|
-    it "should return a non-nil, non-blank value for the #{k} key in extra" do
+    it "should return #{k} extra data with a non-nil, non-blank value" do
+      @data['extra'].has_key?(k).should be_true
       @data['extra'][k].should_not be_nil
       @data['extra'][k].to_s.length.should > 0
     end
@@ -317,7 +301,8 @@ describe "V3 Video API: Get A Single Video By Slug" do
   
   ["youtubeChannelIds",
     "legacyArticleIds"].each do |k|
-    it "should return a non-nil, non-blank value for the #{k} key in refs" do
+    it "should return #{k} refs data with a non-nil, non-blank value" do
+      @data['refs'].has_key?(k).should be_true
       @data['refs'][k].should_not be_nil
       @data['refs'][k].to_s.length.should > 0
     end
@@ -329,12 +314,14 @@ describe "V3 Video API: Get A Single Video By Slug" do
     "createdAt",
     "updatedAt"].each do |k|
     if k == "mezzanineUrl"
-      it "should return a non-nil, non-blank value for the #{k} key in system", :prd => true do
+      it "should return #{k} system data with a non-nil, non-blank value", :prd => true do
+        @data['system'].has_key?(k).should be_true
         @data['system'][k].should_not be_nil
         @data['system'][k].to_s.length.should > 0
       end
     else
-      it "should return a non-nil, non-blank value for the #{k} key in system" do
+      it "should return #{k} system data with a non-nil, non-blank value" do
+        @data['system'].has_key?(k).should be_true
         @data['system'][k].should_not be_nil
         @data['system'][k].to_s.length.should > 0
       end
@@ -389,6 +376,12 @@ describe "V3 Video API: Get Published Videos in Published State using /state/pub
   end
   
 end
+
+##################################################################
+
+##################################################################
+
+
 
 
 
