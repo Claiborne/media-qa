@@ -16,7 +16,7 @@ include Assert
   "?sortOrder=asc&sortBy=metadata.name&metadata.state=published",
   "?metadata.state=published&fields=metadata.name,metadata.networks,videoId"].each do |call|
 
-describe "V3 Video API: Smoke Tests" do
+describe "V3 Video API: Video Smoke Tests" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
@@ -145,12 +145,107 @@ end
 
 ##################################################################
 
-describe "V3 Video API: Get A Single Video By Slug" do
+describe "V3 Video API: Playlist Smoke Tests" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/slug/metal-gear-solid-hd-collection-video-review"
+    @url = "http://#{@config.options['baseurl']}/v3/playlists"
+    puts @url
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+    
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+  
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+  
+  it "should return a hash with six indices" do
+    check_indices(@data, 6)
+  end
+  
+  ["count","start","end","isMore","total","data"].each do |k|
+    it "shoud return #{k} with a non-nil, non-blank value" do
+      @data.has_key?('count').should be_true
+      @data[k].should_not be_nil
+      @data[k].to_s.length.should > 0
+    end
+  end
+  
+  it "should return count with a value of 20" do
+    @data['count'].should == 20
+  end
+  
+  it "should return start with a value of 0" do
+    @data['start'].should == 0
+  end
+  
+  it "should return end with a value of 19" do
+    @data['end'].should == 19
+  end
+  
+  it "should return isMore with a value of true" do
+    @data['isMore'].should == true
+  end
+  
+  it "should return total with a value greater than 20" do
+    @data['total'].should > 20
+  end
+  
+  it "should return data with an array length of 20" do
+    @data['data'].length.should == 20
+  end
+  
+  ["playlistId","metadata","system"].each do |key|
+    it "should return #{key} data with a non-nil, non-blank value for all playlists" do
+      @data['data'].each do |playlist|
+        playlist.has_key?(key).should be_true
+        playlist[key].should_not be_nil
+        playlist[key].to_s.length.should > 0
+      end
+    end
+  end
+  
+  ["name", "description", "url"].each do |key|
+    it "should return #{key} metadata with a non-nil, non-blank value for all playlists" do
+      @data['data'].each do |playlist|
+        playlist['metadata'].has_key?(key).should be_true
+        playlist['metadata'].should_not be_nil
+        playlist['metadata'].to_s.length.should > 0
+      end
+    end
+  end
+  
+end
+
+##################################################################
+
+##################################################################
+{"Get A Single Video By Slug" => "/slug/metal-gear-solid-hd-collection-video-review",
+  "Get A Single Video By videoId" => "/4eb87cb98e88c57b65000008"}.each do |k,v|
+
+describe "V3 Video API: #{k}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/v3/videos#{v}"
     puts @url
     begin 
       @response = RestClient.get @url
@@ -325,6 +420,7 @@ describe "V3 Video API: Get A Single Video By Slug" do
     end
   end
 
+end
 end
 
 ##################################################################
