@@ -8,14 +8,13 @@ require 'assert'
 
 include Assert
 
-describe "V3 Video API: Search Example.......", :test => true do
+describe "V3 Video API: Search Using Post Smoke Test" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
     @config = Configuration.new
     
-    
-    body = {
+    @body = {
     "matchRule"=>"matchAll",
     "rules"=>[
       {
@@ -31,12 +30,10 @@ describe "V3 Video API: Search Example.......", :test => true do
     "states"=>"published"
     }.to_json
     
-    
     @url = "http://#{@config.options['baseurl']}/v3/videos/search"
     puts @url
     begin 
-     #@response = RestClient.get @url
-     @response = RestClient.post @url, body, :content_type => "application/json"
+     @response = RestClient.post @url, @body, :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
