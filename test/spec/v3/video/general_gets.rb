@@ -355,7 +355,7 @@ describe "V3 Video API: Get Videos By Network" do
   end
     
   it "should return 200" do
-    check_200(@data)
+    check_200(@response)
   end
 
   it "should not be blank" do
