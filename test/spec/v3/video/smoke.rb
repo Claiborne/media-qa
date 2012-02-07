@@ -222,7 +222,7 @@ describe "V3 Video API: Playlist Smoke Tests" do
     end
   end
   
-  ["name", "description", "url"].each do |key|
+  ["name", "description", "url","networks"].each do |key|
     it "should return #{key} metadata with a non-nil, non-blank value for all playlists" do
       @data['data'].each do |playlist|
         playlist['metadata'].has_key?(key).should be_true
