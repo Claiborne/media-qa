@@ -44,33 +44,39 @@ module Blogrollv2Articles
       it "should have #{num} blogroll entries"
     else
       it "should have #{num} blogroll entries", :smoke => true do
-        @doc.css('div.blogrollv2Container div.listElmnt-articleContent').count.should eql(num)
+        @doc.css('div.blogrollv2Container div.listElmnt').count.should eql(num)
       end
     end
 
-    it "shoud display the authors' names" do
-      check_is_not_blank(@doc, num, "div.blogrollv2Container div.listElmnt-authors")
-    end
-    
-    it "shoud display the articles' timestamps" do
-      check_is_not_blank(@doc, num, "div.blogrollv2Container div.listElmnt-date")
+    it "shoud display the author's name / timestamp" do
+      check_is_not_blank(@doc, num, "div.blogrollv2Container span.listElmnt-date")
     end
 
     it "shoud display the articles' headlines", :smoke => true do
-      check_is_not_blank(@doc, num, "div.blogrollv2Container a.listElmnt-storyHeadline")
+      check_is_not_blank(@doc, num, "div.blogrollv2Container h3 a.listElmnt-storyHeadline")
     end
 
-    it "shoud display articles' summaries", :smoke => true do
-      check_is_not_blank(@doc, num, "div.blogrollv2Container p.listElmnt-summary")
+    it "shoud display articles' summaries", :smoke => true do 
+      i = 0
+      @doc.css("div.blogrollv2Container div.listElmnt-blogItem p").count.should > 0
+      @doc.css("div.blogrollv2Container div.listElmnt-blogItem p").each do |summary|
+        article_byline = summary.css('span').text
+        article_read_more = summary.css('a').text
+        if summary.text.gsub(article_byline,"").gsub(article_read_more,"").delete("^a-zA-Z").length < 1
+          i = i+1
+        end
+      end
+      i.should be < num*0.7
     end
     
     it "shoud display the read more links" do
       check_is_not_blank(@doc, num, "div.blogrollv2Container a.moreLink")
     end
 
-    it "should display only unique entries", :smoke => true do
+    it "should display only unique entries", :smoke => true do  
       headline = []
-      @doc.css('div.listElmnt-articleContent a.listElmnt-storyHeadline').each do |entry|
+      @doc.css('div.listElmnt-blogItem a.listElmnt-storyHeadline').should be_true
+      @doc.css('div.listElmnt-blogItem a.listElmnt-storyHeadline').each do |entry|
         headline << entry.attribute('href')
       end
       headline.count.should > 0
@@ -78,13 +84,14 @@ module Blogrollv2Articles
     end
     
     it "should contain first two headline links that return 200", :spam => true do
-      link = @doc.at_css("div.blogrollv2Container div:nth-child(1).listElmnt-article div.listElmnt-articleContent h3 a").attribute("href").to_s
+      @doc.at_css("div.blogrollv2Container div:nth-child(1).listElmnt h3 a").should be_true
+      link = @doc.at_css("div.blogrollv2Container div:nth-child(1).listElmnt h3 a").attribute("href").to_s
       response = rest_client_not_301_home_open link
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
       response.code.should eql(200)
 
-      link = @doc.at_css("div.blogrollv2Container div:nth-child(2).listElmnt-article div.listElmnt-articleContent h3 a").attribute("href").to_s
+      link = @doc.at_css("div.blogrollv2Container div:nth-child(2).listElmnt h3 a").attribute("href").to_s
       response = rest_client_not_301_home_open link
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
