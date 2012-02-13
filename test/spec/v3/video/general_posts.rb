@@ -8,7 +8,7 @@ require 'assert'
 
 include Assert
 
-describe "V3 Video API: Search Using Post Smoke Test" do
+describe "V3 Video API: Search by legacyId", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
@@ -31,7 +31,7 @@ describe "V3 Video API: Search Using Post Smoke Test" do
     }.to_json
     
     @url = "http://#{@config.options['baseurl']}/v3/videos/search"
-    puts @url
+    puts @body
     begin 
      @response = RestClient.post @url, @body, :content_type => "application/json"
     rescue => e
@@ -59,7 +59,46 @@ describe "V3 Video API: Search Using Post Smoke Test" do
   it "should return a hash with six indices" do
     check_indices(@data, 6)
   end
+  
+  it "should return only videos with legacyId == 872155" do
+    @data['data'].each do |k|
+      legacyId_values = []
+      k['objectRelations'].each do |l|
+        legacyId_values << l['legacyId'].to_i
+      end
+      legacyId_values.include?(872155).should be_true
+    end
+  end
+  
+  it "should return only published videos" do
+    @data['data'].each do |k|
+      k['metadata']['state'].should == "published"
+    end
+  end
 
+  {'start'=>0,'count'=>25,'end'=>24}.each do |k,v|
+    it "should return a #{k} value of #{v}" do
+      @data.has_key?(k).should be_true
+      @data[k].should == v
+    end
+  end
+  
+  it "should return only videos with networks == ign" do
+    networks_metadata = []
+    @data['data'].each do |k|
+      k['metadata']['networks'].each do |l|
+        networks_metadata << l
+      end
+      networks_metadata.include?("ign").should be_true
+    end
+  end
+  
+  it "should return only videos where prime == false" do
+    @data['data'].each do |k|
+      k['metadata']['prime'].should be_false
+    end
+  end
+  
 end
 
 

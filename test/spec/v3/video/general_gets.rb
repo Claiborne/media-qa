@@ -366,9 +366,13 @@ describe "V3 Video API: Get Videos By Network" do
     check_indices(@data, 6)
   end
   
-  it "should return only videos that are " do
-    @data['data'].each do |video|
-      video['metadata']['networks'].to_s.match(/ign/).should be_true
+  it "should return only videos with networks == ign" do
+    networks_metadata = []
+    @data['data'].each do |k|
+      k['metadata']['networks'].each do |l|
+        networks_metadata << l
+      end
+      networks_metadata.include?("ign").should be_true
     end
   end
   
