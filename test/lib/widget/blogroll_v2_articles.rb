@@ -98,19 +98,19 @@ module Blogrollv2Articles
       response.code.should eql(200)
     end
 
-    it "should display the same articles as the api returns" do
+    it "should display the same articles as the api returns", :test => true do ###### REMOVE TEST
       Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
       config = Configuration.new
     
       data = JSON.parse((rest_client_open("http://#{config.options['baseurl']}#{call}")).body)
       api_titles = []
       data.each do |article|
-        api_titles << article['blogroll']['headline']
+        api_titles << article['blogroll']['headline'].gsub(/&rsquo;/,"").delete("^a-zA-Z")
       end
 
       frontend_titles = []
-      @doc.css("div.blogrollv2Container a.listElmnt-storyHeadline").each do |article|
-        frontend_titles << article.text
+      @doc.css("div.blogrollv2Container h3 a.listElmnt-storyHeadline").each do |article|
+        frontend_titles << article.text.gsub(/&rsquo;/,"").delete("^a-zA-Z")
       end
       titles = api_titles + frontend_titles
       titles.uniq.count.should be <= num+2
