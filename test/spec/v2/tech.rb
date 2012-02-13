@@ -136,7 +136,7 @@ describe "Tech Homepage -> Blogroll-Widget Service Call" do
     
 end
 
-describe "Tech Topic-Pages -> Blogroll-Widget Service Call" do
+describe "Tech Topic-Pages -> Blogroll-Widget Service Call", :prd => true do
   
   @topic = return_tech_nav
   @topic.each do |topic|
