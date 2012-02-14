@@ -1,6 +1,5 @@
 require 'rspec'
 require 'nokogiri'
-require 'open-uri'
 require 'rest_client'
 require 'open_page'
 require 'fe_checker'
