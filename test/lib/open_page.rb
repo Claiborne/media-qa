@@ -27,6 +27,69 @@ def nokogiri_open(page)
   return nok_doc
 end#end def
 
+def nokogiri_not_301_home_open(page)
+  stitial_count = 0
+  begin
+    rest_doc = rest_client_not_301_home_helper(page)
+  rescue => e
+    raise Exception.new("#{e.message} on "+page.to_s)
+  end#end Exception
+  while Nokogiri::HTML(rest_doc.body).at_css('div#disable')
+    begin
+      rest_doc = rest_client_not_301_home_helper(page)
+    rescue => e
+      raise Exception.new("#{e.message} (after skipping a stitial) on "+page.to_s)
+    end#end Exception
+    stitial_count +=1
+    if stitial_count > 3
+      raise "An endless stitial loop prevented this test case from running"
+    elsif stitial_count > 2
+      begin
+        rest_doc = rest_client_not_301_home_helper(page+"?special=noads")
+      rescue => e
+        raise Exception.new("#{e.message} (with special=stital) on "+page.to_s)
+      end#end Exception
+    end
+  end#end while
+  return Nokogiri::HTML(rest_doc)
+end
+
+def nokogiri_not_301_open(page)
+  stitial_count = 0
+  begin
+    rest_doc = rest_client_not_301_helper(page)
+  rescue => e
+    raise Exception.new("#{e.message} on "+page.to_s)
+  end#end Exception
+  while Nokogiri::HTML(rest_doc.body).at_css('div#disable')
+    begin
+      rest_doc = rest_client_not_301_helper(page)
+    rescue => e
+      raise Exception.new("#{e.message} (after skipping a stitial) on "+page.to_s)
+    end#end Exception
+    stitial_count +=1
+    if stitial_count > 3
+      raise "An endless stitial loop prevented this test case from running"
+    elsif stitial_count > 2
+      begin
+        rest_doc = rest_client_not_301_helper(page+"?special=noads")
+      rescue => e
+        raise Exception.new("#{e.message} (with special=stital) on "+page.to_s)
+      end#end Exception
+    end
+  end#end while
+  return Nokogiri::HTML(rest_doc)
+end
+
+
+
+
+
+
+
+########
+
+
 def rest_client_open(page)
   stitial_count = 0
   begin

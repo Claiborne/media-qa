@@ -63,7 +63,7 @@ describe "#{hub} :" do
 
   before(:all) do
     @page = hub.to_s
-    @doc = nokogiri_open(@page)
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -75,7 +75,6 @@ describe "#{hub} :" do
   end
 
   it "should return 200", :smoke => true do
-    check_return_200_without_301(@page)
   end
 
   it "should include at least one css file", :smoke => true do

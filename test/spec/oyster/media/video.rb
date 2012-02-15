@@ -13,41 +13,43 @@ include GlobalFooter
 include GlobalHeader
 include VideoHubSlotter
 
+  # Helper Method #
+
 def check_video_blogroll
-  
+
   it "should not be missing from the page", :smoke => true do
     @doc.css('div#video-blogroll').should be_true
   end
-  
+
   it "should populate 15 entires", :smoke => true do
     @doc.css("div#video-blogroll div[class='grid_16 alpha bottom_2']").count.should == 15
   end
-  
+
   it "should display text", :smoke => true do
     check_display_text("div#video-blogroll div[class='grid_16 alpha bottom_2']")
   end
-  
+
   it "should have at least one link", :smoke => true do
     check_have_a_link("div#video-blogroll div[class='grid_16 alpha bottom_2']")
   end
-  
+
   it "should have at least one image", :smoke => true do
     check_have_an_img("div#video-blogroll div[class='grid_16 alpha bottom_2']")
   end
-  
+
   it "should display a load more button", :smoke => true do
     @doc.css('div#video-blogroll a#moreVideos').should be_true
   end
-  
+
   it "should display a functional load more button" do
     @doc.css('div#video-blogroll a#moreVideos').attribute('href')
   end
-  
+
 end
 
-## BEGIN SPEC ##
+  # Tests #
 
-describe "Video Hub:" do
+describe "Video Hub\nhttp://www.ign.com/videos" do
 
   before(:all) do
     @page = "http://www.ign.com/videos"
@@ -102,7 +104,7 @@ end
 
 @blogroll_ajax_calls.each do |blogroll_call|
   
-describe "#{blogroll_call}" do
+describe "Video Hub Ajax Calls\n#{blogroll_call}" do
   
   before(:all) do
      @page = blogroll_call.to_s
@@ -148,7 +150,7 @@ end
 
 @video_player_page.each do |video_player_page|
   
-describe "#{video_player_page}" do
+describe "Video Player Page\n#{video_player_page}" do
 
   before(:all) do
     @page = video_player_page.to_s

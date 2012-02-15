@@ -41,7 +41,8 @@ describe "Tech HomePage:" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech"
-    @doc = nokogiri_open(@page)
+    puts @page
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -53,7 +54,6 @@ describe "Tech HomePage:" do
   end
   
   it "should return 200", :smoke => true do
-    check_return_200_without_301(@page)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -119,7 +119,8 @@ describe "Tech #{topic} Topic Page:" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech/#{topic}"
-    @doc = nokogiri_open(@page)
+    puts @page
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -131,7 +132,6 @@ describe "Tech #{topic} Topic Page:" do
   end
   
   it "should return 200", :smoke => true do
-    check_return_200_without_301(@page)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -195,7 +195,8 @@ describe "Tech v2 Article Page:" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/articles/2011/09/21/gears-of-war-3-dolby-7-1-surround-sound-headset-review"
-    @doc = nokogiri_open(@page)
+    puts @page
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -207,7 +208,6 @@ describe "Tech v2 Article Page:" do
   end
   
   it "should return 200", :smoke => true do
-    check_return_200_without_301_to_home(@page)
   end
 
   it "should include at least one css file", :smoke => true do
