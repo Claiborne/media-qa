@@ -59,7 +59,7 @@ include LegacyBlogroll
 
 @hubs.each do |hub|
   
-describe "#{hub} :" do
+describe "#{hub}:" do
 
   before(:all) do
     @page = hub.to_s

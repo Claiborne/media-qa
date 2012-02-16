@@ -81,15 +81,6 @@ def nokogiri_not_301_open(page)
   return Nokogiri::HTML(rest_doc)
 end
 
-
-
-
-
-
-
-########
-
-
 def rest_client_open(page)
   stitial_count = 0
   begin
@@ -174,8 +165,7 @@ end
 
 def rest_client_not_301_home_helper(page)
   RestClient.get(page){ |response, request, result, &block|
-    #if ["300","301","302","303","304","307"].include? response.code.to_s
-    if ["302"].include? response.code.to_s
+    if ["300","301","302","303","304","307"].include? response.code.to_s
       if ["/","http://www.ign.com","http://www.ign.com/"].include? response.headers[:location].to_s
         raise Exception.new("#{page} did not return a 200 but instead a #{response.code} to the homepage")
       else

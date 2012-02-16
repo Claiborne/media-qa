@@ -25,5 +25,9 @@ module GlobalHeader
       check_have_a_link('div#ign-header')
     end
     
+    it "should load the user-tools widget", :smoke => true do
+      @doc.css('div#ign-header div#userTools').should be_true
+    end
+    
   end 
 end

@@ -49,11 +49,12 @@ end
 
   # Tests #
 
-describe "Video Hub\nhttp://www.ign.com/videos" do
+describe "Video Hub:" do
 
   before(:all) do
     @page = "http://www.ign.com/videos"
-    @doc = nokogiri_open(@page)
+    puts @page
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -65,7 +66,6 @@ describe "Video Hub\nhttp://www.ign.com/videos" do
   end
 
   it "should return 200", :smoke => true do
-    check_return_200_without_301(@page)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -104,11 +104,12 @@ end
 
 @blogroll_ajax_calls.each do |blogroll_call|
   
-describe "Video Hub Ajax Calls\n#{blogroll_call}" do
+describe "Video Hub Ajax Calls:" do
   
   before(:all) do
      @page = blogroll_call.to_s
-     @doc = nokogiri_open(@page)
+     puts @page
+     @doc = nokogiri_not_301_open(@page)
    end
 
    before(:each) do
@@ -120,7 +121,6 @@ describe "Video Hub Ajax Calls\n#{blogroll_call}" do
    end
 
    it "should return 200", :smoke => true do
-     check_return_200_without_301(@page)
    end
    
    it "should return 15 blogroll entries", :smoke => true do
@@ -150,11 +150,12 @@ end
 
 @video_player_page.each do |video_player_page|
   
-describe "Video Player Page\n#{video_player_page}" do
+describe "Video Player Page:" do
 
   before(:all) do
     @page = video_player_page.to_s
-    @doc = nokogiri_open(@page)
+    puts @page
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do

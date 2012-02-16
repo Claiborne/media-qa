@@ -97,6 +97,14 @@ RSpec::Core::RakeTask.new('videofrontend') do |t|
     t.pattern = ['spec/oyster/media/video.rb']  
 end
 
+############# IMAGES ############# 
+
+desc "Run Tech Frontend and API tests"
+RSpec::Core::RakeTask.new('imagesfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = ['spec/oyster/media/images.rb']  
+end
+
 ############# LEGACY ############# 
 
 desc "Run Legacy game hub tests"
