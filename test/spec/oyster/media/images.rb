@@ -3,14 +3,13 @@ require 'selenium-webdriver'
 require 'configuration'
 require 'rest-client'
 =begin
+# =>  TODO:
 #
+# =>  IMPLEMENT BROWSER AND ENV
 #
+# =>  CHECK WHEN TO IMPLEMENT WAIT METHODS
 #
-#      IMPLEMENT BROWSER AND ENV
-#
-#
-#
-#
+# =>  BROWSER AND PAGE CLASS IN LIB FOR COMMON METHODS
 
 describe "Images HomePage:" do
 
@@ -67,7 +66,7 @@ describe "Images Gallery Page:", :selenium => true do
   after(:each) do
 
   end
-  
+=begin
   it "should open the Far Cry 3 gallery page", :smoke => true do
     @selenium.get @page
     #
@@ -113,6 +112,9 @@ describe "Images Gallery Page:", :selenium => true do
     
     # Click the second thumbnail image and wait until it replaces the starting image in the viewer
     @selenium.find_element(:css => "div.imageGallery div:nth-child(2).imageGalleryThumb a").click
+    #
+    # wait somehow
+    #
     next_image = @selenium.find_element(:css => "div#peekWindow a img")
     @wait.until { next_image.attribute('src') != starting_image }
     
@@ -138,6 +140,19 @@ describe "Images Gallery Page:", :selenium => true do
     @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') == starting_image }
     @wait.until { @selenium.current_url == starting_url }
     
+  end
+=end
+  it "should display the appropriate images and URLs when the back and forward browser buttons are clicked through pagination" do
+    @selenium.get @page
+    #
+    # wait somehow
+    #
+    first_image = @wait.until { @selenium.find_element(:css => "div#peekWindow a img") }
+    first_url = @selenium.current_url
+    
+    (@wait.until { @selenium.find_element(:css => "div.imageGallery div.imageGalleryThumb a" }).click
+    @wait.until 
+    second_image = 
   end
   
 
