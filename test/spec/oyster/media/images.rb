@@ -2,12 +2,10 @@ require 'rspec'
 require 'selenium-webdriver'
 require 'configuration'
 require 'rest-client'
-=begin
+
 # =>  TODO:
 #
 # =>  IMPLEMENT BROWSER AND ENV
-#
-# =>  CHECK WHEN TO IMPLEMENT WAIT METHODS
 #
 # =>  BROWSER AND PAGE CLASS IN LIB FOR COMMON METHODS
 
@@ -36,14 +34,12 @@ describe "Images HomePage:" do
   
   it "should 301 from /images to /index/images.html", :smoke => true do
     @selenium.get @page
-    #
-    # Wait for page somehow
-    #
+    # Do I need to wait for load?
     @selenium.current_url.should == "http://#{@config.options['baseurl']}/index/images.html"
   end
   
 end
-=end
+
 describe "Images Gallery Page:", :selenium => true do
 
   before(:all) do
@@ -66,12 +62,10 @@ describe "Images Gallery Page:", :selenium => true do
   after(:each) do
 
   end
-=begin
+
   it "should open the Far Cry 3 gallery page", :smoke => true do
     @selenium.get @page
-    #
-    # Wait for page somehow
-    #
+    # Do I need to wait for load?
     @selenium.current_url.should == @page
   end
 
@@ -87,24 +81,46 @@ describe "Images Gallery Page:", :selenium => true do
   
   it "should display pagination", :smoke => true do
     @selenium.find_element(:css => "div.pagination span")
-    @selenium.find_element(:css => "div.pagination a")
+    @selenium.find_elements(:css => "div.pagination a").count.should == 2
   end
   
   it "should display pagination with a link to the second page" do
-   @selenium.find_element(:css => "div.pagination a").attribute('href').match(/\?page=2/)
+   @selenium.find_element(:css => "div.pagination a").attribute('href').should == @page+"?page=2"
   end
   
-  it "should display a non-broken image above the thumbnails when a thumbnail is clicked ", :smoke => true do
+  it "should display a non-broken viewer-image above the thumbnails when a thumbnail is clicked ", :smoke => true do
     page_first_thumb = @selenium.find_element(:css => "div.imageGallery div.imageGalleryThumb a")
     page_first_thumb.click
     page_image = @wait.until { @selenium.find_element(:css => "div#peekWindow a img[src*='http']") }
     RestClient.get(page_image.attribute('src')).code.should == 200
   end
   
+  it "should display the same viewer image that was clicked in the thumbnails", :smoke => true do
+    # Regex here is poor/hacky way to compare mathcing images
+    matching_thumb = @selenium.find_element(:css => "div#peekWindow a img").attribute('src').match(/\d{14,}/).to_s
+    matching_viewer = @selenium.find_element(:css => "div.imageGallery div.imageGalleryThumb a").attribute('ign:fullimg').match(/\d{14,}/).to_s
+    matching_thumb.should == matching_viewer
+  end
+  
   it "should change the URL when a thumbnail is cliked", :smoke => true do
     @selenium.current_url.match(/far-cry-3-xbox-360-53491\/\d\d\d/).should be_true
   end
   
+  it "should display a full image in the lightbox overlay when a thumbnail is clicked", :smoke => true do
+    @selenium.find_element(:css => "div#peekWindow a img[src*='http']").click
+    @wait.until { @selenium.find_element(:css => "div#lbCenter a").displayed? == true }
+  end
+  
+  it "should display in the lightbox overlay the same image that was clicked on in the image viewer", :smoke => true do
+    # Regex here is poor/hacky way to compare mathcing images
+    @selenium.find_element(:css => "div#peekWindow a img").attribute('src').match(/\d{14,}/).to_s.should == @selenium.find_element(:css => "div#lbCenter a").attribute('href').match(/\d{14,}/).to_s
+  end
+  
+  it "should remove the lightbox overlay when an area outside the overlay image is clicked", :smoke => true do
+    @selenium.find_element(:css => "div#lbOverlay").click
+    @wait.until { @selenium.find_element(:css => "div#lbCenter a").displayed? == false }
+  end
+
   it "should display the appropriate images and URLs when the back and forward browser buttons are clicked", :smoke => true do
     # Set variables for the starting image and starting UR:
     starting_image =  @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
@@ -112,9 +128,7 @@ describe "Images Gallery Page:", :selenium => true do
     
     # Click the second thumbnail image and wait until it replaces the starting image in the viewer
     @selenium.find_element(:css => "div.imageGallery div:nth-child(2).imageGalleryThumb a").click
-    #
-    # wait somehow
-    #
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') != starting_image }
     next_image = @selenium.find_element(:css => "div#peekWindow a img")
     @wait.until { next_image.attribute('src') != starting_image }
     
@@ -139,22 +153,85 @@ describe "Images Gallery Page:", :selenium => true do
     @selenium.navigate.forward
     @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') == starting_image }
     @wait.until { @selenium.current_url == starting_url }
-    
   end
-=end
+
   it "should display the appropriate images and URLs when the back and forward browser buttons are clicked through pagination" do
     @selenium.get @page
-    #
-    # wait somehow
-    #
-    first_image = @wait.until { @selenium.find_element(:css => "div#peekWindow a img") }
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img") }
+    first_image = @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
     first_url = @selenium.current_url
     
-    (@wait.until { @selenium.find_element(:css => "div.imageGallery div.imageGalleryThumb a" }).click
-    @wait.until 
-    second_image = 
-  end
-  
+    # Click thumb
+    @selenium.find_element(:css => "div.imageGallery div.imageGalleryThumb a").click
+    @wait.until { first_image != @selenium.find_element(:css => "div#peekWindow a img").attribute('src') }
+    second_image =  @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
+    second_url = @selenium.current_url
+    
+    # Click thumb
+    @selenium.find_element(:css => "div.imageGallery div:nth-child(2).imageGalleryThumb a").click
+    @wait.until { second_image != @selenium.find_element(:css => "div#peekWindow a img").attribute('src') }
+    third_image =  @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
+    third_url = @selenium.current_url
+    
+    # Click second page
+    @selenium.find_element(:css => "div.pagination a").click
+    @wait.until { third_image != @selenium.find_element(:css => "div#peekWindow a img").attribute('src') }
+    fourth_image = @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
+    fourth_url = @selenium.current_url
+    
+    # Click thumb
+    @selenium.find_element(:css => "div.imageGallery div.imageGalleryThumb a").click
+    @wait.until { fourth_image != @selenium.find_element(:css => "div#peekWindow a img").attribute('src') }
+    fifth_image =  @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
+    fifth_url = @selenium.current_url
+    
+    # Click thumb
+    @selenium.find_element(:css => "div.imageGallery div:nth-child(2).imageGalleryThumb a").click
+    @wait.until { fifth_image != @selenium.find_element(:css => "div#peekWindow a img").attribute('src') }
+    sixth_image =  @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
+    sixth_url = @selenium.current_url
+    
+    # Assert browser back works
+    @selenium.navigate.back
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') == fifth_image }
+    @wait.until { @selenium.current_url == fifth_url }
+    
+    @selenium.navigate.back
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").displayed? == false }
+    @wait.until { @selenium.current_url == fourth_url }
+    
+    @selenium.navigate.back
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') == third_image }
+    @wait.until { @selenium.current_url == third_url }
+    
+    @selenium.navigate.back
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') == second_image }
+    @wait.until { @selenium.current_url == second_url }
+    
+    @selenium.navigate.back
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").displayed? == false }
+    @wait.until { @selenium.current_url == first_url }
+    
+    @selenium.navigate.forward
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') == second_image }
+    @wait.until { @selenium.current_url == second_url }
+    
+    @selenium.navigate.forward
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') == third_image }
+    @wait.until { @selenium.current_url == third_url }
+    
+    @selenium.navigate.forward
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").displayed? == false }
+    @wait.until { @selenium.current_url == fourth_url }
+    
+    @selenium.navigate.forward
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') == fifth_image }
+    @wait.until { @selenium.current_url == fifth_url }
+    
+    @selenium.navigate.forward
+    @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') == sixth_image }
+    @wait.until { @selenium.current_url == sixth_url }
 
-  
+  end
+
 end
