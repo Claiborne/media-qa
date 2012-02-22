@@ -1,7 +1,6 @@
 module OpenPage
 
 def nokogiri_open(page)
-  stitial_count = 0 
   begin
     nok_doc = Nokogiri::HTML(RestClient.get(page))
   rescue => e
@@ -11,7 +10,6 @@ def nokogiri_open(page)
 end#end def
 
 def nokogiri_not_301_home_open(page)
-  stitial_count = 0
   begin
     rest_doc = rest_client_not_301_home_helper(page)
   rescue => e
@@ -21,7 +19,6 @@ def nokogiri_not_301_home_open(page)
 end
 
 def nokogiri_not_301_open(page)
-  stitial_count = 0
   begin
     rest_doc = rest_client_not_301_helper(page)
   rescue => e
@@ -31,7 +28,6 @@ def nokogiri_not_301_open(page)
 end
 
 def rest_client_open(page)
-  stitial_count = 0
   begin
     rest_doc = RestClient.get(page)
   rescue => e
@@ -41,7 +37,6 @@ def rest_client_open(page)
 end
 
 def rest_client_not_301_home_open(page)
-  stitial_count = 0
   begin
     rest_doc = rest_client_not_301_home_helper(page)
   rescue => e
