@@ -98,7 +98,7 @@ module Blogrollv2Articles
       response.code.should eql(200)
     end
 
-    it "should display the same articles as the api returns", :test => true do ###### REMOVE TEST
+    it "should display the same articles as the api returns" do
       Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
       config = Configuration.new
     
@@ -114,6 +114,14 @@ module Blogrollv2Articles
       end
       titles = api_titles + frontend_titles
       titles.uniq.count.should be <= num+2
+      # Debug code
+      #api_titles.each do |i|
+        #puts i
+      #end
+      #puts ""
+      #frontend_titles.each do |i|
+        #puts i
+      #end
     end
 
   end
