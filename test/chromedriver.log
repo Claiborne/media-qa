@@ -1,0 +1,2359 @@
+[0.000][INFO]:      ChromeDriver 18.0.1022.0 /Applications/chromedriver
+[0.268][FINE]:      Initializing session with capabilities {
+   "browserName": "chrome",
+   "chrome.detach": true,
+   "chromeOptions": {
+      "detach": true
+   },
+   "cssSelectorsEnabled": true,
+   "javascriptEnabled": true,
+   "nativeEvents": false,
+   "platform": "ANY",
+   "rotatable": false,
+   "takesScreenshot": false,
+   "version": ""
+}
+
+[0.268][INFO]:      Using named testing interface
+[0.693][INFO]:      Connected to Chrome successfully. Version: 17.0.963.56
+[0.722][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb)
+[0.723][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "acceptSslCerts": false,
+      "applicationCacheEnabled": false,
+      "browserConnectionEnabled": false,
+      "browserName": "chrome",
+      "chrome.chromedriverVersion": "18.0.1022.0",
+      "chrome.nativeEvents": false,
+      "cssSelectorsEnabled": true,
+      "databaseEnabled": false,
+      "handlesAlerts": true,
+      "javascriptEnabled": true,
+      "locationContextEnabled": false,
+      "nativeEvents": true,
+      "platform": "mac",
+      "rotatable": false,
+      "takesScreenshot": true,
+      "version": "17.0.963.56",
+      "webStorageEnabled": false
+   }
+}
+
+[0.725][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/url) with params {
+   "url": "http://www.ign.com/images/games/far-c..."
+}
+
+[0.725][FINER]:     Waiting for all views to stop loading...
+[0.725][FINER]:     Done waiting for all views to stop loading
+[3.617][FINER]:     Waiting for all views to stop loading...
+[3.622][FINER]:     Done waiting for all views to stop loading
+[3.622][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[3.624][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#sugarad-stitial-overlay"
+}
+
+[3.624][FINER]:     Waiting for all views to stop loading...
+[3.625][FINER]:     Done waiting for all views to stop loading
+[3.637][FINER]:     Waiting for all views to stop loading...
+[3.637][FINER]:     Done waiting for all views to stop loading
+[3.637][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121816956"
+   }
+}
+
+[3.640][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121816956/displayed)
+[3.640][FINER]:     Waiting for all views to stop loading...
+[3.641][FINER]:     Done waiting for all views to stop loading
+[3.649][FINER]:     Waiting for all views to stop loading...
+[3.649][FINER]:     Done waiting for all views to stop loading
+[3.649][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121816956/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": true
+}
+
+[3.650][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/url) with params {
+   "url": "http://www.ign.com/images/games/far-c..."
+}
+
+[3.650][FINER]:     Waiting for all views to stop loading...
+[3.651][FINER]:     Done waiting for all views to stop loading
+[6.598][FINER]:     Waiting for all views to stop loading...
+[6.630][FINER]:     Done waiting for all views to stop loading
+[6.630][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[6.631][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#sugarad-stitial-overlay"
+}
+
+[6.631][FINER]:     Waiting for all views to stop loading...
+[6.662][FINER]:     Done waiting for all views to stop loading
+[6.682][FINER]:     Waiting for all views to stop loading...
+[6.682][FINER]:     Done waiting for all views to stop loading
+[6.682][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820001"
+   }
+}
+
+[6.683][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820001/displayed)
+[6.683][FINER]:     Waiting for all views to stop loading...
+[6.683][FINER]:     Done waiting for all views to stop loading
+[6.696][FINER]:     Waiting for all views to stop loading...
+[6.713][FINER]:     Done waiting for all views to stop loading
+[6.713][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820001/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": false
+}
+
+[6.713][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[6.713][FINER]:     Waiting for all views to stop loading...
+[6.714][FINER]:     Done waiting for all views to stop loading
+[6.718][FINER]:     Waiting for all views to stop loading...
+[6.719][FINER]:     Done waiting for all views to stop loading
+[6.719][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[6.720][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/elements) with params {
+   "using": "css selector",
+   "value": "div.imageGallery div.imageGalleryThum..."
+}
+
+[6.720][FINER]:     Waiting for all views to stop loading...
+[6.720][FINER]:     Done waiting for all views to stop loading
+[6.732][FINER]:     Waiting for all views to stop loading...
+[6.732][FINER]:     Done waiting for all views to stop loading
+[6.732][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/elements) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": [ {
+      "ELEMENT": ":wdc:1330121820002"
+   }, {
+      "ELEMENT": ":wdc:1330121820003"
+   }, {
+      "ELEMENT": ":wdc:1330121820004"
+   }, {
+      "ELEMENT": ":wdc:1330121820005"
+   }, {
+      "ELEMENT": ":wdc:1330121820006"
+   }, {
+      "ELEMENT": ":wdc:1330121820007"
+   }, {
+      "ELEMENT": ":wdc:1330121820008"
+   }, {
+      "ELEMENT": ":wdc:1330121820009"
+   }, {
+      "ELEMENT": ":wdc:1330121820010"
+   }, {
+      "ELEMENT": ":wdc:1330121820011"
+   }, {
+      "ELEMENT": ":wdc:1330121820012"
+   }, {
+      "ELEMENT": ":wdc:1330121820013"
+   }, {
+      "ELEMENT": ":wdc:1330121820014"
+   }, {
+      "ELEMENT": ":wdc:1330121820015"
+   }, {
+      "ELEMENT": ":wdc:1330121820016"
+   }, {
+      "ELEMENT": ":wdc:1330121820017"
+   }, {
+      "ELEMENT": ":wdc:1330121820018"
+   }, {
+      "ELEMENT": ":wdc:1330121820019"
+   }, {
+      "ELEMENT": ":wdc:1330121820020"
+   }, {
+      "ELEMENT": ":wdc:1330121820021"
+   } ]
+}
+
+[6.734][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/elements) with params {
+   "using": "css selector",
+   "value": "div.imageGallery div.imageGalleryThum..."
+}
+
+[6.734][FINER]:     Waiting for all views to stop loading...
+[6.734][FINER]:     Done waiting for all views to stop loading
+[6.746][FINER]:     Waiting for all views to stop loading...
+[6.746][FINER]:     Done waiting for all views to stop loading
+[6.746][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/elements) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": [ {
+      "ELEMENT": ":wdc:1330121820002"
+   }, {
+      "ELEMENT": ":wdc:1330121820003"
+   }, {
+      "ELEMENT": ":wdc:1330121820004"
+   }, {
+      "ELEMENT": ":wdc:1330121820005"
+   }, {
+      "ELEMENT": ":wdc:1330121820006"
+   }, {
+      "ELEMENT": ":wdc:1330121820007"
+   }, {
+      "ELEMENT": ":wdc:1330121820008"
+   }, {
+      "ELEMENT": ":wdc:1330121820009"
+   }, {
+      "ELEMENT": ":wdc:1330121820010"
+   }, {
+      "ELEMENT": ":wdc:1330121820011"
+   }, {
+      "ELEMENT": ":wdc:1330121820012"
+   }, {
+      "ELEMENT": ":wdc:1330121820013"
+   }, {
+      "ELEMENT": ":wdc:1330121820014"
+   }, {
+      "ELEMENT": ":wdc:1330121820015"
+   }, {
+      "ELEMENT": ":wdc:1330121820016"
+   }, {
+      "ELEMENT": ":wdc:1330121820017"
+   }, {
+      "ELEMENT": ":wdc:1330121820018"
+   }, {
+      "ELEMENT": ":wdc:1330121820019"
+   }, {
+      "ELEMENT": ":wdc:1330121820020"
+   }, {
+      "ELEMENT": ":wdc:1330121820021"
+   } ]
+}
+
+[6.748][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820002/attribute/src)
+[6.748][FINER]:     Waiting for all views to stop loading...
+[6.748][FINER]:     Done waiting for all views to stop loading
+[6.758][FINER]:     Waiting for all views to stop loading...
+[6.758][FINER]:     Done waiting for all views to stop loading
+[6.758][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820002/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[6.807][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820003/attribute/src)
+[6.807][FINER]:     Waiting for all views to stop loading...
+[6.807][FINER]:     Done waiting for all views to stop loading
+[6.814][FINER]:     Waiting for all views to stop loading...
+[6.814][FINER]:     Done waiting for all views to stop loading
+[6.814][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820003/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[6.880][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820004/attribute/src)
+[6.880][FINER]:     Waiting for all views to stop loading...
+[6.881][FINER]:     Done waiting for all views to stop loading
+[6.891][FINER]:     Waiting for all views to stop loading...
+[6.891][FINER]:     Done waiting for all views to stop loading
+[6.891][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820004/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[6.951][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820005/attribute/src)
+[6.951][FINER]:     Waiting for all views to stop loading...
+[6.952][FINER]:     Done waiting for all views to stop loading
+[6.964][FINER]:     Waiting for all views to stop loading...
+[6.964][FINER]:     Done waiting for all views to stop loading
+[6.964][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820005/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.025][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820006/attribute/src)
+[7.025][FINER]:     Waiting for all views to stop loading...
+[7.030][FINER]:     Done waiting for all views to stop loading
+[7.037][FINER]:     Waiting for all views to stop loading...
+[7.038][FINER]:     Done waiting for all views to stop loading
+[7.038][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820006/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.086][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820007/attribute/src)
+[7.086][FINER]:     Waiting for all views to stop loading...
+[7.097][FINER]:     Done waiting for all views to stop loading
+[7.105][FINER]:     Waiting for all views to stop loading...
+[7.105][FINER]:     Done waiting for all views to stop loading
+[7.105][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820007/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.152][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820008/attribute/src)
+[7.152][FINER]:     Waiting for all views to stop loading...
+[7.164][FINER]:     Done waiting for all views to stop loading
+[7.171][FINER]:     Waiting for all views to stop loading...
+[7.171][FINER]:     Done waiting for all views to stop loading
+[7.171][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820008/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.218][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820009/attribute/src)
+[7.218][FINER]:     Waiting for all views to stop loading...
+[7.218][FINER]:     Done waiting for all views to stop loading
+[7.231][FINER]:     Waiting for all views to stop loading...
+[7.232][FINER]:     Done waiting for all views to stop loading
+[7.232][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820009/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.277][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820010/attribute/src)
+[7.277][FINER]:     Waiting for all views to stop loading...
+[7.281][FINER]:     Done waiting for all views to stop loading
+[7.288][FINER]:     Waiting for all views to stop loading...
+[7.289][FINER]:     Done waiting for all views to stop loading
+[7.289][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820010/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.335][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820011/attribute/src)
+[7.335][FINER]:     Waiting for all views to stop loading...
+[7.335][FINER]:     Done waiting for all views to stop loading
+[7.342][FINER]:     Waiting for all views to stop loading...
+[7.342][FINER]:     Done waiting for all views to stop loading
+[7.342][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820011/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.390][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820012/attribute/src)
+[7.390][FINER]:     Waiting for all views to stop loading...
+[7.391][FINER]:     Done waiting for all views to stop loading
+[7.397][FINER]:     Waiting for all views to stop loading...
+[7.398][FINER]:     Done waiting for all views to stop loading
+[7.398][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820012/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.444][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820013/attribute/src)
+[7.444][FINER]:     Waiting for all views to stop loading...
+[7.444][FINER]:     Done waiting for all views to stop loading
+[7.451][FINER]:     Waiting for all views to stop loading...
+[7.451][FINER]:     Done waiting for all views to stop loading
+[7.451][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820013/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.498][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820014/attribute/src)
+[7.498][FINER]:     Waiting for all views to stop loading...
+[7.499][FINER]:     Done waiting for all views to stop loading
+[7.508][FINER]:     Waiting for all views to stop loading...
+[7.508][FINER]:     Done waiting for all views to stop loading
+[7.508][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820014/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.557][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820015/attribute/src)
+[7.557][FINER]:     Waiting for all views to stop loading...
+[7.558][FINER]:     Done waiting for all views to stop loading
+[7.566][FINER]:     Waiting for all views to stop loading...
+[7.566][FINER]:     Done waiting for all views to stop loading
+[7.566][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820015/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.615][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820016/attribute/src)
+[7.615][FINER]:     Waiting for all views to stop loading...
+[7.615][FINER]:     Done waiting for all views to stop loading
+[7.624][FINER]:     Waiting for all views to stop loading...
+[7.625][FINER]:     Done waiting for all views to stop loading
+[7.625][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820016/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.671][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820017/attribute/src)
+[7.671][FINER]:     Waiting for all views to stop loading...
+[7.673][FINER]:     Done waiting for all views to stop loading
+[7.680][FINER]:     Waiting for all views to stop loading...
+[7.680][FINER]:     Done waiting for all views to stop loading
+[7.681][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820017/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.727][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820018/attribute/src)
+[7.728][FINER]:     Waiting for all views to stop loading...
+[7.732][FINER]:     Done waiting for all views to stop loading
+[7.740][FINER]:     Waiting for all views to stop loading...
+[7.740][FINER]:     Done waiting for all views to stop loading
+[7.740][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820018/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.790][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820019/attribute/src)
+[7.790][FINER]:     Waiting for all views to stop loading...
+[7.832][FINER]:     Done waiting for all views to stop loading
+[7.865][FINER]:     Waiting for all views to stop loading...
+[7.866][FINER]:     Done waiting for all views to stop loading
+[7.866][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820019/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.911][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820020/attribute/src)
+[7.911][FINER]:     Waiting for all views to stop loading...
+[7.911][FINER]:     Done waiting for all views to stop loading
+[7.919][FINER]:     Waiting for all views to stop loading...
+[7.919][FINER]:     Done waiting for all views to stop loading
+[7.919][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820020/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[7.964][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820021/attribute/src)
+[7.964][FINER]:     Waiting for all views to stop loading...
+[7.965][FINER]:     Done waiting for all views to stop loading
+[7.972][FINER]:     Waiting for all views to stop loading...
+[7.973][FINER]:     Done waiting for all views to stop loading
+[7.973][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820021/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://media.ignimgs.com/media/thumb/..."
+}
+
+[8.019][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.pagination span"
+}
+
+[8.019][FINER]:     Waiting for all views to stop loading...
+[8.019][FINER]:     Done waiting for all views to stop loading
+[8.032][FINER]:     Waiting for all views to stop loading...
+[8.032][FINER]:     Done waiting for all views to stop loading
+[8.032][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820022"
+   }
+}
+
+[8.033][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/elements) with params {
+   "using": "css selector",
+   "value": "div.pagination a"
+}
+
+[8.033][FINER]:     Waiting for all views to stop loading...
+[8.034][FINER]:     Done waiting for all views to stop loading
+[8.044][FINER]:     Waiting for all views to stop loading...
+[8.045][FINER]:     Done waiting for all views to stop loading
+[8.045][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/elements) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": [ {
+      "ELEMENT": ":wdc:1330121820023"
+   }, {
+      "ELEMENT": ":wdc:1330121820024"
+   } ]
+}
+
+[8.046][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.pagination a"
+}
+
+[8.046][FINER]:     Waiting for all views to stop loading...
+[8.046][FINER]:     Done waiting for all views to stop loading
+[8.058][FINER]:     Waiting for all views to stop loading...
+[8.059][FINER]:     Done waiting for all views to stop loading
+[8.059][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820023"
+   }
+}
+
+[8.060][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820023/attribute/href)
+[8.060][FINER]:     Waiting for all views to stop loading...
+[8.060][FINER]:     Done waiting for all views to stop loading
+[8.067][FINER]:     Waiting for all views to stop loading...
+[8.068][FINER]:     Done waiting for all views to stop loading
+[8.068][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820023/attribute/href) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[8.081][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.imageGallery div.imageGalleryThumb a"
+}
+
+[8.081][FINER]:     Waiting for all views to stop loading...
+[8.081][FINER]:     Done waiting for all views to stop loading
+[8.093][FINER]:     Waiting for all views to stop loading...
+[8.093][FINER]:     Done waiting for all views to stop loading
+[8.093][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820025"
+   }
+}
+
+[8.094][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820025/click) with params {
+
+}
+
+[8.094][FINER]:     Waiting for all views to stop loading...
+[8.094][FINER]:     Done waiting for all views to stop loading
+[8.130][WARNING]:   Element's descendant would receive the click. Consider clicking the descendant instead. Descendant: <img border="0" height="110" width="146" src="http://media.ignimgs.com/media/thumb/360/3602308/far-cry-3-20120214035810925_thumb_ign.jpg" alt="Far Cry 3 image 3602308">
+[8.160][FINER]:     Waiting for all views to stop loading...
+[8.160][FINER]:     Done waiting for all views to stop loading
+[8.161][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820025/click) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[8.162][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img[src*='http']"
+}
+
+[8.162][FINER]:     Waiting for all views to stop loading...
+[8.169][FINER]:     Done waiting for all views to stop loading
+[8.191][FINER]:     Waiting for all views to stop loading...
+[8.191][FINER]:     Done waiting for all views to stop loading
+[8.191][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820026"
+   }
+}
+
+[8.193][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/attribute/src)
+[8.193][FINER]:     Waiting for all views to stop loading...
+[8.193][FINER]:     Done waiting for all views to stop loading
+[8.205][FINER]:     Waiting for all views to stop loading...
+[8.206][FINER]:     Done waiting for all views to stop loading
+[8.206][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[8.328][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[8.328][FINER]:     Waiting for all views to stop loading...
+[8.328][FINER]:     Done waiting for all views to stop loading
+[8.340][FINER]:     Waiting for all views to stop loading...
+[8.341][FINER]:     Done waiting for all views to stop loading
+[8.341][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820026"
+   }
+}
+
+[8.342][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/attribute/src)
+[8.342][FINER]:     Waiting for all views to stop loading...
+[8.351][FINER]:     Done waiting for all views to stop loading
+[8.367][FINER]:     Waiting for all views to stop loading...
+[8.368][FINER]:     Done waiting for all views to stop loading
+[8.368][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[8.369][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.imageGallery div.imageGalleryThumb a"
+}
+
+[8.369][FINER]:     Waiting for all views to stop loading...
+[8.369][FINER]:     Done waiting for all views to stop loading
+[8.372][FINER]:     Waiting for all views to stop loading...
+[8.373][FINER]:     Done waiting for all views to stop loading
+[8.373][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820025"
+   }
+}
+
+[8.374][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820025/attribute/ign:fullimg)
+[8.374][FINER]:     Waiting for all views to stop loading...
+[8.374][FINER]:     Done waiting for all views to stop loading
+[8.381][FINER]:     Waiting for all views to stop loading...
+[8.381][FINER]:     Done waiting for all views to stop loading
+[8.381][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820025/attribute/ign:fullimg) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[8.382][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[8.382][FINER]:     Waiting for all views to stop loading...
+[8.383][FINER]:     Done waiting for all views to stop loading
+[8.385][FINER]:     Waiting for all views to stop loading...
+[8.386][FINER]:     Done waiting for all views to stop loading
+[8.386][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[8.388][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img[src*='http']"
+}
+
+[8.388][FINER]:     Waiting for all views to stop loading...
+[8.389][FINER]:     Done waiting for all views to stop loading
+[8.394][FINER]:     Waiting for all views to stop loading...
+[8.394][FINER]:     Done waiting for all views to stop loading
+[8.394][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820026"
+   }
+}
+
+[8.395][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/click) with params {
+
+}
+
+[8.395][FINER]:     Waiting for all views to stop loading...
+[8.396][FINER]:     Done waiting for all views to stop loading
+[8.439][FINER]:     Waiting for all views to stop loading...
+[8.440][FINER]:     Done waiting for all views to stop loading
+[8.440][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/click) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[8.441][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#lbCenter a"
+}
+
+[8.441][FINER]:     Waiting for all views to stop loading...
+[8.441][FINER]:     Done waiting for all views to stop loading
+[8.477][FINER]:     Waiting for all views to stop loading...
+[8.478][FINER]:     Done waiting for all views to stop loading
+[8.478][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820027"
+   }
+}
+
+[8.479][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/displayed)
+[8.479][FINER]:     Waiting for all views to stop loading...
+[8.479][FINER]:     Done waiting for all views to stop loading
+[8.543][FINER]:     Waiting for all views to stop loading...
+[8.543][FINER]:     Done waiting for all views to stop loading
+[8.543][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": false
+}
+
+[9.045][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#lbCenter a"
+}
+
+[9.045][FINER]:     Waiting for all views to stop loading...
+[9.072][FINER]:     Done waiting for all views to stop loading
+[9.103][FINER]:     Waiting for all views to stop loading...
+[9.122][FINER]:     Done waiting for all views to stop loading
+[9.122][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820027"
+   }
+}
+
+[9.124][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/displayed)
+[9.124][FINER]:     Waiting for all views to stop loading...
+[9.138][FINER]:     Done waiting for all views to stop loading
+[9.173][FINER]:     Waiting for all views to stop loading...
+[9.190][FINER]:     Done waiting for all views to stop loading
+[9.190][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": false
+}
+
+[9.692][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#lbCenter a"
+}
+
+[9.692][FINER]:     Waiting for all views to stop loading...
+[9.693][FINER]:     Done waiting for all views to stop loading
+[9.725][FINER]:     Waiting for all views to stop loading...
+[9.725][FINER]:     Done waiting for all views to stop loading
+[9.725][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820027"
+   }
+}
+
+[9.726][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/displayed)
+[9.726][FINER]:     Waiting for all views to stop loading...
+[9.727][FINER]:     Done waiting for all views to stop loading
+[9.755][FINER]:     Waiting for all views to stop loading...
+[9.756][FINER]:     Done waiting for all views to stop loading
+[9.756][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": true
+}
+
+[9.758][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[9.758][FINER]:     Waiting for all views to stop loading...
+[9.758][FINER]:     Done waiting for all views to stop loading
+[9.784][FINER]:     Waiting for all views to stop loading...
+[9.786][FINER]:     Done waiting for all views to stop loading
+[9.786][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820026"
+   }
+}
+
+[9.788][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/attribute/src)
+[9.788][FINER]:     Waiting for all views to stop loading...
+[9.788][FINER]:     Done waiting for all views to stop loading
+[9.820][FINER]:     Waiting for all views to stop loading...
+[9.820][FINER]:     Done waiting for all views to stop loading
+[9.821][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[9.822][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#lbCenter a"
+}
+
+[9.822][FINER]:     Waiting for all views to stop loading...
+[9.823][FINER]:     Done waiting for all views to stop loading
+[9.849][FINER]:     Waiting for all views to stop loading...
+[9.850][FINER]:     Done waiting for all views to stop loading
+[9.850][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820027"
+   }
+}
+
+[9.851][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/attribute/href)
+[9.851][FINER]:     Waiting for all views to stop loading...
+[9.851][FINER]:     Done waiting for all views to stop loading
+[9.882][FINER]:     Waiting for all views to stop loading...
+[9.883][FINER]:     Done waiting for all views to stop loading
+[9.883][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/attribute/href) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[9.884][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#lbTopContainer"
+}
+
+[9.884][FINER]:     Waiting for all views to stop loading...
+[9.885][FINER]:     Done waiting for all views to stop loading
+[9.922][FINER]:     Waiting for all views to stop loading...
+[9.923][FINER]:     Done waiting for all views to stop loading
+[9.923][FINE]:      Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820028"
+   }
+}
+
+[9.924][FINE]:      Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820028/click) with params {
+
+}
+
+[9.924][FINER]:     Waiting for all views to stop loading...
+[9.926][FINER]:     Done waiting for all views to stop loading
+[10.073][FINER]:    Waiting for all views to stop loading...
+[10.073][FINER]:    Done waiting for all views to stop loading
+[10.073][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820028/click) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[10.074][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#lbCenter a"
+}
+
+[10.074][FINER]:    Waiting for all views to stop loading...
+[10.074][FINER]:    Done waiting for all views to stop loading
+[10.127][FINER]:    Waiting for all views to stop loading...
+[10.127][FINER]:    Done waiting for all views to stop loading
+[10.127][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820027"
+   }
+}
+
+[10.128][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/displayed)
+[10.128][FINER]:    Waiting for all views to stop loading...
+[10.128][FINER]:    Done waiting for all views to stop loading
+[10.172][FINER]:    Waiting for all views to stop loading...
+[10.172][FINER]:    Done waiting for all views to stop loading
+[10.172][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820027/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": false
+}
+
+[10.174][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[10.174][FINER]:    Waiting for all views to stop loading...
+[10.174][FINER]:    Done waiting for all views to stop loading
+[10.221][FINER]:    Waiting for all views to stop loading...
+[10.222][FINER]:    Done waiting for all views to stop loading
+[10.222][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820026"
+   }
+}
+
+[10.223][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/attribute/src)
+[10.223][FINER]:    Waiting for all views to stop loading...
+[10.224][FINER]:    Done waiting for all views to stop loading
+[10.265][FINER]:    Waiting for all views to stop loading...
+[10.266][FINER]:    Done waiting for all views to stop loading
+[10.266][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820026/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[10.267][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[10.267][FINER]:    Waiting for all views to stop loading...
+[10.267][FINER]:    Done waiting for all views to stop loading
+[10.310][FINER]:    Waiting for all views to stop loading...
+[10.311][FINER]:    Done waiting for all views to stop loading
+[10.311][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[10.312][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.imageGallery div:nth-child(2).ima..."
+}
+
+[10.312][FINER]:    Waiting for all views to stop loading...
+[10.312][FINER]:    Done waiting for all views to stop loading
+[10.360][FINER]:    Waiting for all views to stop loading...
+[10.361][FINER]:    Done waiting for all views to stop loading
+[10.361][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820029"
+   }
+}
+
+[10.362][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820029/click) with params {
+
+}
+
+[10.362][FINER]:    Waiting for all views to stop loading...
+[10.363][FINER]:    Done waiting for all views to stop loading
+[10.523][WARNING]:  Element's descendant would receive the click. Consider clicking the descendant instead. Descendant: <img border="0" height="110" width="146" src="http://media.ignimgs.com/media/thumb/360/3602307/far-cry-3-20120214035808822_thumb_ign.jpg" alt="Far Cry 3 image 3602307">
+[10.609][FINER]:    Waiting for all views to stop loading...
+[10.626][FINER]:    Done waiting for all views to stop loading
+[10.626][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820029/click) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[10.628][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[10.628][FINER]:    Waiting for all views to stop loading...
+[10.644][FINER]:    Done waiting for all views to stop loading
+[10.675][FINER]:    Waiting for all views to stop loading...
+[10.692][FINER]:    Done waiting for all views to stop loading
+[10.693][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820030"
+   }
+}
+
+[10.694][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820030/attribute/src)
+[10.694][FINER]:    Waiting for all views to stop loading...
+[10.707][FINER]:    Done waiting for all views to stop loading
+[10.742][FINER]:    Waiting for all views to stop loading...
+[10.781][FINER]:    Done waiting for all views to stop loading
+[10.781][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820030/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[10.782][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[10.782][FINER]:    Waiting for all views to stop loading...
+[10.792][FINER]:    Done waiting for all views to stop loading
+[10.826][FINER]:    Waiting for all views to stop loading...
+[10.840][FINER]:    Done waiting for all views to stop loading
+[10.840][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820030"
+   }
+}
+
+[10.841][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820030/attribute/src)
+[10.841][FINER]:    Waiting for all views to stop loading...
+[10.859][FINER]:    Done waiting for all views to stop loading
+[10.891][FINER]:    Waiting for all views to stop loading...
+[10.910][FINER]:    Done waiting for all views to stop loading
+[10.910][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820030/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[10.912][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[10.912][FINER]:    Waiting for all views to stop loading...
+[10.924][FINER]:    Done waiting for all views to stop loading
+[10.958][FINER]:    Waiting for all views to stop loading...
+[10.976][FINER]:    Done waiting for all views to stop loading
+[10.976][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[10.977][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/back) with params {
+
+}
+
+[10.977][FINER]:    Waiting for all views to stop loading...
+[11.009][FINER]:    Done waiting for all views to stop loading
+[11.093][FINER]:    Waiting for all views to stop loading...
+[11.130][FINER]:    Done waiting for all views to stop loading
+[11.130][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/back) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[11.131][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[11.131][FINER]:    Waiting for all views to stop loading...
+[11.160][FINER]:    Done waiting for all views to stop loading
+[11.194][FINER]:    Waiting for all views to stop loading...
+[11.208][FINER]:    Done waiting for all views to stop loading
+[11.208][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820031"
+   }
+}
+
+[11.209][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820031/attribute/src)
+[11.209][FINER]:    Waiting for all views to stop loading...
+[11.209][FINER]:    Done waiting for all views to stop loading
+[11.216][FINER]:    Waiting for all views to stop loading...
+[11.217][FINER]:    Done waiting for all views to stop loading
+[11.217][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820031/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[11.218][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[11.218][FINER]:    Waiting for all views to stop loading...
+[11.218][FINER]:    Done waiting for all views to stop loading
+[11.244][FINER]:    Waiting for all views to stop loading...
+[11.259][FINER]:    Done waiting for all views to stop loading
+[11.259][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[11.260][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/back) with params {
+
+}
+
+[11.260][FINER]:    Waiting for all views to stop loading...
+[11.292][FINER]:    Done waiting for all views to stop loading
+[11.378][FINER]:    Waiting for all views to stop loading...
+[11.414][FINER]:    Done waiting for all views to stop loading
+[11.414][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/back) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[11.416][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[11.416][FINER]:    Waiting for all views to stop loading...
+[11.426][FINER]:    Done waiting for all views to stop loading
+[11.462][FINER]:    Waiting for all views to stop loading...
+[11.476][FINER]:    Done waiting for all views to stop loading
+[11.476][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820031"
+   }
+}
+
+[11.477][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820031/displayed)
+[11.477][FINER]:    Waiting for all views to stop loading...
+[11.492][FINER]:    Done waiting for all views to stop loading
+[11.544][FINER]:    Waiting for all views to stop loading...
+[11.560][FINER]:    Done waiting for all views to stop loading
+[11.560][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820031/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": false
+}
+
+[11.562][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[11.562][FINER]:    Waiting for all views to stop loading...
+[11.593][FINER]:    Done waiting for all views to stop loading
+[11.626][FINER]:    Waiting for all views to stop loading...
+[11.644][FINER]:    Done waiting for all views to stop loading
+[11.644][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[11.645][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/forward) with params {
+
+}
+
+[11.645][FINER]:    Waiting for all views to stop loading...
+[11.660][FINER]:    Done waiting for all views to stop loading
+[11.744][FINER]:    Waiting for all views to stop loading...
+[11.778][FINER]:    Done waiting for all views to stop loading
+[11.778][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/forward) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[11.779][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[11.780][FINER]:    Waiting for all views to stop loading...
+[11.811][FINER]:    Done waiting for all views to stop loading
+[11.847][FINER]:    Waiting for all views to stop loading...
+[11.848][FINER]:    Done waiting for all views to stop loading
+[11.848][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121820032"
+   }
+}
+
+[11.849][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820032/attribute/src)
+[11.849][FINER]:    Waiting for all views to stop loading...
+[11.849][FINER]:    Done waiting for all views to stop loading
+[11.856][FINER]:    Waiting for all views to stop loading...
+[11.857][FINER]:    Done waiting for all views to stop loading
+[11.857][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121820032/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[11.858][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[11.858][FINER]:    Waiting for all views to stop loading...
+[11.859][FINER]:    Done waiting for all views to stop loading
+[11.911][FINER]:    Waiting for all views to stop loading...
+[11.928][FINER]:    Done waiting for all views to stop loading
+[11.928][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[11.929][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url) with params {
+   "url": "http://www.ign.com/images/games/far-c..."
+}
+
+[11.929][FINER]:    Waiting for all views to stop loading...
+[11.944][FINER]:    Done waiting for all views to stop loading
+[14.453][FINER]:    Waiting for all views to stop loading...
+[14.485][FINER]:    Done waiting for all views to stop loading
+[14.485][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[14.487][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#sugarad-stitial-overlay"
+}
+
+[14.487][FINER]:    Waiting for all views to stop loading...
+[14.520][FINER]:    Done waiting for all views to stop loading
+[14.551][FINER]:    Waiting for all views to stop loading...
+[14.570][FINER]:    Done waiting for all views to stop loading
+[14.571][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827859"
+   }
+}
+
+[14.572][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827859/displayed)
+[14.572][FINER]:    Waiting for all views to stop loading...
+[14.603][FINER]:    Done waiting for all views to stop loading
+[14.652][FINER]:    Waiting for all views to stop loading...
+[14.668][FINER]:    Done waiting for all views to stop loading
+[14.668][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827859/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": false
+}
+
+[14.669][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[14.669][FINER]:    Waiting for all views to stop loading...
+[14.687][FINER]:    Done waiting for all views to stop loading
+[14.705][FINER]:    Waiting for all views to stop loading...
+[14.706][FINER]:    Done waiting for all views to stop loading
+[14.706][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827860"
+   }
+}
+
+[14.707][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[14.707][FINER]:    Waiting for all views to stop loading...
+[14.707][FINER]:    Done waiting for all views to stop loading
+[14.711][FINER]:    Waiting for all views to stop loading...
+[14.712][FINER]:    Done waiting for all views to stop loading
+[14.712][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827860"
+   }
+}
+
+[14.713][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827860/attribute/src)
+[14.713][FINER]:    Waiting for all views to stop loading...
+[14.713][FINER]:    Done waiting for all views to stop loading
+[14.736][FINER]:    Waiting for all views to stop loading...
+[14.752][FINER]:    Done waiting for all views to stop loading
+[14.752][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827860/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": ""
+}
+
+[14.753][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[14.753][FINER]:    Waiting for all views to stop loading...
+[14.770][FINER]:    Done waiting for all views to stop loading
+[14.803][FINER]:    Waiting for all views to stop loading...
+[14.819][FINER]:    Done waiting for all views to stop loading
+[14.820][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[14.821][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.imageGallery div.imageGalleryThumb a"
+}
+
+[14.821][FINER]:    Waiting for all views to stop loading...
+[14.821][FINER]:    Done waiting for all views to stop loading
+[14.826][FINER]:    Waiting for all views to stop loading...
+[14.826][FINER]:    Done waiting for all views to stop loading
+[14.826][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827861"
+   }
+}
+
+[14.827][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827861/click) with params {
+
+}
+
+[14.827][FINER]:    Waiting for all views to stop loading...
+[14.827][FINER]:    Done waiting for all views to stop loading
+[14.986][WARNING]:  Element's descendant would receive the click. Consider clicking the descendant instead. Descendant: <img border="0" height="110" width="146" src="http://media.ignimgs.com/media/thumb/360/3602308/far-cry-3-20120214035810925_thumb_ign.jpg" alt="Far Cry 3 image 3602308">
+[15.043][FINER]:    Waiting for all views to stop loading...
+[15.075][FINER]:    Done waiting for all views to stop loading
+[15.075][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827861/click) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[15.077][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[15.077][FINER]:    Waiting for all views to stop loading...
+[15.104][FINER]:    Done waiting for all views to stop loading
+[15.137][FINER]:    Waiting for all views to stop loading...
+[15.154][FINER]:    Done waiting for all views to stop loading
+[15.154][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827862"
+   }
+}
+
+[15.156][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827862/attribute/src)
+[15.156][FINER]:    Waiting for all views to stop loading...
+[15.171][FINER]:    Done waiting for all views to stop loading
+[15.223][FINER]:    Waiting for all views to stop loading...
+[15.237][FINER]:    Done waiting for all views to stop loading
+[15.237][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827862/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[15.238][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[15.239][FINER]:    Waiting for all views to stop loading...
+[15.270][FINER]:    Done waiting for all views to stop loading
+[15.304][FINER]:    Waiting for all views to stop loading...
+[15.304][FINER]:    Done waiting for all views to stop loading
+[15.304][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827862"
+   }
+}
+
+[15.305][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827862/attribute/src)
+[15.305][FINER]:    Waiting for all views to stop loading...
+[15.305][FINER]:    Done waiting for all views to stop loading
+[15.308][FINER]:    Waiting for all views to stop loading...
+[15.308][FINER]:    Done waiting for all views to stop loading
+[15.308][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827862/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[15.309][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[15.309][FINER]:    Waiting for all views to stop loading...
+[15.309][FINER]:    Done waiting for all views to stop loading
+[15.311][FINER]:    Waiting for all views to stop loading...
+[15.311][FINER]:    Done waiting for all views to stop loading
+[15.311][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[15.324][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.imageGallery div:nth-child(2).ima..."
+}
+
+[15.324][FINER]:    Waiting for all views to stop loading...
+[15.324][FINER]:    Done waiting for all views to stop loading
+[15.329][FINER]:    Waiting for all views to stop loading...
+[15.329][FINER]:    Done waiting for all views to stop loading
+[15.329][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827863"
+   }
+}
+
+[15.331][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827863/click) with params {
+
+}
+
+[15.331][FINER]:    Waiting for all views to stop loading...
+[15.331][FINER]:    Done waiting for all views to stop loading
+[15.404][WARNING]:  Element's descendant would receive the click. Consider clicking the descendant instead. Descendant: <img border="0" height="110" width="146" src="http://media.ignimgs.com/media/thumb/360/3602307/far-cry-3-20120214035808822_thumb_ign.jpg" alt="Far Cry 3 image 3602307">
+[15.475][FINER]:    Waiting for all views to stop loading...
+[15.489][FINER]:    Done waiting for all views to stop loading
+[15.489][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827863/click) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[15.490][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[15.490][FINER]:    Waiting for all views to stop loading...
+[15.522][FINER]:    Done waiting for all views to stop loading
+[15.570][FINER]:    Waiting for all views to stop loading...
+[15.588][FINER]:    Done waiting for all views to stop loading
+[15.588][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827864"
+   }
+}
+
+[15.589][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827864/attribute/src)
+[15.589][FINER]:    Waiting for all views to stop loading...
+[15.605][FINER]:    Done waiting for all views to stop loading
+[15.637][FINER]:    Waiting for all views to stop loading...
+[15.673][FINER]:    Done waiting for all views to stop loading
+[15.673][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827864/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[15.675][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[15.675][FINER]:    Waiting for all views to stop loading...
+[15.688][FINER]:    Done waiting for all views to stop loading
+[15.738][FINER]:    Waiting for all views to stop loading...
+[15.756][FINER]:    Done waiting for all views to stop loading
+[15.756][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827864"
+   }
+}
+
+[15.757][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827864/attribute/src)
+[15.757][FINER]:    Waiting for all views to stop loading...
+[15.772][FINER]:    Done waiting for all views to stop loading
+[15.805][FINER]:    Waiting for all views to stop loading...
+[15.822][FINER]:    Done waiting for all views to stop loading
+[15.822][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827864/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[15.824][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[15.824][FINER]:    Waiting for all views to stop loading...
+[15.839][FINER]:    Done waiting for all views to stop loading
+[15.873][FINER]:    Waiting for all views to stop loading...
+[15.874][FINER]:    Done waiting for all views to stop loading
+[15.874][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[15.875][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.pagination a"
+}
+
+[15.875][FINER]:    Waiting for all views to stop loading...
+[15.876][FINER]:    Done waiting for all views to stop loading
+[15.882][FINER]:    Waiting for all views to stop loading...
+[15.882][FINER]:    Done waiting for all views to stop loading
+[15.882][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121827865"
+   }
+}
+
+[15.884][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827865/click) with params {
+
+}
+
+[15.884][FINER]:    Waiting for all views to stop loading...
+[15.889][FINER]:    Done waiting for all views to stop loading
+[16.081][FINER]:    Waiting for all views to stop loading...
+[18.614][FINER]:    Done waiting for all views to stop loading
+[18.614][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121827865/click) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[18.615][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[18.615][FINER]:    Waiting for all views to stop loading...
+[18.648][FINER]:    Done waiting for all views to stop loading
+[18.682][FINER]:    Waiting for all views to stop loading...
+[18.716][FINER]:    Done waiting for all views to stop loading
+[18.716][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831992"
+   }
+}
+
+[18.717][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831992/attribute/src)
+[18.717][FINER]:    Waiting for all views to stop loading...
+[18.748][FINER]:    Done waiting for all views to stop loading
+[18.781][FINER]:    Waiting for all views to stop loading...
+[18.781][FINER]:    Done waiting for all views to stop loading
+[18.781][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831992/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": ""
+}
+
+[18.782][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[18.782][FINER]:    Waiting for all views to stop loading...
+[18.783][FINER]:    Done waiting for all views to stop loading
+[18.786][FINER]:    Waiting for all views to stop loading...
+[18.787][FINER]:    Done waiting for all views to stop loading
+[18.787][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831992"
+   }
+}
+
+[18.788][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831992/attribute/src)
+[18.788][FINER]:    Waiting for all views to stop loading...
+[18.788][FINER]:    Done waiting for all views to stop loading
+[18.790][FINER]:    Waiting for all views to stop loading...
+[18.790][FINER]:    Done waiting for all views to stop loading
+[18.790][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831992/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": ""
+}
+
+[18.791][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[18.791][FINER]:    Waiting for all views to stop loading...
+[18.792][FINER]:    Done waiting for all views to stop loading
+[18.795][FINER]:    Waiting for all views to stop loading...
+[18.796][FINER]:    Done waiting for all views to stop loading
+[18.796][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[18.797][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.imageGallery div.imageGalleryThumb a"
+}
+
+[18.797][FINER]:    Waiting for all views to stop loading...
+[18.797][FINER]:    Done waiting for all views to stop loading
+[18.809][FINER]:    Waiting for all views to stop loading...
+[18.809][FINER]:    Done waiting for all views to stop loading
+[18.809][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831993"
+   }
+}
+
+[18.810][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831993/click) with params {
+
+}
+
+[18.810][FINER]:    Waiting for all views to stop loading...
+[18.811][FINER]:    Done waiting for all views to stop loading
+[18.867][WARNING]:  Element's descendant would receive the click. Consider clicking the descendant instead. Descendant: <img border="0" height="110" width="146" src="http://media.ignimgs.com/media/thumb/346/3464804/far-cry-3-20110606094110042_thumb_ign.jpg" alt="Far Cry 3 image 3464804">
+[18.885][FINER]:    Waiting for all views to stop loading...
+[18.888][FINER]:    Done waiting for all views to stop loading
+[18.888][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831993/click) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[18.889][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[18.889][FINER]:    Waiting for all views to stop loading...
+[18.932][FINER]:    Done waiting for all views to stop loading
+[18.967][FINER]:    Waiting for all views to stop loading...
+[18.984][FINER]:    Done waiting for all views to stop loading
+[18.984][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831994"
+   }
+}
+
+[18.985][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831994/attribute/src)
+[18.985][FINER]:    Waiting for all views to stop loading...
+[18.999][FINER]:    Done waiting for all views to stop loading
+[19.031][FINER]:    Waiting for all views to stop loading...
+[19.032][FINER]:    Done waiting for all views to stop loading
+[19.032][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831994/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://xbox360media.ign.com/xbox360/i..."
+}
+
+[19.033][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[19.033][FINER]:    Waiting for all views to stop loading...
+[19.033][FINER]:    Done waiting for all views to stop loading
+[19.048][FINER]:    Waiting for all views to stop loading...
+[19.048][FINER]:    Done waiting for all views to stop loading
+[19.049][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831994"
+   }
+}
+
+[19.049][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831994/attribute/src)
+[19.049][FINER]:    Waiting for all views to stop loading...
+[19.050][FINER]:    Done waiting for all views to stop loading
+[19.052][FINER]:    Waiting for all views to stop loading...
+[19.052][FINER]:    Done waiting for all views to stop loading
+[19.053][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831994/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://xbox360media.ign.com/xbox360/i..."
+}
+
+[19.053][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[19.053][FINER]:    Waiting for all views to stop loading...
+[19.054][FINER]:    Done waiting for all views to stop loading
+[19.055][FINER]:    Waiting for all views to stop loading...
+[19.056][FINER]:    Done waiting for all views to stop loading
+[19.056][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[19.056][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div.imageGallery div:nth-child(2).ima..."
+}
+
+[19.056][FINER]:    Waiting for all views to stop loading...
+[19.057][FINER]:    Done waiting for all views to stop loading
+[19.080][FINER]:    Waiting for all views to stop loading...
+[19.082][FINER]:    Done waiting for all views to stop loading
+[19.082][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831995"
+   }
+}
+
+[19.084][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831995/click) with params {
+
+}
+
+[19.084][FINER]:    Waiting for all views to stop loading...
+[19.084][FINER]:    Done waiting for all views to stop loading
+[19.137][WARNING]:  Element's descendant would receive the click. Consider clicking the descendant instead. Descendant: <img border="0" height="110" width="146" src="http://media.ignimgs.com/media/thumb/346/3464805/far-cry-3-20110606094112542_thumb_ign.jpg" alt="Far Cry 3 image 3464805">
+[19.173][FINER]:    Waiting for all views to stop loading...
+[19.204][FINER]:    Done waiting for all views to stop loading
+[19.204][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831995/click) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[19.206][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[19.206][FINER]:    Waiting for all views to stop loading...
+[19.217][FINER]:    Done waiting for all views to stop loading
+[19.251][FINER]:    Waiting for all views to stop loading...
+[19.265][FINER]:    Done waiting for all views to stop loading
+[19.265][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831996"
+   }
+}
+
+[19.267][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831996/attribute/src)
+[19.267][FINER]:    Waiting for all views to stop loading...
+[19.283][FINER]:    Done waiting for all views to stop loading
+[19.315][FINER]:    Waiting for all views to stop loading...
+[19.332][FINER]:    Done waiting for all views to stop loading
+[19.332][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831996/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://xbox360media.ign.com/xbox360/i..."
+}
+
+[19.334][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[19.334][FINER]:    Waiting for all views to stop loading...
+[19.367][FINER]:    Done waiting for all views to stop loading
+[19.400][FINER]:    Waiting for all views to stop loading...
+[19.416][FINER]:    Done waiting for all views to stop loading
+[19.416][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831996"
+   }
+}
+
+[19.417][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831996/attribute/src)
+[19.417][FINER]:    Waiting for all views to stop loading...
+[19.432][FINER]:    Done waiting for all views to stop loading
+[19.467][FINER]:    Waiting for all views to stop loading...
+[19.483][FINER]:    Done waiting for all views to stop loading
+[19.483][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831996/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://xbox360media.ign.com/xbox360/i..."
+}
+
+[19.484][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[19.484][FINER]:    Waiting for all views to stop loading...
+[19.500][FINER]:    Done waiting for all views to stop loading
+[19.517][FINER]:    Waiting for all views to stop loading...
+[19.517][FINER]:    Done waiting for all views to stop loading
+[19.517][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[19.518][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/back) with params {
+
+}
+
+[19.518][FINER]:    Waiting for all views to stop loading...
+[19.519][FINER]:    Done waiting for all views to stop loading
+[19.600][FINER]:    Waiting for all views to stop loading...
+[19.637][FINER]:    Done waiting for all views to stop loading
+[19.637][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/back) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[19.639][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[19.639][FINER]:    Waiting for all views to stop loading...
+[19.667][FINER]:    Done waiting for all views to stop loading
+[19.716][FINER]:    Waiting for all views to stop loading...
+[19.751][FINER]:    Done waiting for all views to stop loading
+[19.751][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831997"
+   }
+}
+
+[19.752][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831997/attribute/src)
+[19.752][FINER]:    Waiting for all views to stop loading...
+[19.784][FINER]:    Done waiting for all views to stop loading
+[19.818][FINER]:    Waiting for all views to stop loading...
+[19.834][FINER]:    Done waiting for all views to stop loading
+[19.834][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831997/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://xbox360media.ign.com/xbox360/i..."
+}
+
+[19.835][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[19.835][FINER]:    Waiting for all views to stop loading...
+[19.868][FINER]:    Done waiting for all views to stop loading
+[19.901][FINER]:    Waiting for all views to stop loading...
+[19.902][FINER]:    Done waiting for all views to stop loading
+[19.902][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[19.903][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/back) with params {
+
+}
+
+[19.903][FINER]:    Waiting for all views to stop loading...
+[19.917][FINER]:    Done waiting for all views to stop loading
+[19.952][FINER]:    Waiting for all views to stop loading...
+[19.990][FINER]:    Done waiting for all views to stop loading
+[19.991][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/back) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[19.992][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[19.992][FINER]:    Waiting for all views to stop loading...
+[20.017][FINER]:    Done waiting for all views to stop loading
+[20.051][FINER]:    Waiting for all views to stop loading...
+[20.067][FINER]:    Done waiting for all views to stop loading
+[20.067][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121831997"
+   }
+}
+
+[20.068][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831997/displayed)
+[20.068][FINER]:    Waiting for all views to stop loading...
+[20.068][FINER]:    Done waiting for all views to stop loading
+[20.076][FINER]:    Waiting for all views to stop loading...
+[20.076][FINER]:    Done waiting for all views to stop loading
+[20.076][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121831997/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": false
+}
+
+[20.077][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[20.077][FINER]:    Waiting for all views to stop loading...
+[20.078][FINER]:    Done waiting for all views to stop loading
+[20.079][FINER]:    Waiting for all views to stop loading...
+[20.080][FINER]:    Done waiting for all views to stop loading
+[20.080][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[20.080][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/back) with params {
+
+}
+
+[20.080][FINER]:    Waiting for all views to stop loading...
+[20.081][FINER]:    Done waiting for all views to stop loading
+[22.259][FINER]:    Waiting for all views to stop loading...
+[22.292][FINER]:    Done waiting for all views to stop loading
+[22.293][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/back) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[22.294][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[22.294][FINER]:    Waiting for all views to stop loading...
+[22.324][FINER]:    Done waiting for all views to stop loading
+[22.358][FINER]:    Waiting for all views to stop loading...
+[22.358][FINER]:    Done waiting for all views to stop loading
+[22.358][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121835664"
+   }
+}
+
+[22.359][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835664/attribute/src)
+[22.359][FINER]:    Waiting for all views to stop loading...
+[22.359][FINER]:    Done waiting for all views to stop loading
+[22.366][FINER]:    Waiting for all views to stop loading...
+[22.366][FINER]:    Done waiting for all views to stop loading
+[22.366][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835664/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[22.367][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[22.367][FINER]:    Waiting for all views to stop loading...
+[22.368][FINER]:    Done waiting for all views to stop loading
+[22.370][FINER]:    Waiting for all views to stop loading...
+[22.371][FINER]:    Done waiting for all views to stop loading
+[22.371][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[22.372][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/back) with params {
+
+}
+
+[22.372][FINER]:    Waiting for all views to stop loading...
+[22.372][FINER]:    Done waiting for all views to stop loading
+[22.381][FINER]:    Waiting for all views to stop loading...
+[22.381][FINER]:    Done waiting for all views to stop loading
+[22.381][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/back) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[22.382][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[22.382][FINER]:    Waiting for all views to stop loading...
+[22.394][FINER]:    Done waiting for all views to stop loading
+[22.441][FINER]:    Waiting for all views to stop loading...
+[22.458][FINER]:    Done waiting for all views to stop loading
+[22.458][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121835665"
+   }
+}
+
+[22.459][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835665/attribute/src)
+[22.460][FINER]:    Waiting for all views to stop loading...
+[22.494][FINER]:    Done waiting for all views to stop loading
+[22.542][FINER]:    Waiting for all views to stop loading...
+[22.558][FINER]:    Done waiting for all views to stop loading
+[22.558][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835665/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[22.559][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[22.559][FINER]:    Waiting for all views to stop loading...
+[22.611][FINER]:    Done waiting for all views to stop loading
+[22.642][FINER]:    Waiting for all views to stop loading...
+[22.659][FINER]:    Done waiting for all views to stop loading
+[22.659][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[22.660][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/back) with params {
+
+}
+
+[22.660][FINER]:    Waiting for all views to stop loading...
+[22.691][FINER]:    Done waiting for all views to stop loading
+[22.778][FINER]:    Waiting for all views to stop loading...
+[22.815][FINER]:    Done waiting for all views to stop loading
+[22.815][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/back) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[22.816][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[22.816][FINER]:    Waiting for all views to stop loading...
+[22.845][FINER]:    Done waiting for all views to stop loading
+[22.875][FINER]:    Waiting for all views to stop loading...
+[22.893][FINER]:    Done waiting for all views to stop loading
+[22.893][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121835665"
+   }
+}
+
+[22.894][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835665/displayed)
+[22.894][FINER]:    Waiting for all views to stop loading...
+[22.909][FINER]:    Done waiting for all views to stop loading
+[22.935][FINER]:    Waiting for all views to stop loading...
+[22.935][FINER]:    Done waiting for all views to stop loading
+[22.935][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835665/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": false
+}
+
+[22.936][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[22.936][FINER]:    Waiting for all views to stop loading...
+[22.936][FINER]:    Done waiting for all views to stop loading
+[22.945][FINER]:    Waiting for all views to stop loading...
+[22.945][FINER]:    Done waiting for all views to stop loading
+[22.945][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[22.946][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/forward) with params {
+
+}
+
+[22.946][FINER]:    Waiting for all views to stop loading...
+[22.946][FINER]:    Done waiting for all views to stop loading
+[22.963][FINER]:    Waiting for all views to stop loading...
+[22.999][FINER]:    Done waiting for all views to stop loading
+[22.999][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/forward) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[23.001][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[23.001][FINER]:    Waiting for all views to stop loading...
+[23.026][FINER]:    Done waiting for all views to stop loading
+[23.030][FINER]:    Waiting for all views to stop loading...
+[23.030][FINER]:    Done waiting for all views to stop loading
+[23.030][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121835666"
+   }
+}
+
+[23.031][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835666/attribute/src)
+[23.031][FINER]:    Waiting for all views to stop loading...
+[23.031][FINER]:    Done waiting for all views to stop loading
+[23.040][FINER]:    Waiting for all views to stop loading...
+[23.040][FINER]:    Done waiting for all views to stop loading
+[23.040][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835666/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[23.042][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[23.042][FINER]:    Waiting for all views to stop loading...
+[23.061][FINER]:    Done waiting for all views to stop loading
+[23.064][FINER]:    Waiting for all views to stop loading...
+[23.065][FINER]:    Done waiting for all views to stop loading
+[23.065][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[23.066][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/forward) with params {
+
+}
+
+[23.066][FINER]:    Waiting for all views to stop loading...
+[23.067][FINER]:    Done waiting for all views to stop loading
+[23.081][FINER]:    Waiting for all views to stop loading...
+[23.081][FINER]:    Done waiting for all views to stop loading
+[23.081][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/forward) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[23.082][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[23.083][FINER]:    Waiting for all views to stop loading...
+[23.095][FINER]:    Done waiting for all views to stop loading
+[23.126][FINER]:    Waiting for all views to stop loading...
+[23.143][FINER]:    Done waiting for all views to stop loading
+[23.144][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121835667"
+   }
+}
+
+[23.144][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835667/attribute/src)
+[23.144][FINER]:    Waiting for all views to stop loading...
+[23.145][FINER]:    Done waiting for all views to stop loading
+[23.162][FINER]:    Waiting for all views to stop loading...
+[23.177][FINER]:    Done waiting for all views to stop loading
+[23.177][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121835667/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://pcmedia.ign.com/pc/image/artic..."
+}
+
+[23.178][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[23.178][FINER]:    Waiting for all views to stop loading...
+[23.193][FINER]:    Done waiting for all views to stop loading
+[23.195][FINER]:    Waiting for all views to stop loading...
+[23.195][FINER]:    Done waiting for all views to stop loading
+[23.195][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[23.196][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/forward) with params {
+
+}
+
+[23.196][FINER]:    Waiting for all views to stop loading...
+[23.197][FINER]:    Done waiting for all views to stop loading
+[24.299][FINER]:    Waiting for all views to stop loading...
+[24.465][FINER]:    Done waiting for all views to stop loading
+[24.465][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/forward) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[24.466][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[24.466][FINER]:    Waiting for all views to stop loading...
+[24.466][FINER]:    Done waiting for all views to stop loading
+[24.574][FINER]:    Waiting for all views to stop loading...
+[24.575][FINER]:    Done waiting for all views to stop loading
+[24.575][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121837892"
+   }
+}
+
+[24.577][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121837892/displayed)
+[24.577][FINER]:    Waiting for all views to stop loading...
+[24.577][FINER]:    Done waiting for all views to stop loading
+[24.656][FINER]:    Waiting for all views to stop loading...
+[24.767][FINER]:    Done waiting for all views to stop loading
+[24.767][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121837892/displayed) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": false
+}
+
+[24.768][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[24.768][FINER]:    Waiting for all views to stop loading...
+[24.783][FINER]:    Done waiting for all views to stop loading
+[24.824][FINER]:    Waiting for all views to stop loading...
+[24.824][FINER]:    Done waiting for all views to stop loading
+[24.824][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[24.825][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/forward) with params {
+
+}
+
+[24.825][FINER]:    Waiting for all views to stop loading...
+[24.826][FINER]:    Done waiting for all views to stop loading
+[27.074][FINER]:    Waiting for all views to stop loading...
+[27.106][FINER]:    Done waiting for all views to stop loading
+[27.106][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/forward) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[27.107][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[27.107][FINER]:    Waiting for all views to stop loading...
+[27.139][FINER]:    Done waiting for all views to stop loading
+[27.172][FINER]:    Waiting for all views to stop loading...
+[27.189][FINER]:    Done waiting for all views to stop loading
+[27.189][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121837893"
+   }
+}
+
+[27.190][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121837893/attribute/src)
+[27.190][FINER]:    Waiting for all views to stop loading...
+[27.207][FINER]:    Done waiting for all views to stop loading
+[27.255][FINER]:    Waiting for all views to stop loading...
+[27.272][FINER]:    Done waiting for all views to stop loading
+[27.272][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121837893/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://xbox360media.ign.com/xbox360/i..."
+}
+
+[27.273][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[27.273][FINER]:    Waiting for all views to stop loading...
+[27.288][FINER]:    Done waiting for all views to stop loading
+[27.307][FINER]:    Waiting for all views to stop loading...
+[27.307][FINER]:    Done waiting for all views to stop loading
+[27.307][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[27.308][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/forward) with params {
+
+}
+
+[27.308][FINER]:    Waiting for all views to stop loading...
+[27.308][FINER]:    Done waiting for all views to stop loading
+[27.326][FINER]:    Waiting for all views to stop loading...
+[27.358][FINER]:    Done waiting for all views to stop loading
+[27.358][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/forward) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[27.360][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element) with params {
+   "using": "css selector",
+   "value": "div#peekWindow a img"
+}
+
+[27.360][FINER]:    Waiting for all views to stop loading...
+[27.378][FINER]:    Done waiting for all views to stop loading
+[27.411][FINER]:    Waiting for all views to stop loading...
+[27.411][FINER]:    Done waiting for all views to stop loading
+[27.411][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1330121837894"
+   }
+}
+
+[27.423][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121837894/attribute/src)
+[27.423][FINER]:    Waiting for all views to stop loading...
+[27.423][FINER]:    Done waiting for all views to stop loading
+[27.430][FINER]:    Waiting for all views to stop loading...
+[27.430][FINER]:    Done waiting for all views to stop loading
+[27.430][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/element/:wdc:1330121837894/attribute/src) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://xbox360media.ign.com/xbox360/i..."
+}
+
+[27.431][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb/url)
+[27.431][FINER]:    Waiting for all views to stop loading...
+[27.432][FINER]:    Done waiting for all views to stop loading
+[27.433][FINER]:    Waiting for all views to stop loading...
+[27.434][FINER]:    Done waiting for all views to stop loading
+[27.434][FINE]:     Command finished (/session/e699156c3c74343a39efbca4226da6cb/url) with response {
+   "sessionId": "e699156c3c74343a39efbca4226da6cb",
+   "status": 0,
+   "value": "http://www.ign.com/images/games/far-c..."
+}
+
+[27.435][FINE]:     Command received (/session/e699156c3c74343a39efbca4226da6cb)

@@ -2,8 +2,11 @@ require 'rspec'
 require 'selenium-webdriver'
 require 'configuration'
 require 'rest-client'
+require 'open_page'
 
-describe "Images HomePage:" do, :selenium => true do
+include OpenPage
+
+describe "Images HomePage:", :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
@@ -27,7 +30,7 @@ describe "Images HomePage:" do, :selenium => true do
   end
   
   it "should 301 from /images to /index/images.html", :smoke => true do
-    @selenium.get @page
+    selenium_get(@selenium, @page)
     # Do I need to wait for load?
     @selenium.current_url.should == "http://#{@config.options['baseurl']}/index/images.html"
   end
@@ -58,9 +61,10 @@ describe "Images Gallery Page:", :selenium => true do
   end
 
   it "should open the Far Cry 3 gallery page", :smoke => true do
-    @selenium.get @page
+    selenium_get(@selenium, @page)
     # Do I need to wait for load?
     @selenium.current_url.should == @page
+      
   end
 
   it "should display 20 thumbnails", :smoke => true do
@@ -111,7 +115,7 @@ describe "Images Gallery Page:", :selenium => true do
   end
   
   it "should remove the lightbox overlay when an area outside the overlay image is clicked", :smoke => true do
-    @selenium.find_element(:css => "div#lbOverlay").click
+    @selenium.find_element(:css, "div#lbTopContainer").click
     @wait.until { @selenium.find_element(:css => "div#lbCenter a").displayed? == false }
   end
 
@@ -150,7 +154,7 @@ describe "Images Gallery Page:", :selenium => true do
   end
 
   it "should display the appropriate images and URLs when the back and forward browser buttons are clicked through pagination" do
-    @selenium.get @page
+    selenium_get(@selenium, @page)
     @wait.until { @selenium.find_element(:css => "div#peekWindow a img") }
     first_image = @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
     first_url = @selenium.current_url
