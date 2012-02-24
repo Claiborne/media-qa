@@ -3,20 +3,14 @@ require 'selenium-webdriver'
 require 'configuration'
 require 'rest-client'
 
-# =>  TODO:
-#
-# =>  IMPLEMENT BROWSER AND ENV
-#
-# =>  BROWSER AND PAGE CLASS IN LIB FOR COMMON METHODS
-
-describe "Images HomePage:" do
+describe "Images HomePage:" do, :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/images"
-    puts @page
-    @selenium = Selenium::WebDriver.for :firefox
+    puts @page+" using "+@config.browser['browser']
+    @selenium = Selenium::WebDriver.for @config.browser['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
   end
   
@@ -46,8 +40,8 @@ describe "Images Gallery Page:", :selenium => true do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/images/games/far-cry-3-xbox-360-53491"
-    puts @page
-    @selenium = Selenium::WebDriver.for :firefox
+    puts @page+" using "+@config.browser['browser']
+    @selenium = Selenium::WebDriver.for @config.browser['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
   end
   
