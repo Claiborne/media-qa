@@ -118,23 +118,23 @@ describe "V3 Video API: Video Smoke Tests" do
     "metadata", 
     "tags", 
     "category"].each do |k| 
-    it "should return #{k} for all videos" do
-      @data['data'].each do |article|
-        article.has_key?(k).should be_true
+    it "should return a #{k} key for all videos" do
+      @data['data'].each do |video|
+        video.has_key?(k).should be_true
       end
     end
   end
   
   it "should return videoId with non-nil, non-blank value for all videos" do
-    @data['data'].each do |article|
-      article['videoId'].should_not be_nil
-      article['videoId'].to_s.length.should > 0
+    @data['data'].each do |video|
+      video['videoId'].should_not be_nil
+      video['videoId'].to_s.length.should > 0
     end
   end
   
   it "should return a hash value for all videoIds" do
     @data['data'].each do |video|
-      video['videoId'].match(/^[0-9a-f]{24,32}$/).should be_true  
+      video['videoId'].match(/^[0-9a-f]{24,32}$/).should be_true
     end  
   end
   
