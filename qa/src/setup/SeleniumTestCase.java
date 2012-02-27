@@ -82,16 +82,16 @@ public class SeleniumTestCase {
         //}
     }
 
-    public void waitForElementNotPresent(Selenium sel, String elementDescription){
-
-        try {
-            waitForElementPresent(sel, elementDescription, 20000);
-            Assert.fail("Element was found when it was not suppose to be");
-        } catch(Exception e){
-            Reporter.log("Element was not found");
-
-        }
-
-    }
+//    public void waitForElementNotPresent(Selenium sel, String elementDescription){
+//
+//        try {
+//            waitForElementPresent(sel, elementDescription, 20000);
+//            Assert.fail("Element was found when it was not suppose to be");
+//        } catch(Exception e){
+//            Reporter.log("Element was not found");
+//
+//        }
+//
+//    }
 
 }

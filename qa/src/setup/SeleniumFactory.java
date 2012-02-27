@@ -3,7 +3,6 @@ package setup;
 import com.thoughtworks.selenium.DefaultSelenium;
 import org.testng.Assert;
 
-
 import java.io.FileInputStream;
 import java.io.IOException;
 

@@ -14,11 +14,26 @@ public class ignHomePage extends ignBaseClass{
     
     
     @Test
-    @Parameters
-    public void login(){
+    @Parameters({"email", "password", "message"})
+    public void login(String email, String password, String message){
 
-        waitForElementPresent(selenium, "//div");
+        waitForElementPresent(selenium, "//a[.='Sign in']");
+        selenium.click("//a[.='Sign in']");
 
+        waitForElementPresent(selenium, "//input[@id='email']");
+        selenium.type("//input[@id='email']", email);
+        selenium.type("//input[@id='password']", password);
+        selenium.click("//input[@value='SIGN IN']");
+
+        waitForElementPresent(selenium,"//form[@id='QuickReply']");
+        selenium.type("//textarea[@id='ctrl_message']", message);
+        selenium.click("//input[@class='button primary']");
+
+        waitForElementPresent(selenium, "//li[contains(@class, 'message')]//blockquote[contains(.,'"+message+"')]");
+
+        //selenium.runScript("InlineMessageEditor.setData('hello');");
+        //String cookie = selenium.getCookie();
+        //waitForElementPresent(selenium, "//div");
 
     }
     

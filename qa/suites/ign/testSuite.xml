@@ -1,13 +1,15 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="IGN Homepage Testing" parallel="tests" thread-count="1" >
+<suite name="IGN Homepage Testing" parallel="tests" thread-count="2" >
 
-    <parameter name="path" value="" />
-    <parameter name="URL" value=""/>
+    <parameter name="path" value="boards/threads/problems-with-extremely-large-threads.250031818/" />
+    <parameter name="URL" value="ign.com"/>
 
 
     <test name="Check Homepage Aesthetics">
-
+        <parameter name="email" value="davidortizosu@gmail.com"/>
+        <parameter name="password" value="starwars"/>
+        <parameter name="message" value="This is an automated message"/>
 
         <classes>
             <class name="ign.ignHomePage"/>
@@ -15,7 +17,9 @@
     </test>
 
     <test name="Check Homepage Aesthetics 2">
-
+        <parameter name="email" value="davidortizosu@gmail.com"/>
+        <parameter name="password" value="starwars"/>
+        <parameter name="message" value="This is an automated message"/>
 
         <classes>
             <class name="ign.ignHomePage"/>

@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Boards Testing" parallel="tests" thread-count="2" >
+
+    <parameter name="path" value="boards/" />
+    <parameter name="URL" value="ign.com"/>
+
+
+    <test name="Boards Aesthetics">
+        <parameter name="email" value="davidortizosu@gmail.com"/>
+        <parameter name="password" value="starwars"/>
+        <parameter name="username" value="DavidOrtizOSU"/>
+        <parameter name="message" value="This is an automated message"/>
+
+        <classes>
+            <class name="boards.boardsAesthetics"/>
+        </classes>
+    </test>
+
+
+
+</suite>
