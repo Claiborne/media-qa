@@ -125,7 +125,7 @@ describe "V3 Video API: Video Smoke Tests" do
     end
   end
   
-  it "should not return any blank or nil values for videoId" do
+  it "should return videoId with non-nil, non-blank value for all videos" do
     @data['data'].each do |article|
       article['videoId'].should_not be_nil
       article['videoId'].to_s.length.should > 0
@@ -222,7 +222,7 @@ describe "V3 Video API: Playlist Smoke Tests" do
     end
   end
   
-  ["name", "description", "url","networks"].each do |key|
+  ["name", "url","networks"].each do |key|
     it "should return #{key} metadata with a non-nil, non-blank value for all playlists" do
       @data['data'].each do |playlist|
         playlist['metadata'].has_key?(key).should be_true
