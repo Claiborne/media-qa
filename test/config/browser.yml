@@ -1,0 +1,11 @@
+chrome:
+  browser: chrome
+
+firefox:
+  browser: firefox
+
+ie:
+  browser: ie
+
+headless:
+  browser: headless

@@ -1,22 +1,25 @@
 require 'rspec'
 require 'selenium-webdriver'
 require 'configuration'
+require 'browser_config'
 require 'rest-client'
+require 'open_page'
 
-# =>  TODO:
-#
-# =>  IMPLEMENT BROWSER AND ENV
-#
-# =>  BROWSER AND PAGE CLASS IN LIB FOR COMMON METHODS
+include OpenPage
 
-describe "Images HomePage:" do
+describe "Images HomePage:", :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
+    
+    BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
+    @browser_config = BrowserConfig.new
+    
     @page = "http://#{@config.options['baseurl']}/images"
-    puts @page
-    @selenium = Selenium::WebDriver.for :firefox
+    puts @page+" using "+@browser_config.options['browser']
+    
+    @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
   end
   
@@ -33,7 +36,7 @@ describe "Images HomePage:" do
   end
   
   it "should 301 from /images to /index/images.html", :smoke => true do
-    @selenium.get @page
+    selenium_get(@selenium, @page)
     # Do I need to wait for load?
     @selenium.current_url.should == "http://#{@config.options['baseurl']}/index/images.html"
   end
@@ -45,10 +48,23 @@ describe "Images Gallery Page:", :selenium => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
+    
+    BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
+    @browser_config = BrowserConfig.new
+    
     @page = "http://#{@config.options['baseurl']}/images/games/far-cry-3-xbox-360-53491"
-    puts @page
-    @selenium = Selenium::WebDriver.for :firefox
+    puts @page+" using "+@browser_config.options['browser']
+    
+    @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+    
+    
+    #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    #@config = Configuration.new
+    #@page = "http://#{@config.options['baseurl']}/images/games/far-cry-3-xbox-360-53491"
+    #puts @page+" using "+@config.browser['browser']
+    #@selenium = Selenium::WebDriver.for @config.browser['browser'].to_sym
+    #@wait = Selenium::WebDriver::Wait.new(:timeout => 5)
   end
   
   after(:all) do
@@ -64,9 +80,10 @@ describe "Images Gallery Page:", :selenium => true do
   end
 
   it "should open the Far Cry 3 gallery page", :smoke => true do
-    @selenium.get @page
+    selenium_get(@selenium, @page)
     # Do I need to wait for load?
     @selenium.current_url.should == @page
+      
   end
 
   it "should display 20 thumbnails", :smoke => true do
@@ -117,7 +134,7 @@ describe "Images Gallery Page:", :selenium => true do
   end
   
   it "should remove the lightbox overlay when an area outside the overlay image is clicked", :smoke => true do
-    @selenium.find_element(:css => "div#lbOverlay").click
+    @selenium.find_element(:css, "div#lbTopContainer").click
     @wait.until { @selenium.find_element(:css => "div#lbCenter a").displayed? == false }
   end
 
@@ -156,7 +173,7 @@ describe "Images Gallery Page:", :selenium => true do
   end
 
   it "should display the appropriate images and URLs when the back and forward browser buttons are clicked through pagination" do
-    @selenium.get @page
+    selenium_get(@selenium, @page)
     @wait.until { @selenium.find_element(:css => "div#peekWindow a img") }
     first_image = @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
     first_url = @selenium.current_url

@@ -115,13 +115,13 @@ module Blogrollv2Articles
       titles = api_titles + frontend_titles
       titles.uniq.count.should be <= num+2
       # Debug code
-      #api_titles.each do |i|
-        #puts i
-      #end
-      #puts ""
-      #frontend_titles.each do |i|
-        #puts i
-      #end
+      api_titles.each do |i|
+        puts i
+      end
+      puts ""
+      frontend_titles.each do |i|
+        puts i
+      end
     end
 
   end

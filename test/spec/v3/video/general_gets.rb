@@ -82,10 +82,10 @@ describe "V3 Video API: #{k}" do
     "height",
     "width",].each do |k| 
     it "should return #{k} asset data with a non-nil, non-blank value" do
-      @data['assets'].each do |article|
-        article.has_key?(k).should be_true
-        article[k].should_not be_nil
-        article[k].to_s.length.should > 0
+      @data['assets'].each do |video|
+        video.has_key?(k).should be_true
+        video[k].should_not be_nil
+        video[k].to_s.length.should > 0
       end
     end
   end
@@ -95,10 +95,10 @@ describe "V3 Video API: #{k}" do
     "height",
     "width",].each do |k| 
     it "should return #{k} thumbnail data with a non-nil, non-blank value" do
-      @data['thumbnails'].each do |article|
-        article.has_key?(k).should be_true
-        article[k].should_not be_nil
-        article[k].to_s.length.should > 0
+      @data['thumbnails'].each do |video|
+        video.has_key?(k).should be_true
+        video[k].should_not be_nil
+        video[k].to_s.length.should > 0
       end
     end
   end
@@ -145,10 +145,10 @@ describe "V3 Video API: #{k}" do
   end
 
   it "should return tag data with 14 non-nil, non-blank slugs" do
-    @data['tags'].each do |article|
-      article.has_key?('slug').should be_true
-      article['slug'].should_not be_nil
-      article['slug'].to_s.length.should > 0
+    @data['tags'].each do |video|
+      video.has_key?('slug').should be_true
+      video['slug'].should_not be_nil
+      video['slug'].to_s.length.should > 0
     end
     @data['tags'].length.should == 14
   end
