@@ -4,16 +4,4 @@ staging:
   baseurl: branchname.stg.www.ign.com 
 
 production:
-  baseurl: www.ign.com 
-
-chrome:
-  browser: chrome
-
-firefox:
-  browser: firefox
-
-ie:
-  browser: ie
-
-headless:
-  browser: headless
+  baseurl: www.ign.com
