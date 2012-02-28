@@ -142,19 +142,77 @@ describe "V3 Articles API: Articles Smoke Tests" do
       end
     end
   end
-=begin
-  it "should return videoId with non-nil, non-blank value for all videos" do
-    @data['data'].each do |article|
-      article['videoId'].should_not be_nil
-      article['videoId'].to_s.length.should > 0
+
+end
+end
+
+##################################################################
+
+{"Slug"=>"/slug/apple-iphone-4s-review", "ID"=>"/4e9cb2997ebbd863360000a2"}.each do |k,v|
+
+describe "V3 Articles API: Smoke Get Article By #{k}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_art.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles#{v}"
+    puts @url
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+    
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+  
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+  
+  ["review",
+    "legacyData",
+    "system", 
+    "objectRelation", 
+    "metadata", 
+    "tags", 
+    "refs",
+    "_id",
+    "authors",
+    "categoryLocales",
+    "promo",
+    "categories",
+    "content",
+    "metadata",].each do |k| 
+    it "should return an article with a #{k} key" do
+      @data.has_key?(k).should be_true
     end
   end
   
-  it "should return a hash value for all videoIds" do
-    @data['data'].each do |video|
-      video['videoId'].match(/^[0-9a-f]{24,32}$/).should be_true  
+  ["headline",
+    "networks",
+    "state",
+    "slug",
+    "subHeadline",
+    "publishDate",
+    "articleType",].each do |k|
+    it "should return an article with non-nil, non-blank #{k} metadata" do
+      @data['metadata'].has_key?(k).should be_true
+      @data['metadata'][k].should_not be_nil
+      @data['metadata'][k].to_s.length.should > 0
     end  
   end
-=end
+
 end
 end

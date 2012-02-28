@@ -10,8 +10,6 @@ include Assert
 
 ##################################################################
 
-##################################################################
-
 {"Get A Single Video By Slug" => "/slug/metal-gear-solid-hd-collection-video-review",
   "Get A Single Video By videoId" => "/4eb87cb98e88c57b65000008"}.each do |k,v|
 
@@ -199,9 +197,6 @@ end
 end
 
 ##################################################################
-
-##################################################################
-
   
 [ "state/published",
   "?metadata.state=published&metadata.networks=ign",
@@ -252,8 +247,6 @@ describe "V3 Video API: Get Videos in Published State" do
   end
 end
 end
-
-##################################################################
 
 ##################################################################
 
@@ -323,8 +316,6 @@ describe "V3 Video API: Get Videos Using Count and Start Index" do
   end
 end
 end
-
-##################################################################
 
 ##################################################################
 
