@@ -217,6 +217,61 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
     end
     end
   end
+  
+  it "should return an article with a numberic wordpressId" do
+    @data['refs'].has_key?('wordpressId').should be_true
+    @data['refs']['wordpressId'].should_not be_nil
+    @data['refs']['wordpressId'].to_s.delete("^0-9").length.should > 0
+  end
+  
+  it "should return an article with a numberic disqusId" do
+    @data['refs'].has_key?('disqusId').should be_true
+    @data['refs']['disqusId'].should_not be_nil
+    @data['refs']['disqusId'].to_s.delete("^0-9").length.should > 0
+  end
+  
+  it "should return an article with an _id hash with 24 characters" do
+    @data['_id'].should_not be_nil
+    @data['_id'].match(/^[0-9a-f]{24,32}$/).should be_true
+  end
+  
+  it "should return an article with a non-blank, non-nil createdAt value" do
+    @data['system'].has_key?('createdAt').should be_true
+    @data['system']['createdAt'].should_not be_nil
+    @data['system']['createdAt'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+  
+  it "should return an article with a non-blank, non-nil updatedAt value" do
+    @data['system'].has_key?('updatedAt').should be_true
+    @data['system']['updatedAt'].should_not be_nil
+    @data['system']['updatedAt'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+  
+  it "should return an article with a non-blank, non-nil author-name value" do
+    @data['authors'].has_key?('name').should be_true
+    @data['authors']['name'].should_not be_nil
+    @data['authors']['name'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+  
+  it "should return an article with a non-blank, non-nil categoryLocales value" do
+    @data['categoryLocales'].should_not be_nil
+    @data['categoryLocales'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+  
+  it "should return an article with a non-blank, non-nil categories value" do
+    @data['categories'].should_not be_nil
+    @data['categories'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+  
+  it "should return an article with a non-blank, non-nil tags value" do
+    @data['tags'].should_not be_nil
+    @data['tags'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+  
+  it "should return an article with a non-blank, non-nil content value" do
+    @data['content'].should_not be_nil
+    @data['content'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
 
 end
 end
