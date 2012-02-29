@@ -18,7 +18,6 @@ describe "Images HomePage:", :selenium => true do
     
     @page = "http://#{@config.options['baseurl']}/images"
     puts @page+" using "+@browser_config.options['browser']
-    
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
   end
@@ -54,17 +53,8 @@ describe "Images Gallery Page:", :selenium => true do
     
     @page = "http://#{@config.options['baseurl']}/images/games/far-cry-3-xbox-360-53491"
     puts @page+" using "+@browser_config.options['browser']
-    
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-    
-    
-    #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    #@config = Configuration.new
-    #@page = "http://#{@config.options['baseurl']}/images/games/far-cry-3-xbox-360-53491"
-    #puts @page+" using "+@config.browser['browser']
-    #@selenium = Selenium::WebDriver.for @config.browser['browser'].to_sym
-    #@wait = Selenium::WebDriver::Wait.new(:timeout => 5)
   end
   
   after(:all) do

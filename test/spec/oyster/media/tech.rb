@@ -91,6 +91,10 @@ describe "Tech HomePage:" do
   context "Blogroll Widget:", :test => true do
     widget_blogroll_v2_articles(10, "/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
     
+    it "should debug..." do
+      puts @doc
+    end
+    
     it "should include the load more button ocne" do
       @doc.css('div.blogrollv2Container button#loadMore').count.should == 1
     end

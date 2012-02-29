@@ -83,7 +83,7 @@ describe "V3 Video API: #{k}" do
       @data['assets'].each do |video|
         video.has_key?(k).should be_true
         video[k].should_not be_nil
-        video[k].to_s.length.should > 0
+        video[k].to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     end
   end
@@ -96,7 +96,7 @@ describe "V3 Video API: #{k}" do
       @data['thumbnails'].each do |video|
         video.has_key?(k).should be_true
         video[k].should_not be_nil
-        video[k].to_s.length.should > 0
+        video[k].to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     end
   end
@@ -111,7 +111,7 @@ describe "V3 Video API: #{k}" do
     it "should return #{k} objectRelations data with a non-nil, non-blank value" do
       @data['objectRelations'][0].has_key?(k).should be_true
       @data['objectRelations'][0][k].should_not be_nil
-      @data['objectRelations'][0][k].to_s.length.should > 0
+      @data['objectRelations'][0][k].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
   end
 
@@ -138,7 +138,7 @@ describe "V3 Video API: #{k}" do
     it "should return #{k} metadata with a non-nil, non-blank value" do
       @data['metadata'].has_key?(k).should be_true
       @data['metadata'][k].should_not be_nil
-      @data['metadata'][k].to_s.length.should > 0
+      @data['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
   end
 
@@ -146,7 +146,7 @@ describe "V3 Video API: #{k}" do
     @data['tags'].each do |video|
       video.has_key?('slug').should be_true
       video['slug'].should_not be_nil
-      video['slug'].to_s.length.should > 0
+      video['slug'].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
     @data['tags'].length.should == 14
   end
@@ -160,7 +160,7 @@ describe "V3 Video API: #{k}" do
     it "should return #{k} extra data with a non-nil, non-blank value" do
       @data['extra'].has_key?(k).should be_true
       @data['extra'][k].should_not be_nil
-      @data['extra'][k].to_s.length.should > 0
+      @data['extra'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
   end
   
@@ -182,13 +182,13 @@ describe "V3 Video API: #{k}" do
       it "should return #{k} system data with a non-nil, non-blank value", :prd => true do
         @data['system'].has_key?(k).should be_true
         @data['system'][k].should_not be_nil
-        @data['system'][k].to_s.length.should > 0
+        @data['system'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     else
       it "should return #{k} system data with a non-nil, non-blank value" do
         @data['system'].has_key?(k).should be_true
         @data['system'][k].should_not be_nil
-        @data['system'][k].to_s.length.should > 0
+        @data['system'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     end
   end
@@ -198,11 +198,11 @@ end
 
 ##################################################################
   
-[ "state/published",
-  "?metadata.state=published&metadata.networks=ign",
-  "network/ign?metadata.state=published",
-  "state/published?metadata.networks=ign",
-  "?sortOrder=asc&sortBy=metadata.name&metadata.state=published",
+[ "state/published?fields=metadata.state",
+  "?metadata.state=published&metadata.networks=ign&fields=metadata.state",
+  "network/ign?metadata.state=published&fields=metadata.state",
+  "state/published?metadata.networks=ign&fields=metadata.state",
+  "?sortOrder=asc&sortBy=metadata.name&metadata.state=published&fields=metadata.state",
   "?metadata.state=published&fields=metadata.name,metadata.networks,videoId,metadata.state"].each do |call|
     
 describe "V3 Video API: Get Videos in Published State" do
@@ -250,10 +250,10 @@ end
 
 ##################################################################
 
-[ "state/published?count=35",
-  "state/published?startIndex=36&count=35",
-  "network/ign?count=35&metadata.state=published",
-  "network/ign?startIndex=36&count=35&metadata.state=published"].each do |call|
+[ "state/published?count=35&fields=metadata.state",
+  "state/published?startIndex=36&count=35&fields=metadata.state",
+  "network/ign?count=35&metadata.state=published&fields=metadata.state",
+  "network/ign?startIndex=36&count=35&metadata.state=published&fields=metadata.state"].each do |call|
 
 describe "V3 Video API: Get Videos Using Count and Start Index" do
 
@@ -319,8 +319,8 @@ end
 
 ##################################################################
 
-["/network/ign",
-  "?metadata.networks=ign"].each do |call|
+["/network/ign?fields=metadata.networks",
+  "?metadata.networks=ign&fields=metadata.networks"].each do |call|
 
 describe "V3 Video API: Get Videos By Network" do
 

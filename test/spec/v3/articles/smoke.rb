@@ -207,11 +207,15 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
     "subHeadline",
     "publishDate",
     "articleType",].each do |k|
+    if k == "networks" 
+    it "should return an article with non-nil, non-blank #{k} metadata"
+    else 
     it "should return an article with non-nil, non-blank #{k} metadata" do
       @data['metadata'].has_key?(k).should be_true
       @data['metadata'][k].should_not be_nil
-      @data['metadata'][k].to_s.length.should > 0
-    end  
+      @data['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+    end
   end
 
 end

@@ -54,7 +54,7 @@ describe "V3 Video API: Video Smoke Tests" do
   it "shoud return count with a non-nil, non-blank value" do
     @data.has_key?('count').should be_true
     @data['count'].should_not be_nil
-    @data['count'].to_s.length.should > 0
+    @data['count'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return count with a value of 20" do
@@ -64,7 +64,7 @@ describe "V3 Video API: Video Smoke Tests" do
   it "shoud return start with a non-nil, non-blank value" do
     @data.has_key?('start').should be_true
     @data['start'].should_not be_nil
-    @data['start'].to_s.length.should > 0
+    @data['start'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return start with a value of 0" do
@@ -74,7 +74,7 @@ describe "V3 Video API: Video Smoke Tests" do
   it "shoud return end with a non-nil, non-blank value" do
     @data.has_key?('end').should be_true
     @data['end'].should_not be_nil
-    @data['end'].to_s.length.should > 0
+    @data['end'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return end with a value of 19" do
@@ -84,7 +84,7 @@ describe "V3 Video API: Video Smoke Tests" do
   it "shoud return isMore with a non-nil, non-blank value" do
     @data.has_key?('isMore').should be_true
     @data['isMore'].should_not be_nil
-    @data['isMore'].to_s.length.should > 0
+    @data['isMore'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return isMore with a value of true" do
@@ -94,7 +94,7 @@ describe "V3 Video API: Video Smoke Tests" do
   it "shoud return total with a non-nil, non-blank value" do
     @data.has_key?('total').should be_true
     @data['total'].should_not be_nil
-    @data['total'].to_s.length.should > 0
+    @data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return total with a value greater than 20" do
@@ -104,7 +104,7 @@ describe "V3 Video API: Video Smoke Tests" do
   it "shoud return data with a non-nil, non-blank value" do
     @data.has_key?('data').should be_true
     @data['data'].should_not be_nil
-    @data['data'].to_s.length.should > 0
+    @data['data'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return data with an array length of 20" do
@@ -128,7 +128,7 @@ describe "V3 Video API: Video Smoke Tests" do
   it "should return videoId with non-nil, non-blank value for all videos" do
     @data['data'].each do |video|
       video['videoId'].should_not be_nil
-      video['videoId'].to_s.length.should > 0
+      video['videoId'].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
   end
   
@@ -182,7 +182,7 @@ describe "V3 Video API: Playlist Smoke Tests" do
     it "shoud return #{k} with a non-nil, non-blank value" do
       @data.has_key?('count').should be_true
       @data[k].should_not be_nil
-      @data[k].to_s.length.should > 0
+      @data[k].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
   end
   
@@ -215,7 +215,7 @@ describe "V3 Video API: Playlist Smoke Tests" do
       @data['data'].each do |playlist|
         playlist.has_key?(key).should be_true
         playlist[key].should_not be_nil
-        playlist[key].to_s.length.should > 0
+        playlist[key].to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     end
   end
@@ -225,17 +225,9 @@ describe "V3 Video API: Playlist Smoke Tests" do
       @data['data'].each do |playlist|
         playlist['metadata'].has_key?(key).should be_true
         playlist['metadata'].should_not be_nil
-        playlist['metadata'].to_s.length.should > 0
+        playlist['metadata'].to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     end
   end
   
 end
-
-
-
-
-
-
-
-
