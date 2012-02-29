@@ -52,7 +52,7 @@ describe "V3 Articles API: Articles Smoke Tests" do
   it "shoud return count with a non-nil, non-blank value" do
     @data.has_key?('count').should be_true
     @data['count'].should_not be_nil
-    @data['count'].to_s.length.should > 0
+    @data['count'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return count with a value of 20" do
@@ -62,7 +62,7 @@ describe "V3 Articles API: Articles Smoke Tests" do
   it "shoud return startIndex with a non-nil, non-blank value" do
     @data.has_key?('startIndex').should be_true
     @data['startIndex'].should_not be_nil
-    @data['startIndex'].to_s.length.should > 0
+    @data['startIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return startIndex with a value of 0" do
@@ -72,7 +72,7 @@ describe "V3 Articles API: Articles Smoke Tests" do
   it "shoud return endIndex with a non-nil, non-blank value" do
     @data.has_key?('endIndex').should be_true
     @data['endIndex'].should_not be_nil
-    @data['endIndex'].to_s.length.should > 0
+    @data['endIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return endIndex with a value of 19" do
@@ -82,7 +82,7 @@ describe "V3 Articles API: Articles Smoke Tests" do
   it "shoud return isMore with a non-nil, non-blank value" do
     @data.has_key?('isMore').should be_true
     @data['isMore'].should_not be_nil
-    @data['isMore'].to_s.length.should > 0
+    @data['isMore'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return isMore with a value of true" #do
@@ -92,7 +92,7 @@ describe "V3 Articles API: Articles Smoke Tests" do
   it "shoud return total with a non-nil, non-blank value" do
     @data.has_key?('total').should be_true
     @data['total'].should_not be_nil
-    @data['total'].to_s.length.should > 0
+    @data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return total with a value greater than 20" #do
@@ -102,24 +102,11 @@ describe "V3 Articles API: Articles Smoke Tests" do
   it "shoud return data with a non-nil, non-blank value" do
     @data.has_key?('data').should be_true
     @data['data'].should_not be_nil
-    @data['data'].to_s.length.should > 0
+    @data['data'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return data with an array length of 20" do
     @data['data'].length.should == 20
-  end
-  
-  it "should return an article _id with non-nil, non-blank value for all articles" do
-    @data['data'].each do |article|
-      article['_id'].should_not be_nil
-      article['_id'].to_s.length.should > 0
-    end
-  end
-  
-  it "should return an article _id with a 24 character hash value for all articles" do
-    @data['data'].each do |article|
-      article['_id'].match(/^[0-9a-f]{24,32}$/).should be_true  
-    end
   end
 
   ["review",
@@ -136,9 +123,51 @@ describe "V3 Articles API: Articles Smoke Tests" do
     "categories",
     "content",
     "metadata",].each do |k| 
-    it "should return a #{k} key for all articles" do
+    it "should return a #{k} with a non-nil, non-blank value for all articles" do
       @data['data'].each do |article|
         article.has_key?(k).should be_true
+        article.should_not be_nil
+        article.to_s.length.should > 0
+      end
+    end    
+  end#end iteration
+  
+  it "should return an article _id with non-nil, non-blank value for all articles" do
+    @data['data'].each do |article|
+      article['_id'].should_not be_nil
+      article['_id'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+  end
+  
+  it "should return an article _id with a 24 character hash value for all articles" do
+    @data['data'].each do |article|
+      article['_id'].match(/^[0-9a-f]{24,32}$/).should be_true
+    end
+  end
+  
+  ["headline",
+    "networks",
+    "state",
+    "slug",
+    "subHeadline",
+    "publishDate",
+    "articleType",].each do |k|
+    it "should return a #{k} metadata key for all articles" do
+      @data['data'].each do |article|
+        article.has_key?(k).should be_true
+      end
+    end
+  end
+  
+  [ "networks",
+    "state",
+    "slug",
+    "publishDate",
+    "articleType",].each do |k|
+    it "should return #{k} metadata with a non-nil, non-blank value for all articles" do
+      @data['data'].each do |article|
+        article.should_not be_nil
+        article.to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     end
   end
