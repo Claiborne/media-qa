@@ -1,7 +1,6 @@
 require 'rspec'
 require 'selenium-webdriver'
 require 'configuration'
-require 'browser_config'
 require 'rest-client'
 require 'open_page'
 
