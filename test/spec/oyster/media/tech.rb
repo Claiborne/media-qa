@@ -1,7 +1,6 @@
 require 'rspec'
 require 'configuration'
 require 'nokogiri'
-require 'open-uri'
 require 'tech_nav'
 require 'rest_client'
 require 'json'
@@ -42,7 +41,8 @@ describe "Tech HomePage:" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech"
-    @doc = nokogiri_open(@page)
+    puts @page
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -54,7 +54,6 @@ describe "Tech HomePage:" do
   end
   
   it "should return 200", :smoke => true do
-    check_return_200_without_301(@page)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -89,14 +88,18 @@ describe "Tech HomePage:" do
     widget_cover_stories_extra
   end
 
-  context "Blogroll Widget:" do
+  context "Blogroll Widget:", :test => true do
     widget_blogroll_v2_articles(10, "/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
+    
+    it "should debug..." do
+      puts @doc
+    end
     
     it "should include the load more button ocne" do
       @doc.css('div.blogrollv2Container button#loadMore').count.should == 1
     end
     
-    it "should include a functional load more button", :test => true do
+    it "should include a functional load more button" do
       @doc.css('div.blogrollv2Container button#loadMore').attribute('data-url').to_s.match(/http:\/\/widgets.ign.com\/global\/page\/blogrollv2articles.jsonp\?post_type=article&page=2&per_page=10&categories=tech/).should be_true
     end
   end
@@ -120,7 +123,8 @@ describe "Tech #{topic} Topic Page:" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech/#{topic}"
-    @doc = nokogiri_open(@page)
+    puts @page
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -132,7 +136,6 @@ describe "Tech #{topic} Topic Page:" do
   end
   
   it "should return 200", :smoke => true do
-    check_return_200_without_301(@page)
   end
 
   it "should include at least one css file", :smoke => true do
@@ -196,7 +199,8 @@ describe "Tech v2 Article Page:" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/articles/2011/09/21/gears-of-war-3-dolby-7-1-surround-sound-headset-review"
-    @doc = nokogiri_open(@page)
+    puts @page
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -208,7 +212,6 @@ describe "Tech v2 Article Page:" do
   end
   
   it "should return 200", :smoke => true do
-    check_return_200_without_301_to_home(@page)
   end
 
   it "should include at least one css file", :smoke => true do

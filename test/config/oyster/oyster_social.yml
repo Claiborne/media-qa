@@ -1,9 +1,0 @@
-development:
-
-staging:
-  baseurl_myign: stg-my.ign.com
-  baseurl_myign_people: stg-people.ign.com
-
-production:
-  baseurl_myign: my.ign.com       
-  baseurl_myign_people: people.ign.com

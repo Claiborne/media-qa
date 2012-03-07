@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
 
-gem 'selenium-client'
+gem 'selenium-webdriver'
 gem 'rake'
 gem 'test-unit'

@@ -211,11 +211,11 @@ describe "v2 Article Page -> Article Service Call" do
   end
 
   it "should return 200" do
-    check_200(@response, @data)
+    check_200(@response)
   end
   
   it "should not be blank" do
-    check_not_blank(@response, @data)
+    check_not_blank(@data)
   end
   
   it "should return only one article" do

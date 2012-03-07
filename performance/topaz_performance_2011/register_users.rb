@@ -1,21 +1,30 @@
-require 'rest-client'
 require 'rest_client'
 require 'json'
 
-uri = "http://secure-stg.ign.com/authentication/user/register?oauth_token=71339394919e9f00f68b1324179722f1f73c68ef"
+uri = "https://secure.ign.com/authentication/user/register?oauth_token=ea8e68350192bb52ebf88ec7dc7519c92b8cd6e5"
+social_uri = "http://social-services.ign.com/v1.0/social/rest/reg"
 
-(61..80).each do |name|
+(0..150).each do |name|
   
-  emailname = "perftest_#{name}@hello.com"
+  emailname = "sf_testuser#{name}@hello.com"
   
   body = 
   {
    	"email" => emailname,
-   	"provider" => "google",
+   	"provider" => "local",
    	"password" => "testpassword"
     }.to_json
+    
+  doc = RestClient.post(uri, body, :Content_Type => 'application/json')
+    
+  social_body = 
+  {
+    "email" => emailname,
+    "nickname" => emailname.match(/\A[a-z0-9_]*/).to_s,
+    "accounts" => [ {"accountType" => "topaz","key1" => doc.match(/[a-z0-9]{24}/).to_s,"key2" => "local"} ]
+  }.to_json
 
-    doc = RestClient.post(uri, body, :Content_Type => 'application/json')
+  s_soc = RestClient.post(social_uri, social_body, :Content_Type => 'application/json')
     
   File.open("/Users/wclaiborne/Desktop/users.txt", "a") do |f|
     f.puts emailname
@@ -23,5 +32,7 @@ uri = "http://secure-stg.ign.com/authentication/user/register?oauth_token=713393
     f.puts ""
   end
 
-end
+end#end iteration
 
+# ID 4e972e6be4b0a23ca6e1f2e6
+# TOKEN ea8e68350192bb52ebf88ec7dc7519c92b8cd6e5
