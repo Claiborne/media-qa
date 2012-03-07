@@ -37,7 +37,8 @@ RSpec::Core::RakeTask.new('backend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
       'spec/v2/**/*.rb',
-      'spec/v3/**/*.rb',
+      'spec/v3/video/*.rb'
+      #'spec/v3/**/*.rb', uncomment this when v3 articles are ready, and del line above
       ]  
 end
 
@@ -46,7 +47,8 @@ end
 desc "Run v3 tests"
 RSpec::Core::RakeTask.new('v3') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/**/*.rb'    
+    t.pattern = 'spec/v3/video/*.rb'
+    t.pattern = #'spec/v3/**/*.rb' uncomment this when v3 articles are ready, and del line above
 end
 
 desc "Run v3 video tests"
