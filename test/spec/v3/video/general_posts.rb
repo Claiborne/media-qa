@@ -11,7 +11,7 @@ include Assert
 describe "V3 Video API: Search by legacyId", :test => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     
     @body = {

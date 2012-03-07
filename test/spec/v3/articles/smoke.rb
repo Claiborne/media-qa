@@ -17,7 +17,7 @@ include Assert
 describe "V3 Articles API: Articles Smoke Tests" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_art.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/articles#{call}"
     puts @url
@@ -182,7 +182,7 @@ end
 describe "V3 Articles API: Smoke Get Article By #{k}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_art.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/articles#{v}"
     puts @url

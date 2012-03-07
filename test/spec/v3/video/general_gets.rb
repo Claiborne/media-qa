@@ -16,7 +16,7 @@ include Assert
 describe "V3 Video API: #{k}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos#{v}"
     puts @url
@@ -208,7 +208,7 @@ end
 describe "V3 Video API: Get Videos in Published State" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
     puts @url
@@ -258,7 +258,7 @@ end
 describe "V3 Video API: Get Videos Using Count and Start Index" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
     puts @url
@@ -325,7 +325,7 @@ end
 describe "V3 Video API: Get Videos By Network" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos#{call}"
     puts @url

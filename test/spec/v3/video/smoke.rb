@@ -19,7 +19,7 @@ include Assert
 describe "V3 Video API: Video Smoke Tests" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
     puts @url
@@ -146,7 +146,7 @@ end
 describe "V3 Video API: Playlist Smoke Tests" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_vid.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/playlists"
     puts @url
