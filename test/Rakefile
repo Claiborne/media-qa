@@ -164,7 +164,7 @@ end
 
 desc "Run social_api tests"
 RSpec::Core::RakeTask.new('social_api') do |t|
-    t.rspec_opts = ["-Ilib"]
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/social_api/**/*.rb'
 end
 

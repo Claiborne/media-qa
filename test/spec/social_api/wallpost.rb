@@ -1,5 +1,5 @@
-
-require File.dirname(__FILE__) + "/../spec_helper"
+#require File.dirname(__FILE__) + "/../spec_helper"
+require 'rspec'
 require 'rest_client'
 require 'json'
 require 'configuration'
