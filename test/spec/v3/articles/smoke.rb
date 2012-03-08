@@ -14,7 +14,7 @@ include Assert
   "/type/article",
   "/state/published"].each do |call|
 
-describe "V3 Articles API: Articles Smoke Tests" do
+describe "V3 Articles API: Endpoint #{call} (Smoke Tests)" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -49,79 +49,75 @@ describe "V3 Articles API: Articles Smoke Tests" do
     check_indices(@data, 6)
   end
   
-  it "shoud return count with a non-nil, non-blank value" do
+  it "should return 'count' data with a non-nil, non-blank value" do
     @data.has_key?('count').should be_true
     @data['count'].should_not be_nil
     @data['count'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
-  it "should return count with a value of 20" do
+  it "should return 'count' data with a value of 20" do
     @data['count'].should == 20
   end
   
-  it "shoud return startIndex with a non-nil, non-blank value" do
+  it "should return 'startIndex' data with a non-nil, non-blank value" do
     @data.has_key?('startIndex').should be_true
     @data['startIndex'].should_not be_nil
     @data['startIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
-  it "should return startIndex with a value of 0" do
+  it "should return 'startIndex' data with a value of 0" do
     @data['startIndex'].should == 0
   end
   
-  it "shoud return endIndex with a non-nil, non-blank value" do
+  it "should return 'endIndex' data with a non-nil, non-blank value" do
     @data.has_key?('endIndex').should be_true
     @data['endIndex'].should_not be_nil
     @data['endIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
-  it "should return endIndex with a value of 19" do
+  it "should return 'endIndex' data with a value of 19" do
     @data['endIndex'].should == 19
   end
   
-  it "shoud return isMore with a non-nil, non-blank value" do
+  it "should return 'isMore' data with a non-nil, non-blank value" do
     @data.has_key?('isMore').should be_true
     @data['isMore'].should_not be_nil
     @data['isMore'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
-  it "should return isMore with a value of true" #do
+  it "should return 'isMore' data with a value of true" #do
     #@data['isMore'].should == true
   #end
 
-  it "shoud return total with a non-nil, non-blank value" do
+  it "should return 'total' data with a non-nil, non-blank value" do
     @data.has_key?('total').should be_true
     @data['total'].should_not be_nil
     @data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
-  it "should return total with a value greater than 20" #do
+  it "should return 'total' data with a value greater than 20" #do
     #@data['total'].should > 20
   #end
   
-  it "shoud return data with a non-nil, non-blank value" do
+  it "should return 'data' with a non-nil, non-blank value" do
     @data.has_key?('data').should be_true
     @data['data'].should_not be_nil
     @data['data'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
-  it "should return data with an array length of 20" do
+  it "should return 'data' with an array length of 20" do
     @data['data'].length.should == 20
   end
 
   [ "articleId",
-    "legacyData",
-    "system", 
-    "objectRelation", 
     "metadata", 
     "tags", 
     "refs",
     "authors",
     "categoryLocales",
-    "promo",
     "categories",
     "content"].each do |k| 
-    it "should return a #{k} with a non-nil value for all articles" do
+    it "should return non-nil '#{k}' data for all articles" do
       @data['data'].each do |article|
         article.has_key?(k).should be_true
         article.should_not be_nil
@@ -132,14 +128,14 @@ describe "V3 Articles API: Articles Smoke Tests" do
   
   # articleId assertions
   
-  it "should return an articleId with non-nil, non-blank value for all articles" do
+  it "should return non-nil, non-blank 'articleId' data for all articles" do
     @data['data'].each do |article|
       article['articleId'].should_not be_nil
       article['articleId'].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
   end
   
-  it "should return an articleId with a 24 character hash value for all articles" do
+  it "should return an articleId with a 24-character hash value for all articles" do
     @data['data'].each do |article|
       article['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
     end
@@ -148,21 +144,20 @@ describe "V3 Articles API: Articles Smoke Tests" do
   # metadata assertions
   
   ["headline",
-    "networks",
     "state",
     "slug",
     "publishDate",
     "articleType",].each do |k|
       
-    it "should return a #{k} metadata key for all articles" do
+    it "should return '#{k}' metadata for all articles" do
       @data['data'].each do |article|
         article['metadata'].has_key?(k).should be_true
       end
     end
     
-    it "should return #{k} metadata with a non-nil, non-blank value for all articles" do
+    it "should return non-nil, non-blank '#{k}' metadata for all articles" do
       @data['data'].each do |article|
-        article.['metadata'][k].should_not be_nil
+        article['metadata'][k].should_not be_nil
         article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     end
@@ -191,7 +186,7 @@ end
 
 {"Slug"=>"/slug/calibur-11-crafts-battlefield-3-console-vaults", "ID"=>"/4e9caeb67ebbd8441c0000a0"}.each do |k,v|
 
-describe "V3 Articles API: Smoke Get Article By #{k}" do
+describe "V3 Articles API: Endpoint #{k}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -248,7 +243,7 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
     @data['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
   end
   
-  it "should return an article with an articleId of 4e9caeb67ebbd8441c0000a0" do
+  it "should return an article with an articleId value of 4e9caeb67ebbd8441c0000a0" do
     @data['articleId'].should == '4e9caeb67ebbd8441c0000a0'
   end
   
@@ -261,36 +256,36 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
     "subHeadline",
     "publishDate",
     "articleType",].each do |k|
-    it "should return an article with non-nil, non-blank #{k} metadata" do
+    it "should return an article with non-nil, non-blank '#{k}' metadata" do
       @data['metadata'].has_key?(k).should be_true
       @data['metadata'][k].should_not be_nil
       @data['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
   end
   
-  it "should return an article with a slug of calibur-11-crafts-battlefield-3-console-vaults" do
+  it "should return an article with a slug value of 'calibur-11-crafts-battlefield-3-console-vaults'" do
     @data['metadata']['slug'].should == 'calibur-11-crafts-battlefield-3-console-vaults'
   end
   
-  it "should return an article in the published state" do
+  it "should return an article in the 'published' state" do
     @data['metadata']['state'].should == 'published'
   end
   
-  it "should return an article with an articleType of article" do
+  it "should return an article with an articleType value of 'article'" do
     @data['metadata']['articleType'].should == 'article'
   end
   
-  it "should return an article with the headline Calibur 11 Crafts Battlefield 3 Console Vaults" do
+  it "should return an article with a headline value of 'Calibur 11 Crafts Battlefield 3 Console Vaults'" do
     @data['metadata']['headline'].should == 'Calibur 11 Crafts Battlefield 3 Console Vaults'
   end
   
-  it "should return an article with the subHeadline Calibur has the right equipment for your Xbox 360 or PS3." do
+  it "should return an article with the subHeadline 'Calibur has the right equipment for your Xbox 360 or PS3.'" do
     @data['metadata']['subHeadline'].should == 'Calibur has the right equipment for your Xbox 360 or PS3.'
   end
   
   # review assertions  
   
-  it "should return an article with a non-nil highlights data" do
+  it "should return an article with non-nil 'highlights' data" do
     @data['review'].has_key?('highlights').should be_true
     @data['review']['highlights'].should_not be_nil
     @data['review']['highlights'].to_s.length.should > 0
@@ -299,7 +294,7 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
   # legacyData assertions
   
   ['legacyArticles','objectRelations'].each do |k|
-    it "should return an article with a non-nil, non-blank #{k} data" #do
+    it "should return an article with non-nil, non-blank '#{k}' data" #do
       #@data['legacyData'].has_key?(k).should be_true
       #@data['legacyData'][k].should_not be_nil
       #@data['legacyData'][k].to_s.length should > 0
@@ -309,7 +304,7 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
   # system assertions
   
   ['createdAt','updatedAt'].each do |k|
-    it "should return an article with a non-nil, non-blank #{k} data" do
+    it "should return an article with non-nil, non-blank '#{k}' data" do
       @data['system'].has_key?(k).should be_true
       @data['system'][k].should_not be_nil
       @data['system'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
@@ -318,7 +313,7 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
   
   # tags assertions
   
-  it "should return an article with 15 non-nil non-blank tags" do
+  it "should return an article with 15 non-nil, non-blank tags" do
     @data['tags'].length.should == 15
     @data['tags'].each do |tag|
       tag.should_not be_nil
@@ -327,7 +322,7 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
   end
   
   ['displayName','slug','tagType'].each do |k|
-    it "should return an article with non-nil, non-blank #{k} data for each tag" do 
+    it "should return an article with non-nil, non-blank '#{k}' data for each tag" do 
       @data['tags'].each do |tag|
         tag.has_key?(k).should be_true
         tag[k].should_not be_nil
@@ -338,7 +333,7 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
   
   # refs assertions
   
-  it "should return an article with a numberic wordpressId" do
+  it "should return an article with a numberic wordpressId value" do
     @data['refs'].has_key?('wordpressId').should be_true
     @data['refs']['wordpressId'].should_not be_nil
     @data['refs']['wordpressId'].to_s.delete("^0-9").length.should > 0
@@ -348,7 +343,7 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
     @data['refs']['wordpressId'].should == 59572
   end
   
-  it "should return an article with a numberic disqusId" do
+  it "should return an article with a numberic disqusId value" do
     @data['refs'].has_key?('disqusId').should be_true
     @data['refs']['disqusId'].should_not be_nil
     @data['refs']['disqusId'].to_s.delete("^0-9").length.should > 0
@@ -368,14 +363,14 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
   
   # categoryLocales assertions
   
-  it "should return an article with a categoryLocales value that includes the us locale" do
+  it "should return an article with a categoryLocales value that includes the 'us' locale" do
     @data['categoryLocales'].to_s.match(/us/).should be_true
   end
   
   # promo assertions
   
   ['promoImages','title','summary'].each do |k|
-    it "should return an article with a non-nil, non-blank #{k} data" do
+    it "should return an article with non-nil, non-blank #{k} data" do
       @data['promo'].has_key?(k).should be_true
       @data['promo'][k].should_not be_nil
       @data['promo'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
@@ -384,7 +379,7 @@ describe "V3 Articles API: Smoke Get Article By #{k}" do
   
   # categories assertions
   
-  it "should return an article with 4 non-nil non-blank categories" do
+  it "should return an article with 4 non-nil, non-blank categories" do
     @data['categories'].length.should == 4
     @data['categories'].each do |categories|
       categories.should_not be_nil

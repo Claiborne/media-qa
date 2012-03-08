@@ -8,32 +8,33 @@ require 'assert'
 
 include Assert
 
-describe "V3 Video API: Search by legacyId", :test => true do
+def body_request
+  @body = {
+  "matchRule"=>"matchAll",
+  "rules"=>[
+    {
+       "condition"=>"is",
+       "field"=>"objectRelations.legacyId",
+       "value"=>"872155"
+    }
+  ],
+  "startIndex"=>0,
+  "count"=>25,
+  "networks"=>"ign",
+  "prime"=>"false",
+  "states"=>"published"
+  }.to_json
+end
+
+
+describe "V3 Video API: POST Endpoint /v3/videos/search sending the following body - #{body_request} " do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
-    
-    @body = {
-    "matchRule"=>"matchAll",
-    "rules"=>[
-      {
-         "condition"=>"is",
-         "field"=>"objectRelations.legacyId",
-         "value"=>"872155"
-      }
-    ],
-    "startIndex"=>0,
-    "count"=>25,
-    "networks"=>"ign",
-    "prime"=>"false",
-    "states"=>"published"
-    }.to_json
-    
     @url = "http://#{@config.options['baseurl']}/v3/videos/search"
-    puts @body
-    begin 
-     @response = RestClient.post @url, @body, :content_type => "application/json"
+    begin
+     @response = RestClient.post @url, body_request, :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -60,7 +61,7 @@ describe "V3 Video API: Search by legacyId", :test => true do
     check_indices(@data, 6)
   end
   
-  it "should return only videos with legacyId == 872155" do
+  it "should return only videos with legacyId data is '872155'" do
     @data['data'].each do |k|
       legacyId_values = []
       k['objectRelations'].each do |l|
@@ -77,13 +78,13 @@ describe "V3 Video API: Search by legacyId", :test => true do
   end
 
   {'start'=>0,'count'=>25,'end'=>24}.each do |k,v|
-    it "should return a #{k} value of #{v}" do
+    it "should return a '#{k}' value of '#{v}'" do
       @data.has_key?(k).should be_true
       @data[k].should == v
     end
   end
   
-  it "should return only videos with networks == ign" do
+  it "should return only videos with networks data is 'ign'" do
     networks_metadata = []
     @data['data'].each do |k|
       k['metadata']['networks'].each do |l|
@@ -93,7 +94,7 @@ describe "V3 Video API: Search by legacyId", :test => true do
     end
   end
   
-  it "should return only videos where prime == false" do
+  it "should return only videos where prime is 'false'" do
     @data['data'].each do |k|
       k['metadata']['prime'].should be_false
     end

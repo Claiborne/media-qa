@@ -10,10 +10,10 @@ include Assert
 
 ##################################################################
 
-{"Get A Single Video By Slug" => "/slug/metal-gear-solid-hd-collection-video-review",
-  "Get A Single Video By videoId" => "/4eb87cb98e88c57b65000008"}.each do |k,v|
+{"Get Video By Slug" => "/slug/metal-gear-solid-hd-collection-video-review",
+  "Get Video By videoId" => "/4eb87cb98e88c57b65000008"}.each do |k,v|
 
-describe "V3 Video API: #{k}" do
+describe "V3 Video API: Endpoint #{v} (#{k})" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -59,7 +59,7 @@ describe "V3 Video API: #{k}" do
     "refs",
     "category",
     "system"].each do |k| 
-    it "should return a video with #{k} data" do
+    it "should return a video with '#{k}' data" do
       @data.has_key?(k).should be_true
       @data[k].should_not be_nil
       @data[k].to_s.length.should > 0
@@ -79,7 +79,7 @@ describe "V3 Video API: #{k}" do
     "bitrate",
     "height",
     "width",].each do |k| 
-    it "should return #{k} asset data with a non-nil, non-blank value" do
+    it "should return a video with non-nil, non-blank '#{k}' asset data" do
       @data['assets'].each do |video|
         video.has_key?(k).should be_true
         video[k].should_not be_nil
@@ -92,7 +92,7 @@ describe "V3 Video API: #{k}" do
     "url",
     "height",
     "width",].each do |k| 
-    it "should return #{k} thumbnail data with a non-nil, non-blank value" do
+    it "should return a video with non-nil, non-blank '#{k}' thumbnail data" do
       @data['thumbnails'].each do |video|
         video.has_key?(k).should be_true
         video[k].should_not be_nil
@@ -108,7 +108,7 @@ describe "V3 Video API: #{k}" do
     "legacyId",
     "platform",
     "objectType"].each do |k|
-    it "should return #{k} objectRelations data with a non-nil, non-blank value" do
+    it "should return a video with non-nil, non-blank '#{k}' objectRelations data" do
       @data['objectRelations'][0].has_key?(k).should be_true
       @data['objectRelations'][0][k].should_not be_nil
       @data['objectRelations'][0][k].to_s.delete("^a-zA-Z0-9").length.should > 0
@@ -135,14 +135,14 @@ describe "V3 Video API: #{k}" do
     "downloadable",
     "creator",
     "origin"].each do |k|
-    it "should return #{k} metadata with a non-nil, non-blank value" do
+    it "should return a video with non-nil, non-blank '#{k}' metadata" do
       @data['metadata'].has_key?(k).should be_true
       @data['metadata'][k].should_not be_nil
       @data['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
   end
 
-  it "should return tag data with 14 non-nil, non-blank slugs" do
+  it "should return 'tag' data with 14 non-nil, non-blank slugs" do
     @data['tags'].each do |video|
       video.has_key?('slug').should be_true
       video['slug'].should_not be_nil
@@ -157,7 +157,7 @@ describe "V3 Video API: #{k}" do
   
   ["videoSeries",
     "regions"].each do |k|
-    it "should return #{k} extra data with a non-nil, non-blank value" do
+    it "should return a video with non-nil, non-blank '#{k}' extra data" do
       @data['extra'].has_key?(k).should be_true
       @data['extra'][k].should_not be_nil
       @data['extra'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
@@ -166,7 +166,7 @@ describe "V3 Video API: #{k}" do
   
   ["youtubeChannelIds",
     "legacyArticleIds"].each do |k|
-    it "should return #{k} refs data with a non-nil value" do
+    it "should return a video with non-nil '#{k}' refs data" do
       @data['refs'].has_key?(k).should be_true
       @data['refs'][k].should_not be_nil
       @data['refs'][k].to_s.length.should > 0
@@ -179,13 +179,13 @@ describe "V3 Video API: #{k}" do
     "createdAt",
     "updatedAt"].each do |k|
     if k == "mezzanineUrl"
-      it "should return #{k} system data with a non-nil, non-blank value", :prd => true do
+      it "should return a video with non-nil, non-blank '#{k}' system data", :prd => true do
         @data['system'].has_key?(k).should be_true
         @data['system'][k].should_not be_nil
         @data['system'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     else
-      it "should return #{k} system data with a non-nil, non-blank value" do
+      it "should return a video with non-nil, non-blank '#{k}' system data" do
         @data['system'].has_key?(k).should be_true
         @data['system'][k].should_not be_nil
         @data['system'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
@@ -205,7 +205,7 @@ end
   "?sortOrder=asc&sortBy=metadata.name&metadata.state=published&fields=metadata.state",
   "?metadata.state=published&fields=metadata.name,metadata.networks,videoId,metadata.state"].each do |call|
     
-describe "V3 Video API: Get Videos in Published State" do
+describe "V3 Video API: Endpoint #{call} (Get Videos in Published State)" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -255,7 +255,7 @@ end
   "network/ign?count=35&metadata.state=published&fields=metadata.state",
   "network/ign?startIndex=36&count=35&metadata.state=published&fields=metadata.state"].each do |call|
 
-describe "V3 Video API: Get Videos Using Count and Start Index" do
+describe "V3 Video API: Endpoint #{call} (Get Videos Using Count and Start Index)" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -296,7 +296,7 @@ describe "V3 Video API: Get Videos Using Count and Start Index" do
     end
   end
   
-  it "should return a count value of 35" do
+  it "should return a 'count' value of 35" do
     @data['count'].should == 35
   end
   
@@ -322,7 +322,7 @@ end
 ["/network/ign?fields=metadata.networks",
   "?metadata.networks=ign&fields=metadata.networks"].each do |call|
 
-describe "V3 Video API: Get Videos By Network" do
+describe "V3 Video API: Endpoint #{call} (Get Videos By Network)" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -357,7 +357,7 @@ describe "V3 Video API: Get Videos By Network" do
     check_indices(@data, 6)
   end
   
-  it "should return only videos with networks == ign" do
+  it "should return only videos with networks with a value of 'ign'" do
     networks_metadata = []
     @data['data'].each do |k|
       k['metadata']['networks'].each do |l|
