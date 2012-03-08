@@ -166,7 +166,7 @@ describe "V3 Video API: #{k}" do
   
   ["youtubeChannelIds",
     "legacyArticleIds"].each do |k|
-    it "should return #{k} refs data with a non-nil, non-blank value" do
+    it "should return #{k} refs data with a non-nil value" do
       @data['refs'].has_key?(k).should be_true
       @data['refs'][k].should_not be_nil
       @data['refs'][k].to_s.length.should > 0
