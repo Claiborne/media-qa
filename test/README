@@ -61,10 +61,24 @@ sample config
 staging:
   baseurl: branchname.stg.www.ign.com
 
-Using Tags:
+== Using Tags ==
 
-To run v2 for production: rake v2 env=production
+For smoke/basic assertions, use the tag 'smoke'
+For assertions that spam the site or take a long time to run (for example, checking all the links on the page), use the tag 'spam'
+For assertions only valid in a staging environment, use the tag 'stg'
+For assertion only valid in the production environment, use the tag 'prd'
 
-To run v2 for staging: rake v2 SPEC_OPTS="--tag ~prd"
+Here's an example of using an rspec tag in your spec file:
 
-To run with tags: rake v2 SPEC_OPTS="--tag name_of_tag"
+      it "should have at least one link", :smoke => true do
+          check_have_a_link('div#right-col-outnow-tabs')
+      end
+
+To run only the assertions tagged 'smoke' in the frontend testsuite, I use the following command to include only smoke assertions
+  rake frontend env=production SPEC_OPTS='--tag test'
+
+To run the frontend test without the assertions tagged 'spam, I use the following command to exclude all spam assertions
+	rake frontend env=production SPEC_OPTS='--tag ~spam'
+
+To run the frontend testsuite in production without the staging-only assertions, I use the following command to  exclude all stage assertions
+	rake frontend env=production SPEC_OPTS='--tag ~stg'
