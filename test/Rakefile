@@ -12,9 +12,7 @@ desc "Run all tests"
 RSpec::Core::RakeTask.new('all') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
-      'spec/legacy/*.rb',
       'spec/oyster/media/*.rb',
-      'spec/v2/*.rb',
       'spec/v3/**/*.rb',
       ]  
 end
@@ -25,7 +23,6 @@ desc "Run all frontend tests"
 RSpec::Core::RakeTask.new('frontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
-      'spec/legacy/*.rb',
       'spec/oyster/media/*.rb',
       ]  
 end
@@ -36,7 +33,6 @@ desc "Run all backend tests"
 RSpec::Core::RakeTask.new('backend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
-      'spec/v2/**/*.rb',
       'spec/v3/video/*.rb'
       #'spec/v3/**/*.rb', uncomment this when v3 articles are ready, and del line above
       ]  
@@ -47,8 +43,7 @@ end
 desc "Run v3 tests"
 RSpec::Core::RakeTask.new('v3') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/video/*.rb'
-    #t.pattern = 'spec/v3/**/*.rb' uncomment this when v3 articles are ready, and del line above
+    t.pattern = 'spec/v3/**/*.rb'
 end
 
 desc "Run v3 video tests"
@@ -83,12 +78,30 @@ RSpec::Core::RakeTask.new('v2blogs') do |t|
     t.pattern = 'spec/v2/blogs.rb'    
 end
 
-############# OYSTER ############# 
+############# OYSTER #############
 
-desc "Run All Oyster FE Tests"
+desc "Run All Oyster Frontend Tests"
 RSpec::Core::RakeTask.new('oysterfrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/media/*.rb'
+end
+
+desc "Run Hubs Frontend Tests"
+RSpec::Core::RakeTask.new('hubsfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oyster/media/hubs.rb'
+end
+
+desc "Run Images Frontend Tests"
+RSpec::Core::RakeTask.new('imagesfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = ['spec/oyster/media/images.rb']  
+end
+
+desc "Run Video Frontend Tests"
+RSpec::Core::RakeTask.new('videofrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = ['spec/oyster/media/video.rb']  
 end
 
 ############# TECH ############# 
@@ -109,22 +122,6 @@ desc "Run Tech API tests"
 RSpec::Core::RakeTask.new('techapi') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/v2/tech.rb'    
-end
-
-############# VIDEO ############# 
-
-desc "Run Video tests"
-RSpec::Core::RakeTask.new('videofrontend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/video.rb']  
-end
-
-############# IMAGES ############# 
-
-desc "Run Tech Frontend and API tests"
-RSpec::Core::RakeTask.new('imagesfrontend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/images.rb']  
 end
 
 ############# LEGACY ############# 

@@ -25,15 +25,15 @@ module DiscoverMore
     end
     
     it "should display text", :smoke => true do
-       check_display_text('div.slider-holder')
+      check_display_text('div.slider-holder')
     end
 
     it "should have at least one link", :smoke => true do
-       check_have_a_link('div.slider-holder')
+      check_have_a_link('div.slider-holder')
     end
 
     it "should have at least one image", :smoke => true do
-       check_have_an_img('div.slider-holder')
+      check_have_an_img('div.slider-holder')
     end
     
     it "should display a title" do
