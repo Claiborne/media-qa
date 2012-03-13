@@ -10,7 +10,15 @@ require 'widget/cover_stories_hub'
 require 'widget/legacy_blogroll'
 require 'widget/ent_promo'
 require 'widget/discover_more'
+require 'widget/top_games'
+require 'widget/what_we_are_playing'
+require 'widget/promo'
+require 'widget/hot_reviews_previews'
 
+include HotReviewsPreviews
+include Promo
+include WhatWeArePlaying
+include TopGames
 include DiscoverMore
 include EntPromo
 include LegacyBlogroll
@@ -68,21 +76,74 @@ describe "Oyster Hubs: #{hub}" do
   context "Blogroll" do
     widget_legacy_blogroll
   end
+  
 
   if (hub.match(/movies.ign.com/) || 
     hub.match(/comics.ign.com/) || 
     hub.match(/tv.ign.com/) || 
     hub.match(/stars.ign.com/) ||
-    hub.match(/music.ign.com/))
+    hub.match(/music.ign.com/) ||
+    hub.match(/wireless.ign.com/))
+    
+  elsif (hub.match(/www.ign.com/) || 
+    hub.match(/uk.ign.com/) || 
+    hub.match(/au.ign.com/))
+  
+    context "Entertainment Promo Widget" do
+      widget_ent_promo
+    end
+  
+    context "Top Games Out Now Content View" do
+      widget_top_games('out_now')
+    end
+    
+    context "Top Games Coming Soon Content View" do
+      widget_top_games('comming_soon')
+    end
+    
+    context "Discover More Widget" do
+      widget_discover_more
+    end
+
+    context "What We're Playing Widget" do
+      widget_what_we_are_playing
+    end
+    
+    context "IGN Essentials (Promo) Widget" do
+      widget_promo('essentials')
+    end
+
+    context "Hot Reviews Widget" do
+      widget_hot_reviews_previews('reviews')
+    end
+
+    context "Hot Preview Widget" do
+      widget_hot_reviews_previews('previews')
+    end
+
+    context "Hot Game Help Widget" do
+      widget_hot_reviews_previews('game-help')
+    end
+
+    context "IGN Friends (Promo) Widget" do
+      widget_promo('ignfriends')
+    end
+
+    context "Promotions and Sweepstakes (Promo) Widget" do
+      widget_promo('promotions')
+    end
+
+    context "Around the Network (Promo) Widget" do
+      widget_promo('aroundthenetwork')
+    end
 
   else
 
     context "Entertainment Promo Widget" do
       widget_ent_promo
     end
-  
-    context "Top Games Out Now Content View" do
       
+    context "Top Games Out Now Content View" do
       it "should be on the page once", :smoke => true do
         @doc.css('div#right-col-outnow-tabs').count.should == 1
       end
@@ -94,11 +155,9 @@ describe "Oyster Hubs: #{hub}" do
       it "should have at least one link", :smoke => true do
         check_have_a_link('div#right-col-outnow-tabs')
       end
-      
     end
     
-    context "Top Games Coming Soon" do
-      
+    context "Top Games Coming Soon Content View" do
       it "should be on the page once", :smoke => true do
         @doc.css('div#right-col-comingsoon-tabs').count.should == 1
       end
@@ -110,13 +169,44 @@ describe "Oyster Hubs: #{hub}" do
       it "should have at least one link", :smoke => true do
         check_have_a_link('div#right-col-comingsoon-tabs')
       end
-      
     end
     
     context "Discover More Widget" do
       widget_discover_more
     end
     
+    context "IGN Essentials (Promo) Widget" do
+      widget_promo('essentials')
+    end
+
+    context "Hot Reviews Widget" do
+      widget_hot_reviews_previews('reviews')
+    end
+
+    context "Hot Preview Widget" do
+      widget_hot_reviews_previews('previews')
+    end
+
+    context "Hot Game Help Widget" do
+      widget_hot_reviews_previews('game-help')
+    end
+    
+    context "Hot News Widget" do
+      widget_hot_reviews_previews('hot-news')
+    end
+
+    context "IGN Friends (Promo) Widget" do
+      widget_promo('ignfriends')
+    end
+
+    context "Promotions and Sweepstakes (Promo) Widget" do
+      widget_promo('promotions')
+    end
+
+    context "Around the Network (Promo) Widget" do
+      widget_promo('aroundthenetwork')
+    end
+  
   end#end if else
   
 end# end describe
