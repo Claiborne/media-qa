@@ -4,11 +4,7 @@
 #
 ###################################################
 
-
 class VindiciaPrimePayment < Page
-  
-  	#include ScreenshotHelper 
-  	#include SqlServer
 
 	def get_subscription_name
 			return @client.find_element(:class, "selectedPackage").text
@@ -19,6 +15,15 @@ class VindiciaPrimePayment < Page
 	end
 
 	def choose_card_type(card_type)
+		case card_type
+		when "American Express"
+			card_type = "AmEx"
+		when "MasterCard"
+			card_type = "Mastercard"
+    else
+      card_type = nil
+		end
+		
 		card_select = @client.find_element(:id => "vin_PaymentMethod_customerSpecifiedType")
 		card_select.find_elements(:tag_name, "option").each do |option|
   		if option.attribute("value") == card_type
@@ -63,12 +68,14 @@ class VindiciaPrimePayment < Page
     case cc_type
       when "Visa"
         card_num = Array['4444444444444448', '4012888888881881']
-      when "Master Card"
+      when "MasterCard"
         card_num = Array['5555555555555557', '5555555555554444', '5105105105105100']
       when "American Express"
         card_num = Array['343434343434343', '371449635398431', '378282246310005']
       when "Discover"
         card_num = Array['6011000990139424']
+      else
+        card_num = nil
     end
     puts card_num[rand(card_num.length - 1)]
     return card_num[rand(card_num.length - 1)]

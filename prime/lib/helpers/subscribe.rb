@@ -11,15 +11,6 @@ class VindiciaSubscribePage < Page
 	end  
 	
 	def select_subscription(plan_name)
-		# case plan_name
-		# when 'Prime - Free Trial'
-			# plan_id = 'plan-Prime 30 Day Trial'
-		# when 'Prime 30 Day Trial'
-		# when 'Prime - Annual'
-			# plan_id = 'plan-Prime - Annual'
-		# when 'Prime - 2 Year'
-			# plan_id = 'plan-Prime - 2 Year'
-		# end
 		plan_id = "plan-" + plan_name
 		#the xpath is different for packages that don't have a sign-up bonus hence the two different paths
 		#if it fails it will try the next path
@@ -39,6 +30,7 @@ class VindiciaSubscribePage < Page
 		@client.find_element(:id, "register_email").send_keys info[:email]
 		@client.find_element(:id, "register_password").send_keys info[:password]
 		@client.find_element(:id, "register_nickname").send_keys info[:nickname]
+		puts info[:email]
 	end
 
 	def login_account(info)
@@ -56,7 +48,11 @@ class VindiciaSubscribePage < Page
 	end
   	
 	def continue		
-		@client.find_element(:id, "continueBtn").click  		
+		@client.find_element(:id, "continueBtn").click
+		#temporary fix for being unable to login on the first attempt on s.ign.com
+		if @client.find_element(:class, "prime-hdrtext").text.include? "Sign-up"
+			return "retry"
+		end
 	end
 	
 	def is_displayed

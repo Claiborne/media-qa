@@ -32,8 +32,32 @@ require 'rspec/core/rake_task'
     # t.verbose = true
 # end
 
-desc "Run Vindicia smoke test"
-RSpec::Core::RakeTask.new('vindicia_smoke') do |t|
+desc "Prime CC transactions"
+RSpec::Core::RakeTask.new('prime_cc_tests') do |t|
+	t.rspec_opts = ["-Ilib","--format h > output.html","--color"]
+	t.pattern = 'functional/suites/checkout_cc.rb'    
+end
+
+desc "Prime login/registration"
+RSpec::Core::RakeTask.new('prime_topaz_tests') do |t|
 	t.rspec_opts = ["-Ilib","--format documentation","--color"]
-	t.pattern = 'functional/suites/vindicia_checkout_headless.rb'    
+	t.pattern = 'functional/suites/login_registration.rb'
+end
+
+desc "Prime account management"
+RSpec::Core::RakeTask.new('prime_account_tests') do |t|
+	t.rspec_opts = ["-Ilib","--format documentation","--color"]
+	t.pattern = 'functional/suites/account_management.rb'    
+end
+
+desc "entitlements test"
+RSpec::Core::RakeTask.new('entitlements') do |t|
+	t.rspec_opts = ["-Ilib","--format documentation","--color"]
+	t.pattern = 'functional/suites/entitlements.rb'    
+end
+
+desc "vindicia test"
+RSpec::Core::RakeTask.new('vindicia_test') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'functional/suites/vindicia_test.rb'
 end

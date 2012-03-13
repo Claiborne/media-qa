@@ -10,14 +10,12 @@ class Configuration
 
   def initialize
     raise ConfigurationException, "Missing configuration file" unless File.exists?(@@config_path)
-    environment = ENV['env'] 
+    environment = ENV['env']
     browser = ENV['browser']
     configs = YAML.load_file(@@config_path)
     @options = configs[environment]
     @browser = configs[browser]
-
-    # this is a bad hack for branch substitution 
-    @env_option['baseurl'].sub(/branchname/, ENV['branch']) unless ENV['branch'] == nil
+    
   end
 end
 

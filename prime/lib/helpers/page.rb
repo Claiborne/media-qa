@@ -80,5 +80,10 @@ class Page
   def locate_element(element)
     return @client.is_element_present(element)
   end
- 
+
+  def debug(string)
+    if @config.options['debug'] == true
+      puts string
+    end
+  end
 end
