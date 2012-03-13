@@ -16,13 +16,12 @@ include Assert
   "?sortOrder=asc&sortBy=metadata.name&metadata.state=published",
   "?metadata.state=published&fields=metadata.name,metadata.networks,videoId"].each do |call|
 
-describe "V3 Video API: Endpoint #{call}" do
+describe "V3 Video API -- General Smoke Tests -- #{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
-    puts @url
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -143,13 +142,12 @@ end
 
 ##################################################################
 
-describe "V3 Video API: Endpoint /v3/playlists" do
+describe "V3 Video API -- Playlists Smoke Tests -- /v3/playlists" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/playlists"
-    puts @url
     begin 
       @response = RestClient.get @url
     rescue => e

@@ -27,7 +27,7 @@ def body_request
 end
 
 
-describe "V3 Video API: POST Endpoint /v3/videos/search sending the following body - #{body_request} " do
+describe "V3 Video API -- Search/POST Smoke Tests -- POST /v3/videos/search -- Body = #{body_request} " do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"

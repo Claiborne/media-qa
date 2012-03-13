@@ -14,13 +14,12 @@ include Assert
   "/type/article",
   "/state/published"].each do |call|
 
-describe "V3 Articles API: Endpoint #{call} (Smoke Tests)" do
+describe "V3 Articles API -- General Smoke Tests -- #{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/articles#{call}"
-    puts @url
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -186,13 +185,12 @@ end
 
 {"Slug"=>"/slug/calibur-11-crafts-battlefield-3-console-vaults", "ID"=>"/4e9caeb67ebbd8441c0000a0"}.each do |k,v|
 
-describe "V3 Articles API: Endpoint #{k}" do
+describe "V3 Articles API -- Get Article By #{k} -- #{v}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/articles#{v}"
-    puts @url
     begin 
       @response = RestClient.get @url
     rescue => e
