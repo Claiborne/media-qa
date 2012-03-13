@@ -1,7 +1,6 @@
 require 'rspec'
 require 'selenium-webdriver'
 require 'configuration'
-require 'browser_config'
 require 'rest-client'
 require 'open_page'
 
@@ -88,7 +87,7 @@ describe "Images Gallery Page:", :selenium => true do
   
   it "should display pagination", :smoke => true do
     @selenium.find_element(:css => "div.pagination span")
-    @selenium.find_elements(:css => "div.pagination a").count.should == 2
+    @selenium.find_elements(:css => "div.pagination a").count.should > 1
   end
   
   it "should display pagination with a link to the second page" do
@@ -129,12 +128,12 @@ describe "Images Gallery Page:", :selenium => true do
   end
 
   it "should display the appropriate images and URLs when the back and forward browser buttons are clicked", :smoke => true do
-    # Set variables for the starting image and starting UR:
+    # Set variables for the starting image and starting URL:
     starting_image =  @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
     starting_url = @selenium.current_url
     
     # Click the second thumbnail image and wait until it replaces the starting image in the viewer
-    @selenium.find_element(:css => "div.imageGallery div:nth-child(2).imageGalleryThumb a").click
+    @selenium.find_element(:css => "div.imageGallery div:nth-child(3).imageGalleryThumb a").click
     @wait.until { @selenium.find_element(:css => "div#peekWindow a img").attribute('src') != starting_image }
     next_image = @selenium.find_element(:css => "div#peekWindow a img")
     @wait.until { next_image.attribute('src') != starting_image }
@@ -175,7 +174,7 @@ describe "Images Gallery Page:", :selenium => true do
     second_url = @selenium.current_url
     
     # Click thumb
-    @selenium.find_element(:css => "div.imageGallery div:nth-child(2).imageGalleryThumb a").click
+    @selenium.find_element(:css => "div.imageGallery div:nth-child(3).imageGalleryThumb a").click
     @wait.until { second_image != @selenium.find_element(:css => "div#peekWindow a img").attribute('src') }
     third_image =  @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
     third_url = @selenium.current_url
@@ -193,7 +192,7 @@ describe "Images Gallery Page:", :selenium => true do
     fifth_url = @selenium.current_url
     
     # Click thumb
-    @selenium.find_element(:css => "div.imageGallery div:nth-child(2).imageGalleryThumb a").click
+    @selenium.find_element(:css => "div.imageGallery div:nth-child(3).imageGalleryThumb a").click
     @wait.until { fifth_image != @selenium.find_element(:css => "div#peekWindow a img").attribute('src') }
     sixth_image =  @selenium.find_element(:css => "div#peekWindow a img").attribute('src')
     sixth_url = @selenium.current_url
