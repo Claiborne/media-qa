@@ -14,7 +14,9 @@ require 'widget/top_games'
 require 'widget/what_we_are_playing'
 require 'widget/promo'
 require 'widget/hot_reviews_previews'
+require 'widget/youtube_start_schedule'
 
+include YoutubeStartSchedule
 include HotReviewsPreviews
 include Promo
 include WhatWeArePlaying
@@ -76,28 +78,31 @@ describe "Oyster Hubs: #{hub}" do
   context "Blogroll" do
     widget_legacy_blogroll
   end
-  
 
-  if (hub.match(/movies.ign.com/) || 
-    hub.match(/comics.ign.com/) || 
-    hub.match(/tv.ign.com/) || 
-    hub.match(/stars.ign.com/) ||
+  if (hub.match(/movies.ign.com/) || #updated
+    hub.match(/comics.ign.com/) || #updated
+    hub.match(/tv.ign.com/) || #updated
+    hub.match(/stars.ign.com/) || 
     hub.match(/music.ign.com/) ||
-    hub.match(/wireless.ign.com/))
+    hub.match(/wireless.ign.com/)) #updated
     
   elsif (hub.match(/www.ign.com/) || 
     hub.match(/uk.ign.com/) || 
     hub.match(/au.ign.com/))
+    
+    context "Youtube Start Schedule" do
+      widget_youtube_start_schedule
+    end
   
     context "Entertainment Promo Widget" do
       widget_ent_promo
     end
   
-    context "Top Games Out Now Content View" do
+    context "Top Games Out Now Widget" do
       widget_top_games('out_now')
     end
     
-    context "Top Games Coming Soon Content View" do
+    context "Top Games Coming Soon Widget" do
       widget_top_games('comming_soon')
     end
     
@@ -107,10 +112,6 @@ describe "Oyster Hubs: #{hub}" do
 
     context "What We're Playing Widget" do
       widget_what_we_are_playing
-    end
-    
-    context "IGN Essentials (Promo) Widget" do
-      widget_promo('essentials')
     end
 
     context "Hot Reviews Widget" do
@@ -125,37 +126,33 @@ describe "Oyster Hubs: #{hub}" do
       widget_hot_reviews_previews('game-help')
     end
 
-    context "IGN Friends (Promo) Widget" do
-      widget_promo('ignfriends')
-    end
-
-    context "Promotions and Sweepstakes (Promo) Widget" do
-      widget_promo('promotions')
-    end
-
-    context "Around the Network (Promo) Widget" do
-      widget_promo('aroundthenetwork')
-    end
-
-  else
+  else #begin games hubs
 
     context "Entertainment Promo Widget" do
       widget_ent_promo
     end
-      
-    context "Top Games Out Now Content View" do
-      it "should be on the page once", :smoke => true do
-        @doc.css('div#right-col-outnow-tabs').count.should == 1
-      end
     
-      it "should display text", :smoke => true do
-        check_display_text('div#right-col-outnow-tabs')
-      end
+    if hub.match(/vita.ign.com/) #if Vita, don't check for Top Games Out Now Content View
+      
+      context "Top Games Out Now Content View"
+      
+    else
+    
+      context "Top Games Out Now Content View" do
+        it "should be on the page once", :smoke => true do
+          @doc.css('div#right-col-outnow-tabs').count.should == 1
+        end
+        
+        it "should display text", :smoke => true do
+          check_display_text('div#right-col-outnow-tabs')
+        end
 
-      it "should have at least one link", :smoke => true do
-        check_have_a_link('div#right-col-outnow-tabs')
+        it "should have at least one link", :smoke => true do
+          check_have_a_link('div#right-col-outnow-tabs')
+        end
       end
-    end
+      
+    end#end vita work-around for Top Games Out Now content view
     
     context "Top Games Coming Soon Content View" do
       it "should be on the page once", :smoke => true do
@@ -174,10 +171,6 @@ describe "Oyster Hubs: #{hub}" do
     context "Discover More Widget" do
       widget_discover_more
     end
-    
-    context "IGN Essentials (Promo) Widget" do
-      widget_promo('essentials')
-    end
 
     context "Hot Reviews Widget" do
       widget_hot_reviews_previews('reviews')
@@ -191,23 +184,35 @@ describe "Oyster Hubs: #{hub}" do
       widget_hot_reviews_previews('game-help')
     end
     
-    context "Hot News Widget" do
-      widget_hot_reviews_previews('hot-news')
-    end
-
-    context "IGN Friends (Promo) Widget" do
-      widget_promo('ignfriends')
-    end
-
-    context "Promotions and Sweepstakes (Promo) Widget" do
-      widget_promo('promotions')
-    end
-
-    context "Around the Network (Promo) Widget" do
-      widget_promo('aroundthenetwork')
-    end
+    if hub.match(/vita.ign.com/) #if Vita, don't check for Hot News Widget
+      
+      context "Hot News Widget"
+      
+    else
+    
+      context "Hot News Widget" do
+        widget_hot_reviews_previews('hot-news')
+      end
+    
+    end#end vita work-around for Hot News Widget
   
-  end#end if else
+  end#end if/elsif/else for hubs
+  
+  context "IGN Essentials (Promo) Widget" do
+    widget_promo('essentials')
+  end
+  
+  context "IGN Friends (Promo) Widget" do
+    widget_promo('ignfriends')
+  end
+  
+  context "Promotions and Sweepstakes (Promo) Widget" do
+    widget_promo('promotions')
+  end
+  
+  context "Around the Network (Promo) Widget" do
+    widget_promo('aroundthenetwork')
+  end
   
 end# end describe
 end# end hub interation
