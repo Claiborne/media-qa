@@ -5,7 +5,7 @@ module ObjectScore
   
   def widget_object_score_smoke
     it "should not be missing from the page", :smoke => true do
-       @doc.css('div.ratingScoreBoxContainer div.ratingScoreBox').should be_true
+       @doc.at_css('div.ratingScoreBoxContainer div.ratingScoreBox').should be_true
     end
   end
   

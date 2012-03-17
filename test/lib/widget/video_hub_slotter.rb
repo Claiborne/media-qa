@@ -5,7 +5,7 @@ module VideoHubSlotter
 
   def widget_video_hub_slotter_smoke
     it "should not be missing from the page", :smoke => true do
-       @doc.css('ul#video-hub').should be_true
+      @doc.at_css('ul#video-hub').should be_true
     end
   end
   

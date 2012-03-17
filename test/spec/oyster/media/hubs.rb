@@ -31,13 +31,67 @@ include OpenPage
 include GlobalFooter
 include GlobalHeader
 
+# wii-u only stuff
+require 'widget/evo_header'
+
+include EvoHeader
+
+@newhub = ["http://www.ign.com/wii-u"]
+
+@newhub.each do |hub|
+
+describe "Oyster Hubs -- #{hub}" do
+  
+  before(:all) do
+    @page = hub.to_s
+    @doc = nokogiri_not_301_open(@page)
+  end
+
+  before(:each) do
+    
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200", :smoke => true do
+  end
+  
+  it "should include at least one css file", :smoke => true do
+    check_include_at_least_one_css_file(@doc)
+  end
+  
+  it "should not include any css files that return 400 or 500", :smoke => true do
+    check_css_files(@doc)
+  end
+  
+  context "Global Header Widget" do
+    widget_evo_header
+  end
+  
+  context "Global Footer Widget" do
+    
+  end
+  
+  context "Cover Stories Widget" do
+    
+  end
+  
+  context "Blogroll" 
+  
+  
+  
+end#end desc
+end#end each
+
+########################################################
+
 @hubs = return_hubs_list
 
 @hubs.each do |hub|
   
-describe "Oyster Hubs: Tech"
-  
-describe "Oyster Hubs: #{hub}" do
+describe "Oyster Hubs -- #{hub}" do
 
   before(:all) do
     @page = hub.to_s
@@ -99,11 +153,11 @@ describe "Oyster Hubs: #{hub}" do
     end
   
     context "Top Games Out Now Widget" do
-      widget_top_games('out_now')
+      widget_top_games('Top Games Out Now', 5)
     end
     
     context "Top Games Coming Soon Widget" do
-      widget_top_games('comming_soon')
+      widget_top_games('Top Games Coming Soon', 5)
     end
     
     context "Discover More Widget" do
@@ -115,15 +169,15 @@ describe "Oyster Hubs: #{hub}" do
     end
 
     context "Hot Reviews Widget" do
-      widget_hot_reviews_previews('reviews')
+      widget_hot_reviews_previews('reviews', 5)
     end
 
     context "Hot Preview Widget" do
-      widget_hot_reviews_previews('previews')
+      widget_hot_reviews_previews('previews', 5)
     end
 
     context "Hot Game Help Widget" do
-      widget_hot_reviews_previews('game-help')
+      widget_hot_reviews_previews('game-help', 1)
     end
 
   else #begin games hubs
@@ -132,7 +186,7 @@ describe "Oyster Hubs: #{hub}" do
       widget_ent_promo
     end
     
-    if hub.match(/vita.ign.com/) #if Vita, don't check for Top Games Out Now Content View
+    if hub.match(/vita.ign.com/) #if Vita, don't check for Top Games Out Now content view
       
       context "Top Games Out Now Content View"
       
@@ -173,15 +227,15 @@ describe "Oyster Hubs: #{hub}" do
     end
 
     context "Hot Reviews Widget" do
-      widget_hot_reviews_previews('reviews')
+      widget_hot_reviews_previews('reviews', 5)
     end
 
     context "Hot Preview Widget" do
-      widget_hot_reviews_previews('previews')
+      widget_hot_reviews_previews('previews', 5)
     end
 
     context "Hot Game Help Widget" do
-      widget_hot_reviews_previews('game-help')
+      widget_hot_reviews_previews('game-help', 1)
     end
     
     if hub.match(/vita.ign.com/) #if Vita, don't check for Hot News Widget
@@ -191,7 +245,7 @@ describe "Oyster Hubs: #{hub}" do
     else
     
       context "Hot News Widget" do
-        widget_hot_reviews_previews('hot-news')
+        widget_hot_reviews_previews('hot-news', 5)
       end
     
     end#end vita work-around for Hot News Widget
@@ -199,19 +253,19 @@ describe "Oyster Hubs: #{hub}" do
   end#end if/elsif/else for hubs
   
   context "IGN Essentials (Promo) Widget" do
-    widget_promo('essentials')
+    widget_promo('essentials', 5)
   end
   
   context "IGN Friends (Promo) Widget" do
-    widget_promo('ignfriends')
+    widget_promo('ignfriends', 6)
   end
   
   context "Promotions and Sweepstakes (Promo) Widget" do
-    widget_promo('promotions')
+    widget_promo('promotions', 2)
   end
   
   context "Around the Network (Promo) Widget" do
-    widget_promo('aroundthenetwork')
+    widget_promo('aroundthenetwork', 2)
   end
   
 end# end describe

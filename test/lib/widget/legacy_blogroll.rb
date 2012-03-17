@@ -5,7 +5,7 @@ module LegacyBlogroll
 
   def widget_legacy_blogroll_smoke
     it "should not be missing from the page", :smoke => true do
-       @doc.css('div#all-news').should be_true
+       @doc.at_css('div#all-news').should be_true
     end
   end
   
