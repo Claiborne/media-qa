@@ -71,14 +71,14 @@ describe "Oyster Hubs -- #{hub}" do
   end
   
   context "Global Footer Widget" do
-    
+    #todo
   end
   
   context "Cover Stories Widget" do
-    
+    #todo
   end
   
-  context "Blogroll" 
+  context "Blogroll" #todo
   
   
   
