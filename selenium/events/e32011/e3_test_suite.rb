@@ -1,6 +1,0 @@
-require 'test/unit'
-require 'files/e3_main'
-require 'files/e3_news'
-require 'files/e3_games'
-require 'files/e3_images'
-require 'files/e3_videos'

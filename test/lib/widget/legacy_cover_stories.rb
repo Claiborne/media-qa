@@ -5,7 +5,7 @@ module LegacyCoverStories
 
   def widget_legacy_cover_stories_smoke
     it "should not be missing from the page", :smoke => true do
-       @doc.css('div.coverStories').should be_true
+       @doc.at_ss('div.coverStories').should be_true
     end
   end
   

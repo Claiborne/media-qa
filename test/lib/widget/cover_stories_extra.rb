@@ -5,7 +5,7 @@ module CoverStoriesExtra
 
   def widget_cover_stories_extra_smoke
     it "should not be missing from the page", :smoke => true do
-       @doc.css('div.extra-coverStories').should be_true
+       @doc.at_css('div.extra-coverStories').should be_true
     end
   end
   

@@ -6,7 +6,7 @@ require 'open_page'
 
 include OpenPage
 
-describe "Images HomePage:", :selenium => true do
+describe "Images HomePage -- /images", :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
@@ -41,7 +41,7 @@ describe "Images HomePage:", :selenium => true do
   
 end
 
-describe "Images Gallery Page:", :selenium => true do
+describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"

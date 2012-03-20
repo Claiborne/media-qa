@@ -13,13 +13,12 @@ include Assert
 {"Get Video By Slug" => "/slug/metal-gear-solid-hd-collection-video-review",
   "Get Video By videoId" => "/4eb87cb98e88c57b65000008"}.each do |k,v|
 
-describe "V3 Video API: Endpoint #{v} (#{k})" do
+describe "V3 Video API -- #{k} -- #{v}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos#{v}"
-    puts @url
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -205,13 +204,12 @@ end
   "?sortOrder=asc&sortBy=metadata.name&metadata.state=published&fields=metadata.state",
   "?metadata.state=published&fields=metadata.name,metadata.networks,videoId,metadata.state"].each do |call|
     
-describe "V3 Video API: Endpoint #{call} (Get Videos in Published State)" do
+describe "V3 Video API -- Get Videos in Published State -- #{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
-    puts @url
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -255,13 +253,12 @@ end
   "network/ign?count=35&metadata.state=published&fields=metadata.state",
   "network/ign?startIndex=36&count=35&metadata.state=published&fields=metadata.state"].each do |call|
 
-describe "V3 Video API: Endpoint #{call} (Get Videos Using Count and Start Index)" do
+describe "V3 Video API -- Get Videos Using Count and Start Index -- #{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
-    puts @url
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -322,13 +319,12 @@ end
 ["/network/ign?fields=metadata.networks",
   "?metadata.networks=ign&fields=metadata.networks"].each do |call|
 
-describe "V3 Video API: Endpoint #{call} (Get Videos By Network)" do
+describe "V3 Video API -- Get Videos By Network -- #{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos#{call}"
-    puts @url
     begin 
       @response = RestClient.get @url
     rescue => e

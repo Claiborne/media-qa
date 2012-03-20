@@ -11,14 +11,33 @@ module FeChecker
     @doc.css(locator).text.delete("^a-zA-Z").length.should > 0
   end
   
+  def check_display_text_for_each(locator)
+    @doc.css(locator).each do |li|
+      li.text.delete("^a-zA-Z").length.should > 0
+    end
+  end
+  
   def check_have_a_link(locator)
     @doc.css("#{locator} a").count.should > 0
     @doc.css("#{locator} a[href*='http']").count.should > 0
   end
   
+  def check_have_a_link_for_each(locator)
+    @doc.css(locator).each do |li|
+      li.at_css("a[href*='http']").should be_true
+    end
+  end
+  
   def check_have_an_img(locator)
     @doc.css("#{locator} img").count.should > 0
     @doc.css("#{locator} img[src*='http']").count.should > 0
+  end
+  
+  def check_have_an_img_for_each(locator)
+    @doc.css(locator).each do |li|
+      li.at_css("img").should be_true
+      li.at_css("img[src*='http']").should be_true
+    end
   end
   
   def check_return_200_without_301(page)

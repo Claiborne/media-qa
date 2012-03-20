@@ -49,11 +49,10 @@ end
 
   # Tests #
 
-describe "Video Hub:" do
+describe "Video Hub -- /video" do
 
   before(:all) do
     @page = "http://www.ign.com/videos"
-    puts @page
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -94,6 +93,8 @@ describe "Video Hub:" do
   
 end
 
+########################################
+
 @blogroll_ajax_calls = [
 "http://www.ign.com/videos/all/filtergalleryajax?filter=all",
 "http://www.ign.com/videos/all/filtergalleryajax?filter=games-trailer",
@@ -104,11 +105,10 @@ end
 
 @blogroll_ajax_calls.each do |blogroll_call|
   
-describe "Video Hub Ajax Calls:" do
+describe "Video Hub Ajax Calls -- #{blogroll_call}" do
   
   before(:all) do
      @page = blogroll_call.to_s
-     puts @page
      @doc = nokogiri_not_301_open(@page)
    end
 
@@ -150,11 +150,10 @@ end
 
 @video_player_page.each do |video_player_page|
   
-describe "Video Player Page:" do
+describe "Video Player Page -- #{video_player_page}" do
 
   before(:all) do
     @page = video_player_page.to_s
-    puts @page
     @doc = nokogiri_not_301_open(@page)
   end
 

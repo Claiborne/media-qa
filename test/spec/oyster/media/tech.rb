@@ -35,13 +35,12 @@ include Blogrollv2Articles
 include DiscoverMore
 include WikiUpdates
 
-describe "Tech HomePage:" do
+describe "Tech HomePage -- /tech" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech"
-    puts @page
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -64,11 +63,11 @@ describe "Tech HomePage:" do
     check_css_files(@doc)
   end
   
-  context "Global Header Widget:" do
+  context "Global Header Widget" do
     widget_global_header
   end
   
-  context "Global Footer Widget:" do
+  context "Global Footer Widget" do
     widget_global_footer
   end
   
@@ -76,19 +75,19 @@ describe "Tech HomePage:" do
     @doc.css('div.followBox').count.should == 1
   end
   
-  context "Tech Nav Widget:" do
+  context "Tech Nav Widget" do
     wiget_discover_more_expanded
   end
   
-  context "Main Cover Stories Widget:" do
+  context "Main Cover Stories Widget" do
     widget_cover_stories_main
   end
   
-  context "Extra Cover Stories Widget:" do
+  context "Extra Cover Stories Widget" do
     widget_cover_stories_extra
   end
 
-  context "Blogroll Widget:", :test => true do
+  context "Blogroll Widget", :test => true do
     widget_blogroll_v2_articles(10, "/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=10&categories=tech&sort=publish_date&order=desc")
     
     it "should debug..." do
@@ -104,20 +103,22 @@ describe "Tech HomePage:" do
     end
   end
   
-  context "Video Interrupt Widget:" do
+  context "Video Interrupt Widget" do
     widget_video_interrupt
   end
   
-  context "Popular Article Interrupt Widget:" do
+  context "Popular Article Interrupt Widget" do
     widget_popular_articles_interrupt
   end
 
 end
 
+#################################################
+
 @topic = return_tech_nav
 @topic.each do |topic|
   
-describe "Tech #{topic} Topic Page:" do
+describe "Tech #{topic} Topic Page" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
@@ -162,30 +163,30 @@ describe "Tech #{topic} Topic Page:" do
     @doc.css('a.postNews').count.should == 1
   end
     
-  context "Blogroll Widget:" do
+  context "Blogroll Widget" do
     widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=20&tags=tech,#{topic}&all_tags=true&sort=publish_date&order=desc")
   end
   
-  context "Vertical Navigation Widget:" do
+  context "Vertical Navigation Widget" do
     widget_vert_nav("tech", topic)
   end
 
   if topic == "lifestyle"
-    context "Tag Cover Stories Widget:" do
+    context "Tag Cover Stories Widget" do
       it "should check when implemented on FE"
     end
   else
-    context "Tag Cover Stories Widget:" do
+    context "Tag Cover Stories Widget" do
       widget_tag_cover_stories
     end
   end
 
-  context "Discover More Widget:" do
+  context "Discover More Widget" do
     widget_discover_more
   end
 
   if topic != 'lifestyle'
-    context "Wiki Updates Widget:" do
+    context "Wiki Updates Widget" do
       widget_wiki_updates
     end
   end
@@ -193,13 +194,12 @@ describe "Tech #{topic} Topic Page:" do
 end
 end
 
-describe "Tech v2 Article Page:" do
+describe "Tech v2 Article Page -- /articles/2011/09/21/gears-of-war-3-dolby-7-1-surround-sound-headset-review" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/articles/2011/09/21/gears-of-war-3-dolby-7-1-surround-sound-headset-review"
-    puts @page
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -226,11 +226,11 @@ describe "Tech v2 Article Page:" do
     @doc.at_css('div.article_byLine div.article_author').text.delete('^a-zA-Z').length.should > 2
   end
   
-  context "Global Header Widget:" do
+  context "Global Header Widget" do
     widget_global_header
   end
   
-  context "Global Footer Widget:" do
+  context "Global Footer Widget" do
     widget_global_footer
   end
   

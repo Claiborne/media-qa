@@ -6,13 +6,13 @@ module DiscoverMore
   
   def widget_discover_more_smoke
     it "should not be missing from the page", :smoke => true do
-      @doc.css('div.slider-holder div.slider').should be_true
+      @doc.at_css('div.slider-holder div.slider').should be_true
     end
   end
   
   def wiget_discover_more_expanded_smoke
     it "should not be missing from the page", :smoke => true do
-      @doc.css('div.topicTiles').should be_true
+      @doc.at_css('div.topicTiles').should be_true
     end
   end
   
@@ -44,7 +44,7 @@ module DiscoverMore
       check_links_not_301_home('div.slider-holder')
     end
     
-    it "should not display broken images", :spam => true do
+    it "should not display broken images" do
       check_for_broken_images('div.slider-holder')
     end
     
