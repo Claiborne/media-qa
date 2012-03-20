@@ -1,25 +1,28 @@
 == Automation Framework ==
 
-In order to consolidate the various test scripts used by the media qa team, the team will begin using a unified framework that will be the main entry point for all automated tests and scripts. 
+In order to consolidate the various test scripts used by the media qa team, the team is using a unified framework that will be the main entry point for all automated tests and scripts. 
 
 == REQUIRED SOFTWARE == 
+
 Below are the required software and gems you need to install to run this framework.
 
-Ruby (1.9.2)
+*** RUBY ***
+Ruby version 1.9.2 - Recommend using RVM to install and set-up Ruby http://beginrescueend.com/
 
-*** LOCAL GEMS ***
-capybara (1.0.0)
-culerity (0.2.15)
-json_pure (1.5.3)
-nokogiri (1.5.0)
-rest-client (1.6.3)
-rspec (2.6.0)
-rubyzip (0.9.4)
-selenium-client (1.2.18)
-selenium-webdriver (2.0.1, 0.2.2)
-xpath (0.1.4)
+*** LOCAL RUBY GEMS ***
+json_pure
+nokogiri
+rake
+rest-client
+rspec
+selenium-webdriver
 
-All tests will be written using rspec and any additional test frameworks needed for the application under test.  This typically means selenium client for acceptance/front end testing or plain old ruby for api testing.  Performance tests can be scripted using httperf and auto bench but are still required to be driven by the unified framework for simplified deployment and execution.
+*** GIT ***
+How to set up GIT on a Mac - http://help.github.com/mac-set-up-git/
+
+== FRAMEWORK == 
+
+All tests will be written using the rspec2 framework - https://www.relishapp.com/rspec
 
 The current folder structure:
 
