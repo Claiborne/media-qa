@@ -1,3 +1,9 @@
+require 'widget/blogroll_v3_articles'
+include Blogrollv3Articles
+
+
+
+
 require 'rspec'
 require 'nokogiri'
 require 'rest_client'
@@ -33,18 +39,25 @@ include GlobalHeader
 
 # wii-u only stuff
 require 'widget/evo_header'
+require 'widget/cover_stories_main'
 
 include EvoHeader
+include CoverStoriesMain
 
-@newhub = ["http://www.ign.com/wii-u"]
+require 'widget/blogroll_v3_articles'
+include Blogrollv3Articles
 
-@newhub.each do |hub|
+#@newhub = ["http://www.ign.com/wii-u"]
 
-describe "Oyster Hubs -- #{hub}" do
+#@newhub.each do |hub|
+hub = "d"
+
+describe "Oyster Hubs -- #{hub}", :br => true do
   
   before(:all) do
-    @page = hub.to_s
-    @doc = nokogiri_not_301_open(@page)
+    #@page = hub.to_s
+    #@doc = nokogiri_not_301_open(@page)
+    @doc = Nokogiri::HTML(open('/Users/wclaiborne/Desktop/blogrollarticles.html'))
   end
 
   before(:each) do
@@ -54,7 +67,12 @@ describe "Oyster Hubs -- #{hub}" do
   after(:each) do
 
   end
+  context "sfsfs" do
+    @doc = Nokogiri::HTML(open('/Users/wclaiborne/Desktop/blogrollarticles.html'))
+    widget_blogroll_v3_articles(20, 'platform')
+  end
 
+=begin
   it "should return 200", :smoke => true do
   end
   
@@ -71,19 +89,19 @@ describe "Oyster Hubs -- #{hub}" do
   end
   
   context "Global Footer Widget" do
-    #todo
+    widget_global_footer
   end
   
   context "Cover Stories Widget" do
-    #todo
+    widget_cover_stories_main_new(5)
   end
   
   context "Blogroll" #todo
-  
+=end
   
   
 end#end desc
-end#end each
+#end#end each
 
 ########################################################
 
