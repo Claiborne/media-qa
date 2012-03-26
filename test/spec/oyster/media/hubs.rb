@@ -33,8 +33,14 @@ include GlobalHeader
 
 # wii-u only stuff
 require 'widget/evo_header'
+require 'widget/cover_stories_main'
 
 include EvoHeader
+include CoverStoriesMain
+
+# blogroll
+require 'widget/blogroll_v3_articles'
+include Blogrollv3Articles
 
 @newhub = ["http://www.ign.com/wii-u"]
 
@@ -71,19 +77,17 @@ describe "Oyster Hubs -- #{hub}" do
   end
   
   context "Global Footer Widget" do
-    #todo
+    widget_global_footer
   end
   
   context "Cover Stories Widget" do
-    #todo
+    widget_cover_stories_main_new(5)
   end
   
-  context "Blogroll" #todo
+  context "Blogroll" #todo  
   
-  
-  
-end#end desc
-end#end each
+end
+end
 
 ########################################################
 
@@ -144,7 +148,7 @@ describe "Oyster Hubs -- #{hub}" do
     hub.match(/uk.ign.com/) || 
     hub.match(/au.ign.com/))
     
-    context "Youtube Start Schedule" do
+    context "Youtube Start Schedule Widget" do
       widget_youtube_start_schedule
     end
   
