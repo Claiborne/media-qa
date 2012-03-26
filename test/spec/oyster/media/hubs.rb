@@ -1,9 +1,3 @@
-require 'widget/blogroll_v3_articles'
-include Blogrollv3Articles
-
-
-
-
 require 'rspec'
 require 'nokogiri'
 require 'rest_client'
@@ -44,20 +38,19 @@ require 'widget/cover_stories_main'
 include EvoHeader
 include CoverStoriesMain
 
+# blogroll
 require 'widget/blogroll_v3_articles'
 include Blogrollv3Articles
 
-#@newhub = ["http://www.ign.com/wii-u"]
+@newhub = ["http://www.ign.com/wii-u"]
 
-#@newhub.each do |hub|
-hub = "d"
+@newhub.each do |hub|
 
-describe "Oyster Hubs -- #{hub}", :br => true do
+describe "Oyster Hubs -- #{hub}" do
   
   before(:all) do
-    #@page = hub.to_s
-    #@doc = nokogiri_not_301_open(@page)
-    @doc = Nokogiri::HTML(open('/Users/wclaiborne/Desktop/blogrollarticles.html'))
+    @page = hub.to_s
+    @doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -67,12 +60,7 @@ describe "Oyster Hubs -- #{hub}", :br => true do
   after(:each) do
 
   end
-  context "sfsfs" do
-    @doc = Nokogiri::HTML(open('/Users/wclaiborne/Desktop/blogrollarticles.html'))
-    widget_blogroll_v3_articles(20, 'platform')
-  end
 
-=begin
   it "should return 200", :smoke => true do
   end
   
@@ -96,12 +84,10 @@ describe "Oyster Hubs -- #{hub}", :br => true do
     widget_cover_stories_main_new(5)
   end
   
-  context "Blogroll" #todo
-=end
+  context "Blogroll" #todo  
   
-  
-end#end desc
-#end#end each
+end
+end
 
 ########################################################
 
@@ -162,7 +148,7 @@ describe "Oyster Hubs -- #{hub}" do
     hub.match(/uk.ign.com/) || 
     hub.match(/au.ign.com/))
     
-    context "Youtube Start Schedule" do
+    context "Youtube Start Schedule Widget" do
       widget_youtube_start_schedule
     end
   
