@@ -44,8 +44,8 @@ describe "V3 Articles API -- General Smoke Tests -- #{call}" do
     check_not_blank(@data)
   end
   
-  it "should return a hash with six indices" do
-    check_indices(@data, 6)
+  it "should return a hash with five indices" do
+    check_indices(@data, 5)
   end
   
   it "should return 'count' data with a non-nil, non-blank value" do
@@ -88,15 +88,15 @@ describe "V3 Articles API -- General Smoke Tests -- #{call}" do
     #@data['isMore'].should == true
   #end
 
-  it "should return 'total' data with a non-nil, non-blank value" do
-    @data.has_key?('total').should be_true
-    @data['total'].should_not be_nil
-    @data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
-  end
+#  it "should return 'total' data with a non-nil, non-blank value" do
+#    @data.has_key?('total').should be_true
+#    @data['total'].should_not be_nil
+#    @data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
+#  end
   
-  it "should return 'total' data with a value greater than 20" #do
-    #@data['total'].should > 20
-  #end
+#  it "should return 'total' data with a value greater than 20" #do
+#    @data['total'].should > 20
+#  end
   
   it "should return 'data' with a non-nil, non-blank value" do
     @data.has_key?('data').should be_true
@@ -228,8 +228,23 @@ describe "V3 Articles API -- Get Article By #{k} -- #{v}" do
     "promo",
     "categories",
     "content"].each do |k| 
-    it "should return an article with non-nil, non-blank #{k} data" do
+    it "should return an article with #{k} data" do
       @data.has_key?(k).should be_true
+    end   
+  end
+  
+  ["articleId",
+    "metadata",
+    "metadata", 
+    "system", 
+    "tags",
+    "refs",
+    "authors",
+    "categoryLocales",
+    "promo",
+    "categories",
+    "content"].each do |k| 
+    it "should return an article with non-nil, non-blank #{k} data" do
       @data[k].should_not be_nil
       @data[k].to_s.delete("^a-zA-Z0-9").length.should > 0
     end   
@@ -283,21 +298,15 @@ describe "V3 Articles API -- Get Article By #{k} -- #{v}" do
   
   # review assertions  
   
-  it "should return an article with non-nil 'highlights' data" do
-    @data['review'].has_key?('highlights').should be_true
-    @data['review']['highlights'].should_not be_nil
-    @data['review']['highlights'].to_s.length.should > 0
-  end
-  
   # legacyData assertions
   
-  ['legacyArticles','objectRelations'].each do |k|
-    it "should return an article with non-nil, non-blank '#{k}' data" #do
-      #@data['legacyData'].has_key?(k).should be_true
-      #@data['legacyData'][k].should_not be_nil
-      #@data['legacyData'][k].to_s.length should > 0
-    #end
-  end
+#  ['legacyArticles','objectRelations'].each do |k|
+#    it "should return an article with non-nil, non-blank '#{k}' data" #do
+#      @data['legacyData'].has_key?(k).should be_true
+#      @data['legacyData'][k].should_not be_nil
+#      @data['legacyData'][k].to_s.length should > 0
+#    end
+#  end
   
   # system assertions
   
@@ -319,7 +328,7 @@ describe "V3 Articles API -- Get Article By #{k} -- #{v}" do
     end
   end
   
-  ['displayName','slug','tagType'].each do |k|
+  ['displayName','slug'].each do |k|
     it "should return an article with non-nil, non-blank '#{k}' data for each tag" do 
       @data['tags'].each do |tag|
         tag.has_key?(k).should be_true
@@ -367,7 +376,11 @@ describe "V3 Articles API -- Get Article By #{k} -- #{v}" do
   
   # promo assertions
   
-  ['promoImages','title','summary'].each do |k|
+  it "should return an article with promoImages data" do
+    @data['promo'].has_key?('promoImages').should be_true
+  end
+  
+  ['title','summary'].each do |k|
     it "should return an article with non-nil, non-blank #{k} data" do
       @data['promo'].has_key?(k).should be_true
       @data['promo'][k].should_not be_nil

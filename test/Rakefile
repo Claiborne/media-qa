@@ -13,7 +13,7 @@ RSpec::Core::RakeTask.new('all') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
       'spec/oyster/media/*.rb',
-      'spec/v3/video/*.rb',  # Change this to spec/v3/*/*.rb when video is on prd
+      'spec/v3/video/*.rb',  # Change this to spec/v3/*/*.rb when ARTICLES is on prd
       ]  
 end
 
@@ -34,7 +34,7 @@ RSpec::Core::RakeTask.new('backend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
       'spec/v3/video/*.rb'
-      #'spec/v3/**/*.rb', uncomment this when v3 articles are ready, and del line above
+      #'spec/v3/**/*.rb', uncomment this when v3 ARTICLES are ready, and del line above
       ]  
 end
 
@@ -43,7 +43,7 @@ end
 desc "Run v3 tests"
 RSpec::Core::RakeTask.new('v3') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/video/*.rb' # Change this to spec/v3/*/*.rb when video is on prd
+    t.pattern = 'spec/v3/video/*.rb' # Change this to spec/v3/*/*.rb when ARTICLES2 is on prd
 end
 
 desc "Run v3 video tests"
