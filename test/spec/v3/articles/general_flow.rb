@@ -10,12 +10,12 @@ include Assert
 #Client ID: 4e972e6be4b0a23ca6e1f2e6
 #Secret:
 #http://apicms.lan.ign.com/
-#3f588238ccbb5fec52ff4486ffd646df4ad01793
+# 85163bdb537ca8389dbb2ca552261247723699c4
 
 #["authorization-config","playlists","read","authentication-user","authorization-client","entitlements-config","authentication-login","entitlements-set","videos","write","articles"]
 
 def get_topaz_token
-  #"3f588238ccbb5fec52ff4486ffd646df4ad01793" 
+  # 85163bdb537ca8389dbb2ca552261247723699c4
 end
 
 def body_request
