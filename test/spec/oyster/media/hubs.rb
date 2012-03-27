@@ -84,6 +84,14 @@ describe "Oyster Hubs -- #{hub}" do
     widget_cover_stories_main_new(5)
   end
   
+  context "Top Games Out Now Widget" do
+    widget_top_games('Games Out Now', 5)
+  end
+  
+  context "Top Games Coming Soon Widget" do
+    widget_top_games('Games Coming Soon', 5)
+  end
+  
   context "Blogroll" #todo  
   
 end

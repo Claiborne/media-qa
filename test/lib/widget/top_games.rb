@@ -41,12 +41,6 @@ module TopGames
       end
     end
     
-    it "should have an image in each slot" do
-      return_top_games_widget(@doc, type).css('div.column-game').each do |slot|
-        slot.css("img[src*='http']").count.should > 0
-      end
-    end
-    
     it "should link to an object page when a game's box-art is clicked" do
       return_top_games_widget(@doc, type).css('div.column-game div.boxart a').each do |slot|
         slot.attribute('href').to_s.match(/.com\/object/).should be_true

@@ -40,6 +40,8 @@ module Promo
     it "should have a link in each slot", :smoke => true do
       check_have_a_link_for_each("div.promo_#{type_of_promo}_container div.promo_#{type_of_promo}_item")
     end
+    
+    it "images should be clickable"
   end
   
 end
