@@ -14,7 +14,7 @@ include Assert
   "/type/article",
   "/state/published"].each do |call|
 
-describe "V3 Articles API -- General Smoke Tests -- #{call}" do
+describe "V3 Articles API -- General Smoke Tests -- v3/articles#{call}", :smoke => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -84,9 +84,9 @@ describe "V3 Articles API -- General Smoke Tests -- #{call}" do
     @data['isMore'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
-  it "should return 'isMore' data with a value of true" #do
-    #@data['isMore'].should == true
-  #end
+  it "should return 'isMore' data with a value of true" do
+    @data['isMore'].should == true
+  end
 
 #  it "should return 'total' data with a non-nil, non-blank value" do
 #    @data.has_key?('total').should be_true
@@ -177,6 +177,39 @@ describe "V3 Articles API -- General Smoke Tests -- #{call}" do
   # categories assertions
   
   # content assertions
+  
+  case call
+  when "?metadata.state=published"
+    it "should only return published articles" do
+      @data['data'].each do |article|
+        article['metadata']['state'].should == 'published'
+      end
+    end
+  when "/type/post"
+    it "should only return 'post' articleTypes" do
+      @data['data'].each do |article|
+        article['metadata']['articleType'].should == 'post'
+      end
+    end
+  when "/type/cheat"
+    it "should only return 'cheat' articleTypes" do
+      @data['data'].each do |article|
+        article['metadata']['articleType'].should == 'cheat'
+      end
+    end
+  when "/type/article"
+    it "should only return 'article' articleTypes" do
+      @data['data'].each do |article|
+        article['metadata']['articleType'].should == 'article'
+      end
+    end
+  when "/state/published"
+    it "should only return published articles" do
+      @data['data'].each do |article|
+        article['metadata']['state'].should == 'published'
+      end
+    end
+  end#end switch statement
 
 end
 end
@@ -185,7 +218,7 @@ end
 
 {"Slug"=>"/slug/calibur-11-crafts-battlefield-3-console-vaults", "ID"=>"/4e9caeb67ebbd8441c0000a0"}.each do |k,v|
 
-describe "V3 Articles API -- Get Article By #{k} -- #{v}" do
+describe "V3 Articles API -- Get Article By #{k} -- #{v}", :smoke => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
