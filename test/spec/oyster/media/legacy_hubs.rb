@@ -46,8 +46,7 @@ include Blogrollv3Articles
 
 @newhub.each do |hub|
 
-describe "Oyster Hubs -- #{hub}", :test => true do
-  
+describe "Oyster Hubs -- #{hub}" do
   before(:all) do
     @page = hub.to_s
     @doc = nokogiri_not_301_open(@page)
