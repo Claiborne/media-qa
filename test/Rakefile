@@ -86,6 +86,12 @@ RSpec::Core::RakeTask.new('oysterfrontend') do |t|
     t.pattern = 'spec/oyster/media/*.rb'
 end
 
+desc "Run Legacy Hubs Frontend Tests"
+RSpec::Core::RakeTask.new('legacyhubsfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/oyster/media/legacy_hubs.rb'
+end
+
 desc "Run Hubs Frontend Tests"
 RSpec::Core::RakeTask.new('hubsfrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
@@ -122,14 +128,6 @@ desc "Run Tech API tests"
 RSpec::Core::RakeTask.new('techapi') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/v2/tech.rb'    
-end
-
-############# LEGACY ############# 
-
-desc "Run Legacy game hub tests"
-RSpec::Core::RakeTask.new('legacyhubsfrontend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/legacy/legacy_hubs.rb']  
 end
 
 ############# DEPRECATED / INVALID ############# 

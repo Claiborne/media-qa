@@ -57,20 +57,6 @@ module EvoHeader
       @doc.css('div#ignHeader div#ignHeader-userBar').count.should == 1
     end
     
-    # user-tools (logged-out) assertions
-    
-    it "should display the user-tools once", :smoke => true do
-       @doc.css('div#ignHeader div.userTools').count.should == 1
-    end
-    
-    it "should link to s.ign.com/login in the user-tools", :smoke => true do
-      @doc.at_css("div#ignHeader div.userTools a[href*='s.ign.com/login']")
-    end
-    
-    it "should link to s.ign.com/register in the user-tools", :smoke => true do
-      @doc.at_css("div#ignHeader div.userTools a[href*='s.ign.com/resgister']")
-    end
-    
     # site nav assertions
     
     it "should display the site nav once", :smoke => true do

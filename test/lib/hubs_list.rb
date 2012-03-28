@@ -12,8 +12,8 @@ module HubsList
     "http://movies.ign.com",
     "http://tv.ign.com",
     "http://comics.ign.com",
-    "http://music.ign.com",
-    "http://stars.ign.com",
+    #{}"http://music.ign.com",
+    #{}"http://stars.ign.com",
     "http://uk.ign.com",
     "http://uk.ps3.ign.com",
     "http://uk.xbox360.ign.com",
@@ -25,8 +25,8 @@ module HubsList
     "http://uk.movies.ign.com",
     "http://uk.tv.ign.com",
     "http://uk.comics.ign.com",
-    "http://uk.music.ign.com",
-    "http://uk.stars.ign.com",
+    #{}"http://uk.music.ign.com",
+    #{}"http://uk.stars.ign.com",
     "http://au.ign.com",
     "http://au.ps3.ign.com",
     "http://au.xbox360.ign.com",
@@ -38,8 +38,8 @@ module HubsList
     "http://au.movies.ign.com",
     "http://au.tv.ign.com",
     "http://au.comics.ign.com",
-    "http://au.music.ign.com",
-    "http://au.stars.ign.com",
+    #{}"http://au.music.ign.com",
+    #{}"http://au.stars.ign.com",
     ]
   end
 end
