@@ -36,7 +36,7 @@ describe "V3 Video API -- Search/POST Smoke Tests -- POST /v3/videos/search -- B
     begin
      @response = RestClient.post @url, body_request, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url)
+      raise Exception.new(e.message+" "+@url+" "+e.response)
     end
     @data = JSON.parse(@response.body)
   end

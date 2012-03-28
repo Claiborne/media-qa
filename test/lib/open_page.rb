@@ -4,7 +4,7 @@ def nokogiri_open(page)
   begin
     nok_doc = Nokogiri::HTML(RestClient.get(page))
   rescue => e
-    raise Exception.new("#{e.message} on "+page.to_s )
+    raise Exception.new("#{e.message} on "+page.to_s+". "+e.response)
   end#end Exception
   return nok_doc
 end#end def
@@ -13,7 +13,7 @@ def nokogiri_not_301_home_open(page)
   begin
     rest_doc = rest_client_not_301_home_helper(page)
   rescue => e
-    raise Exception.new("#{e.message} on "+page.to_s)
+    raise Exception.new("#{e.message} on "+page.to_s+". "+e.response)
   end#end Exception
   return Nokogiri::HTML(rest_doc)
 end
@@ -22,7 +22,7 @@ def nokogiri_not_301_open(page)
   begin
     rest_doc = rest_client_not_301_helper(page)
   rescue => e
-    raise Exception.new("#{e.message} on "+page.to_s)
+    raise Exception.new("#{e.message} on "+page.to_s+". "+e.response)
   end#end Exception
   return Nokogiri::HTML(rest_doc)
 end
@@ -31,7 +31,7 @@ def rest_client_open(page)
   begin
     rest_doc = RestClient.get(page)
   rescue => e
-    raise Exception.new("#{e.message} on "+page.to_s)
+    raise Exception.new("#{e.message} on "+page.to_s+". "+e.response)
   end#end Exception
   return rest_doc
 end
@@ -40,7 +40,7 @@ def rest_client_not_301_home_open(page)
   begin
     rest_doc = rest_client_not_301_home_helper(page)
   rescue => e
-    raise Exception.new("#{e.message} on "+page.to_s)
+    raise Exception.new("#{e.message} on "+page.to_s+". "+e.response)
   end#end Exception
   return rest_doc
 end
@@ -50,7 +50,7 @@ def rest_client_not_301_open(page)
   begin
     rest_doc = rest_client_not_301_helper(page)
   rescue => e
-    raise Exception.new("#{e.message} on "+page.to_s)
+    raise Exception.new("#{e.message} on "+page.to_s+". "+e.response)
   end#end Exception
   return rest_doc
 end

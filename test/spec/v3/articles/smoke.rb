@@ -23,7 +23,7 @@ describe "V3 Articles API -- General Smoke Tests -- v3/articles#{call}", :smoke 
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url)
+      raise Exception.new(e.message+" "+@url+" "+e.response)
     end
     @data = JSON.parse(@response.body)
   end
@@ -227,7 +227,7 @@ describe "V3 Articles API -- Get Article By #{k} -- #{v}", :smoke => true do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url)
+      raise Exception.new(e.message+" "+@url+" "+e.response)
     end
     @data = JSON.parse(@response.body)
   end

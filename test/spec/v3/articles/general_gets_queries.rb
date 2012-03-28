@@ -145,7 +145,7 @@ describe "V3 Articles API -- Get Published Article Type: #{call} -- v3/articles/
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url)
+      raise Exception.new(e.message+" "+@url+" "+e.response)
     end
     @data = JSON.parse(@response.body)
   end
