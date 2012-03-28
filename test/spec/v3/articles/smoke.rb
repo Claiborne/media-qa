@@ -268,7 +268,6 @@ describe "V3 Articles API -- Get Article By #{k} -- #{v}", :smoke => true do
   
   ["articleId",
     "metadata",
-    "metadata", 
     "system", 
     "tags",
     "refs",
