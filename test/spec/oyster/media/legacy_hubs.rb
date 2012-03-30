@@ -42,62 +42,6 @@ include CoverStoriesMain
 require 'widget/blogroll_v3_articles'
 include Blogrollv3Articles
 
-@newhub = ["http://www.ign.com/wii-u"]
-
-@newhub.each do |hub|
-
-describe "Oyster Hubs -- #{hub}" do
-  before(:all) do
-    @page = hub.to_s
-    @doc = nokogiri_not_301_open(@page)
-  end
-
-  before(:each) do
-    
-  end
-
-  after(:each) do
-
-  end
-
-  it "should return 200", :smoke => true do
-  end
-  
-  it "should include at least one css file", :smoke => true do
-    check_include_at_least_one_css_file(@doc)
-  end
-  
-  it "should not include any css files that return 400 or 500", :smoke => true do
-    check_css_files(@doc)
-  end
-  
-  context "Global Header Widget" do
-    widget_evo_header
-  end
-  
-  context "Global Footer Widget" do
-    widget_global_footer
-  end
-  
-  context "Cover Stories Widget" do
-    widget_cover_stories_main_new(6)
-  end
-  
-  context "Top Games Out Now Widget" do
-    widget_top_games('Games Out Now', 5)
-  end
-  
-  context "Top Games Coming Soon Widget" do
-    widget_top_games('Games Coming Soon', 5)
-  end
-  
-  context "Blogroll" #todo  
-  
-end
-end
-
-########################################################
-
 @hubs = return_hubs_list
 
 @hubs.each do |hub|

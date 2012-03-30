@@ -9,16 +9,16 @@ require 'var_helper'
 include Assert
 
 def get_stage_topaz_token
-  '3d1a61dc73b6750228416edb0615645e956a9290'
+  'ed4063ae614773398a945dc35962e599b511fe0e'
 end
 
 #TODO:
-# get_stage_topaz_token lib helper method
+# get_stage_topaz_token lib helper method   ##{Random.rand(100000-999999)}
 
 def body_request
   {
     "metadata" => {
-      "headline"=>"Media QA Test Article #{Random.rand(100000-999999)}",
+      "headline"=>"Media QA Test Article r4",
       "articleType"=>"article",
       "state"=>"published"
     },

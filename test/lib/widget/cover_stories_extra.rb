@@ -53,18 +53,6 @@ module CoverStoriesExtra
       end
     end
     
-    it "should have at least one <a> tag", :smoke => true do
-      @doc.css('div.extra-coverStories a').count.should > 0
-    end
-    
-    it "should have at least one <img> tag", :smoke => true do
-      @doc.css('div.extra-coverStories img').count.should > 0
-    end
-
-    it "should display text", :smoke => true do
-      @doc.css('div.extra-coverStories').text.delete("^a-zA-Z").length.should > 0
-    end
-    
     it "should display text in each slot" do
       @doc.css('div.extra-coverStories div.extra-storyItem').each do |slot|
         slot.text.delete("^a-zA-Z").length.should > 0

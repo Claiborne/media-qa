@@ -1,61 +1,39 @@
 require 'rspec'
+require 'configuration'
 require 'nokogiri'
 require 'rest_client'
 require 'open_page'
 require 'fe_checker'
+require 'hubs_list'
+require 'widget/evo_header'
+require 'widget/global_footer'
+require 'widget/cover_stories_main'
+require 'widget/cover_stories_extra'
+require 'widget/top_games'
+require 'widget/most_commented_stories'
+require 'widget/video_interrupt'
+require 'widget/popular_threads'
 
-#require 'hubs_list'
-#require 'widget/global_header'
-#require 'widget/global_footer'
-#require 'widget/cover_stories_hub'
-#require 'widget/legacy_blogroll'
-#require 'widget/ent_promo'
-#require 'widget/discover_more'
-#require 'widget/top_games'
-#require 'widget/what_we_are_playing'
-#require 'widget/promo'
-#require 'widget/hot_reviews_previews'
-#require 'widget/youtube_start_schedule'
+include OpenPage
+include FeChecker
+include HubsList
+include EvoHeader
+include GlobalFooter
+include TopGames
+include CoverStoriesMain
+include CoverStoriesExtra
+include MostCommentedStories
+include VideoInterrupt
+include PopularThreads
 
-#include YoutubeStartSchedule
-#include HotReviewsPreviews
-#include Promo
-#include WhatWeArePlaying
-#include TopGames
-#include DiscoverMore
-#include EntPromo
-#include LegacyBlogroll
-#include CoverStoriesHub
-#include HubsList
-#include FeChecker
-#include OpenPage
-#include GlobalFooter
-#include GlobalHeader
-
-# wii-u only stuff
-#require 'widget/evo_header'
-#require 'widget/cover_stories_main'
-
-#include EvoHeader
-#include CoverStoriesMain
-
-# blogroll
-#require 'widget/blogroll_v3_articles'
-#include Blogrollv3Articles
-
-@newhub = ["http://www.ign.com/wii-u"]
-
-@newhub.each do |hub|
-
-describe "Oyster Hubs -- #{hub}" do
+describe "Oyster Hubs -- www.ign.com/wii-u" do
+  
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster_hubs.yml"
-    @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/tech/#{topic}"
-    puts @page
+    #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
+    #@config = Configuration.new
+    #@page = "http://#{@config.options['baseurl']}#{hub}"
+    @page = "http://www.ign.com/wii-u"
     @doc = nokogiri_not_301_open(@page)
-    #@page = hub.to_s
-    #@doc = nokogiri_not_301_open(@page)
   end
 
   before(:each) do
@@ -72,3 +50,127 @@ describe "Oyster Hubs -- #{hub}" do
   it "should include at least one css file", :smoke => true do
     check_include_at_least_one_css_file(@doc)
   end
+  
+  context "Global Header Widget" do
+    widget_evo_header
+  end
+    
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+  
+  context "Cover Stories Widget" do
+    widget_cover_stories_main_new(5)
+  end
+  
+  context "Extra Cover Stories Widget" do
+    widget_cover_stories_extra
+  end
+  
+  context "Popular Videos Widget" do
+    widget_video_interrupt
+  end
+  
+  context "Most Commented Stories Widget" do
+    widget_most_commented_stories
+  end
+  
+  context "Top Games Out Now Widget" do
+    widget_top_games('Games Out Now', 5)
+  end
+  
+  context "Top Games Coming Soon Widget" do
+    widget_top_games('Games Coming Soon', 5)
+  end
+  
+  context "Popular Threads Widget" do
+    widget_popular_threads
+  end
+
+end #end describe
+
+######################################################################
+
+@hubs = return_list_of_game_hubs
+
+@hubs.each do |hub|
+
+describe "Oyster Hubs -- #{hub}", :test => true do
+  
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
+    @config = Configuration.new
+    @page = "http://#{@config.options['baseurl']}#{hub}" 
+    @doc = nokogiri_not_301_open(@page)
+  end
+
+  before(:each) do
+    
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200", :smoke => true do
+  end
+  
+  it "should include at least one css file", :smoke => true do
+    check_include_at_least_one_css_file(@doc)
+  end
+  
+  context "Global Header Widget" do
+    it "should implement..."
+  end
+    
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+  
+  context "Cover Stories Widget" do
+    widget_cover_stories_main_new(5)
+  end
+  
+  context "Top Games Out Now Widget" do
+    widget_top_games('Games Out Now', 4)
+  end
+  
+  context "Top Games Coming Soon Widget" do
+    widget_top_games('Games Coming Soon', 4)
+  end
+
+end #end describe
+end #end hub iteration
+
+######################################################################
+
+@hubs = return_list_of_non_game_hubs
+
+@hubs.each do |hub|
+
+describe "Oyster Hubs -- #{hub}" do
+  
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
+    @config = Configuration.new
+    @page = "http://#{@config.options['baseurl']}#{hub}" 
+    @doc = nokogiri_not_301_open(@page)
+  end
+
+  before(:each) do
+    
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200", :smoke => true do
+  end
+  
+  it "should include at least one css file", :smoke => true do
+    check_include_at_least_one_css_file(@doc)
+  end
+  
+end #end describe
+end #end hub iteration

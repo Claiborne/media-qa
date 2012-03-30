@@ -96,12 +96,14 @@ module CoverStoriesMain
       check_links_not_301_home('div.cat-coverStories')
     end
 
-    it "should have #{num_of_slots} slots for #{num_of_slots} cover stories", :smoke => true do
-      @doc.css('div.cat-coverStories div.cvr-main').count.should == num_of_slots
+    it "should have at least #{num_of_slots} slots for #{num_of_slots} cover stories", :smoke => true do
+      @doc.css('div.cat-coverStories div.cvr-main').count.should >= num_of_slots
     end
     
     it "should have a clickable image for each cover-story slot", :smoke => true do
-      @doc.css("div.cat-coverStories div.cvr-main a > img").count.should == num_of_slots
+      @doc.css("div.cat-coverStories div.cvr-main").each do |story|
+        story.css("a > img").count.should == 1
+      end
     end
     
     it "should have an http link for each cover-story slot", :smoke => true do
@@ -112,12 +114,16 @@ module CoverStoriesMain
       check_have_an_img_for_each('div.cat-coverStories div.cvr-main')
     end
     
+    it "should have at least #{num_of_slots} headlines for #{num_of_slots} cover stories", :smoke => true do
+      @doc.css('div.cat-coverStories div.cvr-headline').count.should >= num_of_slots
+    end
+    
     it "should have a headline for each cover-story slot", :smoke => true do
-      @doc.css('div.cat-coverStories div.cvr-headline').count.should == num_of_slots
+      @doc.css('div.cat-coverStories div.cvr-headline').count.should == @doc.css('div.cat-coverStories div.cvr-main').count
     end
     
     it "should have a link for the headline in each cover-story slot", :smoke => true do
-      @doc.css('div.cat-coverStories div.cvr-headline a').count.should == num_of_slots
+      check_have_a_link('div.cat-coverStories div.cvr-headline')
     end
     
     it "should display text for each cover-story headline", :smoke => true do
@@ -128,8 +134,12 @@ module CoverStoriesMain
       check_have_a_link_for_each('div.cat-coverStories div.cvr-headline')
     end
     
+    it "should have at least #{num_of_slots} subitem slot for #{num_of_slots} cover stories", :smoke => true do
+       @doc.css('div.cat-coverStories ul.cat-coverStories-subitems').count.should >= num_of_slots
+    end
+    
     it "should have a subitem slot for each cover story", :smoke => true do
-      @doc.css('div.cat-coverStories ul.cat-coverStories-subitems').count.should == num_of_slots
+      @doc.css('div.cat-coverStories ul.cat-coverStories-subitems').count.should == @doc.css('div.cat-coverStories div.cvr-main').count
     end
     
     it "should have at least one subitem for each cover story", :smoke => true do

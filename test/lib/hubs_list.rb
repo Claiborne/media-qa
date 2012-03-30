@@ -1,4 +1,5 @@
 module HubsList
+  
   def return_hubs_list
     [
     "http://www.ign.com",
@@ -42,4 +43,30 @@ module HubsList
     #{}"http://au.stars.ign.com",
     ]
   end
+  
+  def return_list_of_game_hubs
+    [
+    "/",
+    "/xbox-360",
+    "/ps3",
+    "/wii",
+    "/wii-u",
+    "/pc",
+    "/ds",
+    "/ps-vita",
+    "/wireless"
+    ]
+  end
+  
+  def return_list_of_non_game_hubs
+    [  
+    "/tech",
+    "/music",
+    "/comics",
+    "/stars",
+    "/tv",
+    "/movies"
+    ]
+  end
+  
 end
