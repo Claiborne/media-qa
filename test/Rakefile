@@ -188,9 +188,11 @@ RSpec::Core::RakeTask.new('ign-auth') do |t|
 end
 
 desc "Run social_api tests"
+task :social_api do
 RSpec::Core::RakeTask.new('social_api') do |t|
-    t.rspec_opts = ["-Ilib"]
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/social_api/**/*.rb'
+end
 end
 
 desc "Run social_test tests"
@@ -208,4 +210,10 @@ desc "Run gobID for v3 test"
 RSpec::Core::RakeTask.new('v3_gobId') do |t|
   t.rspec_opts = ["-Ilib", "--format documentation","--color"]
   t.pattern = 'spec/v1/v3_gobId.rb'
+end
+
+desc "Run Topaz_registration test"
+RSpec::Core::RakeTask.new('topaz_registration') do |t|
+  t.rspec_opts = ["-Ilib", "--format documentation","--color"]
+  t.pattern = 'spec/topaz/topaz_registration.rb'
 end

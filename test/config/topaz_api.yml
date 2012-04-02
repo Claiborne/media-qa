@@ -2,8 +2,8 @@ development:
   baseurl: localhost:8080
 
 staging:
-  baseurl: social-stg-services-vm-01.sc4.colo.fimops.com:8080
+  baseurl: secure-stg.ign.com
 
 production:
-  baseurl: social-services.ign.com
+  baseurl: secure.ign.com
 

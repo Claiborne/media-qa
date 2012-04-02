@@ -23,7 +23,7 @@ before(:all) do
 
   end
  it "should return 20 videos" do
-    response = RestClient.get "http://#{@config.options['baseurl']}/v3/videos?count=500"
+    response = RestClient.get "http://#{@config.options['baseurl']}/v3/videos?count=1000"
     response.code.should eql(200)
     data = JSON.parse(response.body)["data"]
     data.each do |entry|

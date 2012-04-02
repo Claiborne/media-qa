@@ -1,4 +1,5 @@
-require File.dirname(__FILE__) + "/../spec_helper"
+#require File.dirname(__FILE__) + "/../spec_helper"
+require 'rspec'
 require 'rest_client'
 require 'json'
 require 'configuration'
@@ -29,7 +30,7 @@ gamerCard_type = "GAMER_CARD"
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
     @config = Configuration.new
 
-    @nickname = "socialnick2_#{Random.rand(200-9999)}"
+    @nickname = "socialnick3_#{Random.rand(200-9999)}"
     @joined = "#{@nickname} joined the community"
   end
 
@@ -42,8 +43,8 @@ gamerCard_type = "GAMER_CARD"
 
 it "should register a new user" do
 @time_stamp = Time.now.to_s 
-@email = "socialuser2_#{Random.rand(100-9999)}@ign.com"
-@key1 = "102353437#{Random.rand(10-1000)}"
+@email = "socialuser3_#{Random.rand(100-9999)}@ign.com"
+@key1 = "102453437#{Random.rand(10-1000)}"
 jdata = JSON.generate({"email"=>"#{@email}","nickname"=>"#{@nickname}","accounts"=>[{"accountType"=>"topaz","key1"=>"1234578","key2"=>"local"}]})
 response = RestClient.post "http://#{@config.options['baseurl']}/v1.0/social/rest/reg",jdata, {:content_type => 'application/json'}
 person_id= JSON.parse(response.body)["entry"]
