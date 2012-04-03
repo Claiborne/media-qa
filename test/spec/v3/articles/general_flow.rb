@@ -13,12 +13,12 @@ def get_stage_topaz_token
 end
 
 #TODO:
-# get_stage_topaz_token lib helper method   ##{Random.rand(100000-999999)}
+# get_stage_topaz_token lib helper method
 
 def body_request
   {
     "metadata" => {
-      "headline"=>"Media QA Test Article r4",
+      "headline"=>"Media QA Test Article #{Random.rand(100000-999999)}",
       "articleType"=>"article",
       "state"=>"published"
     },

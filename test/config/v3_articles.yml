@@ -4,4 +4,4 @@ staging:
   baseurl: 10.92.218.21:8081
 
 production:
-  baseurl: 
+  baseurl: apis.lan.ign.com/article
