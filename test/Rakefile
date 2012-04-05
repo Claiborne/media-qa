@@ -136,6 +136,8 @@ RSpec::Core::RakeTask.new('techapi') do |t|
     t.pattern = 'spec/v2/tech.rb'    
 end
 
+############# NON-SPEC SCRIPTS ############# 
+
 ############# DEPRECATED / INVALID ############# 
 
 desc "" 
@@ -210,6 +212,7 @@ RSpec::Core::RakeTask.new('status_oauth') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/social_api/status_oauth.rb'  
 end
+
 desc "Run gobID for v3 test"
 RSpec::Core::RakeTask.new('v3_gobId') do |t|
   t.rspec_opts = ["-Ilib", "--format documentation","--color"]
