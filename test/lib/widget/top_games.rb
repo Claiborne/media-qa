@@ -26,7 +26,7 @@ module TopGames
     end
     
     it "should have at least #{num_of_slots} slots", :smoke => true do
-      #return_top_games_widget(@doc, type).css('div.column-game').count.should  num_of_slots
+      return_top_games_widget(@doc, type).css('div.column-game').count.should >= num_of_slots
     end
     
     it "should have text in each slot", :smoke => true do

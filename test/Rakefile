@@ -13,7 +13,7 @@ RSpec::Core::RakeTask.new('all') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
       'spec/oyster/media/*.rb',
-      'spec/v3/video/*.rb',  # Change this to spec/v3/*/*.rb when ARTICLES is on prd
+      'spec/v3/*/*.rb'
       ]  
 end
 
@@ -33,8 +33,8 @@ desc "Run all backend tests"
 RSpec::Core::RakeTask.new('backend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
-      'spec/v3/video/*.rb'
-      #'spec/v3/**/*.rb', uncomment this when v3 ARTICLES are ready, and del line above
+      'spec/v3/video/*.rb',
+      'spec/v3/**/*.rb'
       ]  
 end
 
@@ -43,7 +43,7 @@ end
 desc "Run v3 tests"
 RSpec::Core::RakeTask.new('v3') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/video/*.rb' # Change this to spec/v3/*/*.rb when ARTICLES2 is on prd
+    t.pattern = 'spec/v3/*/*.rb' 
 end
 
 desc "Run v3 video tests"
@@ -55,7 +55,13 @@ end
 desc "Run v3 articles tests"
 RSpec::Core::RakeTask.new('v3articles') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/articles/*.rb'    
+    t.pattern = 'spec/v3/articles/*.rb'
+end
+
+desc "Run v3 object tests"
+RSpec::Core::RakeTask.new('v3object') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v3/object/*.rb'
 end
 
 ############# V2 ############# 
@@ -129,6 +135,8 @@ RSpec::Core::RakeTask.new('techapi') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/v2/tech.rb'    
 end
+
+############# NON-SPEC SCRIPTS ############# 
 
 ############# DEPRECATED / INVALID ############# 
 
@@ -206,6 +214,7 @@ RSpec::Core::RakeTask.new('status_oauth') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/social_api/status_oauth.rb'  
 end
+
 desc "Run gobID for v3 test"
 RSpec::Core::RakeTask.new('v3_gobId') do |t|
   t.rspec_opts = ["-Ilib", "--format documentation","--color"]
