@@ -38,7 +38,7 @@ end
 
 def wiiu
 {"matchRule"=>"matchAll",
- "count"=>10,
+ "count"=>20,
  "startIndex"=>0,
  "networks"=>"ign",
  "states"=>"published",
@@ -85,7 +85,7 @@ end
 v3 = []; v2 =[]
 
 @url = "http://apis.lan.ign.com/article/v3/articles/search"
-@response = RestClient.post @url, wiiu, :content_type => "application/json"
+@response = RestClient.post @url, blogs, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/test.json', 'w') {|f| f.write(@response.to_s) }
 

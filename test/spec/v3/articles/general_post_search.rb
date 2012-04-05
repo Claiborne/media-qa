@@ -5,7 +5,7 @@ require 'rest_client'
 require 'json'
 require 'assert'
 require 'var_helper'
-#require 'time'
+require 'time'
 
 include Assert
 
@@ -88,43 +88,8 @@ def tech
 }.to_json
 end
 
-########################## BEGIN SPEC ########################## 
-
-{'wii'=>wii,'tech'=>tech}.each_pair do |hub, search|
-describe "V3 Articles API -- General Post Search for Hubs using #{search}" do
-
-  before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
-    begin 
-       @response = RestClient.post @url, search, :content_type => "application/json"
-    rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
-    end
-    @data = JSON.parse(@response.body)
-  end
-
-  before(:each) do
-
-  end
-
-  after(:each) do
-    
-  end
+def common_assertions
   
-  after(:all) do
-
-  end
-  
-  it "should return 200" do
-    check_200(@response)
-  end
-
-  it "should not be blank" do
-    check_not_blank(@data)
-  end
-
   it "should return a hash with five indices" do
     check_indices(@data, 6)
   end
@@ -188,9 +153,44 @@ describe "V3 Articles API -- General Post Search for Hubs using #{search}" do
   it "should return 'data' with an array length of 20" do
     @data['data'].length.should == 10
   end
+  
+  it "should return 'networks' metadata with a value that includes 'ign' for all articles" do
+    @data['data'].each do |article|
+      article['metadata']['networks'].include?('ign').should be_true
+    end
+  end
+  
+  it "should return 'state' metadata with a value of 'published' for all articles" do
+    @data['data'].each do |article|
+      article['metadata']['state'].should == 'published'
+    end
+  end
+  
+  it "should return articles in descending 'publishDate' order" do
+    pub_date_array = []
+    @data['data'].each do |article|
+      article['metadata']['publishDate'].should_not be_nil
+      pub_date_array << Time.parse(article['metadata']['publishDate'])
+    end
+    pub_date_array.should == (pub_date_array.sort {|x,y| y <=> x })
+  end
+  
+  it "should return non-nil, non-blank 'articleId' data for all articles" do
+    @data['data'].each do |article|
+      article['articleId'].should_not be_nil
+      article['articleId'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+  end
 
+  it "should return an articleId with a 24-character hash value for all articles" do
+    @data['data'].each do |article|
+      article['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    end
+  end
+  
   [ "articleId",
-    "metadata", 
+    "metadata",
+    "system",
     "tags", 
     "refs",
     "authors",
@@ -205,21 +205,39 @@ describe "V3 Articles API -- General Post Search for Hubs using #{search}" do
       end
     end    
   end#end iteration
+  
+end
 
-  # articleId assertions
+########################## BEGIN SPEC ########################## 
 
-  it "should return non-nil, non-blank 'articleId' data for all articles" do
-    @data['data'].each do |article|
-      article['articleId'].should_not be_nil
-      article['articleId'].to_s.delete("^a-zA-Z0-9").length.should > 0
+{'wii'=>wii,'tech'=>tech}.each_pair do |hub, search|
+describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}", :test => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
+    begin 
+       @response = RestClient.post @url, search, :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response)
     end
+    @data = JSON.parse(@response.body)
   end
 
-  it "should return an articleId with a 24-character hash value for all articles" do
-    @data['data'].each do |article|
-      article['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
-    end
+  before(:each) do
+
   end
+
+  after(:each) do
+    
+  end
+  
+  after(:all) do
+
+  end
+  
+  common_assertions
 
   # metadata assertions
 
@@ -241,18 +259,6 @@ describe "V3 Articles API -- General Post Search for Hubs using #{search}" do
       end
     end
   end# end iteration
-
-  it "should return 'networks' metadata with a value that includes 'ign' for all articles" do
-    @data['data'].each do |article|
-      article['metadata']['networks'].include?('ign').should be_true
-    end
-  end
-  
-  it "should return 'state' metadata with a value of 'published' for all articles" do
-    @data['data'].each do |article|
-      article['metadata']['state'].should == 'published'
-    end
-  end
   
   it "should retrun 'articleType' metadata with a value of 'article' for all articles" do
     @data['data'].each do |article|
@@ -276,15 +282,6 @@ describe "V3 Articles API -- General Post Search for Hubs using #{search}" do
     @data['data'].each do |article|
       article['categoryLocales'].include?('us').should be_true
     end
-  end
-  
-  it "should return articles in descending 'publishDate' order" do
-    pub_date_array = []
-    @data['data'].each do |article|
-      article['metadata']['publishDate'].should_not be_nil
-      pub_date_array << Time.parse(article['metadata']['publishDate'])
-    end
-    pub_date_array.should == (pub_date_array.sort {|x,y| y <=> x })
   end
 
   # legacyData assertions
@@ -334,6 +331,14 @@ describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}", :t
 
   end
 
+  common_assertions
+  
+  it "should retrun 'articleType' metadata with a value of 'post' for all articles" do
+    @data['data'].each do |article|
+      article['metadata']['articleType'].should == 'post'
+    end
+  end
+  
 end
 
 ###############################################################
@@ -362,6 +367,14 @@ describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}", 
   
   after(:all) do
 
+  end
+  
+  common_assertions
+  
+  it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
+    @data['data'].each do |article|
+      article['metadata']['articleType'].should == 'cheat'
+    end
   end
   
 end
