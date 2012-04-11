@@ -87,19 +87,19 @@ end
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"
-RSpec::Core::RakeTask.new('oysterfrontend') do |t|
+RSpec::Core::RakeTask.new('oysterfe') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/media/*.rb'
 end
 
 desc "Run Legacy Hubs Frontend Tests"
-RSpec::Core::RakeTask.new('legacyhubsfrontend') do |t|
+RSpec::Core::RakeTask.new('legacyhubs') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/media/legacy_hubs.rb'
 end
 
 desc "Run Hubs Frontend Tests"
-RSpec::Core::RakeTask.new('hubsfrontend') do |t|
+RSpec::Core::RakeTask.new('hubs') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/media/hubs.rb'
 end

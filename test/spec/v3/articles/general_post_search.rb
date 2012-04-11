@@ -9,6 +9,22 @@ require 'time'
 
 include Assert
 
+def published_articles
+{"matchRule"=>"matchAll",
+ "count"=>10,
+ "startIndex"=>0,
+ "networks"=>"ign",
+ "states"=>"published",
+ "rules"=>[
+   {"field"=>"metadata.articleType",
+     "condition"=>"is",
+     "value"=>"article"}
+     ],
+ "sortBy"=>"metadata.publishDate",
+ "sortOrder"=>"desc"
+}.to_json
+end
+
 def blogs
 {"matchRule"=>"matchAll",
  "sortBy"=>"metadata.publishDate",
@@ -210,8 +226,73 @@ end
 
 ########################## BEGIN SPEC ########################## 
 
+describe "V3 Articles API -- General Post Search for published articles" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
+    begin 
+       @response = RestClient.post @url, published_articles, :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+    
+  end
+  
+  after(:all) do
+
+  end
+  
+  common_assertions
+
+  # metadata assertions
+
+  ["headline",
+    "state",
+    "slug",
+    "publishDate",
+    "articleType",].each do |k|
+    it "should return '#{k}' metadata for all articles" do
+      @data['data'].each do |article|
+        article['metadata'].has_key?(k).should be_true
+      end
+    end
+    
+    it "should return non-nil, non-blank '#{k}' metadata for all articles" do
+      @data['data'].each do |article|
+      article['metadata'][k].should_not be_nil
+      article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+      end
+    end
+  end# end iteration
+  
+  it "should retrun 'articleType' metadata with a value of 'article' for all articles" do
+    @data['data'].each do |article|
+      article['metadata']['articleType'].should == 'article'
+    end
+  end
+  
+  it "should return the first article with a publish date no more than an hour old" do
+     time_now = Time.new
+     time_last_published = Time.parse(@data['data'][0]['metadata']['publishDate'])
+     (time_now - time_last_published).should < 3601
+  end
+  
+end
+
+###############################################################
+
 {'wii'=>wii,'tech'=>tech}.each_pair do |hub, search|
-describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}", :test => true do
+describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -305,7 +386,7 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}", :test => true do
+describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -339,11 +420,17 @@ describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}", :t
     end
   end
   
+  it "should return the first blog with a publish date no more than an hour old" do
+     time_now = Time.new
+     time_last_published = Time.parse(@data['data'][0]['metadata']['publishDate'])
+     (time_now - time_last_published).should < 3601
+  end
+  
 end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}", :test => true do
+describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
