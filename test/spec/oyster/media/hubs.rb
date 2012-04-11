@@ -13,7 +13,9 @@ require 'widget/top_games'
 require 'widget/most_commented_stories'
 require 'widget/video_interrupt'
 require 'widget/popular_threads'
+require 'widget/blogroll_v3_articles'
 
+include Blogrollv3Articles
 include OpenPage
 include FeChecker
 include HubsList
@@ -26,7 +28,38 @@ include MostCommentedStories
 include VideoInterrupt
 include PopularThreads
 
-describe "Oyster Hubs -- www.ign.com/wii-u" do
+describe "Oyster Hubs -- www.ign.com/tech", :deploy => true do
+  
+  before(:all) do
+    #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
+    #@config = Configuration.new
+    #@page = "http://#{@config.options['baseurl']}#{hub}"
+    @page = "http://www.ign.com/tech"
+    @doc = nokogiri_not_301_open(@page)
+  end
+
+  before(:each) do
+    
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200", :smoke => true do
+  end
+  
+  it "should include at least one css file", :smoke => true do
+    check_include_at_least_one_css_file(@doc)
+  end
+  
+  context "v3 Blogroll widget", :blogroll => true do
+    widget_blogroll_v3_articles(10, "n/a")
+  end
+
+end #end describe
+
+describe "Oyster Hubs -- www.ign.com/wii-u", :deploy => true do
   
   before(:all) do
     #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
@@ -63,6 +96,10 @@ describe "Oyster Hubs -- www.ign.com/wii-u" do
     widget_cover_stories_main_new(5)
   end
   
+  context "v3 Blogroll widget", :blogroll => true do
+    widget_blogroll_v3_articles(10, "n/a")
+  end
+  
   context "Extra Cover Stories Widget" do
     widget_cover_stories_extra
   end
@@ -95,7 +132,7 @@ end #end describe
 
 @hubs.each do |hub|
 
-describe "Oyster Hubs -- #{hub}", :test => true do
+describe "Oyster Hubs -- #{hub}" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"

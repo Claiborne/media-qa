@@ -36,9 +36,33 @@ def cheats
 }.to_json
 end
 
+def xboxmobile
+{"matchRule"=>"matchAll",
+ "count"=>60,
+ "startIndex"=>0,
+ "networks"=>"ign",
+ "states"=>"published",
+ "rules"=>[
+   {"field"=>"metadata.articleType",
+    "condition"=>"is",
+    "value"=>"article"},
+  {"field"=>"categoryLocales",
+   "condition"=>"contains",
+   "value"=>"us"},
+  {"field"=>"tags.slug",
+   #"condition"=>"contains",
+   "condition"=>"contains",
+   "value"=>"news,feature,review,preview"},
+  {"field"=>"categories.slug",
+   "condition"=>"contains",
+   "value"=>"xbox-360"}
+  ]
+}.to_json
+end
+
 def wiiu
 {"matchRule"=>"matchAll",
- "count"=>20,
+ "count"=>80,
  "startIndex"=>0,
  "networks"=>"ign",
  "states"=>"published",
@@ -51,7 +75,7 @@ def wiiu
     "value"=>"wii"},
    {"field"=>"categoryLocales",
     "condition"=>"contains",
-    "value"=>"us"}
+    "value"=>"uk"}
     ],
   "sortBy"=>"metadata.publishDate",
   "sortOrder"=>"desc"
@@ -61,7 +85,7 @@ end
 
 def tech
 {"matchRule"=>"matchAll",
- "count"=>60,
+ "count"=>10,
  "startIndex"=>0,
  "networks"=>"ign",
  "states"=>"published",
@@ -85,7 +109,7 @@ end
 v3 = []; v2 =[]
 
 @url = "http://apis.lan.ign.com/article/v3/articles/search"
-@response = RestClient.post @url, blogs, :content_type => "application/json"
+@response = RestClient.post @url, xboxmobile, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/test.json', 'w') {|f| f.write(@response.to_s) }
 
