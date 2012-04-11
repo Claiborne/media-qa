@@ -28,7 +28,7 @@ include MostCommentedStories
 include VideoInterrupt
 include PopularThreads
 
-describe "Oyster Hubs -- www.ign.com/tech", :deploy => true do
+describe "Oyster Hubs -- www.ign.com/tech" do
   
   before(:all) do
     #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
@@ -53,13 +53,14 @@ describe "Oyster Hubs -- www.ign.com/tech", :deploy => true do
     check_include_at_least_one_css_file(@doc)
   end
   
-  context "v3 Blogroll widget", :blogroll => true do
+  context "v3 Blogroll widget" do
     widget_blogroll_v3_articles(10, "n/a")
+    widget_blogroll_v3_articles_vs_api(10, "tech", "us")
   end
 
 end #end describe
 
-describe "Oyster Hubs -- www.ign.com/wii-u", :deploy => true do
+describe "Oyster Hubs -- www.ign.com/wii-u" do
   
   before(:all) do
     #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
@@ -96,8 +97,9 @@ describe "Oyster Hubs -- www.ign.com/wii-u", :deploy => true do
     widget_cover_stories_main_new(5)
   end
   
-  context "v3 Blogroll widget", :blogroll => true do
+  context "v3 Blogroll widget" do
     widget_blogroll_v3_articles(10, "n/a")
+    widget_blogroll_v3_articles_vs_api(10, "wii", "us")
   end
   
   context "Extra Cover Stories Widget" do
@@ -132,7 +134,7 @@ end #end describe
 
 @hubs.each do |hub|
 
-describe "Oyster Hubs -- #{hub}" do
+describe "Oyster Hubs -- #{hub}", :stg => true do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
@@ -185,7 +187,7 @@ end #end hub iteration
 
 @hubs.each do |hub|
 
-describe "Oyster Hubs -- #{hub}" do
+describe "Oyster Hubs -- #{hub}", :stg => true do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"

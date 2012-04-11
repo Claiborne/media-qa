@@ -1,6 +1,8 @@
 module Blogrollv3Articles
 
   require 'fe_checker'
+  require 'rest_client'
+  require 'json'
   include FeChecker
   
   def widget_blogroll_v3_articles_smoke
@@ -136,4 +138,52 @@ module Blogrollv3Articles
     widget_blogroll_v3_articles_nav(nav)
     
   end
-end
+
+  def widget_blogroll_v3_articles_vs_api(count, category, locale)
+    
+    it "should display the same articles as the API returns" do
+      # Get articles from API
+      api_call = 
+      {"matchRule"=>"matchAll",
+       "count"=>count.to_i,
+       "startIndex"=>0,
+       "networks"=>"ign",
+       "states"=>"published",
+       "rules"=>[
+         {"field"=>"metadata.articleType",
+           "condition"=>"is",
+           "value"=>"article"},
+         {"field"=>"categories.slug",
+          "condition"=>"contains",
+          "value"=>"#{category}"},
+         {"field"=>"categoryLocales",
+          "condition"=>"contains",
+          "value"=>"#{locale}"}
+          ],
+        "sortBy"=>"metadata.publishDate",
+        "sortOrder"=>"desc"
+      }.to_json
+      api_response = RestClient.post "http://apis.lan.ign.com/article/v3/articles/search", api_call, :content_type => "application/json"
+      api_articles = JSON.parse(api_response.body)
+      api_article_headlines = []
+      api_articles['data'].each do |api_article|
+        api_article_headlines << api_article['promo']['title']
+      end
+      
+      # Get articles from v3_blogroll
+      blogroll_headlines = []
+      @doc.css('div.blogrollContainer div.listElmnt-blogItem h3').each do |blogroll_article|
+       blogroll_headlines << blogroll_article.text
+      end
+      
+      # Compare headlines from API and Blogroll
+      begin
+        api_article_headlines.should == blogroll_headlines
+      rescue => e
+        raise Exception.new("#{e.message}\nAPI returned: #{api_article_headlines}\nBlogroll returned: #{blogroll_headlines}")
+      end#end Exception
+      
+    end#end it
+  end#end def
+  
+end#end module

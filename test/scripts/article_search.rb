@@ -75,7 +75,7 @@ def wiiu
     "value"=>"wii"},
    {"field"=>"categoryLocales",
     "condition"=>"contains",
-    "value"=>"uk"}
+    "value"=>"us"}
     ],
   "sortBy"=>"metadata.publishDate",
   "sortOrder"=>"desc"
@@ -105,8 +105,15 @@ def tech
  }.to_json
 end
 
+=begin
+tech subpages
+{"field"=>"tags",
+"condition"=>"containsAll",
+"value"=>"tech,wii-u"}
+=end
 
 v3 = []; v2 =[]
+
 
 @url = "http://apis.lan.ign.com/article/v3/articles/search"
 @response = RestClient.post @url, xboxmobile, :content_type => "application/json"
