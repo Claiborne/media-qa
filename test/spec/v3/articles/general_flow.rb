@@ -33,7 +33,7 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Create An Article -- POST 10.92.218.21:8081/v3/articles?oauth_token={token}", :write => true do
+describe "V3 Articles API -- Create An Article -- POST 10.92.218.21:8081/v3/articles?oauth_token={token}", :stg => true do
 
   before(:all) do
     @url = "http://10.92.218.21:8081/v3/articles?oauth_token=#{get_stage_topaz_token}"
@@ -79,7 +79,7 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Created -- 10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}", :write => true do
+describe "V3 Articles API -- Check Article Just Created -- 10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}", :stg => true do
 
   before(:all) do
     @url = "http://10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}"
@@ -267,7 +267,7 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Update Article Just Created -- PUT 10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}?oauth_token={token}", :write => true do
+describe "V3 Articles API -- Update Article Just Created -- PUT 10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}?oauth_token={token}", :stg => true do
 
   before(:all) do
     put_body = {"content" => ["Test Content Change #{Random.rand(10000-99999)}"]}.to_json
@@ -304,7 +304,7 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Updated -- 10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}", :write => true do
+describe "V3 Articles API -- Check Article Just Updated -- 10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}", :stg => true do
 
   before(:all) do
     @url = "http://10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}"
