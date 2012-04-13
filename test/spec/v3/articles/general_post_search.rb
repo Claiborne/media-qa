@@ -60,6 +60,20 @@ def cheats
 }.to_json
 end
 
+def skyrim_cheats
+{"matchRule"=>"matchAll",
+ "count"=>100,
+ "rules"=>[
+   {"field"=>"metadata.articleType",
+    "condition"=>"is",
+    "value"=>"cheat"},
+   {"field"=>"legacyData.objectRelations",
+     "condition"=>"is",
+     "value"=>"14267318"}
+  ]
+}.to_json
+end
+
 def wii
 {"matchRule"=>"matchAll",
  "count"=>10,
@@ -226,7 +240,7 @@ end
 
 ########################## BEGIN SPEC ########################## 
 
-describe "V3 Articles API -- General Post Search for published articles" do
+describe "V3 Articles API -- General Post Search for published articles sending #{published_articles}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -465,3 +479,158 @@ describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}" d
   end
   
 end
+
+###############################################################
+
+describe "V3 Articles API -- General Post Search for Skyrim Cheats sending #{skyrim_cheats}", :ttt => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
+    begin 
+       @response = RestClient.post @url, skyrim_cheats, :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+    
+  end
+  
+  after(:all) do
+
+  end
+  
+  it "should return a hash with five indices" do
+    check_indices(@data, 6)
+  end
+
+  it "should return 'count' data with a non-nil, non-blank value" do
+    @data.has_key?('count').should be_true
+    @data['count'].should_not be_nil
+    @data['count'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+
+  it "should return 'count' data with a value of 20" do
+    @data['count'].should > 46
+  end
+
+  it "should return 'startIndex' data with a non-nil, non-blank value" do
+    @data.has_key?('startIndex').should be_true
+    @data['startIndex'].should_not be_nil
+    @data['startIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+
+  it "should return 'startIndex' data with a value of 0" do
+    @data['startIndex'].should == 0
+  end
+
+  it "should return 'endIndex' data with a non-nil, non-blank value" do
+    @data.has_key?('endIndex').should be_true
+    @data['endIndex'].should_not be_nil
+    @data['endIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+
+  it "should return 'endIndex' data with a value of 19" do
+    @data['endIndex'].should > 45
+  end
+
+  it "should return 'isMore' data with a non-nil, non-blank value" do
+    @data.has_key?('isMore').should be_true
+    @data['isMore'].should_not be_nil
+    @data['isMore'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+
+  it "should return 'total' data with a non-nil, non-blank value" do
+    @data.has_key?('total').should be_true
+    @data['total'].should_not be_nil
+    @data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+
+  it "should return 'total' data with a value greater than 20" do
+    @data['total'].should > 20
+  end
+
+  it "should return 'data' with a non-nil, non-blank value" do
+    @data.has_key?('data').should be_true
+    @data['data'].should_not be_nil
+    @data['data'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+
+  it "should return 'data' with an array length of 20" do
+    @data['data'].length.should > 46
+  end
+  
+  it "should return 'networks' metadata with a value that includes 'ign' for all articles" do
+    @data['data'].each do |article|
+      article['metadata']['networks'].include?('ign').should be_true
+    end
+  end
+  
+  it "should return 'state' metadata with a value of 'published' for all articles" do
+    @data['data'].each do |article|
+      article['metadata']['state'].should == 'published'
+    end
+  end
+  
+  it "should return articles in descending 'publishDate' order" do
+    pub_date_array = []
+    @data['data'].each do |article|
+      article['metadata']['publishDate'].should_not be_nil
+      pub_date_array << Time.parse(article['metadata']['publishDate'])
+    end
+    pub_date_array.should == (pub_date_array.sort {|x,y| y <=> x })
+  end
+  
+  it "should return non-nil, non-blank 'articleId' data for all articles" do
+    @data['data'].each do |article|
+      article['articleId'].should_not be_nil
+      article['articleId'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+  end
+
+  it "should return an articleId with a 24-character hash value for all articles" do
+    @data['data'].each do |article|
+      article['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    end
+  end
+  
+  [ "articleId",
+    "metadata",
+    "system",
+    "tags", 
+    "refs",
+    "authors",
+    "categoryLocales",
+    "categories",
+    "content"].each do |k| 
+    it "should return non-nil '#{k}' data for all articles" do
+      @data['data'].each do |article|
+        article.has_key?(k).should be_true
+        article.should_not be_nil
+        article.to_s.length.should > 0
+      end
+    end    
+  end#end iteration
+  
+  it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
+    @data['data'].each do |article|
+      article['metadata']['articleType'].should == 'cheat'
+    end
+  end
+  
+  it "should return 'legacyData.objectRelations' data that includes the integer 14267318 for all articles" do
+    @data['data'].each do |article|
+      article['legacyData']['objectRelations'].include?(14267318).should be_true
+    end
+  end
+  
+end
+

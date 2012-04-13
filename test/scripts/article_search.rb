@@ -50,7 +50,6 @@ def xboxmobile
    "condition"=>"contains",
    "value"=>"us"},
   {"field"=>"tags.slug",
-   #"condition"=>"contains",
    "condition"=>"contains",
    "value"=>"news,feature,review,preview"},
   {"field"=>"categories.slug",
@@ -105,6 +104,20 @@ def tech
  }.to_json
 end
 
+def skyrim_cheats
+{"matchRule"=>"matchAll",
+ "count"=>100,
+ "rules"=>[
+   {"field"=>"metadata.articleType",
+    "condition"=>"is",
+    "value"=>"cheat"},
+   {"field"=>"legacyData.objectRelations",
+     "condition"=>"is",
+     "value"=>"14267318"}
+  ]
+}.to_json
+end
+
 =begin
 tech subpages
 {"field"=>"tags",
@@ -114,15 +127,7 @@ tech subpages
 
 v3 = []; v2 =[]
 
-
 @url = "http://apis.lan.ign.com/article/v3/articles/search"
-@response = RestClient.post @url, xboxmobile, :content_type => "application/json"
+@response = RestClient.post @url, skyrim_cheats, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/test.json', 'w') {|f| f.write(@response.to_s) }
-
-
-
-
-
-
-

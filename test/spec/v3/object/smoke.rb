@@ -7,7 +7,7 @@ require 'assert'
 
 include Assert
 
-describe "V3 Object API -- General Smoke Tests -- [[[[[[[[[[[[[  URL   ]]]]]]]]]]]]", :smoke => true do
+describe "V3 Object API -- General Smoke Tests -- [[[[[[[[[[[[[  URL   ]]]]]]]]]]]]", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"

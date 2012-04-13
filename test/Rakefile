@@ -87,7 +87,7 @@ end
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"
-RSpec::Core::RakeTask.new('oysterfe') do |t|
+RSpec::Core::RakeTask.new('oyster') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/media/*.rb'
 end
