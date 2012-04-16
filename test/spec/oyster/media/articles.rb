@@ -31,13 +31,8 @@ i = 0
   i+=1
 end
 
-def help
-  @doc
-end
-
 @articles_pages.each do |article|
-#doc = nokogiri_not_301_open(article)
-describe "Article Page -- #{article}", :test2 => true do
+describe "Article Page -- #{article}" do
   
   doc = nokogiri_not_301_open(article)
   
@@ -80,6 +75,7 @@ describe "Article Page -- #{article}", :test2 => true do
     @doc.css('div#disqus_thread').count.should == 1
   end
   
+  # BAD HACK
   # if article topic is lifestyle, skip Wiki Updates Widget
   unless doc.css('div.vn-container li.vn-categoryItem a').attribute('href').to_s.match('/lifestyle')
     context "Wiki Updates Widget" do

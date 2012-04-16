@@ -116,6 +116,12 @@ RSpec::Core::RakeTask.new('videofrontend') do |t|
     t.pattern = ['spec/oyster/media/video.rb']  
 end
 
+desc "Run Articles Frontend Tests"
+RSpec::Core::RakeTask.new('articlesfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = ['spec/oyster/media/articles.rb']  
+end
+
 ############# TECH ############# 
 
 desc "Run Tech Frontend and API tests"
