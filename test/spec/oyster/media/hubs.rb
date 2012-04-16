@@ -36,7 +36,7 @@ include DiscoverMore
 include MostCommentedStories
 include TechNav
 
-describe "Oyster Hubs -- www.ign.com/tech", :test => true do
+describe "Oyster Hubs -- www.ign.com/tech" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"

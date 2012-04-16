@@ -32,8 +32,6 @@ module ObjectScore
     it "should display a numberic score", :smoke => true do
       @doc.at_css('div.ratingScoreBoxContainer div.rsb-scoreNumber').text.delete('^0-9').length.should > 0
     end
-    
-    it "should not appear on an article with no review score"
 
   end 
 end

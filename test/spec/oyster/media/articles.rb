@@ -10,6 +10,7 @@ require 'widget/global_footer'
 require 'widget/wiki_updates'
 require 'widget/discover_more'
 require 'widget/video_interrupt'
+require 'widget/object_score'
 
 include FeChecker
 include OpenPage
@@ -18,6 +19,7 @@ include GlobalFooter
 include WikiUpdates
 include DiscoverMore
 include VideoInterrupt
+include ObjectScore
 
 Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
 @setup_config = Configuration.new
@@ -75,6 +77,14 @@ describe "Article Page -- #{article}" do
     @doc.css('div#disqus_thread').count.should == 1
   end
   
+  it "should display the author's name in the byline", :smoke => true do
+    @doc.at_css('div.article_byLine div.article_author').text.delete('^a-zA-Z').length.should > 2
+  end
+  
+  it "should display the date in the byline", :smoke => true do
+    @doc.at_css('div.article_byLine div.article_pub_date').text.delete('^a-zA-Z').length.should > 0
+  end
+  
   # BAD HACK
   # if article topic is lifestyle, skip Wiki Updates Widget
   unless doc.css('div.vn-container li.vn-categoryItem a').attribute('href').to_s.match('/lifestyle')
@@ -113,4 +123,29 @@ describe "Article Page -- #{article}" do
   end
 
 end
+end
+
+#########################################################
+
+describe "Review Article Page -- http://www.ign.com/articles/2011/10/17/apple-iphone-4s-review" do
+  
+  before(:all) do
+    @doc = nokogiri_not_301_open('http://www.ign.com/articles/2011/10/17/apple-iphone-4s-review')
+  end
+
+  before(:each) do
+   
+  end
+
+  after(:each) do
+
+  end
+  
+  it "should return 200", :smoke => true do
+  end
+  
+  context "Object Scorebox Widget:" do
+    widget_object_score
+  end
+  
 end
