@@ -2,6 +2,8 @@ module Blogrollv2Articles
 
   require 'fe_checker'
   include FeChecker
+  
+  ### DEPRECATED - Blogrollv3Articles has replaced this
 
   def check_is_not_blank(doc, num, element)
     i = 0

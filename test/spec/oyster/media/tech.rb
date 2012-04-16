@@ -6,7 +6,7 @@ require 'rest_client'
 require 'json'
 require 'open_page'
 require 'fe_checker'
-require 'widget/blogroll_v2_articles'
+require 'widget/blogroll_v3_articles'
 require 'widget/discover_more'
 require 'widget/cover_stories_main'
 require 'widget/cover_stories_extra'
@@ -31,7 +31,7 @@ include CoverStoriesMain
 include CoverStoriesExtra
 include TagCoverStories
 include TechNav
-include Blogrollv2Articles
+include Blogrollv3Articles
 include DiscoverMore
 include WikiUpdates
 
@@ -84,7 +84,7 @@ describe "Tech #{topic} Topic Page" do
   end
     
   context "Blogroll Widget" do
-    widget_blogroll_v2_articles(20, "/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=20&tags=tech,#{topic}&all_tags=true&sort=publish_date&order=desc")
+    widget_blogroll_v3_articles(20, "n/a")
   end
   
   context "Vertical Navigation Widget" do
