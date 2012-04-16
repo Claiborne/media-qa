@@ -87,7 +87,7 @@ describe "Article Page -- #{article}" do
 
   it "should not display the pagination widget when only one page exists" do
     @doc.at_css('div.pager_list').should be_false
-  end
+  end # end hack
   
   context "Discover More Widget" do
   

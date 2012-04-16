@@ -6,6 +6,7 @@ require 'open_page'
 require 'fe_checker'
 require 'hubs_list'
 require 'widget/evo_header'
+require 'widget/global_header'
 require 'widget/global_footer'
 require 'widget/cover_stories_main'
 require 'widget/cover_stories_extra'
@@ -14,12 +15,16 @@ require 'widget/most_commented_stories'
 require 'widget/video_interrupt'
 require 'widget/popular_threads'
 require 'widget/blogroll_v3_articles'
+require 'widget/discover_more'
+require 'widget/most_commented_stories'
+require 'tech_nav'
 
 include Blogrollv3Articles
 include OpenPage
 include FeChecker
 include HubsList
 include EvoHeader
+include GlobalHeader
 include GlobalFooter
 include TopGames
 include CoverStoriesMain
@@ -27,14 +32,16 @@ include CoverStoriesExtra
 include MostCommentedStories
 include VideoInterrupt
 include PopularThreads
+include DiscoverMore
+include MostCommentedStories
+include TechNav
 
-describe "Oyster Hubs -- www.ign.com/tech" do
+describe "Oyster Hubs -- www.ign.com/tech", :test => true do
   
   before(:all) do
-    #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
-    #@config = Configuration.new
-    #@page = "http://#{@config.options['baseurl']}#{hub}"
-    @page = "http://www.ign.com/tech"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
+    @config = Configuration.new
+    @page = "http://#{@config.options['baseurl']}/tech"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -53,9 +60,45 @@ describe "Oyster Hubs -- www.ign.com/tech" do
     check_include_at_least_one_css_file(@doc)
   end
   
+  it "should not include any css files that return 400 or 500", :smoke => true do
+    check_css_files(@doc)
+  end
+  
   context "v3 Blogroll widget" do
     widget_blogroll_v3_articles(10, "n/a")
     widget_blogroll_v3_articles_vs_api(10, "tech", "us")
+  end
+  
+  context "Global Header Widget" do
+    widget_global_header
+  end
+  
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+  
+  it "should include the follow us widget once" do
+    @doc.css('div.followBox').count.should == 1
+  end
+  
+  context "Tech Nav Widget" do
+    wiget_discover_more_expanded
+  end
+  
+  context "Main Cover Stories Widget" do
+    widget_cover_stories_main
+  end
+  
+  context "Extra Cover Stories Widget" do
+    widget_cover_stories_extra
+  end
+  
+  context "Video Interrupt Widget" do
+    widget_video_interrupt
+  end
+  
+  context "Most Commented Stories Widget" do
+    widget_most_commented_stories
   end
 
 end #end describe
@@ -63,10 +106,9 @@ end #end describe
 describe "Oyster Hubs -- www.ign.com/wii-u" do
   
   before(:all) do
-    #Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
-    #@config = Configuration.new
-    #@page = "http://#{@config.options['baseurl']}#{hub}"
-    @page = "http://www.ign.com/wii-u"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
+    @config = Configuration.new
+    @page = "http://#{@config.options['baseurl']}/wii-u"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -83,6 +125,10 @@ describe "Oyster Hubs -- www.ign.com/wii-u" do
   
   it "should include at least one css file", :smoke => true do
     check_include_at_least_one_css_file(@doc)
+  end
+  
+  it "should not include any css files that return 400 or 500", :smoke => true do
+    check_css_files(@doc)
   end
   
   context "Global Header Widget" do
@@ -158,6 +204,10 @@ describe "Oyster Hubs -- #{hub}", :stg => true do
     check_include_at_least_one_css_file(@doc)
   end
   
+  it "should not include any css files that return 400 or 500", :smoke => true do
+    check_css_files(@doc)
+  end
+  
   context "Global Header Widget" do
     it "should implement..."
   end
@@ -209,6 +259,10 @@ describe "Oyster Hubs -- #{hub}", :stg => true do
   
   it "should include at least one css file", :smoke => true do
     check_include_at_least_one_css_file(@doc)
+  end
+  
+  it "should not include any css files that return 400 or 500", :smoke => true do
+    check_css_files(@doc)
   end
   
 end #end describe
