@@ -8,13 +8,9 @@ require 'open_page'
 require 'fe_checker'
 require 'widget/blogroll_v3_articles'
 require 'widget/discover_more'
-require 'widget/cover_stories_main'
-require 'widget/cover_stories_extra'
 require 'widget/tag_cover_stories'
 require 'widget/vert_nav'
 require 'widget/wiki_updates'
-require 'widget/video_interrupt'
-require 'widget/popular_articles_interrupt'
 require 'widget/object_score'
 require 'widget/global_header'
 require 'widget/global_footer'
@@ -23,12 +19,8 @@ include GlobalFooter
 include GlobalHeader
 include FeChecker
 include ObjectScore
-include PopularArticlesInterrupt
-include VideoInterrupt
 include OpenPage
 include VertNav
-include CoverStoriesMain
-include CoverStoriesExtra
 include TagCoverStories
 include TechNav
 include Blogrollv3Articles
