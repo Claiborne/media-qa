@@ -1,8 +1,8 @@
 development:
-  baseurl: 10.92.218.36:8080
+  baseurl: 10.92.218.26:8080
 
 staging:
-  baseurl: 
+  baseurl: 10.92.218.26:8080
 
 production:
-  baseurl: apis.ign.com
+  baseurl: apis.ign.com/object/v3

@@ -51,17 +51,31 @@ def xboxmobile
    "value"=>"us"},
   {"field"=>"tags.slug",
    "condition"=>"contains",
-   "value"=>"news,feature,review,preview"},
-  {"field"=>"categories.slug",
-   "condition"=>"contains",
-   "value"=>"xbox-360"}
+   "value"=>"blogroll"}
+  # "value"=>"news,feature,review,preview"}#,
+ # {"field"=>"categories.slug",
+  # "condition"=>"contains",
+   #{}"value"=>"xbox-360"}
   ]
 }.to_json
 end
 
+def legacyarticle
+  {"matchRule"=>"matchAll",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+       "condition"=>"is",
+       "value"=>"article"},
+     {"field"=>"legacyData.legacyArticles.legacyId",
+      "condition"=>"is",
+      "value"=>"1223071"}
+    ]
+  }.to_json
+end
+
 def wiiu
 {"matchRule"=>"matchAll",
- "count"=>80,
+ "count"=>100,
  "startIndex"=>0,
  "networks"=>"ign",
  "states"=>"published",
@@ -74,7 +88,7 @@ def wiiu
     "value"=>"wii"},
    {"field"=>"categoryLocales",
     "condition"=>"contains",
-    "value"=>"us"}
+    "value"=>"uk"}   ###
     ],
   "sortBy"=>"metadata.publishDate",
   "sortOrder"=>"desc"
@@ -118,6 +132,22 @@ def skyrim_cheats
 }.to_json
 end
 
+def promos
+{"matchRule"=>"matchAll",
+ "count"=>60,
+ "startIndex"=>0,
+ "networks"=>"ign",
+ "rules"=> [
+   {"field"=>"metadata.articleType",
+    "condition"=>"is",
+    "value"=>"article"},
+  {"field"=>"tags.slug",
+   "condition"=>"contains",
+   "value"=>"promotion"}
+  ]
+}.to_json
+end
+
 =begin
 tech subpages
 {"field"=>"tags",
@@ -125,9 +155,13 @@ tech subpages
 "value"=>"tech,wii-u"}
 =end
 
+def prdfail
+  {"matchRule"=>"matchAll","count"=>10,"startIndex"=>0,"networks"=>"ign","states"=>"published","rules"=>[{"field"=>"metadata.articleType","condition"=>"is","value"=>"article"},{"field"=>"categories.slug","condition"=>"contains","value"=>"wii"},{"field"=>"categoryLocales","condition"=>"contains","value"=>"us"}],"sortBy"=>"metadata.publishDate","sortOrder"=>"desc"}.to_json
+end
+
 v3 = []; v2 =[]
 
 @url = "http://apis.lan.ign.com/article/v3/articles/search"
-@response = RestClient.post @url, skyrim_cheats, :content_type => "application/json"
+@response = RestClient.post @url, prdfail, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/test.json', 'w') {|f| f.write(@response.to_s) }
