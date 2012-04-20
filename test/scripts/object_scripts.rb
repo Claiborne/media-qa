@@ -253,12 +253,36 @@ def new_release
   }.to_json
 end
 
+def release_search
+  {
+    "rules"=>[
+      {
+        "field"=>"hardware.platform.metadata.slug",
+        "condition"=>"term",
+        "value"=>"xbox-360"
+      }
+    ],
+    "matchRule"=>"matchAll",
+    "startIndex"=>0,
+    "count"=>45,
+    "sortBy"=>"metadata.releaseDate",
+    "sortOrder"=>"asc",
+    "states"=>["published"],
+    "regions"=>["US"]
+  }.to_json
+end
 
-@url = "http://10.92.218.26:8080/releases/4f8e020d99e7ba201065dc8b"
-@response = RestClient.put @url, new_release_min, :content_type => "application/json"
+
+#@url = "http://10.92.218.26:8080/releases/4f8e020d99e7ba201065dc8b"
+#@response = RestClient.put @url, new_release_min, :content_type => "application/json"
+#@data = JSON.parse(@response.body)
+#File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }
+
+
+@url = "http://10.92.218.26:8080/releases/search"
+@response = RestClient.post @url, release_search, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }
-
 
 
 

@@ -40,6 +40,6 @@ module HotReviewsPreviews
     it "should have a link in each slot", :smoke => true do
       check_have_a_link_for_each("div#ign-#{type_of_news} ul li")
     end
-    
+
   end
 end

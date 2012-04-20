@@ -245,7 +245,7 @@ describe "V3 Articles API -- General Post Search for published articles sending 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
+    @url = "http://#{@config.options['baseurl']}releases/search"
     begin 
        @response = RestClient.post @url, published_articles, :content_type => "application/json"
     rescue => e

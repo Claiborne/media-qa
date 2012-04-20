@@ -1022,7 +1022,3 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}", :stg => tr
   
 end
 end
-
-
-
-
