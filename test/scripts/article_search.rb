@@ -148,6 +148,28 @@ def promos
 }.to_json
 end
 
+def tech_reviews
+{"matchRule"=>"matchAll",
+ "count"=>40,
+ "startIndex"=>0,
+ "networks"=>"ign",
+ "states"=>"published",
+ "rules"=>[
+   {"field"=>"metadata.articleType",
+     "condition"=>"is",
+     "value"=>"article"},
+   {"field"=>"categories.slug",
+     "condition"=>"contains",
+     "value"=>"tech"},
+     {"field"=>"tags.slug",
+       "condition"=>"contains",
+       "value"=>"review"}
+     ],
+ "sortBy"=>"metadata.publishDate",
+ "sortOrder"=>"desc"
+ }.to_json
+end
+
 =begin
 tech subpages
 {"field"=>"tags",
@@ -162,6 +184,6 @@ end
 v3 = []; v2 =[]
 
 @url = "http://apis.lan.ign.com/article/v3/articles/search"
-@response = RestClient.post @url, prdfail, :content_type => "application/json"
+@response = RestClient.post @url, tech_reviews, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/test.json', 'w') {|f| f.write(@response.to_s) }

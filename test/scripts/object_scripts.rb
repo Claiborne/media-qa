@@ -1,57 +1,21 @@
 require 'rest_client'
 require 'json'
 
+@token = '0ef8d82392a66dffca80536ce5b216d69a372d34'
+
 def new_release_min
   {
-      #"releaseId" => "4f8e020d99e7ba201065dc8b",  
       "metadata" => {
-          #"legacyId" => 110694,
           "name" => "Test Game 1",
-          "alternateNames" => [
-              "QA Game 1"
-          ],
-          "commonName" => "Test Game 1",
-          "misspelledNames" => [
-              "Testgame 1"
-          ],
-          "editionName" => "Standard",
-          "editionDescription" => "Editorial description here",
-          "shortDescription" => "Short description here",
+          "slug" => "test-game-1",
           "state" => "draft",
           "region" => "US",
-          "releaseDate" => "2012-03-07",
-          "releaseDateDisplay" => "March 7 2012",
-          #"game" => {
-              #"gameId" => "4f6d5043938617c062ceefc4",
-              #"metadata" => {
-                  #"slug" => "test-game-1"
-              #}
-          #}
+          "releaseDateDisplay" => "March 7 2012"
       },
-      "companies" => {
-            "developers" => [
-            {
-                "companyId" => "4f83a92e99e7d55699f3d137"#,
-                #"metadata" => {
-                    #"name" => "Bioware",
-                    #"description" => "desc",
-                    #"legacyId" => 26717,
-                    #"slug" => "bioware"
-                #}
-            }
-        ],
-            "publishers" => [
-            {
-                "companyId" => "4f83a92e99e7d55699f3d137"#,
-                #"metadata" => {
-                    #"name" => "Electronic Arts",
-                    #"description" => "desc",
-                    #"legacyId" => 25025,
-                    #"slug" => "electronic-arts"
-               # }
-            }
-        ],
-        "distributors" => [ ],
+      "hardware" => {
+              "platform"  => { 
+                  "hardwareId" => "4f9597e399e75b8215d853df"
+              }
       }
   }.to_json
 end
@@ -278,11 +242,25 @@ end
 #@data = JSON.parse(@response.body)
 #File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }
 
-
+=begin
 @url = "http://10.92.218.26:8080/releases/search"
 @response = RestClient.post @url, release_search, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }
+=end
+
+@url = "http://10.92.218.26:8080/releases?oauth_token=#{@token}"
+begin
+  @response = RestClient.post @url, new_release_min, :content_type => "application/json"
+rescue => e
+    raise Exception.new(e.message+" "+e.response)
+end
+@data = JSON.parse(@response.body)
+File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }
+puts"DATA:"
+puts"-------------------------"
+puts @data
+
 
 
 
