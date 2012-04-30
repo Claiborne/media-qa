@@ -1,7 +1,7 @@
 require 'rest_client'
 require 'json'
 
-@token = '0ef8d82392a66dffca80536ce5b216d69a372d34'
+@token = '2b405d3ee81080c402f9de4897a377056c86f1bb'
 
 def new_release_min
   {
@@ -236,6 +236,62 @@ def release_search
   }.to_json
 end
 
+def reviews
+  {
+    "rules"=>[
+      {
+        "field"=>"metadata.name",
+        "condition"=>"queryString",
+        "value"=>"QA Tests"
+      }
+    ],
+    "matchRule"=>"matchAll",
+    "startIndex"=>0,
+    "count"=>100,
+    "sortBy"=>"metadata.releaseDate",
+    "sortOrder"=>"asc"
+  }.to_json
+end
+
+def update_this
+  {
+    "network" => {
+      "ign" => {
+        "review" => {
+          "score" => 5.0,
+          "editorsChoice" => false
+        } #end review
+      } #end ign
+    }, #end network
+  }.to_json
+end
+
+def update_market_body
+  {
+    "metadata" => {
+      "slug" => "slug-updated-2",
+      "name" => "QA Test Market updated-2",
+      "description" => "market description updated-2"
+    }
+  }.to_json
+end
+
+def bioware_games_by_dev_name
+  {
+    "rules"=>[
+      {
+        "field"=>"companies.developers.metadata.name",
+        "condition"=>"term",
+        "value"=>"bioware"
+      }
+    ],
+    "matchRule"=>"matchAll",
+    "startIndex"=>0,
+    "count"=>25,
+    "states"=>["published"]
+  }.to_json
+end
+
 
 #@url = "http://10.92.218.26:8080/releases/4f8e020d99e7ba201065dc8b"
 #@response = RestClient.put @url, new_release_min, :content_type => "application/json"
@@ -249,15 +305,18 @@ end
 File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }
 =end
 
-@url = "http://10.92.218.26:8080/releases?oauth_token=#{@token}"
+#@url = "http://10.92.218.26:8080/markets/4f9ec4af99e7cb98fa835b92?oauth_token=#{@token}"
+
+@url = "http://10.92.218.26:8080/releases/search"
+
 begin
-  @response = RestClient.post @url, new_release_min, :content_type => "application/json"
+  @response = RestClient.post @url, bioware_games_by_dev_name, :content_type => "application/json"
 rescue => e
-    raise Exception.new(e.message+" "+e.response)
+    raise Exception.new(e.message)
 end
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }
-puts"DATA:"
+puts"DATA"
 puts"-------------------------"
 puts @data
 

@@ -7,7 +7,7 @@ require 'assert'
 
 include Assert
 
-describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200", :stg => true do
+describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -16,7 +16,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200", :stg =>
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -103,7 +103,7 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Releases Smoke Tests -- /releases/legacyId/110694", :stg => true do
+describe "V3 Object API -- Releases Smoke Tests -- /releases/legacyId/110694" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -112,7 +112,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/legacyId/110694", :
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -144,15 +144,15 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/legacyId/110694", :
   end
   
   it "shoud return four specific releaseId values for each four releases" do
-    ids = ['4f8f406599e7d080611c6720','4f8f406599e7d080611c6721','4f8f406599e7d080611c671f','4f8f406599e7d080611c671e']
+    ids = ['4f9e4b9499e7cb98fa81e22e','4f9e4b9499e7cb98fa81e22f','4f9e4b9499e7cb98fa81e22d','4f9e4b9499e7cb98fa81e22c']
     @data['data'].each do |release|
       ids.include?release['releaseId'].should be_true
     end
   end
   
-  it "should only return releases with a metadata.game.gameId value of 4f95985a99e75b8215d85719" do
+  it "should only return releases with a metadata.game.gameId value of 4f9e4b9299e7cb98fa81e217" do
     @data['data'].each do |release|
-      release['metadata']['game']['gameId'].should == '4f95985a99e75b8215d85719'
+      release['metadata']['game']['gameId'].should == '4f9e4b9299e7cb98fa81e217'
     end
   end
   
@@ -166,16 +166,16 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Releases Smoke Tests -- /releases/4f95985c99e75b8215d8572b", :stg => true do
+describe "V3 Object API -- Releases Smoke Tests -- /releases/4f9e4b9499e7cb98fa81e22d" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/4f95985c99e75b8215d8572b"
+    @url = "http://#{@config.options['baseurl']}/releases/4f9e4b9499e7cb98fa81e22d"
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -204,8 +204,8 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/4f95985c99e75b8215d
     end
   end
   
-  it "should return a release with a releaseId value of 4f95985c99e75b8215d8572b" do
-    @data['releaseId'].should == '4f95985c99e75b8215d8572b'
+  it "should return a release with a releaseId value of 4f9e4b9499e7cb98fa81e22d" do
+    @data['releaseId'].should == '4f9e4b9499e7cb98fa81e22d'
   end
   
   it "shoud return a release with a metadata.region value of UK" do
@@ -213,8 +213,8 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/4f95985c99e75b8215d
     @data['metadata']['region'].should == 'UK'
   end
   
-  it "should only return releases with a metadata.game.gameId value of 4f95985a99e75b8215d85719" do
-    @data['metadata']['game']['gameId'].should == '4f95985a99e75b8215d85719'
+  it "should only return releases with a metadata.game.gameId value of 4f9e4b9299e7cb98fa81e217" do
+    @data['metadata']['game']['gameId'].should == '4f9e4b9299e7cb98fa81e217'
   end
   
   it "should only return releases with a metadata.game.metadata.slug value of mass-effect-3" do
@@ -225,7 +225,7 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Games Smoke Tests -- /games?count=200", :stg => true do
+describe "V3 Object API -- Games Smoke Tests -- /games?count=200" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -234,7 +234,7 @@ describe "V3 Object API -- Games Smoke Tests -- /games?count=200", :stg => true 
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -313,8 +313,8 @@ end
 
 ###################################################
 
-['/4f95985a99e75b8215d85719','/slug/mass-effect-3'].each do |call|
-describe "V3 Object API -- Games Smoke Tests -- /games#{call}", :stg => true do
+['/4f9e4b9299e7cb98fa81e217','/slug/mass-effect-3'].each do |call|
+describe "V3 Object API -- Games Smoke Tests -- /games#{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -323,7 +323,7 @@ describe "V3 Object API -- Games Smoke Tests -- /games#{call}", :stg => true do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -344,9 +344,9 @@ describe "V3 Object API -- Games Smoke Tests -- /games#{call}", :stg => true do
     check_not_blank(@data)
   end
   
-  it "should a release with a gameId value of 4f95985a99e75b8215d85719" do
+  it "should a release with a gameId value of 4f9e4b9299e7cb98fa81e217" do
     @data.has_key?('gameId').should be_true
-    @data['gameId'].should == '4f95985a99e75b8215d85719'  
+    @data['gameId'].should == '4f9e4b9299e7cb98fa81e217'  
   end
   
   it "should a release with a metadata.slug value of mass-effect-3" do
@@ -369,7 +369,7 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Companies Smoke Tests -- /companies?count=200", :stg => true do
+describe "V3 Object API -- Companies Smoke Tests -- /companies?count=200" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -378,7 +378,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies?count=200", :stg 
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -466,7 +466,7 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Companies Smoke Tests -- /companies?query=art&count=200", :stg => true do
+describe "V3 Object API -- Companies Smoke Tests -- /companies?query=art&count=200" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -475,7 +475,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies?query=art&count=2
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -525,8 +525,8 @@ end
 
 ###################################################
 
-['/4f95971a99e75b8215d83419','/slug/bioware'].each do |call|
-describe "V3 Object API -- Companies Smoke Tests -- /companies#{call}", :stg => true do
+['/4f9e207499e7cb98fa804e20','/slug/bioware'].each do |call|
+describe "V3 Object API -- Companies Smoke Tests -- /companies#{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -535,7 +535,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies#{call}", :stg => 
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -556,9 +556,9 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies#{call}", :stg => 
     check_not_blank(@data)
   end
   
-  it "should return a company with a companyId value of 4f95971a99e75b8215d83419" do
+  it "should return a company with a companyId value of 4f9e207499e7cb98fa804e20" do
     @data.has_key?('companyId').should be_true
-    @data['companyId'].should == '4f95971a99e75b8215d83419'
+    @data['companyId'].should == '4f9e207499e7cb98fa804e20'
   end
   
   it "should return a company with a metadata.slug value of 'bioware'" do
@@ -586,7 +586,7 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Features Smoke Tests -- /features?count=200", :stg => true do
+describe "V3 Object API -- Features Smoke Tests -- /features?count=200" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -595,7 +595,7 @@ describe "V3 Object API -- Features Smoke Tests -- /features?count=200", :stg =>
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -672,8 +672,8 @@ describe "V3 Object API -- Features Smoke Tests -- /features/type/online-multipl
 
 ###################################################
 
-['/4f9596f199e75b8215d82f6a','/slug/1080p'].each do |call|
-describe "V3 Object API -- Features Smoke Tests -- /feaures#{call}", :stg => true do
+['/4f9e205a99e7cb98fa804a1b','/slug/1080p'].each do |call|
+describe "V3 Object API -- Features Smoke Tests -- /feaures#{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -682,7 +682,7 @@ describe "V3 Object API -- Features Smoke Tests -- /feaures#{call}", :stg => tru
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -703,9 +703,9 @@ describe "V3 Object API -- Features Smoke Tests -- /feaures#{call}", :stg => tru
     check_not_blank(@data)
   end
   
-  it "should return a feature with a featureId value of 4f9596f199e75b8215d82f6a" do
+  it "should return a feature with a featureId value of 4f9e205a99e7cb98fa804a1b" do
     @data.has_key?('featureId').should be_true
-    @data['featureId'].should == '4f9596f199e75b8215d82f6a'
+    @data['featureId'].should == '4f9e205a99e7cb98fa804a1b'
   end
   
   it "should return a feature with a metadata.slug value of '1080p'" do
@@ -733,7 +733,7 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200", :stg => true do
+describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -742,7 +742,7 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200", :stg => true
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -816,8 +816,8 @@ end
 
 ###################################################
 
-['/4f9597dd99e75b8215d85316','/slug/action'].each do |call|
-describe "V3 Object API -- Genre Smoke Tests -- /genres#{call}", :stg => true do
+['/4f9e215499e7cb98fa806dc7','/slug/action'].each do |call|
+describe "V3 Object API -- Genre Smoke Tests -- /genres#{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -826,7 +826,7 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres#{call}", :stg => true do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -847,9 +847,9 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres#{call}", :stg => true do
     check_not_blank(@data)
   end
   
-  it "should return a genre with a genreId value of 4f9597dd99e75b8215d85316" do
+  it "should return a genre with a genreId value of 4f9e215499e7cb98fa806dc7" do
     @data.has_key?('genreId').should be_true
-    @data['genreId'].should == '4f9597dd99e75b8215d85316'
+    @data['genreId'].should == '4f9e215499e7cb98fa806dc7'
   end
   
   it "should return a genre with a metadata.slug value of 'action'" do
@@ -877,7 +877,7 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Hardware Smoke Tests -- /hardware?count=200", :stg => true do
+describe "V3 Object API -- Hardware Smoke Tests -- /hardware?count=200" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -886,7 +886,7 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware?count=200", :stg =>
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -960,8 +960,8 @@ end
 
 ###################################################
 
-['/4f9597e399e75b8215d853df','/slug/xbox-360'].each do |call|
-describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}", :stg => true do
+['/4f9e215899e7cb98fa806e8d','/slug/xbox-360'].each do |call|
+describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -970,7 +970,7 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}", :stg => tr
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -991,9 +991,9 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}", :stg => tr
     check_not_blank(@data)
   end
   
-  it "should return a hardware with a hardwareId value of 4f9597e399e75b8215d853df" do
+  it "should return a hardware with a hardwareId value of 4f9e215899e7cb98fa806e8d" do
     @data.has_key?('hardwareId').should be_true
-    @data['hardwareId'].should == '4f9597e399e75b8215d853df'
+    @data['hardwareId'].should == '4f9e215899e7cb98fa806e8d'
   end
   
   it "should return a hardware with a metadata.slug value of 'xbox-360'" do

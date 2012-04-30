@@ -52,7 +52,7 @@ def mass_effect_3_releases_by_game_id
       {
         "field"=>"metadata.game.gameId",
         "condition"=>"term",
-        "value"=>"4f95985a99e75b8215d85719"
+        "value"=>"4f9e4b9299e7cb98fa81e217"
       }
     ],
     "matchRule"=>"matchAll",
@@ -251,7 +251,7 @@ describe "V3 Object API -- Post Search for Published 360 Releases: #{release_sea
     begin 
        @response = RestClient.post @url, release_search_smoke, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -309,7 +309,7 @@ describe "V3 Object API -- Post Search for Reviewed Releases: #{reviewed_games}"
     begin 
        @response = RestClient.post @url, reviewed_games, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -365,7 +365,7 @@ end
       begin 
          @response = RestClient.post @url, request_body, :content_type => "application/json"
       rescue => e
-        raise Exception.new(e.message+" "+@url+" "+e.response)
+        raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
       end
       @data = JSON.parse(@response.body)
     end
@@ -388,9 +388,9 @@ end
 
     check_id('releaseId')
     
-    it "should only return releases with a metadata.game.gameId value of '4f95985a99e75b8215d85719'" do
+    it "should only return releases with a metadata.game.gameId value of '4f9e4b9299e7cb98fa81e217'" do
       @data['data'].each do |release|
-        release['metadata']['game']['gameId'].should == '4f95985a99e75b8215d85719'
+        release['metadata']['game']['gameId'].should == '4f9e4b9299e7cb98fa81e217'
       end
     end
     
@@ -421,7 +421,7 @@ describe "V3 Object API -- Post Search for Bioware Releases By Dev Name: #{biowa
     begin 
        @response = RestClient.post @url, bioware_games_by_dev_name, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -441,27 +441,17 @@ describe "V3 Object API -- Post Search for Bioware Releases By Dev Name: #{biowa
   common_assertions(25)
   
   check_id('releaseId')
-  
+
   it "should only return companies.developers.metadata.name data with a value of 'BioWare'" do
     @data['data'].each do |release|
       developers = []
       release['companies']['developers'].each do |dev|
         developers << dev['metadata']['name']
       end
-      developers.include?('BioWare').should be_true
+      developers.to_s.downcase.match(/bioware/).should be_true
     end
   end
-  
-  it "should only return companies.developers.metadata.legacyId data with a value of '26717'" do
-    @data['data'].each do |release|
-      developers = []
-      release['companies']['developers'].each do |dev|
-        developers << dev['metadata']['legacyId']
-      end
-      developers.include?(26717).should be_true
-    end
-  end
-  
+
   it "should only return releases with a metadata.state value of 'published'" do
     @data['data'].each do |release| 
       release['metadata']['state'].should == 'published'
@@ -481,7 +471,7 @@ describe "V3 Object API -- Post Search for Bioware Releases By Dev legacyId: #{b
     begin 
        @response = RestClient.post @url, bioware_games_by_dev_legacyid, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -541,7 +531,7 @@ describe "V3 Object API -- Post Search for Releases Released Boolean: #{release_
     begin 
        @response = RestClient.post @url, release_by_is_released(is_released), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end
@@ -579,7 +569,7 @@ describe "V3 Object API -- Post Search - Test Pagination Using: #{release_pagina
     begin 
        @response = RestClient.post @url, release_pagination(11,0), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
     
@@ -602,7 +592,7 @@ describe "V3 Object API -- Post Search - Test Pagination Using: #{release_pagina
     begin 
       @response = RestClient.post @url, release_pagination(10,10), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
     @data['data'][0]['releaseId'].should == @eleventh_entry

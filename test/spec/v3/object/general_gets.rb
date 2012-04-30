@@ -7,7 +7,7 @@ require 'assert'
 
 include Assert
 
-describe "V3 Object API -- Releases Query Tests -- /releases?count=35&startIndex=35&metadata.state=published&metadata.region=UK", :stg => true do
+describe "V3 Object API -- Releases Query Tests -- /releases?count=35&startIndex=35&metadata.state=published&metadata.region=UK" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -16,7 +16,7 @@ describe "V3 Object API -- Releases Query Tests -- /releases?count=35&startIndex
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
     @data = JSON.parse(@response.body)
   end

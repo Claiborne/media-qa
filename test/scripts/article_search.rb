@@ -36,29 +36,6 @@ def cheats
 }.to_json
 end
 
-def xboxmobile
-{"matchRule"=>"matchAll",
- "count"=>60,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-    "condition"=>"is",
-    "value"=>"article"},
-  {"field"=>"categoryLocales",
-   "condition"=>"contains",
-   "value"=>"us"},
-  {"field"=>"tags.slug",
-   "condition"=>"contains",
-   "value"=>"blogroll"}
-  # "value"=>"news,feature,review,preview"}#,
- # {"field"=>"categories.slug",
-  # "condition"=>"contains",
-   #{}"value"=>"xbox-360"}
-  ]
-}.to_json
-end
 
 def legacyarticle
   {"matchRule"=>"matchAll",
@@ -88,7 +65,7 @@ def wiiu
     "value"=>"wii"},
    {"field"=>"categoryLocales",
     "condition"=>"contains",
-    "value"=>"uk"}   ###
+    "value"=>"uk"}   
     ],
   "sortBy"=>"metadata.publishDate",
   "sortOrder"=>"desc"
@@ -111,14 +88,14 @@ def tech
      "value"=>"tech"},
    {"field"=>"categoryLocales",
      "condition"=>"contains",
-     "value"=>"us"}
+     "value"=>"uk"}
      ],
  "sortBy"=>"metadata.publishDate",
  "sortOrder"=>"desc"
  }.to_json
 end
 
-def skyrim_cheats
+def me3_cheats
 {"matchRule"=>"matchAll",
  "count"=>100,
  "rules"=>[
@@ -127,7 +104,21 @@ def skyrim_cheats
     "value"=>"cheat"},
    {"field"=>"legacyData.objectRelations",
      "condition"=>"is",
-     "value"=>"14267318"}
+     "value"=>"14235014"}
+  ]
+}.to_json
+end
+
+def me3_articles
+{"matchRule"=>"matchAll",
+ "count"=>20,
+ "rules"=>[
+   {"field"=>"metadata.articleType",
+    "condition"=>"is",
+    "value"=>"article"},
+   {"field"=>"legacyData.objectRelations",
+     "condition"=>"is",
+     "value"=>"14235014"}
   ]
 }.to_json
 end
@@ -170,20 +161,57 @@ def tech_reviews
  }.to_json
 end
 
-=begin
-tech subpages
-{"field"=>"tags",
-"condition"=>"containsAll",
-"value"=>"tech,wii-u"}
-=end
+def blogs_by_user
+  {"matchRule"=>"matchAll",
+  "networks"=>"ign",
+  "rules"=>[
+    {"field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"post"},
+      {"field"=>"metadata.blogName",
+        "condition"=>"is",
+        "value"=>"clay.ign"}
+      ]
+  }.to_json
+end
+
 
 def prdfail
   {"matchRule"=>"matchAll","count"=>10,"startIndex"=>0,"networks"=>"ign","states"=>"published","rules"=>[{"field"=>"metadata.articleType","condition"=>"is","value"=>"article"},{"field"=>"categories.slug","condition"=>"contains","value"=>"wii"},{"field"=>"categoryLocales","condition"=>"contains","value"=>"us"}],"sortBy"=>"metadata.publishDate","sortOrder"=>"desc"}.to_json
 end
 
+def wii
+{"matchRule"=>"matchAll",
+ "count"=>100,
+ "startIndex"=>0,
+ "networks"=>"ign",
+ "states"=>"published",
+ "rules"=>[
+   {"field"=>"metadata.articleType",
+     "condition"=>"is",
+     "value"=>"article"},
+    #{"field"=>"categories.slug",
+    #{}"condition"=>"contains",
+    #{}"value"=>"wii"},
+     {"field"=>"tags.slug",
+      "condition"=>"contains",
+      "value"=>"wii"},
+      {"field"=>"tags.slug",
+       "condition"=>"contains",
+       "value"=>"screens"},
+   {"field"=>"categoryLocales",
+    "condition"=>"contains",
+    "value"=>"us"}   
+    ],
+  "sortBy"=>"metadata.publishDate",
+  "sortOrder"=>"desc"
+}.to_json
+end
+
 v3 = []; v2 =[]
 
-@url = "http://apis.lan.ign.com/article/v3/articles/search"
-@response = RestClient.post @url, tech_reviews, :content_type => "application/json"
+#@url = "http://apis.lan.ign.com/article/v3/articles/search"
+@url = "http://10.92.218.21:8081//v3/articles/search"
+@response = RestClient.post @url, me3_articles, :content_type => "application/json"
 @data = JSON.parse(@response.body)
-File.open('/Users/wclaiborne/Desktop/test.json', 'w') {|f| f.write(@response.to_s) }
+File.open('/Users/wclaiborne/Desktop/article_search.json', 'w') {|f| f.write(@response.to_s) }
