@@ -144,8 +144,8 @@ describe "Oyster Hubs -- www.ign.com/wii-u" do
   end
   
   context "v3 Blogroll widget" do
-    widget_blogroll_v3_articles(10, "n/a")
-    widget_blogroll_v3_articles_vs_api(10, "wii", "us")
+    widget_blogroll_v3_articles(11, "n/a")
+    widget_blogroll_v3_articles_vs_api(11, "wii", "us")
   end
   
   context "Extra Cover Stories Widget" do
@@ -161,11 +161,11 @@ describe "Oyster Hubs -- www.ign.com/wii-u" do
   end
   
   context "Top Games Out Now Widget" do
-    widget_top_games('Games Out Now', 5)
+    widget_top_games('Games Out Now', 3)
   end
   
   context "Top Games Coming Soon Widget" do
-    widget_top_games('Games Coming Soon', 5)
+    widget_top_games('Games Coming Soon', 3)
   end
   
   context "Popular Threads Widget" do
