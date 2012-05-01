@@ -221,9 +221,9 @@ def release_search
   {
     "rules"=>[
       {
-        "field"=>"hardware.platform.metadata.slug",
-        "condition"=>"term",
-        "value"=>"xbox-360"
+        "field"=>"editorial.rating",
+        "condition"=>"exists",
+        "value"=>""
       }
     ],
     "matchRule"=>"matchAll",
@@ -292,6 +292,15 @@ def bioware_games_by_dev_name
   }.to_json
 end
 
+def published
+  {
+    "startIndex"=>0,
+    "count"=>25,
+    "states"=>["published"],
+    "regions"=>["IE"]
+  }.to_json
+end
+
 
 #@url = "http://10.92.218.26:8080/releases/4f8e020d99e7ba201065dc8b"
 #@response = RestClient.put @url, new_release_min, :content_type => "application/json"
@@ -310,9 +319,9 @@ File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@respon
 @url = "http://10.92.218.26:8080/releases/search"
 
 begin
-  @response = RestClient.post @url, bioware_games_by_dev_name, :content_type => "application/json"
+  @response = RestClient.post @url, published, :content_type => "application/json"
 rescue => e
-    raise Exception.new(e.message)
+    raise Exception.new(e.message+" "+e.response.to_s)
 end
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }

@@ -144,8 +144,8 @@ describe "Oyster Hubs -- www.ign.com/wii-u" do
   end
   
   context "v3 Blogroll widget" do
-    widget_blogroll_v3_articles(11, "n/a")
-    widget_blogroll_v3_articles_vs_api(11, "wii", "us")
+    widget_blogroll_v3_articles(10, "n/a")
+    widget_blogroll_v3_articles_vs_api(10, "wii", "us")
   end
   
   context "Extra Cover Stories Widget" do
@@ -177,15 +177,15 @@ end #end describe
 ######################################################################
 
 @hubs = return_list_of_game_hubs
-
+{'www.ign.com'=>'us','uk.ign.com'=>'uk','au.ign.com'=>'au','ie.ign.com'=>'ie'}.each do |site,region|
 @hubs.each do |hub|
-
 describe "Oyster Hubs -- #{hub}", :stg => true do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}#{hub}" 
+    #@page = "http://#{@config.options['baseurl']}/#{hub}" 
+    @page = "http://#{site}/#{hub}"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -209,7 +209,7 @@ describe "Oyster Hubs -- #{hub}", :stg => true do
   end
   
   context "Global Header Widget" do
-    it "should implement..."
+    it "should check"
   end
     
   context "Global Footer Widget" do
@@ -220,12 +220,36 @@ describe "Oyster Hubs -- #{hub}", :stg => true do
     widget_cover_stories_main_new(5)
   end
   
+  context "v3 Blogroll widget" do
+    widget_blogroll_v3_articles(10, "n/a")
+    widget_blogroll_v3_articles_vs_api(10, hub, region)
+    it "should call category_locale=#{region} when loading more articles in the blogroll" do
+      @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=#{region}/).should be_true
+    end
+  end
+  
+  #context "Extra Cover Stories Widget" do
+    #widget_cover_stories_extra
+  #end
+  
+  context "Popular Videos Widget" do
+    widget_video_interrupt
+  end
+  
+  context "Most Commented Stories Widget" do
+    widget_most_commented_stories
+  end
+  
   context "Top Games Out Now Widget" do
-    widget_top_games('Games Out Now', 4)
+    widget_top_games('Games Out Now', 3)
   end
   
   context "Top Games Coming Soon Widget" do
-    widget_top_games('Games Coming Soon', 4)
+    widget_top_games('Games Coming Soon', 3)
+  end
+  
+  context "Popular Threads Widget" do
+    widget_popular_threads
   end
 
 end #end describe

@@ -208,10 +208,40 @@ def wii
 }.to_json
 end
 
+def homepage
+  {"matchRule"=>"matchAll",
+   "count"=>100,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"article"},
+    { "field"=>"categories.slug",
+      "condition"=>"contains",
+      "value"=>"ps3"},
+    {"field"=>"categoryLocales",
+    "condition"=>"contains",
+    "value"=>"us"}
+    ],
+    "sortBy"=>"metadata.publishDate","sortOrder"=>"desc"}.to_json
+    
+end
+
 v3 = []; v2 =[]
 
-#@url = "http://apis.lan.ign.com/article/v3/articles/search"
-@url = "http://10.92.218.21:8081//v3/articles/search"
-@response = RestClient.post @url, me3_articles, :content_type => "application/json"
+@url = "http://apis.lan.ign.com/article/v3/articles/search"
+#@url = "http://10.92.218.21:8081//v3/articles/search"
+@response = RestClient.post @url, homepage, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/article_search.json', 'w') {|f| f.write(@response.to_s) }
+
+
+
+
+
+
+
+
+

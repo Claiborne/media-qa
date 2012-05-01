@@ -38,7 +38,7 @@ include ObjectPostSearch
 
 ################################## FIRST SET: CREATE ################################## 
 
-describe "V3 Object API -- Create Game", :test => true do
+describe "V3 Object API -- Create Game", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -76,7 +76,7 @@ describe "V3 Object API -- Create Game", :test => true do
     
 end
 
-describe "V3 Object API -- Create Company", :test => true do
+describe "V3 Object API -- Create Company", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -114,7 +114,7 @@ describe "V3 Object API -- Create Company", :test => true do
   
 end
 
-describe "V3 Object API -- Create Feature", :test => true do
+describe "V3 Object API -- Create Feature", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -152,7 +152,7 @@ describe "V3 Object API -- Create Feature", :test => true do
   
 end
 
-describe "V3 Object API -- Create Genre", :test => true do
+describe "V3 Object API -- Create Genre", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -190,7 +190,7 @@ describe "V3 Object API -- Create Genre", :test => true do
   
 end
 
-describe "V3 Object API -- Create Hardware", :test => true do
+describe "V3 Object API -- Create Hardware", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -228,7 +228,7 @@ describe "V3 Object API -- Create Hardware", :test => true do
   
 end
 
-describe "V3 Object API -- Create Market", :test => true do
+describe "V3 Object API -- Create Market", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -266,7 +266,7 @@ describe "V3 Object API -- Create Market", :test => true do
   
 end
 
-describe "V3 Object API -- Create Release", :test => true do
+describe "V3 Object API -- Create Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -307,7 +307,7 @@ end
 
 ################################## SECOND SET: UPDATES ################################## 
 
-describe "V3 Object API -- Update Game", :test => true do
+describe "V3 Object API -- Update Game", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -344,7 +344,7 @@ describe "V3 Object API -- Update Game", :test => true do
   
 end
 
-describe "V3 Object API -- Update Company", :test => true do
+describe "V3 Object API -- Update Company", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -381,7 +381,7 @@ describe "V3 Object API -- Update Company", :test => true do
   
 end
 
-describe "V3 Object API -- Update Feature", :test => true do
+describe "V3 Object API -- Update Feature", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -418,7 +418,7 @@ describe "V3 Object API -- Update Feature", :test => true do
   
 end
 
-describe "V3 Object API -- Update Genre", :test => true do
+describe "V3 Object API -- Update Genre", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -455,7 +455,7 @@ describe "V3 Object API -- Update Genre", :test => true do
   
 end
 
-describe "V3 Object API -- Update Hardware", :test => true do
+describe "V3 Object API -- Update Hardware", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -492,7 +492,7 @@ describe "V3 Object API -- Update Hardware", :test => true do
   
 end
 
-describe "V3 Object API -- Update Market", :test => true do
+describe "V3 Object API -- Update Market", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -531,7 +531,7 @@ end
 
 ################################## THIRD SET: CHECK UPDATES ################################## 
 
-describe "V3 Object API -- Check Nested Updates Reflect in Release", :test => true do
+describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
