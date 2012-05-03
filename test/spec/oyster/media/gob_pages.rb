@@ -13,7 +13,7 @@ describe "Released GOB Page -- /games/mass-effect-3/xbox-360-14235014" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/mass-effect-3/xbox-360-14235014"
+    @page = "http://#{@config.options['baseurl']}/games/mass-effect-3/xbox-360-14235014?tonysoprano=1"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -45,7 +45,7 @@ describe "Unreleased GOB Page -- /games/halo-4/xbox-360-110563" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/halo-4/xbox-360-110563"
+    @page = "http://#{@config.options['baseurl']}/games/halo-4/xbox-360-110563?tonysoprano=1"
     @doc = nokogiri_not_301_open(@page)
   end
 

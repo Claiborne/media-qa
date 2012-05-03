@@ -36,20 +36,6 @@ def cheats
 }.to_json
 end
 
-
-def legacyarticle
-  {"matchRule"=>"matchAll",
-   "rules"=>[
-     {"field"=>"metadata.articleType",
-       "condition"=>"is",
-       "value"=>"article"},
-     {"field"=>"legacyData.legacyArticles.legacyId",
-      "condition"=>"is",
-      "value"=>"1223071"}
-    ]
-  }.to_json
-end
-
 def wiiu
 {"matchRule"=>"matchAll",
  "count"=>100,
@@ -226,14 +212,48 @@ def homepage
     "value"=>"us"}
     ],
     "sortBy"=>"metadata.publishDate","sortOrder"=>"desc"}.to_json
-    
+end
+
+def wii_editors_choice
+  {"matchRule"=>"matchAll",
+    "startIndex"=>0,
+    "count"=>50,
+    "sortBy"=>"network.ign.review.metadata.publishDate",
+    "sortOrder"=>"desc",
+    "states"=>["published"],
+    "regions"=>["US"],
+    "rules"=>[
+      {"field"=>"hardware.platform.metadata.slug",
+      "condition"=>"term",
+      "value"=>"3ds"},
+      {"field"=>"metadata.releaseDate.date",
+        "condition"=>"range",
+        "value"=>",2012-05-02"},
+        {"field"=>"network.ign.review.editorsChoice",
+          "condition"=>"term",
+          "value"=>"true"},
+          {"field"=>"network.ign.review.score",
+          "condition"=>"exists","value"=>""}]}.to_json
+end
+
+def legacyarticle
+  {"matchRule"=>"matchAll",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+       "condition"=>"is",
+       "value"=>"article"},
+     {"field"=>"legacyData.legacyArticles.legacyId",
+      "condition"=>"is",
+      "value"=>"116474"}
+    ]
+  }.to_json
 end
 
 v3 = []; v2 =[]
 
-@url = "http://apis.lan.ign.com/article/v3/articles/search"
+@url = "http://apis.lan.ign.com/object/v3/releases/search"
 #@url = "http://10.92.218.21:8081//v3/articles/search"
-@response = RestClient.post @url, homepage, :content_type => "application/json"
+@response = RestClient.post @url, legacyarticle, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/article_search.json', 'w') {|f| f.write(@response.to_s) }
 

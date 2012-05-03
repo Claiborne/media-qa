@@ -252,8 +252,9 @@ describe "Oyster Hubs -- #{hub}", :stg => true do
     widget_popular_threads
   end
 
-end #end describe
-end #end hub iteration
+end 
+end
+end 
 
 ######################################################################
 

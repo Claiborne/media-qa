@@ -64,6 +64,12 @@ RSpec::Core::RakeTask.new('v3object') do |t|
     t.pattern = 'spec/v3/object/*.rb'
 end
 
+desc "Run v3 object migration tests"
+RSpec::Core::RakeTask.new('objectmigration') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/v3/object/object_migration.rb'
+end
+
 ############# V2 ############# 
 
 desc "Run v2 tests"
