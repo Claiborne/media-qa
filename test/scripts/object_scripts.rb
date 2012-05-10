@@ -237,20 +237,19 @@ def release_search
 end
 
 def reviews
-  {
-    "rules"=>[
-      {
-        "field"=>"metadata.name",
-        "condition"=>"queryString",
-        "value"=>"QA Tests"
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>100,
-    "sortBy"=>"metadata.releaseDate",
-    "sortOrder"=>"asc"
-  }.to_json
+{"matchRule"=>"matchAll",
+  "startIndex"=>0,
+  "count"=>26,
+  "sortBy"=>"network.ign.review.metadata.publishDate",
+  "sortOrder"=>"desc",
+  "states"=>["published"],
+  "regions"=>["US"],
+  "rules"=>[{"field"=>"network.ign.review.score",
+    "condition"=>"exists","value"=>""},
+    {"field"=>"hardware.platform.metadata.slug",
+      "condition"=>"term","value"=>"ps3"},
+      {"field"=>"network.ign.review.metadata.publishDate",
+        "condition"=>"range","value"=>",2012-05-07"}]}.to_json
 end
 
 def update_this
@@ -301,6 +300,26 @@ def published
   }.to_json
 end
 
+def testing
+  {
+    "rules"=>[
+      {
+        "field"=>"hardware.platform.metadata.slug",
+        "condition"=>"term",
+        "value"=>"xbox-360"
+      }
+    ],
+    "matchRule"=>"matchAll",
+    "startIndex"=>4,
+    "count"=>20,
+    "sortBy"=>"metadata.releaseDate.date",
+    "sortOrder"=>"desc",
+    "states"=>["published"],
+    "regions"=>["US"]
+  }.to_json
+end
+
+
 
 #@url = "http://10.92.218.26:8080/releases/4f8e020d99e7ba201065dc8b"
 #@response = RestClient.put @url, new_release_min, :content_type => "application/json"
@@ -316,18 +335,21 @@ File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@respon
 
 #@url = "http://10.92.218.26:8080/markets/4f9ec4af99e7cb98fa835b92?oauth_token=#{@token}"
 
+#@url = "http://10.92.218.26:8080/releases/search"
+
 @url = "http://10.92.218.26:8080/releases/search"
 
+
 begin
-  @response = RestClient.post @url, published, :content_type => "application/json"
+  @response = RestClient.post @url, testing, :content_type => "application/json"
 rescue => e
     raise Exception.new(e.message+" "+e.response.to_s)
 end
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }
-puts"DATA"
-puts"-------------------------"
-puts @data
+#puts"DATA"
+#puts"-------------------------"
+#puts @data
 
 
 

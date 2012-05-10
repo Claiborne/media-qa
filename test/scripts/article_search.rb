@@ -249,11 +249,35 @@ def legacyarticle
   }.to_json
 end
 
+def mobile_test
+
+{"matchRule"=>"matchAll",
+  "count"=>25,
+  "startIndex"=>0,
+  "networks"=>"ign",
+  "states"=>"published",
+  "rules"=>
+  [
+    {"field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"article"},
+      {"field"=>"categoryLocales",
+        "condition"=>"contains",
+        "value"=>"us"},
+        {"field"=>"categories.slug",
+          "condition"=>"contains",
+          "value"=>"ign"}
+  ]
+}.to_json
+
+  
+end
+
 v3 = []; v2 =[]
 
-@url = "http://apis.lan.ign.com/object/v3/releases/search"
-#@url = "http://10.92.218.21:8081//v3/articles/search"
-@response = RestClient.post @url, legacyarticle, :content_type => "application/json"
+#@url = "http://apis.lan.ign.com/object/v3/releases/search"
+@url = "http://apis.lan.ign.com/v3/articles/search"
+@response = RestClient.post @url, mobile_test, :content_type => "application/json"
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/article_search.json', 'w') {|f| f.write(@response.to_s) }
 

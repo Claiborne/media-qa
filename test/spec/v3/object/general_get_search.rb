@@ -242,14 +242,15 @@ end
 ############################ BEGIN SPEC #################################### 
 
 
-describe "V3 Object API -- Post Search for Published 360 Releases: #{release_search_smoke}" do
+describe "V3 Object API -- GET Search for Published 360 Releases: #{release_search_smoke}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+release_search_smoke.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, release_search_smoke, :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
@@ -300,14 +301,15 @@ end
 
 ################################################################ 
 
-describe "V3 Object API -- Post Search for Reviewed Releases: #{reviewed_games}" do
+describe "V3 Object API -- GET Search for Reviewed Releases: #{reviewed_games}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+reviewed_games.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, reviewed_games, :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
@@ -356,14 +358,15 @@ end
 ################################################################ 
 
 {mass_effect_3_releases_by_game_id=>'GameId',mass_effect_3_releases_by_game_legacyid=>'LegacyId',mass_effect_3_releases_by_game_slug=>'Game Slug'}.each do |request_body,description|
-  describe "V3 Object API -- Post Search for Releases by #{description} using: #{request_body}" do
+  describe "V3 Object API -- GET Search for Releases by #{description} using: #{request_body}" do
 
     before(:all) do
       Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = Configuration.new
-      @url = "http://#{@config.options['baseurl']}/releases/search"
+      @url = "http://#{@config.options['baseurl']}/releases/search?q="+request_body.to_s
+      @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
       begin 
-         @response = RestClient.post @url, request_body, :content_type => "application/json"
+         @response = RestClient.get @url
       rescue => e
         raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
       end
@@ -412,13 +415,14 @@ end
 end
 ################################################################ 
 
-describe "V3 Object API -- Post Search for Bioware Releases By Dev Name: #{bioware_games_by_dev_name}" do
+describe "V3 Object API -- GET Search for Bioware Releases By Dev Name: #{bioware_games_by_dev_name}" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+bioware_games_by_dev_name.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, bioware_games_by_dev_name, :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
@@ -461,14 +465,15 @@ end
 
 ################################################################ 
 
-describe "V3 Object API -- Post Search for Bioware Releases By Dev legacyId: #{bioware_games_by_dev_legacyid}" do
+describe "V3 Object API -- GET Search for Bioware Releases By Dev legacyId: #{bioware_games_by_dev_legacyid}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+bioware_games_by_dev_legacyid.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, bioware_games_by_dev_legacyid, :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
@@ -521,14 +526,15 @@ end
 
 ################################################################ 
 [true,false].each do |is_released|
-describe "V3 Object API -- Post Search for Releases Released Boolean: #{release_by_is_released(is_released)}" do
+describe "V3 Object API -- GET Search for Releases Released Boolean: #{release_by_is_released(is_released)}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+release_by_is_released(is_released).to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, release_by_is_released(is_released), :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
@@ -559,14 +565,15 @@ end
 end
 ################################################################ 
 
-describe "V3 Object API -- Post Search - Test Pagination Using: #{release_pagination(11,0)}" do
+describe "V3 Object API -- GET Search - Test Pagination Using: #{release_pagination(11,0)}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+release_pagination(11,0).to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, release_pagination(11,0), :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
@@ -598,3 +605,10 @@ describe "V3 Object API -- Post Search - Test Pagination Using: #{release_pagina
   end
   
 end
+
+=begin
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+release_search_smoke.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin 
+       @response = RestClient.get @url
+=end

@@ -81,10 +81,6 @@ module Blogrollv3Articles
       @doc.css('div.blogrollContainer div.listElmnt-blogItem span.listElmnt-date').count.should == num
     end
     
-    it "should have #{num} blogroll comments" do
-      @doc.css('div.blogrollContainer div.listElmnt-blogItem a.listElmnt-iconsComments').count.should == num
-    end
-    
     it "should display text for each blogroll entry", :smoke => true do
       check_display_text_for_each('div.blogrollContainer div.listElmnt-blogItem')
     end
@@ -109,10 +105,6 @@ module Blogrollv3Articles
     
     it "should display text for each blogroll timestamp" do
       check_display_text_for_each('div.blogrollContainer div.listElmnt-blogItem span.listElmnt-date')
-    end
-    
-    it "should display text for each blogroll comments" do
-      check_display_text_for_each('div.blogrollContainer div.listElmnt-blogItem a.listElmnt-iconsComments')
     end
     
     it "should not display duplicate articles", :smoke => true do

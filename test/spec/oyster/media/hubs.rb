@@ -177,15 +177,14 @@ end #end describe
 ######################################################################
 
 @hubs = return_list_of_game_hubs
-{'www.ign.com'=>'us','uk.ign.com'=>'uk','au.ign.com'=>'au','ie.ign.com'=>'ie'}.each do |site,region|
+@hubs = ["/"]
 @hubs.each do |hub|
-describe "Oyster Hubs -- #{hub}", :stg => true do
+describe "Oyster Hubs -- #{hub}", :home => true do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
     @config = Configuration.new
-    #@page = "http://#{@config.options['baseurl']}/#{hub}" 
-    @page = "http://#{site}/#{hub}"
+    @page = "http://#{@config.options['baseurl']}#{hub}" 
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -221,19 +220,11 @@ describe "Oyster Hubs -- #{hub}", :stg => true do
   end
   
   context "v3 Blogroll widget" do
-    widget_blogroll_v3_articles(10, "n/a")
-    widget_blogroll_v3_articles_vs_api(10, hub, region)
-    it "should call category_locale=#{region} when loading more articles in the blogroll" do
-      @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=#{region}/).should be_true
+    widget_blogroll_v3_articles(22, "n/a")
+    widget_blogroll_v3_articles_vs_api(22, hub, "us")
+    it "should call category_locale=us when loading more articles in the blogroll" do
+      @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
     end
-  end
-  
-  #context "Extra Cover Stories Widget" do
-    #widget_cover_stories_extra
-  #end
-  
-  context "Popular Videos Widget" do
-    widget_video_interrupt
   end
   
   context "Most Commented Stories Widget" do
@@ -248,13 +239,12 @@ describe "Oyster Hubs -- #{hub}", :stg => true do
     widget_top_games('Games Coming Soon', 3)
   end
   
-  context "Popular Threads Widget" do
-    widget_popular_threads
+  context "Most Commented Widget" do
+    widget_most_commented_stories
   end
 
 end 
 end
-end 
 
 ######################################################################
 

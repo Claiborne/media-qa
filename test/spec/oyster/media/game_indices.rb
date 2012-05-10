@@ -102,7 +102,7 @@ describe "Game Indices -- /games/reviews", :test => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/reviews?tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/reviews"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -128,7 +128,7 @@ describe "Game Indices -- /games/reviews?platform=#{platform}" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/reviews?platform=#{platform}&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/reviews?platform=#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -155,7 +155,7 @@ describe "Game Indices -- /games/reviews?genre=#{genre}&platform=all" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/reviews?genre=#{genre}&platform=all&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/reviews?genre=#{genre}&platform=all"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -183,7 +183,7 @@ describe "Game Indices -- /games/reviews?genre=#{genre}&platform=#{platform}" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/reviews?genre=#{genre}&platform=#{platform}&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/reviews?genre=#{genre}&platform=#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -210,7 +210,7 @@ describe "Game Indices -- /games/editors-choice" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/editors-choice?tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/editors-choice"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -236,7 +236,7 @@ describe "Game Indices -- /games/editors-choice?platform=#{platform}" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/editors-choice?platform=#{platform}&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/editors-choice?platform=#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -263,7 +263,7 @@ describe "Game Indices -- /games/editors-choice?genre=#{genre}&platform=all" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/editors-choice?genre=#{genre}&platform=all&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/editors-choice?genre=#{genre}&platform=all"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -291,7 +291,7 @@ describe "Game Indices -- /games/editors-choice?genre=#{genre}&platform=#{platfo
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/editors-choice?genre=#{genre}&platform=#{platform}&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/editors-choice?genre=#{genre}&platform=#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -318,7 +318,7 @@ describe "Game Indices -- /games/upcoming" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/upcoming?tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/upcoming"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -342,7 +342,7 @@ describe "Game Indices -- /games/upcoming?platform=#{platform}" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/upcoming?platform=#{platform}&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/upcoming?platform=#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -367,7 +367,7 @@ describe "Game Indices -- /games/upcoming?genre=#{genre}&platform=all" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/upcoming?genre=#{genre}&platform=all&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/upcoming?genre=#{genre}&platform=all"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -393,7 +393,7 @@ describe "Game Indices -- /games/upcoming?genre=#{genre}&platform=#{platform}" d
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/upcoming?genre=#{genre}&platform=#{platform}&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/upcoming?genre=#{genre}&platform=#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -418,7 +418,7 @@ describe "Game Indices -- /games/upcoming?filter=top" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/upcoming?filter=top&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/upcoming?filter=top"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -442,7 +442,7 @@ describe "Game Indices -- /games/upcoming?platform=#{platform}&filter=top" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/upcoming?platform=#{platform}&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/upcoming?platform=#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -467,7 +467,7 @@ describe "Game Indices -- /games/upcoming?genre=#{genre}&platform=all&filter=top
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/upcoming?genre=#{genre}&platform=all&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/upcoming?genre=#{genre}&platform=all"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -493,7 +493,7 @@ describe "Game Indices -- /games/upcoming?genre=#{genre}&platform=#{platform}&fi
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games/upcoming?genre=#{genre}&platform=#{platform}&tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games/upcoming?genre=#{genre}&platform=#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -518,7 +518,7 @@ describe "Game Indices -- /games" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/games?tonysoprano=1"
+    @page = "http://#{@config.options['baseurl']}/games"
     @doc = nokogiri_not_301_open(@page)
   end
 

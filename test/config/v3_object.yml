@@ -5,4 +5,4 @@ staging:
   baseurl: 10.92.218.26:8080
 
 production:
-  baseurl: http://apis.lan.ign.com//object/v3
+  baseurl: apis.lan.ign.com/object/v3
