@@ -605,10 +605,3 @@ describe "V3 Object API -- GET Search - Test Pagination Using: #{release_paginat
   end
   
 end
-
-=begin
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+release_search_smoke.to_s
-    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
-    begin 
-       @response = RestClient.get @url
-=end
