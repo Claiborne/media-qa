@@ -596,7 +596,9 @@ describe "V3 Object API -- GET Search - Test Pagination Using: #{release_paginat
    
   it "should pass basic pagination check" do
     begin 
-      @response = RestClient.post @url, release_pagination(10,10), :content_type => "application/json"
+      @url2 = "http://#{@config.options['baseurl']}/releases/search?q="+release_pagination(10,10).to_s
+      @url2 = @url2.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+      @response = RestClient.get @url2
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
     end
