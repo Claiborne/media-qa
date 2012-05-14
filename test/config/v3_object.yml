@@ -3,6 +3,9 @@ development:
 
 staging:
   baseurl: 10.92.218.26:8080
+  
+varnish:
+  baseurl: media-apis-prd-varnishlan-01.las1.colo.ignops.com/object/v3    
 
 production:
   baseurl: apis.lan.ign.com/object/v3
