@@ -240,14 +240,15 @@ end
 
 ########################## BEGIN SPEC ########################## 
 
-describe "V3 Articles API -- General Post Search for published articles sending #{published_articles}" do
+describe "V3 Articles API -- General Post Search for published articles sending #{published_articles}", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+published_articles.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, published_articles, :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response)
     end
@@ -309,14 +310,15 @@ end
 ###############################################################
 
 {'wii'=>wii,'tech'=>tech}.each_pair do |hub, search|
-describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}" do
+describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+search.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, search, :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response)
     end
@@ -403,14 +405,15 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}" do
+describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+blogs.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, blogs, :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response)
     end
@@ -447,14 +450,15 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}" do
+describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+cheats.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, cheats, :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response)
     end
@@ -485,14 +489,15 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Skyrim Cheats sending #{skyrim_cheats}" do
+describe "V3 Articles API -- General Post Search for Skyrim Cheats sending #{skyrim_cheats}", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search"
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+skyrim_cheats.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
-       @response = RestClient.post @url, skyrim_cheats, :content_type => "application/json"
+       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url+" "+e.response)
     end
