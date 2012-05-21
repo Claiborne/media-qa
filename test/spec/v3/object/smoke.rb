@@ -3,9 +3,50 @@ require 'nokogiri'
 require 'configuration'
 require 'rest_client'
 require 'json'
-require 'assert'
+require 'object_api_helper'
 
 include Assert
+include ObjectApiHelper
+
+class ObjectIds
+  
+  @me3_release_ids = get_release_ids_by_legacy_id('110694')
+  @me3_game_id = get_game_id('mass-effect-3')
+  @me3_uk_release_id = get_me3_uk_id
+  @bioware_company_id = get_company_id('bioware')
+  @high_def_feature_id = get_feature_id('1080p')
+  @action_genre_id = get_genre_id('action')
+  @xbox_hardware_id = get_hardware_id('xbox-360')
+  
+  def self.me3_release_ids
+    @me3_release_ids
+  end
+  
+  def self.me3_game_id
+    @me3_game_id
+  end
+  
+  def self.me3_uk_release_id
+    @me3_uk_release_id
+  end
+  
+  def self.bioware_id
+    @bioware_company_id
+  end
+  
+  def self.high_def_id
+    @high_def_feature_id
+  end
+  
+  def self.action_id
+    @action_genre_id
+  end
+  
+  def self.xbox_id
+    @xbox_hardware_id
+  end
+  
+end
 
 describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200" do
 
@@ -144,15 +185,15 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/legacyId/110694" do
   end
   
   it "shoud return four specific releaseId values for each four releases" do
-    ids = ['4fa34fa2945f21eb865f6e9e','4fa34fa28a1606f0a2a69795','4fa34fa284a3615c174b8c34','4fa34fa284a3615c174b8c33']
+    ids = ObjectIds.me3_release_ids
     @data['data'].each do |release|
       ids.include?release['releaseId'].should be_true
     end
   end
   
-  it "should only return releases with a metadata.game.gameId value of 4fa34fa18a1606f0a2a6978f" do
+  it "should only return releases with a metadata.game.gameId value of #{ObjectIds.me3_game_id}" do
     @data['data'].each do |release|
-      release['metadata']['game']['gameId'].should == '4fa34fa18a1606f0a2a6978f'
+      release['metadata']['game']['gameId'].should == ObjectIds.me3_game_id
     end
   end
   
@@ -166,12 +207,12 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Releases Smoke Tests -- /releases/4fa34fa284a3615c174b8c34" do
+describe "V3 Object API -- Releases Smoke Tests -- /releases/#{ObjectIds.me3_uk_release_id}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/4fa34fa284a3615c174b8c34"
+    @url = "http://#{@config.options['baseurl']}/releases/#{ObjectIds.me3_uk_release_id}"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -204,8 +245,8 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/4fa34fa284a3615c174
     end
   end
   
-  it "should return a release with a releaseId value of 4fa34fa284a3615c174b8c34" do
-    @data['releaseId'].should == '4fa34fa284a3615c174b8c34'
+  it "should return a release with a releaseId value of #{ObjectIds.me3_uk_release_id}" do
+    @data['releaseId'].should == ObjectIds.me3_uk_release_id
   end
   
   it "shoud return a release with a metadata.region value of UK" do
@@ -213,8 +254,8 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/4fa34fa284a3615c174
     @data['metadata']['region'].should == 'UK'
   end
   
-  it "should only return releases with a metadata.game.gameId value of 4fa34fa18a1606f0a2a6978f" do
-    @data['metadata']['game']['gameId'].should == '4fa34fa18a1606f0a2a6978f'
+  it "should only return releases with a metadata.game.gameId value of #{ObjectIds.me3_game_id}" do
+    @data['metadata']['game']['gameId'].should == ObjectIds.me3_game_id
   end
   
   it "should only return releases with a metadata.game.metadata.slug value of mass-effect-3" do
@@ -313,7 +354,7 @@ end
 
 ###################################################
 
-['/4fa34fa18a1606f0a2a6978f','/slug/mass-effect-3'].each do |call|
+["/#{ObjectIds.me3_game_id}","/slug/mass-effect-3"].each do |call|
 describe "V3 Object API -- Games Smoke Tests -- /games#{call}" do
 
   before(:all) do
@@ -344,9 +385,9 @@ describe "V3 Object API -- Games Smoke Tests -- /games#{call}" do
     check_not_blank(@data)
   end
   
-  it "should a release with a gameId value of 4fa34fa18a1606f0a2a6978f" do
+  it "should a release with a gameId value of #{ObjectIds.me3_game_id}" do
     @data.has_key?('gameId').should be_true
-    @data['gameId'].should == '4fa34fa18a1606f0a2a6978f'  
+    @data['gameId'].should == ObjectIds.me3_game_id
   end
   
   it "should a release with a metadata.slug value of mass-effect-3" do
@@ -525,7 +566,7 @@ end
 
 ###################################################
 
-['/4fa327248a1606f0a2a60de5','/slug/bioware'].each do |call|
+["/#{ObjectIds.bioware_id}","/slug/bioware"].each do |call|
 describe "V3 Object API -- Companies Smoke Tests -- /companies#{call}" do
 
   before(:all) do
@@ -556,9 +597,9 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies#{call}" do
     check_not_blank(@data)
   end
   
-  it "should return a company with a companyId value of 4fa327248a1606f0a2a60de5" do
+  it "should return a company with a companyId value of #{ObjectIds.bioware_id}" do
     @data.has_key?('companyId').should be_true
-    @data['companyId'].should == '4fa327248a1606f0a2a60de5'
+    @data['companyId'].should == ObjectIds.bioware_id
   end
   
   it "should return a company with a metadata.slug value of 'bioware'" do
@@ -668,7 +709,7 @@ end
 
 ###################################################
 
-['/4fa326cb945f21eb865eea3e','/slug/1080p'].each do |call|
+["/#{ObjectIds.high_def_id}","/slug/1080p"].each do |call|
 describe "V3 Object API -- Features Smoke Tests -- /feaures#{call}" do
 
   before(:all) do
@@ -699,9 +740,9 @@ describe "V3 Object API -- Features Smoke Tests -- /feaures#{call}" do
     check_not_blank(@data)
   end
   
-  it "should return a feature with a featureId value of 4fa326cb945f21eb865eea3e" do
+  it "should return a feature with a featureId value of #{ObjectIds.high_def_id}" do
     @data.has_key?('featureId').should be_true
-    @data['featureId'].should == '4fa326cb945f21eb865eea3e'
+    @data['featureId'].should == ObjectIds.high_def_id
   end
   
   it "should return a feature with a metadata.slug value of '1080p'" do
@@ -812,7 +853,7 @@ end
 
 ###################################################
 
-['/4fa3291c84a3615c174b0dc1','/slug/action'].each do |call|
+["/#{ObjectIds.action_id}","/slug/action"].each do |call|
 describe "V3 Object API -- Genre Smoke Tests -- /genres#{call}" do
 
   before(:all) do
@@ -843,9 +884,9 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres#{call}" do
     check_not_blank(@data)
   end
   
-  it "should return a genre with a genreId value of 4fa3291c84a3615c174b0dc1" do
+  it "should return a genre with a genreId value of #{ObjectIds.action_id}" do
     @data.has_key?('genreId').should be_true
-    @data['genreId'].should == '4fa3291c84a3615c174b0dc1'
+    @data['genreId'].should == ObjectIds.action_id
   end
   
   it "should return a genre with a metadata.slug value of 'action'" do
@@ -956,7 +997,7 @@ end
 
 ###################################################
 
-['/4fa32927945f21eb865ef646','/slug/xbox-360'].each do |call|
+["/#{ObjectIds.xbox_id}","/slug/xbox-360"].each do |call|
 describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}" do
 
   before(:all) do
@@ -987,9 +1028,9 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}" do
     check_not_blank(@data)
   end
   
-  it "should return a hardware with a hardwareId value of 4fa32927945f21eb865ef646" do
+  it "should return a hardware with a hardwareId value of #{ObjectIds.xbox_id}" do
     @data.has_key?('hardwareId').should be_true
-    @data['hardwareId'].should == '4fa32927945f21eb865ef646'
+    @data['hardwareId'].should == ObjectIds.xbox_id
   end
   
   it "should return a hardware with a metadata.slug value of 'xbox-360'" do

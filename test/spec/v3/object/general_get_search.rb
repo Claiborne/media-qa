@@ -4,8 +4,20 @@ require 'configuration'
 require 'rest_client'
 require 'json'
 require 'assert'
+require 'object_api_helper'
 
 include Assert
+include ObjectApiHelper
+
+class Me3GameId
+  
+  @me3_game_id = get_game_id('mass-effect-3')
+  
+  def self.me3_game_id
+    @me3_game_id
+  end
+  
+end
 
 ########################### BEGIN REQUEST BODY METHODS #############################
 
@@ -52,7 +64,7 @@ def mass_effect_3_releases_by_game_id
       {
         "field"=>"metadata.game.gameId",
         "condition"=>"term",
-        "value"=>"4fa34fa18a1606f0a2a6978f"
+        "value"=>"#{Me3GameId.me3_game_id}"
       }
     ],
     "matchRule"=>"matchAll",
@@ -391,9 +403,9 @@ end
 
     check_id('releaseId')
     
-    it "should only return releases with a metadata.game.gameId value of '4fa34fa18a1606f0a2a6978f'" do
+    it "should only return releases with a metadata.game.gameId value of '#{Me3GameId.me3_game_id}'" do
       @data['data'].each do |release|
-        release['metadata']['game']['gameId'].should == '4fa34fa18a1606f0a2a6978f'
+        release['metadata']['game']['gameId'].should == Me3GameId.me3_game_id
       end
     end
     
