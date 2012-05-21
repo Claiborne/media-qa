@@ -7,7 +7,7 @@ require 'assert'
 
 include Assert
 
-describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200", :test3 => true do
+describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"

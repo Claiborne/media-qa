@@ -3,6 +3,14 @@ require 'json'
 
 @token = '2b405d3ee81080c402f9de4897a377056c86f1bb'
 
+
+{
+  
+}.to.json
+
+
+http://media-oyster-dev-app-01.sfdev.colo.ignops.com:8080/releases/search?q=%7B%22matchRule%22%3A%22matchAll%22%2C%22startIndex%22%3A0%2C%22count%22%3A25%2C%22sortBy%22%3A%22network.ign.review.metadata.publishDate%22%2C%22sortOrder%22%3A%22desc%22%2C%22states%22%3A%5B%22published%22%5D%2C%22regions%22%3A%5B%22US%22%2C%22US%22%5D%2C%22rules%22%3A%5B%7B%22field%22%3A%22network.ign.review.score%22%2C%22condition%22%3A%22range%22%2C%22value%22%3A%220.1%2C%22%7D%2C%7B%22field%22%3A%22hardware.platform.metadata.slug%22%2C%22condition%22%3A%22term%22%2C%22value%22%3A%223ds%22%7D%2C%7B%22field%22%3A%22content.primaryGenre.metadata.slug%22%2C%22condition%22%3A%22term%22%2C%22value%22%3A%22sports%22%7D%2C%7B%22field%22%3A%22network.ign.review.metadata.publishDate%22%2C%22condition%22%3A%22range%22%2C%22value%22%3A%22%2C2012-05-16T13%3A36%3A29-0700%22%7D%5D%7D
+
 def new_release_min
   {
       "metadata" => {
@@ -321,6 +329,53 @@ end
 
 
 
+
+
+def review_index
+  
+  # www.ign.com/games/reviews
+  
+  {
+    "rules"=>[
+      {
+        "field"=>"network.ign.review.score",
+        "condition"=>"range",
+        "value"=>"0.1,",
+      }, 
+      {
+        "field"=>"hardware.platform.metadata.slug",
+        "condition"=>"term",
+        "value"=>"3ds"
+      },
+      {
+        "field"=>"content.primaryGenre.metadata.slug",
+        "condition"=>"term",
+        "value"=>"sports"
+      },
+      {
+        "field"=>"network.ign.review.metadata.publishDate",
+        "condition"=>"range",
+        "value"=>",2012-05-16T13:36:29-0700"
+      }
+    ],
+    "matchRule"=>"matchAll",
+    "startIndex"=>0,
+    "count"=>25,
+    "sortBy"=>"network.ign.review.metadata.publishDate",
+    "sortOrder"=>"desc",
+    "states"=>["published"],
+    "regions"=>["US"]
+  }.to.json
+end
+
+def editors_choice_index
+  
+  # www.ign.com/games/editors-choice
+  
+  
+  
+end
+
 #@url = "http://10.92.218.26:8080/releases/4f8e020d99e7ba201065dc8b"
 #@response = RestClient.put @url, new_release_min, :content_type => "application/json"
 #@data = JSON.parse(@response.body)
@@ -337,11 +392,12 @@ File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@respon
 
 #@url = "http://10.92.218.26:8080/releases/search"
 
-@url = "http://10.92.218.26:8080/releases/search"
-
+#@url = "http://10.92.218.26:8080/releases/search"
+@url = "http://apis.lan.ign.com/object/v3/releases/search?q="+return_stuff.to_s
+@url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
 
 begin
-  @response = RestClient.post @url, testing, :content_type => "application/json"
+  @response = RestClient.get @url
 rescue => e
     raise Exception.new(e.message+" "+e.response.to_s)
 end

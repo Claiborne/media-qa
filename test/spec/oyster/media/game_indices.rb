@@ -10,9 +10,8 @@ include OpenPage
 include FeChecker
 include TopGames
 
-def platform_list; ['all','xbox-360','playstation-3','pc','wii','nintendo-3ds','playstation-vita','iphone']; end
-#def genre_list; ['all','action','action,rpg','adventure','fighting','music','rpg','racing','shooter','sports','strategy']; end
-def genre_list; ['all']; end
+def platform_list; ['all','xbox-360','ps33','pc','wii','3ds','playstation-vita','iphone']; end
+def genre_list; ['all','action','adventure','fighting','music','rpg','racing','shooter','sports','strategy']; end
 
 def common_assertions
   
@@ -91,7 +90,7 @@ end
 
 def upcoming_assertions
 
- ##todo
+  ##todo
 
 end
 
@@ -113,7 +112,7 @@ describe "Game Indices -- /games/reviews", :test => true do
   after(:each) do
 
   end
-  
+    
   common_assertions
   
   review_assertions
