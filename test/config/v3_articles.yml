@@ -1,4 +1,5 @@
 development:
+  baseurl: 10.92.218.21:8081
 
 staging:
   baseurl: 10.92.218.21:8081

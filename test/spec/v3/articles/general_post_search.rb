@@ -4,7 +4,6 @@ require 'configuration'
 require 'rest_client'
 require 'json'
 require 'assert'
-require 'var_helper'
 require 'time'
 
 include Assert

@@ -17,24 +17,12 @@ class HelperVars
   
   @number = Random.rand(10000).to_s
 
-  #@game_slug = "qa-test-game-#{@number}"
   @game_id = ""
-
-  #@company_slug = "qa-test-company-#{@number}"
   @company_id = ""
-
-  #@feature_slug = "qa-test-company-#{@number}"
   @feature_id = ""
-
-  #@genre_slug = "qa-test-genre-#{@number}"
   @genre_id = ""
-
-  #@hardware_slug = "qa-test-hardware-#{@number}"
   @hardware_id = ""
-
-  #@market_slug = "qa-test-market-#{@number}"
   @market_id = ""
-
   @release_id = ""
   
   def self.return_token

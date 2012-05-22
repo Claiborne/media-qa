@@ -4,16 +4,31 @@ require 'configuration'
 require 'rest_client'
 require 'json'
 require 'assert'
-require 'var_helper'
+require 'topaz_token'
 
 include Assert
+include TopazToken
 
-def get_stage_topaz_token
-  'ed4063ae614773398a945dc35962e599b511fe0e'
+class HelperVars
+  
+  @article_id = ""
+  
+  @token = return_topaz_token('articles')
+  
+  def self.return_token
+    @token  
+  end
+
+  def self.return_article_id
+    @article_id 
+  end
+  
+  def self.set_article_id(id)
+    @article_id  = id
+  end
+  
 end
 
-#TODO:
-# get_stage_topaz_token lib helper method
 
 def body_request
   {
@@ -36,7 +51,7 @@ end
 describe "V3 Articles API -- Create An Article -- POST 10.92.218.21:8081/v3/articles?oauth_token={token}", :stg => true do
 
   before(:all) do
-    @url = "http://10.92.218.21:8081/v3/articles?oauth_token=#{get_stage_topaz_token}"
+    @url = "http://10.92.218.21:8081/v3/articles?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.post @url, body_request, :content_type => "application/json"
     rescue => e
@@ -71,7 +86,7 @@ describe "V3 Articles API -- Create An Article -- POST 10.92.218.21:8081/v3/arti
   
   it "should return an 'articleID' value that is a 24-character hash" do
     @data['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
-    VarHelper.set_helper_var1(@data['articleId'].to_s)
+    HelperVars.set_article_id(@data['articleId'].to_s)
     puts @data['articleId'].to_s
   end
   
@@ -79,10 +94,10 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Created -- 10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}", :stg => true do
+describe "V3 Articles API -- Check Article Just Created -- 10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}"
+    @url = "http://10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -155,8 +170,8 @@ describe "V3 Articles API -- Check Article Just Created -- 10.92.218.21:8081/v3/
     @data['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
   end
 
-  it "should return an article with an articleId value of #{VarHelper.return_helper_var1}" do
-    @data['articleId'].should == VarHelper.return_helper_var1
+  it "should return an article with an articleId value of #{HelperVars.return_article_id}" do
+    @data['articleId'].should == HelperVars.return_article_id
   end
 
   # metadata assertions
@@ -267,11 +282,11 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Update Article Just Created -- PUT 10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}?oauth_token={token}", :stg => true do
+describe "V3 Articles API -- Update Article Just Created -- PUT 10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}?oauth_token={token}", :stg => true do
 
   before(:all) do
     put_body = {"content" => ["Test Content Change #{Random.rand(10000-99999)}"]}.to_json
-    @url = "http://10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}?oauth_token=#{get_stage_topaz_token}"
+    @url = "http://10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}?oauth_token=#{HelperVars.return_token}"
     begin
       @response = RestClient.put @url, put_body, :content_type => "application/json"
     rescue => e
@@ -296,18 +311,18 @@ describe "V3 Articles API -- Update Article Just Created -- PUT 10.92.218.21:808
     @response.code.should eql(200)
   end
   
-  it "should return an article with an articleId value of #{VarHelper.return_helper_var1}" do
-    @data['articleId'].should == VarHelper.return_helper_var1
+  it "should return an article with an articleId value of #{HelperVars.return_article_id}" do
+    @data['articleId'].should == HelperVars.return_article_id
   end
   
 end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Updated -- 10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}", :stg => true do
+describe "V3 Articles API -- Check Article Just Updated -- 10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://10.92.218.21:8081/v3/articles/#{VarHelper.return_helper_var1}"
+    @url = "http://10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -384,8 +399,8 @@ describe "V3 Articles API -- Check Article Just Updated -- 10.92.218.21:8081/v3/
     @data['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
   end
 
-  it "should return an article with an articleId value of #{VarHelper.return_helper_var1}" do
-    @data['articleId'].should == VarHelper.return_helper_var1
+  it "should return an article with an articleId value of #{HelperVars.return_article_id}" do
+    @data['articleId'].should == HelperVars.return_article_id
   end
 
   # metadata assertions

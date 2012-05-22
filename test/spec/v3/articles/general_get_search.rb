@@ -4,10 +4,23 @@ require 'configuration'
 require 'rest_client'
 require 'json'
 require 'assert'
-require 'var_helper'
 require 'time'
 
 include Assert
+
+class HelperVars
+  
+  @article_id = ""
+
+  def self.return_article_id
+    @article_id 
+  end
+  
+  def self.set_article_id(id)
+    @article_id  = id
+  end
+  
+end
 
 def published_articles
 {"matchRule"=>"matchAll",
