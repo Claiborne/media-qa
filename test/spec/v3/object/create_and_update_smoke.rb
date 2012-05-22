@@ -5,13 +5,15 @@ require 'rest_client'
 require 'json'
 require 'assert'
 require 'post_search/object_post_search'
+require 'topaz_token'
 
 include Assert
 include ObjectPostSearch
+include TopazToken
 
 class HelperVars
   
-  @token = 'bd5a02c465bed5b230c3a12f563e40f6675456d0'
+  @token = return_topaz_token('objects')
   
   @number = Random.rand(10000).to_s
 
@@ -119,11 +121,11 @@ describe "V3 Object API -- Create Game", :stg => true do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
     @url = "http://10.92.218.26:8080/games?oauth_token=#{HelperVars.return_token}"
-    #begin 
+    begin 
       @response = RestClient.post @url, create_game_body(HelperVars.return_object_slug('game')), :content_type => "application/json"
-    #rescue => e
-      #raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
-    #end
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+    end
     @data = JSON.parse(@response.body)
 
   end
