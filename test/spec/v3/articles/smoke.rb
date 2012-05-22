@@ -154,12 +154,26 @@ describe "V3 Articles API -- General Smoke Tests -- v3/articles#{call}", :smoke 
       end
     end
     
-    it "should return non-nil, non-blank '#{k}' metadata for all articles" do
-      @data['data'].each do |article|
-        article['metadata'][k].should_not be_nil
-        article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+    if k == "headline"
+    
+      it "should return non-nil, non-blank '#{k}' metadata for all articles", :prd => true do
+        @data['data'].each do |article|
+          article['metadata'][k].should_not be_nil
+          article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+        end
       end
+      
+    else
+      
+      it "should return non-nil, non-blank '#{k}' metadata for all articles" do
+        @data['data'].each do |article|
+          article['metadata'][k].should_not be_nil
+          article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+        end
+      end
+      
     end
+      
   end
   
   # legacyData assertions
@@ -352,7 +366,15 @@ describe "V3 Articles API -- Get Article By #{k} -- #{v}", :smoke => true do
   
   # tags assertions
   
-  it "should return an article with 15 non-nil, non-blank tags" do
+  it "should return an article with 15 non-nil, non-blank tags", :stg => true do
+    @data['tags'].length.should == 15
+    @data['tags'].each do |tag|
+      tag.should_not be_nil
+      tag.to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+  end
+  
+  it "should return an article with 17 non-nil, non-blank tags", :prd => true do
     @data['tags'].length.should == 17
     @data['tags'].each do |tag|
       tag.should_not be_nil

@@ -105,13 +105,25 @@ def basic_checks
       end
     end
     
-    it "should return non-nil, non-blank '#{k}' metadata for all articles" do
-      @data['data'].each do |article|
-        article['metadata'][k].should_not be_nil
-        article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
-      end
-    end
+    if k = "headline"
     
+      it "should return non-nil, non-blank '#{k}' metadata for all articles", :prd => true do
+        @data['data'].each do |article|
+          article['metadata'][k].should_not be_nil
+          article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+        end
+      end
+      
+    else
+      
+      it "should return non-nil, non-blank '#{k}' metadata for all articles" do
+        @data['data'].each do |article|
+          article['metadata'][k].should_not be_nil
+          article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+        end
+      end
+      
+    end
   end
   
   # legacyData assertions

@@ -283,11 +283,24 @@ describe "V3 Articles API -- General Post Search for published articles sending 
       end
     end
     
-    it "should return non-nil, non-blank '#{k}' metadata for all articles" do
-      @data['data'].each do |article|
-      article['metadata'][k].should_not be_nil
-      article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+    if k == "headline"
+    
+      it "should return non-nil, non-blank '#{k}' metadata for all articles", :prd => true do
+        @data['data'].each do |article|
+        article['metadata'][k].should_not be_nil
+        article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+        end
       end
+      
+    else
+      
+      it "should return non-nil, non-blank '#{k}' metadata for all articles" do
+        @data['data'].each do |article|
+        article['metadata'][k].should_not be_nil
+        article['metadata'][k].to_s.delete("^a-zA-Z0-9").length.should > 0
+        end
+      end  
+        
     end
   end# end iteration
   
@@ -436,7 +449,7 @@ describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}" do
     end
   end
   
-  it "should return the first blog with a publish date no more than an hour old" do
+  it "should return the first blog with a publish date no more than an hour old", :prd => true do
      time_now = Time.new
      time_last_published = Time.parse(@data['data'][0]['metadata']['publishDate'])
      (time_now - time_last_published).should < 3601
