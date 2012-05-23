@@ -64,44 +64,12 @@ RSpec::Core::RakeTask.new('v3object') do |t|
     t.pattern = 'spec/v3/object/*.rb'
 end
 
-desc "Run v3 object migration tests"
-RSpec::Core::RakeTask.new('objectmigration') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/object/object_migration.rb'
-end
-
-############# V2 ############# 
-
-desc "Run v2 tests"
-RSpec::Core::RakeTask.new('v2') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/**/*.rb'    
-end
-
-desc "Run v2 articles"
-RSpec::Core::RakeTask.new('v2articles') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/articles.rb'    
-end
-
-desc "Run v2 blogs"
-RSpec::Core::RakeTask.new('v2blogs') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/blogs.rb'    
-end
-
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"
 RSpec::Core::RakeTask.new('oyster') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/oyster/media/*.rb'
-end
-
-desc "Run Legacy Hubs Frontend Tests"
-RSpec::Core::RakeTask.new('legacyhubs') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/legacy_hubs.rb'
 end
 
 desc "Run Hubs Frontend Tests"
