@@ -8,6 +8,7 @@ require 'assert'
 include Assert
 
 def basic_checks
+  
   it "should return 200" do
     check_200(@response)
   end
@@ -105,7 +106,7 @@ def basic_checks
       end
     end
     
-    if k = "headline"
+    if k == "headline"
     
       it "should return non-nil, non-blank '#{k}' metadata for all articles", :prd => true do
         @data['data'].each do |article|

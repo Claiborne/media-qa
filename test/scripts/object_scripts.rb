@@ -8,9 +8,6 @@ require 'json'
   
 }.to.json
 
-
-http://media-oyster-dev-app-01.sfdev.colo.ignops.com:8080/releases/search?q=%7B%22matchRule%22%3A%22matchAll%22%2C%22startIndex%22%3A0%2C%22count%22%3A25%2C%22sortBy%22%3A%22network.ign.review.metadata.publishDate%22%2C%22sortOrder%22%3A%22desc%22%2C%22states%22%3A%5B%22published%22%5D%2C%22regions%22%3A%5B%22US%22%2C%22US%22%5D%2C%22rules%22%3A%5B%7B%22field%22%3A%22network.ign.review.score%22%2C%22condition%22%3A%22range%22%2C%22value%22%3A%220.1%2C%22%7D%2C%7B%22field%22%3A%22hardware.platform.metadata.slug%22%2C%22condition%22%3A%22term%22%2C%22value%22%3A%223ds%22%7D%2C%7B%22field%22%3A%22content.primaryGenre.metadata.slug%22%2C%22condition%22%3A%22term%22%2C%22value%22%3A%22sports%22%7D%2C%7B%22field%22%3A%22network.ign.review.metadata.publishDate%22%2C%22condition%22%3A%22range%22%2C%22value%22%3A%22%2C2012-05-16T13%3A36%3A29-0700%22%7D%5D%7D
-
 def new_release_min
   {
       "metadata" => {

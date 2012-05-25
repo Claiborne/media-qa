@@ -8,7 +8,7 @@ module Assert
   #Check API does not return a blank json
   def check_not_blank(data)
     data.length.should > 0
-    data.to_s.length.should > 0
+    data.to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   #Check API json returns
