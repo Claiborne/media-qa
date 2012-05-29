@@ -78,10 +78,16 @@ RSpec::Core::RakeTask.new('hubs') do |t|
     t.pattern = 'spec/oyster/media/hubs.rb'
 end
 
-desc "Run Games Frontend Tests"
-RSpec::Core::RakeTask.new('gamesfrontend') do |t|
+desc "Run GOB Frontend Tests"
+RSpec::Core::RakeTask.new('gobfrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/game_indices.rb','spec/oyster/media/gob_pages.rb']  
+    t.pattern = ['spec/oyster/media/gob_pages.rb']  
+end
+
+desc "Run Game Indices Frontend Tests"
+RSpec::Core::RakeTask.new('gameindicesfrontend') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = ['spec/oyster/media/game_indices.rb']  
 end
 
 desc "Run Images Frontend Tests"
