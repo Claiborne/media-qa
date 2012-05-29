@@ -14,7 +14,7 @@ class Configuration
     @options = configs[environment]
   
     # this is a bad hack for branch substitution 
-    @options['baseurl'].sub(/branchname/, ENV['branch']) unless ENV['branch'] == nil    
+    @options['baseurl'] = @options['baseurl'].gsub(/branchname/, ENV['branch']) unless ENV['branch'] == nil    
   end
 end
 
