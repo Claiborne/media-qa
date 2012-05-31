@@ -2,26 +2,27 @@ module EvoHeader
   
   def return_evo_header_nav_links
     [ "http://www.ign.com",
-      "http://xbox360.ign.com",
-      "http://ps3.ign.com",
-      "/wii-u",
-      "http://pc.ign.com",
-      "http://vita.ign.com",
-      "http://ds.ign.com",
-      "http://wireless.ign.com",
-      "/tech",
-      "http://movies.ign.com",
-      "http://tv.ign.com",
-      "http://comics.ign.com",
-      "/index/reviews.html",
-      "/wikis",
-      "/index/upcoming.html",
-      "/index/features.html",
-      "/videos",
-      "/boards",
-      "http://stars.ign.com",
-      "/blogs",
-      "/index/podcasts.html"]
+      #{}"http://xbox360.ign.com",
+      #{}"http://ps3.ign.com",
+      #{}"/wii-u",
+      #{}"http://pc.ign.com",
+      #{}"http://vita.ign.com",
+      #{}"http://ds.ign.com",
+      #{}"http://wireless.ign.com",
+      #{}"/tech",
+      #{}"http://movies.ign.com",
+      #{}"http://tv.ign.com",
+      #{}"http://comics.ign.com",
+      #{}"/index/reviews.html",
+      #{}"/wikis",
+      #{}"/index/upcoming.html",
+      #{}"/index/features.html",
+      #{}"/videos",
+      #{}"/boards",
+      #{}"http://stars.ign.com",
+      #{}"/blogs",
+      #{}"/index/podcasts.html"
+    ]
   end
 
   require 'fe_checker'

@@ -1,16 +1,17 @@
 require 'rspec'
 require 'nokogiri'
+require 'configuration'
 require 'rest_client'
 require 'open_page'
 require 'fe_checker'
-require 'widget/global_header'
+require 'widget/evo_header'
 require 'widget/global_footer'
 require 'widget/video_hub_slotter'
 
 include FeChecker
 include OpenPage
 include GlobalFooter
-include GlobalHeader
+include EvoHeader
 include VideoHubSlotter
 
   # Helper Method #
@@ -49,10 +50,12 @@ end
 
   # Tests #
 
-describe "Video Hub -- /video" do
+describe "Video Hub -- /videos" do
 
-  before(:all) do
-    @page = "http://www.ign.com/videos"
+  before(:all) do    
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = Configuration.new
+    @page = "http://#{@config.options['baseurl']}/videos"
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -76,7 +79,7 @@ describe "Video Hub -- /video" do
   end     
   
   context "Global Header Widget:" do
-    widget_global_header
+    widget_evo_header
   end
   
   context "Global Footer Widget:" do
@@ -96,11 +99,11 @@ end
 ########################################
 
 @blogroll_ajax_calls = [
-"http://www.ign.com/videos/all/filtergalleryajax?filter=all",
-"http://www.ign.com/videos/all/filtergalleryajax?filter=games-trailer",
-"http://www.ign.com/videos/all/filtergalleryajax?filter=games-review",
-"http://www.ign.com/videos/all/filtergalleryajax?filter=movies-trailer",
-"http://www.ign.com/videos/all/filtergalleryajax?filter=series"
+"/videos/all/filtergalleryajax?filter=all",
+"/videos/all/filtergalleryajax?filter=games-trailer",
+"/videos/all/filtergalleryajax?filter=games-review",
+"/videos/all/filtergalleryajax?filter=movies-trailer",
+"/videos/all/filtergalleryajax?filter=series"
 ]
 
 @blogroll_ajax_calls.each do |blogroll_call|
@@ -108,8 +111,10 @@ end
 describe "Video Hub Ajax Calls -- #{blogroll_call}" do
   
   before(:all) do
-     @page = blogroll_call.to_s
-     @doc = nokogiri_not_301_open(@page)
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = Configuration.new
+    @page = "http://#{@config.options['baseurl']}#{blogroll_call}"
+    @doc = nokogiri_not_301_open(@page)
    end
 
    before(:each) do
@@ -142,7 +147,9 @@ describe "Video Hub Ajax Calls -- #{blogroll_call}" do
 end# end describe
 end# end ajax iteration
 
-video_page = nokogiri_open("http://www.ign.com/videos")
+Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+setup_config = Configuration.new
+video_page = nokogiri_open("http://#{setup_config.options['baseurl']}/videos")
 @video_player_page = []
 video_page.css('ul#video-hub div.grid_8 a').each do |v|
   @video_player_page  << v.attribute('href')
@@ -153,6 +160,8 @@ end
 describe "Video Player Page -- #{video_player_page}" do
 
   before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = Configuration.new
     @page = video_player_page.to_s
     @doc = nokogiri_not_301_open(@page)
   end
