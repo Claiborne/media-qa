@@ -77,12 +77,63 @@ describe "Released GOB Page -- /games/mass-effect-3/xbox-360-14235014" do
       @doc.css("div.wikiToC-pair div.wikiToC-image img[src*='http']").count.should > 1
     end
     
+    it "should display a thumbnail for each TOC item" do
+      @doc.css('div.wikiToC-pair div.wikiToC-item').each do |wiki_item| 
+        RestClient.get wiki_item.css('img.wide').attribute('src').to_s
+      end
+    end
+    
+    it "should display a title for each TOC item" do
+      @doc.css('div.wikiToC-pair div.wikiToC-item').each do |wiki_item|
+        wiki_item.css('a.wikiToC-title').text.delete('^a-zA-Z0-9')
+      end
+    end
+    
+    it "should only contain links to Wikis" do
+      @doc.css('div.wikiToC-item a').each do |wiki_link|
+        wiki_link.attribute('href').to_s.match(/ign.com\/wikis\//).should be_true
+      end
+    end
+    
+    it "should only contain links to a wiki with a gob id of 14235014" do
+      @doc.css('div.wikiToC-item a').each do |wiki_link|
+        wiki_link.attribute('href').to_s.match(/14235014/).should be_true
+      end
+    end
+    
   end
   
   context "Popular Threads" do
     
     it "should display at least one thread" do
       @doc.css("div.mainContent div.popularthreads_link a[href*='http']").text.delete('^a-zA-Z0-9').length.should > 0  
+    end
+    
+    it "should display at least three threads" do
+      @doc.css("div.mainContent div.popularthreads_link a[href*='http']").count.should > 0  
+      @doc.css("div.mainContent div.popularthreads_link a[href*='http']").each do |board_link|
+        board_link.text.delete('^a-zA-Z0-9').length.should > 0  
+      end
+    end
+    
+    it "should only contain links to Boards" do
+      @doc.css('div.popularthreads_link a').each do |boards_link|
+        boards_link.attribute('href').to_s.match(/ign.com\/boards\//).should be_true
+      end
+    end
+    
+    it "should display the author's name for each thread" do
+      @doc.css('div.popularthreads_link').count.should == @doc.css('div.popularthreads-author').count
+      @doc.css('div.popularthreads-author').each do |board_author|
+        board_author.text.gsub(board_author.css('span').text.to_s,"").delete('^a-zA-Z0-9').length.should > 0
+      end
+    end
+    
+    it "should display the date for each thread" do
+      @doc.css('div.popularthreads_link').count.should == @doc.css('span.popularthreads-postDate').count
+      @doc.css('span.popularthreads-postDate').each do |board_date|
+        board_date.text.delete('^a-zA-Z0-9').length.should > 0
+      end
     end
     
   end
@@ -93,6 +144,26 @@ describe "Released GOB Page -- /games/mass-effect-3/xbox-360-14235014" do
       it "should contain text in the when sorting by '#{game_info}'" do
         @doc.css("div.aboutGame div##{game_info}").text.delete('^A-Z').length.should > 0
       end
+    end
+    
+    it "should display a release date of March 6, 2012" do
+      @doc.css("div#summary div[class='gameInfo-list leftColumn']").text.match(/Release Date: March 6, 2012/).should be_true
+    end
+    
+    it "should display the a rating of M for Mature" do
+      @doc.css("div#summary div[class='gameInfo-list leftColumn']").text.match(/M for Mature: Blood, Partial Nudity, Sexual Content, Strong Language, Violence/).should be_true
+    end
+    
+    it "should display the genre as RPG" do
+      @doc.css("div#summary").text.delete('^a-zA-Z0-9').match(/GenreRPG/).should be_true
+    end
+    
+    it "should display the publisher as Electronic Arts" do
+      @doc.css("div#summary").text.delete('^a-zA-Z0-9').match(/PublisherElectronicArts/).should be_true
+    end
+    
+    it "should display the developer as Bioware" do
+      @doc.css("div#summary").text.delete('^a-zA-Z0-9').match(/DeveloperBioWare/).should be_true
     end
     
   end
@@ -162,9 +233,41 @@ describe "Released GOB Page -- /games/mass-effect-3/xbox-360-14235014" do
       end
     end
     
+    it "should link to an article page for each story headline" do
+      @doc.css('div.leftNav li.updatesItem a.articleTitle').each do |article_title|
+        article_title.attribute('href').to_s.match(/\/articles\//)
+      end
+    end
+    
+    it "should display the comment field for each article" do
+      @doc.css('div.leftNav li.updatesItem a.articleCommentCount').each do |comment_field|
+        comment_field.text.match(/Comments/).should be_true
+      end
+    end
+    
+    it "should link to an article page for each comment count" do
+      @doc.css('div.leftNav li.updatesItem a.articleCommentCount').each do |comment_count|
+        comment_count.attribute('href').to_s.match(/\/articles\//)
+      end
+    end
+    
+    it "should display a date for each article" do
+      @doc.css('div.leftNav li.updatesItem p.articleDate').each do |article_date|
+        article_date.text.match(/\A\w{2,}\s\d{1,},\s\d{4}/).should be_true
+      end
+    end
+    
   end
   
   context "Latest Videos" do
+    
+    it "should be in the right rail" do
+      @doc.at_css('div.rightrail-module div.ign-latestVideos').should be_true
+    end
+    
+    it "should display the title 'Latest Videos'" do
+      @doc.css('div.ign-latestVideos h2').text.should == 'Latest Videos'
+    end
     
     it "should display at least one video thumbnail" do
       @doc.at_css("div.latestVideo img.latestVideo-thumbnail[src*='http']").should be_true
@@ -174,15 +277,37 @@ describe "Released GOB Page -- /games/mass-effect-3/xbox-360-14235014" do
       @doc.css("div.latestVideo img.latestVideo-thumbnail[src*='http']").count.should == 3
       @doc.css('div.latestVideo span.latestVideo-image').each do |video|
         video.at_css("img.latestVideo-thumbnail[src*='http']").should be_true
+        RestClient.get video.at_css("img.latestVideo-thumbnail").attribute('src').to_s
       end
     end
     
+    it "should display a title link for each thumbnail" do
+      @doc.css("div.latestVideo img.latestVideo-thumbnail[src*='http']").count.should == @doc.css('div.latestVideo a span.latestVideo-title').count
+      @doc.css('div.latestVideo a span.latestVideo-title').text.delete('^a-zA-Z').length.should > 0
+    end
+    
+    it "should link to a video-player page for each video" do
+      @doc.css("div.latestVideo a").attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/[a-z]/)
+    end
+        
   end
   
   context "Latest Image" do
     
+    it "shoud be in the right rail" do
+      @doc.at_css('div.rightrail-module div.ign-latestImages').should be_true
+    end
+    
+    it "should display the title 'Latest Image'" do
+      @doc.css('div.ign-latestImages h2').text.should == 'Latest Image'
+    end
+    
     it "should display an image" do
       RestClient.get @doc.css('div.latestImage a img').attribute('src').to_s
+    end
+    
+    it "should display a date for the image" do
+      @doc.css('div.ign-latestImages span.latestImage-date').text.match(/\A\w{2,}\s\d{1,},\s\d{4}/).should be_true
     end
     
   end
