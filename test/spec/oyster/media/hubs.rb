@@ -6,7 +6,7 @@ require 'open_page'
 require 'fe_checker'
 require 'hubs_list'
 require 'widget/evo_header'
-require 'widget/global_header'
+require 'widget/evo_header'
 require 'widget/global_footer'
 require 'widget/cover_stories_main'
 require 'widget/cover_stories_extra'
@@ -24,7 +24,7 @@ include OpenPage
 include FeChecker
 include HubsList
 include EvoHeader
-include GlobalHeader
+include EvoHeader
 include GlobalFooter
 include TopGames
 include CoverStoriesMain
@@ -36,79 +36,14 @@ include DiscoverMore
 include MostCommentedStories
 include TechNav
 
-describe "Oyster Hubs -- www.ign.com/tech" do
+@hubs = return_list_of_game_hubs
+@hubs.each do |hub|
+describe "Oyster Hubs -- #{hub}" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/tech"
-    @doc = nokogiri_not_301_open(@page)
-  end
-
-  before(:each) do
-    
-  end
-
-  after(:each) do
-
-  end
-
-  it "should return 200", :smoke => true do
-  end
-  
-  it "should include at least one css file", :smoke => true do
-    check_include_at_least_one_css_file(@doc)
-  end
-  
-  it "should not include any css files that return 400 or 500", :smoke => true do
-    check_css_files(@doc)
-  end
-  
-  context "v3 Blogroll widget" do
-    widget_blogroll_v3_articles(10, "n/a")
-    widget_blogroll_v3_articles_vs_api(10, "tech", "us")
-  end
-  
-  context "Global Header Widget" do
-    widget_global_header
-  end
-  
-  context "Global Footer Widget" do
-    widget_global_footer
-  end
-  
-  it "should include the follow us widget once" do
-    @doc.css('div.followBox').count.should == 1
-  end
-  
-  context "Tech Nav Widget" do
-    wiget_discover_more_expanded
-  end
-  
-  context "Main Cover Stories Widget" do
-    widget_cover_stories_main
-  end
-  
-  context "Extra Cover Stories Widget" do
-    widget_cover_stories_extra
-  end
-  
-  context "Video Interrupt Widget" do
-    widget_video_interrupt
-  end
-  
-  context "Most Commented Stories Widget" do
-    widget_most_commented_stories
-  end
-
-end #end describe
-
-describe "Oyster Hubs -- www.ign.com/wii-u" do
-  
-  before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
-    @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}/wii-u"
+    @page = "http://#{@config.options['baseurl']}#{hub}" 
     @doc = nokogiri_not_301_open(@page)
   end
 
@@ -140,88 +75,12 @@ describe "Oyster Hubs -- www.ign.com/wii-u" do
   end
   
   context "Cover Stories Widget" do
-    widget_cover_stories_main_new(5)
+    widget_cover_stories_main_evo(5)
   end
   
   context "v3 Blogroll widget" do
-    widget_blogroll_v3_articles(10, "n/a")
-    widget_blogroll_v3_articles_vs_api(10, "wii", "us")
-  end
-  
-  context "Extra Cover Stories Widget" do
-    widget_cover_stories_extra
-  end
-  
-  context "Popular Videos Widget" do
-    widget_video_interrupt
-  end
-  
-  context "Most Commented Stories Widget" do
-    widget_most_commented_stories
-  end
-  
-  context "Top Games Out Now Widget" do
-    widget_top_games('Games Out Now', 3)
-  end
-  
-  context "Top Games Coming Soon Widget" do
-    widget_top_games('Games Coming Soon', 3)
-  end
-  
-  context "Popular Threads Widget" do
-    widget_popular_threads
-  end
-
-end #end describe
-
-######################################################################
-
-@hubs = return_list_of_game_hubs
-@hubs = ["/"]
-@hubs.each do |hub|
-describe "Oyster Hubs -- #{hub}", :home => true do
-  
-  before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
-    @config = Configuration.new
-    @page = "http://#{@config.options['baseurl']}#{hub}" 
-    @doc = nokogiri_not_301_open(@page)
-  end
-
-  before(:each) do
-    
-  end
-
-  after(:each) do
-
-  end
-
-  it "should return 200", :smoke => true do
-  end
-  
-  it "should include at least one css file", :smoke => true do
-    check_include_at_least_one_css_file(@doc)
-  end
-  
-  it "should not include any css files that return 400 or 500", :smoke => true do
-    check_css_files(@doc)
-  end
-  
-  context "Global Header Widget" do
-    it "should check"
-  end
-    
-  context "Global Footer Widget" do
-    widget_global_footer
-  end
-  
-  context "Cover Stories Widget" do
-    widget_cover_stories_main_new(5)
-  end
-  
-  context "v3 Blogroll widget" do
-    widget_blogroll_v3_articles(22, "n/a")
-    widget_blogroll_v3_articles_vs_api(22, hub, "us")
+    widget_blogroll_v3_articles(28, "n/a")
+    widget_blogroll_v3_articles_vs_api(28, hub, "us")
     it "should call category_locale=us when loading more articles in the blogroll" do
       @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
     end
@@ -252,10 +111,10 @@ end
 
 @hubs.each do |hub|
 
-describe "Oyster Hubs -- #{hub}", :stg => true do
+describe "Oyster Hubs -- #{hub}" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}#{hub}" 
     @doc = nokogiri_not_301_open(@page)
@@ -280,5 +139,94 @@ describe "Oyster Hubs -- #{hub}", :stg => true do
     check_css_files(@doc)
   end
   
+  context "Global Header Widget" do
+    widget_evo_header
+  end
+    
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+  
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+  
+  context "Cover Stories Widget" do
+    widget_cover_stories_main_evo(5)
+  end
+  
+  context "v3 Blogroll widget" do
+    widget_blogroll_v3_articles(10, "n/a")
+    widget_blogroll_v3_articles_vs_api(10, hub, "us")
+    it "should call category_locale=us when loading more articles in the blogroll" do
+      @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
+    end
+  end
+  
 end #end describe
 end #end hub iteration
+
+describe "Oyster Hubs -- /tech" do
+  
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = Configuration.new
+    @page = "http://#{@config.options['baseurl']}/tech"
+    @doc = nokogiri_not_301_open(@page)
+  end
+
+  before(:each) do
+    
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200", :smoke => true do
+  end
+  
+  it "should include at least one css file", :smoke => true do
+    check_include_at_least_one_css_file(@doc)
+  end
+  
+  it "should not include any css files that return 400 or 500", :smoke => true do
+    check_css_files(@doc)
+  end
+  
+  context "v3 Blogroll widget" do
+    widget_blogroll_v3_articles(11, "n/a")
+    widget_blogroll_v3_articles_vs_api(11, "tech", "us")
+  end
+  
+  context "Global Header Widget" do
+    widget_evo_header
+  end
+  
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+  
+  it "should include the follow us widget once" do
+    @doc.css('div.followBox').count.should == 1
+  end
+  
+  context "Tech Nav Widget" do
+    wiget_discover_more_expanded
+  end
+  
+  context "Main Cover Stories Widget"
+  
+  context "Extra Cover Stories Widget" do
+    widget_cover_stories_extra
+  end
+  
+  context "Video Interrupt Widget" do
+    widget_video_interrupt
+  end
+  
+  context "Most Commented Stories Widget" do
+    widget_most_commented_stories
+  end
+
+end #end describe

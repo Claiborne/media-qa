@@ -5,7 +5,7 @@ require 'rest_client'
 require 'json'
 require 'open_page'
 require 'fe_checker'
-require 'widget/global_header'
+require 'widget/evo_header'
 require 'widget/global_footer'
 require 'widget/wiki_updates'
 require 'widget/discover_more'
@@ -14,23 +14,25 @@ require 'widget/object_score'
 
 include FeChecker
 include OpenPage
-include GlobalHeader
+include EvoHeader
 include GlobalFooter
 include WikiUpdates
 include DiscoverMore
 include VideoInterrupt
 include ObjectScore
 
-Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_hubs.yml"
+Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
 @setup_config = Configuration.new
-@setup_page = "http://#{@setup_config.options['baseurl']}/tech"
+@setup_page = "http://#{@setup_config.options['baseurl']}/"
 @setup_doc = nokogiri_not_301_open(@setup_page)
 @articles_pages = []
 i = 0
-@setup_doc.css('div.blogrollContainer h3 > a').each do |article_link|
-  if i >= 3; break; end
-  @articles_pages << article_link.attribute('href').to_s
-  i+=1
+@setup_doc.css('div.blogrollContainer a.listElmnt-storyHeadline').each do |article_link|
+  if i > 2; break; end
+  if article_link.attribute('href').to_s.match(/www.ign.com\/articles/)
+    @articles_pages << article_link.attribute('href').to_s
+    i+=1
+  end
 end
 
 @articles_pages.each do |article|
@@ -62,7 +64,7 @@ describe "Article Page -- #{article}" do
   end  
 
   context "Global Header Widget" do
-    widget_global_header
+    widget_evo_header
   end
 
   context "Global Footer Widget" do
@@ -77,7 +79,7 @@ describe "Article Page -- #{article}" do
     @doc.css('div#disqus_thread').count.should == 1
   end
   
-  it "should display the author's name in the byline", :smoke => true do
+  it "should display the author's name in the top byline", :smoke => true do
     @doc.at_css('div.article_byLine div.article_author').text.delete('^a-zA-Z').length.should > 2
   end
   
@@ -85,24 +87,8 @@ describe "Article Page -- #{article}" do
     @doc.at_css('div.article_byLine div.article_pub_date').text.delete('^a-zA-Z').length.should > 0
   end
   
-  # BAD HACK
-  # if article topic is lifestyle, skip Wiki Updates Widget
-  unless doc.css('div.vn-container li.vn-categoryItem a').attribute('href').to_s.match('/lifestyle')
-    context "Wiki Updates Widget" do
-      
-      widget_wiki_updates
-    
-    end
-  end
-
-  it "should not display the pagination widget when only one page exists" do
-    @doc.at_css('div.pager_list').should be_false
-  end # end hack
-  
-  context "Discover More Widget" do
-  
-    widget_discover_more
-  
+  it "should display content", :smoke => true do
+    @doc.css('div.article_content p').text.delete('^a-zA-Z').length.should > 0
   end
   
   context "Video Interrupt Widget" do
@@ -110,24 +96,13 @@ describe "Article Page -- #{article}" do
     widget_video_interrupt
   
   end
-  
-  context "Vert Nav Widget" do
-    
-    widget_discover_more
-    
-    it "should include all components", :smoke => true do
-      @doc.at_css('div.vn-container ul li.vn-follow').should be_true
-      @doc.at_css('div.vn-container ul li.vn-categoryItem a').should be_true
-      @doc.css('div.vn-container ul li.vn-navItem a').count.should > 3
-    end
-  end
 
 end
 end
 
 #########################################################
 
-describe "Review Article Page -- http://www.ign.com/articles/2011/10/17/apple-iphone-4s-review" do
+describe "Review Article Page -- http://www.ign.com/articles/2011/10/17/apple-iphone-4s-review", :prd => true do
   
   before(:all) do
     @doc = nokogiri_not_301_open('http://www.ign.com/articles/2011/10/17/apple-iphone-4s-review')
@@ -144,8 +119,16 @@ describe "Review Article Page -- http://www.ign.com/articles/2011/10/17/apple-ip
   it "should return 200", :smoke => true do
   end
   
-  context "Object Scorebox Widget:" do
-    widget_object_score
+  it "should incude the scorebox" do
+    @doc.at_css('div.articleBreakdownBox').should be_true  
+  end
+  
+  it "should include a numberic score" do
+    @doc.css('div.articleBreakdownBox div.scorebox_breakdownOverallScore').text.delete('^0-9').length.should > 0
+  end
+  
+  it "should include a score description" do
+    @doc.css('div.articleBreakdownBox div.scorebox_breakdownOverallText').text.delete('^a-z').length.should > 0
   end
   
 end

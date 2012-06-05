@@ -10,8 +10,11 @@ include OpenPage
 include FeChecker
 include TopGames
 
-def platform_list; ['all','xbox-360','ps33','pc','wii','3ds','playstation-vita','iphone']; end
-def genre_list; ['all','action','adventure','fighting','music','rpg','racing','shooter','sports','strategy']; end
+#def platform_list; ['all','xbox-360','ps33','pc','wii','3ds','playstation-vita','iphone']; end
+#def genre_list; ['all','action','adventure','fighting','music','rpg','racing','shooter','sports','strategy']; end
+
+def platform_list; ['all','xbox-360']; end
+def genre_list; ['all']; end
 
 def common_assertions
   
@@ -35,8 +38,8 @@ def common_assertions
   end
   
   it "should return at least one game", :smoke => true do
-    @doc.at_css('div.gameList div.gameList-game').should be_true
-    @doc.at_css('div.gameList div.gameList-game').text.delete("^a-zA-Z").length.should > 0
+    @doc.at_css('div.gameList div.game-title').should be_true
+    @doc.at_css('div.gameList div.game-title').text.delete("^a-zA-Z").length.should > 0
   end
   
   it "should display a title for each game" do
@@ -63,7 +66,7 @@ def common_assertions
   it "should display a release data for each game" do
     @doc.css('div.gameList div.gameList-game').each do |game|
       game.at_css('div.releaseDate').should be_true
-      game.at_css('div.releaseDate').text.delete("^a-zA-Z").length.should > 0
+      game.at_css('div.releaseDate').text.delete("^a-zA-Z0-9").length.should > 0
     end
   end
   
@@ -96,7 +99,7 @@ end
 
 ####################################################################################
 
-describe "Game Indices -- /games/reviews", :test => true do
+describe "Game Indices -- /games/reviews" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
@@ -529,6 +532,6 @@ describe "Game Indices -- /games" do
 
   end
   
-  common_assertions
+  it "should..."
 
 end

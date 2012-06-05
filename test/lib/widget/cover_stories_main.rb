@@ -5,7 +5,7 @@ module CoverStoriesMain
   
   def widget_cover_stories_main_smoke
     it "should not be missing from the page", :smoke => true do
-      @doc.at_css('div.cat-coverStories').should be_true
+      @doc.at_css('div.evo-coverStories').should be_true
     end
   end
   
@@ -66,99 +66,94 @@ module CoverStoriesMain
 
   end
   
-  ##########################
+  ####################################################
   
-  def widget_cover_stories_main_new(num_of_slots)
+  def widget_cover_stories_main_evo(num_of_slots)
     
     widget_cover_stories_main_smoke
 
     it "should be on the page once", :smoke => true do
-      @doc.css('div.cat-coverStories').count.should == 1
+      @doc.css('div.evo-coverStories').count.should == 1
     end
     
     it "should display text", :smoke => true do
-       check_display_text('div.cat-coverStories')
+       check_display_text('div.evo-coverStories')
     end
 
     it "should have at least one link", :smoke => true do
-       check_have_a_link('div.cat-coverStories')
+       check_have_a_link('div.evo-coverStories')
     end
     
     it "should have at least one image", :smoke => true do
-      check_have_an_img('div.cat-coverStories')
+      check_have_an_img('div.evo-coverStories')
     end
 
     it "should not have any broken images", :spam => true do
-      check_for_broken_images('div.cat-coverStories')
+      check_for_broken_images('div.evo-coverStories')
     end
     
     it "should contain links that only return a 200", :spam => true do
-      check_links_not_301_home('div.cat-coverStories')
+      check_links_not_301_home('div.evo-coverStories')
     end
 
     it "should have at least #{num_of_slots} slots for #{num_of_slots} cover stories", :smoke => true do
-      @doc.css('div.cat-coverStories div.cvr-main').count.should >= num_of_slots
+      @doc.css('div.evo-coverStories div.cvr-main').count.should >= num_of_slots
     end
     
     it "should have a clickable image for each cover-story slot", :smoke => true do
-      @doc.css("div.cat-coverStories div.cvr-main").each do |story|
+      @doc.css("div.evo-coverStories div.cvr-main").each do |story|
         story.css("a > img").count.should == 1
       end
     end
     
     it "should have an http link for each cover-story slot", :smoke => true do
-      check_have_a_link_for_each('div.cat-coverStories div.cvr-main')
+      check_have_a_link_for_each('div.evo-coverStories div.cvr-main')
     end
     
     it "should have an image for each cover-story slot", :smoke => true do
-      check_have_an_img_for_each('div.cat-coverStories div.cvr-main')
+      check_have_an_img_for_each('div.evo-coverStories div.cvr-main')
     end
     
     it "should have at least #{num_of_slots} headlines for #{num_of_slots} cover stories", :smoke => true do
-      @doc.css('div.cat-coverStories div.cvr-headline').count.should >= num_of_slots
+      @doc.css('div.evo-coverStories div.cvr-headline').count.should >= num_of_slots
     end
     
     it "should have a headline for each cover-story slot", :smoke => true do
-      @doc.css('div.cat-coverStories div.cvr-headline').count.should == @doc.css('div.cat-coverStories div.cvr-main').count
+      @doc.css('div.evo-coverStories div.cvr-headline').count.should == @doc.css('div.evo-coverStories div.cvr-main').count
     end
     
     it "should have a link for the headline in each cover-story slot", :smoke => true do
-      check_have_a_link('div.cat-coverStories div.cvr-headline')
+      check_have_a_link('div.evo-coverStories div.cvr-headline')
     end
     
     it "should display text for each cover-story headline", :smoke => true do
-      check_display_text_for_each('div.cat-coverStories div.cvr-headline')
+      check_display_text_for_each('div.evo-coverStories div.cvr-headline')
     end
     
     it "should have an http link for each cover-story headline", :smoke => true do
-      check_have_a_link_for_each('div.cat-coverStories div.cvr-headline')
+      check_have_a_link_for_each('div.evo-coverStories div.cvr-headline')
     end
     
     it "should have at least #{num_of_slots} subitem slot for #{num_of_slots} cover stories", :smoke => true do
-       @doc.css('div.cat-coverStories ul.cat-coverStories-subitems').count.should >= num_of_slots
+       @doc.css('div.evo-coverStories ul.evo-coverStories-subitems').count.should >= num_of_slots
     end
     
     it "should have a subitem slot for each cover story", :smoke => true do
-      @doc.css('div.cat-coverStories ul.cat-coverStories-subitems').count.should == @doc.css('div.cat-coverStories div.cvr-main').count
+      @doc.css('div.evo-coverStories ul.cat-coverStories-subitems').count.should == @doc.css('div.cat-coverStories div.cvr-main').count
     end
     
     it "should have at least one subitem for each cover story", :smoke => true do
-      @doc.css('div.cat-coverStories ul.cat-coverStories-subitems').each do |item|
+      @doc.css('div.evo-coverStories ul.cat-coverStories-subitems').each do |item|
         item.css('li').count.should > 0
       end
     end
     
     it "should have a link for every subitem for each cover story", :smoke => true do
-      check_have_a_link_for_each('div.cat-coverStories ul.cat-coverStories-subitems li')
+      check_have_a_link_for_each('div.evo-coverStories ul.cat-coverStories-subitems li')
     end
     
     it "should have a text for every subitem for each cover story", :smoke => true do
-      check_display_text_for_each('div.cat-coverStories ul.cat-coverStories-subitems li')
-    end
-    
-    it "should have one right and left carousel arrow" do
-      @doc.css('div.cat-coverStories-rightArrow').count.should == 1
-      @doc.css('div.cat-coverStories-leftArrow').count.should == 1
+      check_display_text_for_each('div.evo-coverStories ul.cat-coverStories-subitems li')
     end
 
   end

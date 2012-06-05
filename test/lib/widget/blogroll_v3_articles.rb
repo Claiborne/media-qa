@@ -61,24 +61,24 @@ module Blogrollv3Articles
       check_have_a_link('div.blogrollContainer')
     end
     
-    it "should have #{num} blogroll entires", :smoke => true do
-      @doc.css('div.blogrollContainer div.listElmnt-blogItem').count.should == num
+    it "should have at least 10 blogroll entires", :smoke => true do
+      @doc.css('div.blogrollContainer div.listElmnt-blogItem').count.should > 9
     end
     
-    it "should have #{num} blogroll headlines", :smoke => true do
-      @doc.css('div.blogrollContainer div.listElmnt-blogItem h3').count.should == num
+    it "should have at least 10 blogroll headlines", :smoke => true do
+      @doc.css('div.blogrollContainer div.listElmnt-blogItem h3').count.should > 9
     end
     
-    it "should have #{num} blogroll headline article links", :smoke => true do
-      @doc.css('div.blogrollContainer div.listElmnt-blogItem h3 a').count.should == num
+    it "should have at least 10 blogroll headline article links", :smoke => true do
+      @doc.css('div.blogrollContainer div.listElmnt-blogItem h3 a').count.should > 9
     end
     
-    it "should have #{num} blogroll previews", :smoke => true do
-      @doc.css('div.blogrollContainer div.listElmnt-blogItem p').count.should == num
+    it "should have at least 10 blogroll previews", :smoke => true do
+      @doc.css('div.blogrollContainer div.listElmnt-blogItem p').count.should > 9
     end
     
-    it "should have #{num} blogroll timestamps" do
-      @doc.css('div.blogrollContainer div.listElmnt-blogItem span.listElmnt-date').count.should == num
+    it "should have at least 10 blogroll timestamps" do
+      @doc.css('div.blogrollContainer div.listElmnt-blogItem span.listElmnt-date').count.should > 9
     end
     
     it "should display text for each blogroll entry", :smoke => true do
@@ -133,7 +133,8 @@ module Blogrollv3Articles
 
   def widget_blogroll_v3_articles_vs_api(count, category, locale)
     
-    it "should display the same articles as the API returns" do
+    it "should display the same articles as the API returns" 
+=begin
       # Get articles from API
       api_call = 
       {"matchRule"=>"matchAll",
@@ -174,8 +175,9 @@ module Blogrollv3Articles
       rescue => e
         raise Exception.new("#{e.message}\nAPI returned: #{api_article_headlines}\nBlogroll returned: #{blogroll_headlines}")
       end#end Exception
-      
+ 
     end#end it
+=end 
   end#end def
-  
+
 end#end module
