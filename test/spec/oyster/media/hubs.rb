@@ -66,7 +66,7 @@ describe "Oyster Hubs -- #{hub}" do
     check_css_files(@doc)
   end
   
-  context "Global Header Widget" do
+  context "Global Header Widget", :test => true do
     widget_evo_header
   end
     

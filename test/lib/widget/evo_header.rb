@@ -50,6 +50,10 @@ module EvoHeader
       check_have_a_link('div#ignHeader')
     end
     
+    it "should display the IGN logo" do
+      @doc.at_css('div#ignHeader a#ignHeader-logo').should be_true
+    end
+    
     # user-bar assertions
     
     it "should display the user-bar once", :smoke => true do
@@ -64,6 +68,10 @@ module EvoHeader
       it "should link to #{social_links}" do
         @doc.at_css("div#ignHeader div.headerTools a[href='#{social_links}']").should be_true
       end
+    end
+    
+    it "should display the search bar" do
+       @doc.at_css("div#ignHeader li.profileLink-item form.ignHeader-searchForm").should be_true
     end
     
     # site nav assertions
