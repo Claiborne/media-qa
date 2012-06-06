@@ -12,11 +12,11 @@ require 'widget/tag_cover_stories'
 require 'widget/vert_nav'
 require 'widget/wiki_updates'
 require 'widget/object_score'
-require 'widget/global_header'
+require 'widget/evo_header'
 require 'widget/global_footer'
 
 include GlobalFooter
-include GlobalHeader
+include EvoHeader
 include FeChecker
 include ObjectScore
 include OpenPage
@@ -33,7 +33,7 @@ include WikiUpdates
 describe "Tech #{topic} Topic Page" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/tech.yml"
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
     @page = "http://#{@config.options['baseurl']}/tech/#{topic}"
     puts @page
@@ -60,7 +60,7 @@ describe "Tech #{topic} Topic Page" do
   end     
   
   context "Global Header Widget:" do
-    widget_global_header
+    widget_evo_header
   end
   
   context "Global Footer Widget:" do
