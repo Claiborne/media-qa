@@ -90,11 +90,11 @@ describe "Oyster Hubs -- #{hub}" do
     widget_most_commented_stories
   end
   
-  context "Top Games Out Now Widget" do
+  context "Top Games Out Now Widget", :test => true do
     widget_top_games('Games Out Now', 3)
   end
   
-  context "Top Games Coming Soon Widget" do
+  context "Top Games Coming Soon Widget", :test => true do
     widget_top_games('Games Coming Soon', 3)
   end
   
@@ -233,7 +233,7 @@ end #end describe
 
 ######################################################################
 
-describe "Oyster Hubs --/tech", :test => true do
+describe "Oyster Hubs --/tech" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
