@@ -72,12 +72,6 @@ RSpec::Core::RakeTask.new('oyster') do |t|
     t.pattern = 'spec/oyster/media/*.rb'
 end
 
-desc "Run All Oyster Frontend Tests excluding Selenium"
-RSpec::Core::RakeTask.new('oysterxselen') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/*.rb'
-end
-
 desc "Run Hubs Frontend Tests"
 RSpec::Core::RakeTask.new('hubs') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
