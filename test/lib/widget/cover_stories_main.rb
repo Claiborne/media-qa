@@ -97,6 +97,20 @@ module CoverStoriesMain
     it "should contain links that only return a 200", :spam => true do
       check_links_not_301_home('div.evo-coverStories')
     end
+    
+    it "should have one top nav" do
+      @doc.css('div.evo-coverStories div.fuseNav').count.should == 1
+    end
+    
+    it "should have #{num_of_slots} links in the top nav" do
+      @doc.css('div.evo-coverStories div.fuseNav a').count.should == num_of_slots
+    end
+    
+    it "should display text in each of the nav links" do
+      @doc.css('div.evo-coverStories div.fuseNav a').each do |nav_link|
+        nav_link.css('span').text.delete("^a-zA-Z").length.should > 0
+      end
+    end
 
     it "should have at least #{num_of_slots} slots for #{num_of_slots} cover stories", :smoke => true do
       @doc.css('div.evo-coverStories div.cvr-main').count.should >= num_of_slots
