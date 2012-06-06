@@ -1,9 +1,0 @@
-development:
-
-staging:
-  baseurl: tech.stg.www.ign.com
-
-production:
- baseurl: www.ign.com
-     
-    
