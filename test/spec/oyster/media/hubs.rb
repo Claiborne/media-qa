@@ -230,3 +230,63 @@ describe "Oyster Hubs -- /tech" do
   end
 
 end #end describe
+
+######################################################################
+
+describe "Oyster Hubs --/tech", :test => true do
+  
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = Configuration.new
+    @page = "http://#{@config.options['baseurl']}/tech" 
+    @doc = nokogiri_not_301_open(@page)
+  end
+
+  before(:each) do
+    
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200", :smoke => true do
+  end
+  
+  it "should include at least one css file", :smoke => true do
+    check_include_at_least_one_css_file(@doc)
+  end
+  
+  it "should not include any css files that return 400 or 500", :smoke => true do
+    check_css_files(@doc)
+  end
+  
+  context "Global Header Widget" do
+    widget_evo_header
+  end
+    
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+  
+  context "Cover Stories Widget" do
+    widget_cover_stories_main
+  end
+  
+  context "v3 Blogroll widget" do
+    widget_blogroll_v3_articles(28, "n/a")
+    widget_blogroll_v3_articles_vs_api(28, "tech", "us")
+    it "should call category_locale=us when loading more articles in the blogroll" do
+      @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
+    end
+  end
+  
+  context "Most Commented Stories Widget" do
+    widget_most_commented_stories
+  end
+  
+  context "Most Commented Widget" do
+    widget_most_commented_stories
+  end
+
+end

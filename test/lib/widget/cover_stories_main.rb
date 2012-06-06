@@ -11,7 +11,9 @@ module CoverStoriesMain
   
   def widget_cover_stories_main
     
-    widget_cover_stories_main_smoke
+    it "should not be missing from the page", :smoke => true do
+      @doc.at_css('div.cat-coverStories').should be_true
+    end
 
     it "should be on the page once", :smoke => true do
       @doc.css('div.cat-coverStories').count.should == 1
