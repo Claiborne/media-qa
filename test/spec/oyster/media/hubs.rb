@@ -17,6 +17,7 @@ require 'widget/popular_threads'
 require 'widget/blogroll_v3_articles'
 require 'widget/discover_more'
 require 'widget/most_commented_stories'
+require 'widget/cover_stories_extra'
 require 'tech_nav'
 
 include Blogrollv3Articles
@@ -34,6 +35,7 @@ include VideoInterrupt
 include PopularThreads
 include DiscoverMore
 include MostCommentedStories
+include CoverStoriesExtra
 include TechNav
 
 @hubs = return_list_of_game_hubs
@@ -78,6 +80,10 @@ describe "Oyster Hubs -- #{hub}" do
     widget_cover_stories_main_evo(5)
   end
   
+  context "Cover Stories Extra Widget" do
+    widget_cover_stories_extra
+  end
+  
   context "v3 Blogroll widget" do
     widget_blogroll_v3_articles(28, "n/a")
     widget_blogroll_v3_articles_vs_api(28, hub, "us")
@@ -90,11 +96,11 @@ describe "Oyster Hubs -- #{hub}" do
     widget_most_commented_stories
   end
   
-  context "Top Games Out Now Widget", :test => true do
+  context "Top Games Out Now Widget" do
     widget_top_games('Games Out Now', 3)
   end
   
-  context "Top Games Coming Soon Widget", :test => true do
+  context "Top Games Coming Soon Widget" do
     widget_top_games('Games Coming Soon', 3)
   end
   
