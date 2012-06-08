@@ -84,11 +84,21 @@ describe "Oyster Hubs -- #{hub}" do
     widget_cover_stories_extra
   end
   
-  context "v3 Blogroll widget" do
-    widget_blogroll_v3_articles(28, "n/a")
-    widget_blogroll_v3_articles_vs_api(28, hub, "us")
-    it "should call category_locale=us when loading more articles in the blogroll" do
-      @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
+  if hub == "/" 
+    context "v3 Blogroll widget" do
+      widget_blogroll_v3_articles(28, "platform")
+      widget_blogroll_v3_articles_vs_api(28, hub, "us")
+      it "should call category_locale=us when loading more articles in the blogroll" do
+        @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
+      end
+    end
+  else
+    context "v3 Blogroll widget" do
+      widget_blogroll_v3_articles(28, "n/a")
+      widget_blogroll_v3_articles_vs_api(28, hub, "us")
+      it "should call category_locale=us when loading more articles in the blogroll" do
+        @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
+      end
     end
   end
   
@@ -106,6 +116,12 @@ describe "Oyster Hubs -- #{hub}" do
   
   context "Most Commented Widget" do
     widget_most_commented_stories
+  end
+  
+  if hub == "/" # if hub is the homepage
+    context "Discover More Widget" do
+      widget_discover_more  
+    end  
   end
 
 end 
@@ -159,6 +175,12 @@ describe "Oyster Hubs -- #{hub}" do
   
   context "Cover Stories Widget" do
     widget_cover_stories_main_evo(5)
+  end
+  
+  unless hub == "/stars" || hub == "/blu-ray"
+    context "Cover Stories Extra Widget" do
+      widget_cover_stories_extra
+    end
   end
   
   context "v3 Blogroll widget" do

@@ -142,7 +142,7 @@ def release_by_is_released(is_released)
   {
     "rules"=>[
       {
-        "field"=>"metadata.releaseDate.released",
+        "field"=>"metadata.releaseDate.status",
         "condition"=>"term",
         "value"=>is_released.to_s
       }
@@ -537,7 +537,7 @@ describe "V3 Object API -- GET Search for Bioware Releases By Dev legacyId: #{bi
 end
 
 ################################################################ 
-[true,false].each do |is_released|
+['released','unreleased'].each do |is_released|
 describe "V3 Object API -- GET Search for Releases Released Boolean: #{release_by_is_released(is_released)}" do
 
   before(:all) do
@@ -567,9 +567,9 @@ describe "V3 Object API -- GET Search for Releases Released Boolean: #{release_b
   
   common_assertions(100)
   
-  it "should only return releases with a metadata.releaseDate.released boolean value of #{is_released}" do
+  it "should only return releases with a metadata.releaseDate.status value of #{is_released}" do
     @data['data'].each do |release|
-      release['metadata']['releaseDate']['released'].should == is_released  
+      release['metadata']['releaseDate']['status'].should == is_released  
     end  
   end
   

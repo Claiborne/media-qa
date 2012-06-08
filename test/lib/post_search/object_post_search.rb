@@ -55,7 +55,7 @@ module ObjectPostSearch
         "releaseDate" => {
           "date" => "2020-11-11",
           "display"  => "Q4 2020",
-          "released" => false
+          "status" => "unreleased"
         }
       },
       "companies" => {
@@ -181,7 +181,7 @@ module ObjectPostSearch
         "releaseDate" => {
           "date" => "2011-12-12",
           "display"  => "Q4 2011",
-          "released" => true
+          "status" => "released"
         }
       },
       "purchasing" => {

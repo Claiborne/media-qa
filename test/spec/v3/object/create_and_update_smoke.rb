@@ -697,8 +697,8 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
     @data['hardware']['platform']['metadata']['releaseDate']['display'].should == 'Q4 2011'
   end
   
-  it "should return hardware.platform.releaseDate.released with the updated value" do
-    @data['hardware']['platform']['metadata']['releaseDate']['released'].should == true
+  it "should return hardware.platform.releaseDate.status with the updated value" do
+    @data['hardware']['platform']['metadata']['releaseDate']['status'].should == "released"
   end
   
   it "should return the correct purchasing.buy.marketId value" do

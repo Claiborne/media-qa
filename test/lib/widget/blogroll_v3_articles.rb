@@ -13,7 +13,7 @@ module Blogrollv3Articles
   
   def widget_blogroll_v3_articles_nav(nav)
     
-    if ['platform','article'].include?(nav) 
+    if ['platform','article'].include?(nav)
       
       it "should display the #{nav} nav once", :smoke => true do
         @doc.css('div.blogrollContainer ul.ign-blogrollFilters').count.should == 1
@@ -38,6 +38,13 @@ module Blogrollv3Articles
         it "should be display at least 'PS3' in the #{nav} nav", :smoke => true do
            @doc.css('div.blogrollContainer ul.ign-blogrollFilters').text.match('PS3').should be_true
         end
+        
+        ['All', 'Xbox 360', 'PS3', "Wii U", "PS Vita", "PC", "3DS", "iPhone/Android"].each do |plat|
+          it "should display a link to #{plat} in the nav" do
+            @doc.css('div.blogrollContainer ul.ign-blogrollFilters').text.match(plat).should be_true
+          end
+        end
+        
       when 'article'
         it "should be display at least 'Reviews' in the #{nav} nav", :smoke => true do
            @doc.css('div.blogrollContainer ul.ign-blogrollFilters').text.match('Review').should be_true
