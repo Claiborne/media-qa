@@ -253,7 +253,7 @@ end
 
 ########################## BEGIN SPEC ########################## 
 
-describe "V3 Articles API -- General Post Search for published articles sending #{published_articles}", :test => true do
+describe "V3 Articles API -- General Get Search for published articles sending #{published_articles}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -337,7 +337,7 @@ end
 ###############################################################
 
 {'wii'=>wii,'tech'=>tech}.each_pair do |hub, search|
-describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}", :test => true do
+describe "V3 Articles API -- General Get Search for #{hub} hub using #{search}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -432,7 +432,7 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}", :test => true do
+describe "V3 Articles API -- General Get Search for Blogs sending #{blogs}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -477,7 +477,7 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}", :test => true do
+describe "V3 Articles API -- General Get Search for Cheats sending #{cheats}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -516,7 +516,7 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Skyrim Cheats sending #{skyrim_cheats}", :test => true do
+describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{skyrim_cheats}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
