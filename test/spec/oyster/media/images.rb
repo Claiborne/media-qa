@@ -109,7 +109,8 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
   end
   
   it "should change the URL when a thumbnail is cliked", :smoke => true do
-    @selenium.current_url.match(/far-cry-3-xbox-360-53491\/\d\d\d/).should be_true
+    puts @selenium.current_url
+    @selenium.current_url.match(/far-cry-3-xbox-360-53491\/[0-9a-f]{24,32}/).should be_true
   end
   
   it "should display a full image in the lightbox overlay when a thumbnail is clicked", :smoke => true do

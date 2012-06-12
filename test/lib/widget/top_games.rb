@@ -28,7 +28,6 @@ module TopGames
     
     it "should not have any broken links", :spam => true do
       return_top_games_widget(@doc, type).css('a').each do |link|
-        puts "checking..."
         RestClient.get link.attribute('href').to_s
       end
     end

@@ -10,11 +10,11 @@ include OpenPage
 include FeChecker
 include TopGames
 
-#def platform_list; ['all','xbox-360','ps33','pc','wii','3ds','playstation-vita','iphone']; end
-#def genre_list; ['all','action','adventure','fighting','music','rpg','racing','shooter','sports','strategy']; end
+def platform_list; ['all','xbox-360','ps33','pc','wii','3ds','playstation-vita','iphone']; end
+def genre_list; ['all','action','adventure','fighting','music','rpg','racing','shooter','sports','strategy']; end
 
-def platform_list; ['all','xbox-360']; end
-def genre_list; ['all']; end
+#def platform_list; ['all','xbox-360']; end
+#def genre_list; ['all']; end
 
 def common_assertions
   
