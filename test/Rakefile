@@ -65,7 +65,7 @@ RSpec::Core::RakeTask.new('v3object') do |t|
 end
 
 desc "Run review data tests"
-RSpec::Core::RakeTask.new('reviewdata') do |t|
+RSpec::Core::RakeTask.new('gamedata') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/review_data/*.rb' 
 end
