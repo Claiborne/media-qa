@@ -642,7 +642,7 @@ end
 ################################################################
 
 ["3ds,nds","xbox-360,pc,ps3","ps,ps2"].each do |in_val|
-describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'hardware.platform.metadata.slug','in')}", :test => true do
+describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'hardware.platform.metadata.slug','in')}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -693,7 +693,7 @@ end
 ################################################################
 
 ["rpg,action","action","rpg,adventure,fighting"].each do |in_val|
-  describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'content.primaryGenre.metadata.slug','in')}", :test => true do
+  describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'content.primaryGenre.metadata.slug','in')}" do
 
     before(:all) do
       Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -744,7 +744,7 @@ end
 ################################################################
 
 ["3ds,nds","xbox-360,pc,ps3","ps,ps2"].each do |in_val|
-describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'hardware.platform.metadata.slug','notIn')}", :test => true do
+describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'hardware.platform.metadata.slug','notIn')}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
