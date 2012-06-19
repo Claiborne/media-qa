@@ -173,6 +173,24 @@ def release_pagination(count,start_index)
   }.to_json
 end
 
+def search_using_condition_in(val,field,cond)
+  {
+      "rules"=>[
+      {
+          "field"=>field.to_s,
+          "condition"=>cond.to_s,
+          "value"=>val.to_s}
+  ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>0,
+      "count"=>60,
+      "sortBy"=>"metadata.popularity",
+      "sortOrder"=>"desc",
+      "states"=>["published"],
+      "regions"=>["US"]
+  }.to_json
+end
+
 ########################### BEGIN ASSERTION METHODS #############################
 
 def common_assertions(data_count)
@@ -575,6 +593,7 @@ describe "V3 Object API -- GET Search for Releases Released Boolean: #{release_b
   
 end
 end
+
 ################################################################ 
 
 describe "V3 Object API -- GET Search - Test Pagination Using: #{release_pagination(11,0)}" do
@@ -617,5 +636,150 @@ describe "V3 Object API -- GET Search - Test Pagination Using: #{release_paginat
     @data = JSON.parse(@response.body)
     @data['data'][0]['releaseId'].should == @eleventh_entry
   end
-  
+
+end
+
+################################################################
+
+["3ds,nds","xbox-360,pc,ps3","ps,ps2"].each do |in_val|
+describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'hardware.platform.metadata.slug','in')}", :test => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+search_using_condition_in(in_val,'hardware.platform.metadata.slug',"in").to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  common_assertions(60)
+
+  it "should return only releases with a hardware.platform.metadata.slug value that includes the following: #{in_val}" do
+    @data['data'].each do |release|
+      in_val.split(",").include?(release['hardware']['platform']['metadata']['slug']).should be_true
+    end
+  end
+
+  in_val.split(",").each do |val|
+    it "should return at least one release with a hardware.platform.metadata.slug value of #{val}" do
+      platform_data = []
+      @data['data'].each do |release|
+        platform_data << release['hardware']['platform']['metadata']['slug']
+      end
+      platform_data.include?(val).should be_true
+    end
+  end
+
+end
+end
+
+################################################################
+
+["rpg,action","action","rpg,adventure,fighting"].each do |in_val|
+  describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'content.primaryGenre.metadata.slug','in')}", :test => true do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/releases/search?q="+search_using_condition_in(in_val,'content.primaryGenre.metadata.slug',"in").to_s
+      @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    after(:all) do
+
+    end
+
+    common_assertions(60)
+
+    it "should return only releases with a content.primaryGenre.metadata.slug value that includes the following: #{in_val}" do
+      @data['data'].each do |release|
+        in_val.split(",").include?(release['content']['primaryGenre']['metadata']['slug']).should be_true
+      end
+    end
+
+    in_val.split(",").each do |val|
+      it "should return at least one release with a content.primaryGenre.metadata.slug value of #{val}" do
+        platform_data = []
+        @data['data'].each do |release|
+          platform_data << release['content']['primaryGenre']['metadata']['slug']
+        end
+        platform_data.include?(val).should be_true
+      end
+    end
+
+  end
+end
+
+################################################################
+
+["3ds,nds","xbox-360,pc,ps3","ps,ps2"].each do |in_val|
+describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'hardware.platform.metadata.slug','notIn')}", :test => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+search_using_condition_in(in_val,'hardware.platform.metadata.slug',"notIn").to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  common_assertions(60)
+
+  in_val.split(",").each do   |slug|
+    it "should not return any releases with a hardware.platform.metadata.slug value of #{slug}" do
+      @data['data'].each do |release|
+        release['hardware']['platform']['metadata']['slug'].should_not == slug
+      end
+    end
+  end
+
+end
 end

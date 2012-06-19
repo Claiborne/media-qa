@@ -86,7 +86,7 @@ data['data'].each do |article|
       puts "PASS: http://content-api.ign.com/v1/games/#{object}.json"
     else
       puts "--------> FAILURE:"
-      puts "--------> fttp://content-api.ign.com/v1/games/#{object}.json"
+      puts "--------> http://content-api.ign.com/v1/games/#{object}.json"
       puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
       puts "-------->"
     end
