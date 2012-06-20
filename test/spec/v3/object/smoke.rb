@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'configuration'
 require 'rest_client'
 require 'json'
+require 'assert'
 require 'object_api_helper'
 
 include Assert

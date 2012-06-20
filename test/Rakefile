@@ -87,40 +87,34 @@ end
 desc "Run GOB Frontend Tests"
 RSpec::Core::RakeTask.new('gobfrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/gob_pages.rb']  
+    t.pattern = 'spec/oyster/media/gob_pages.rb'
 end
 
 desc "Run Game Indices Frontend Tests"
 RSpec::Core::RakeTask.new('gameindicesfrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/game_indices.rb']  
+    t.pattern = 'spec/oyster/media/game_indices.rb'
 end
 
 desc "Run Images Frontend Tests"
 RSpec::Core::RakeTask.new('imagesfrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/images.rb']  
+    t.pattern = 'spec/oyster/media/images.rb'
 end
 
 desc "Run Video Frontend Tests"
 RSpec::Core::RakeTask.new('videofrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/video.rb']  
+    t.pattern = 'spec/oyster/media/video.rb'
 end
 
 desc "Run Articles Frontend Tests"
 RSpec::Core::RakeTask.new('articlesfrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/articles.rb']  
+    t.pattern = 'spec/oyster/media/articles.rb'
 end
 
-############# TECH ############# 
-
-desc "Run Tech Frontend and API tests"
-RSpec::Core::RakeTask.new('techall') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/tech.rb', 'spec/v2/tech.rb']  
-end
+############# TECH #############
 
 desc "Run Tech frontend tests"
 RSpec::Core::RakeTask.new('techfrontend') do |t|
@@ -128,10 +122,12 @@ RSpec::Core::RakeTask.new('techfrontend') do |t|
     t.pattern = 'spec/oyster/media/tech.rb'  
 end
 
-desc "Run Tech API tests"
-RSpec::Core::RakeTask.new('techapi') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v2/tech.rb'    
+############# SERVICES #############
+
+desc "Run Affinity API tests"
+RSpec::Core::RakeTask.new('affinityapi') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/affinity_api/*.rb'
 end
 
 ############# NON-SPEC SCRIPTS ############# 

@@ -88,7 +88,6 @@ data['data'].each do |article|
       puts "--------> FAILURE:"
       puts "--------> http://content-api.ign.com/v1/games/#{object}.json"
       puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-      puts "-------->"
     end
   end #end objectRelations iteration
   end #end catch

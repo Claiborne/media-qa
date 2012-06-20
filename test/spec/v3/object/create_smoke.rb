@@ -73,7 +73,7 @@ end
 
 ############################# BEGIN SPEC #############################
 
-describe "V3 Object API -- Create Release Negative Smoke", :stg1 => true do
+describe "V3 Object API -- Create Release Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -93,7 +93,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Release Positive Smoke", :stg1 => true do
+describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -148,7 +148,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Game Negative Smoke", :stg1 => true do
+describe "V3 Object API -- Create Game Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.slug is zero" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -168,7 +168,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Game Positive Smoke", :stg1 => true do
+describe "V3 Object API -- Create Game Positive Smoke", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -210,7 +210,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Company Negative Smoke", :stg1 => true do
+describe "V3 Object API -- Create Company Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -244,7 +244,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Company Positive Smoke", :stg1 => true do
+describe "V3 Object API -- Create Company Positive Smoke", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -286,7 +286,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Feature Negative Smoke", :stg1 => true do
+describe "V3 Object API -- Create Feature Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -320,7 +320,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Feature Positive Smoke", :stg1 => true do
+describe "V3 Object API -- Create Feature Positive Smoke", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -362,7 +362,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Genre Negative Smoke", :stg1 => true do
+describe "V3 Object API -- Create Genre Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -396,7 +396,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Genre Positive Smoke", :stg1 => true do
+describe "V3 Object API -- Create Genre Positive Smoke", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -438,7 +438,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Hardware Negative Smoke", :stg1 => true do
+describe "V3 Object API -- Create Hardware Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -472,7 +472,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Hardware Positive Smoke", :stg1 => true do
+describe "V3 Object API -- Create Hardware Positive Smoke", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -514,7 +514,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Market Negative Smoke", :stg1 => true do
+describe "V3 Object API -- Create Market Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -548,7 +548,7 @@ end
 
 ###############################################################
 
-describe "V3 Object API -- Create Market Positive Smoke", :stg1 => true do
+describe "V3 Object API -- Create Market Positive Smoke", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
