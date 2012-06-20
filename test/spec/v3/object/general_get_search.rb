@@ -282,7 +282,7 @@ describe "V3 Object API -- GET Search for Published 360 Releases: #{release_sear
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -341,7 +341,7 @@ describe "V3 Object API -- GET Search for Reviewed Releases: #{reviewed_games}" 
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -398,7 +398,7 @@ end
       begin 
          @response = RestClient.get @url
       rescue => e
-        raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+        raise Exception.new(e.message+" "+@url)
       end
       @data = JSON.parse(@response.body)
     end
@@ -454,7 +454,7 @@ describe "V3 Object API -- GET Search for Bioware Releases By Dev Name: #{biowar
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -505,7 +505,7 @@ describe "V3 Object API -- GET Search for Bioware Releases By Dev legacyId: #{bi
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -566,7 +566,7 @@ describe "V3 Object API -- GET Search for Releases Released Boolean: #{release_b
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -606,7 +606,7 @@ describe "V3 Object API -- GET Search - Test Pagination Using: #{release_paginat
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
     
@@ -631,7 +631,7 @@ describe "V3 Object API -- GET Search - Test Pagination Using: #{release_paginat
       @url2 = @url2.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
       @response = RestClient.get @url2
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
     @data['data'][0]['releaseId'].should == @eleventh_entry
@@ -652,7 +652,7 @@ describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{sea
     begin
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -703,7 +703,7 @@ end
       begin
         @response = RestClient.get @url
       rescue => e
-        raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+        raise Exception.new(e.message+" "+@url)
       end
       @data = JSON.parse(@response.body)
     end
@@ -754,7 +754,7 @@ describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{sea
     begin
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end

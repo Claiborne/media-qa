@@ -55,7 +55,7 @@ describe "V3 Articles API -- Create An Article -- POST 10.92.218.21:8081/v3/arti
     begin 
       @response = RestClient.post @url, body_request, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -101,7 +101,7 @@ describe "V3 Articles API -- Check Article Just Created -- 10.92.218.21:8081/v3/
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -290,7 +290,7 @@ describe "V3 Articles API -- Update Article Just Created -- PUT 10.92.218.21:808
     begin
       @response = RestClient.put @url, put_body, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
       @data = JSON.parse(@response.body)
   end
@@ -326,7 +326,7 @@ describe "V3 Articles API -- Check Article Just Updated -- 10.92.218.21:8081/v3/
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end

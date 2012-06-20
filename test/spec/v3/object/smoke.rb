@@ -58,7 +58,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -154,7 +154,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/legacyId/110694" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -217,7 +217,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/#{ObjectIds.me3_uk_
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -276,7 +276,7 @@ describe "V3 Object API -- Games Smoke Tests -- /games?count=200" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -365,7 +365,7 @@ describe "V3 Object API -- Games Smoke Tests -- /games#{call}" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -420,7 +420,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies?count=200" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -517,7 +517,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies?query=art&count=2
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -577,7 +577,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies#{call}" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -637,7 +637,7 @@ describe "V3 Object API -- Features Smoke Tests -- /features?count=200" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -720,7 +720,7 @@ describe "V3 Object API -- Features Smoke Tests -- /feaures#{call}" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -780,7 +780,7 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -864,7 +864,7 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres#{call}" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -924,7 +924,7 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware?count=200" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -1008,7 +1008,7 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end

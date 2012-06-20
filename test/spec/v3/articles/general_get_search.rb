@@ -263,7 +263,7 @@ describe "V3 Articles API -- General Get Search for published articles sending #
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
     
@@ -347,7 +347,7 @@ describe "V3 Articles API -- General Get Search for #{hub} hub using #{search}" 
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -442,7 +442,7 @@ describe "V3 Articles API -- General Get Search for Blogs sending #{blogs}" do
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -487,7 +487,7 @@ describe "V3 Articles API -- General Get Search for Cheats sending #{cheats}" do
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -526,7 +526,7 @@ describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{skyr
     begin 
        @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end

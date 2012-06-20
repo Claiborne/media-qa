@@ -248,7 +248,7 @@ describe "V3 Articles API -- General Post Search for published articles sending 
     begin 
        @response = RestClient.post @url, published_articles, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
     
@@ -330,7 +330,7 @@ describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}"
     begin 
        @response = RestClient.post @url, search, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -424,7 +424,7 @@ describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}" do
     begin 
        @response = RestClient.post @url, blogs, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -468,7 +468,7 @@ describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}" d
     begin 
        @response = RestClient.post @url, cheats, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -506,7 +506,7 @@ describe "V3 Articles API -- General Post Search for Skyrim Cheats sending #{sky
     begin 
        @response = RestClient.post @url, skyrim_cheats, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end

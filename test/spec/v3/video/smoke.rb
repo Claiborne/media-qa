@@ -25,7 +25,7 @@ describe "V3 Video API -- General Smoke Tests -- #{call}" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -151,7 +151,7 @@ describe "V3 Video API -- Playlists Smoke Tests -- /v3/playlists" do
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end

@@ -102,7 +102,7 @@ describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
     begin 
       @response = RestClient.post @url, create_valid_release, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -125,7 +125,7 @@ describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
       check_200 response
       HelperVars.set_object JSON.parse(response.body)
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end       
   end
   
@@ -177,7 +177,7 @@ describe "V3 Object API -- Create Game Positive Smoke", :stg => true do
     begin 
       @response = RestClient.post @url, create_valid_game, :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -200,7 +200,7 @@ describe "V3 Object API -- Create Game Positive Smoke", :stg => true do
       check_200 response
       HelperVars.set_object JSON.parse(response.body)
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end       
   end
   
@@ -253,7 +253,7 @@ describe "V3 Object API -- Create Company Positive Smoke", :stg => true do
     begin 
       @response = RestClient.post @url, create_valid_object('company'), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -276,7 +276,7 @@ describe "V3 Object API -- Create Company Positive Smoke", :stg => true do
       check_200 response
       HelperVars.set_object JSON.parse(response.body)
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end       
   end
   
@@ -329,7 +329,7 @@ describe "V3 Object API -- Create Feature Positive Smoke", :stg => true do
     begin 
       @response = RestClient.post @url, create_valid_object('feature'), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -352,7 +352,7 @@ describe "V3 Object API -- Create Feature Positive Smoke", :stg => true do
       check_200 response
       HelperVars.set_object JSON.parse(response.body)
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end       
   end
   
@@ -405,7 +405,7 @@ describe "V3 Object API -- Create Genre Positive Smoke", :stg => true do
     begin 
       @response = RestClient.post @url, create_valid_object('genre'), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -428,7 +428,7 @@ describe "V3 Object API -- Create Genre Positive Smoke", :stg => true do
       check_200 response
       HelperVars.set_object JSON.parse(response.body)
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end       
   end
   
@@ -481,7 +481,7 @@ describe "V3 Object API -- Create Hardware Positive Smoke", :stg => true do
     begin 
       @response = RestClient.post @url, create_valid_object('hardware'), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -504,7 +504,7 @@ describe "V3 Object API -- Create Hardware Positive Smoke", :stg => true do
       check_200 response
       HelperVars.set_object JSON.parse(response.body)
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end       
   end
   
@@ -557,7 +557,7 @@ describe "V3 Object API -- Create Market Positive Smoke", :stg => true do
     begin 
       @response = RestClient.post @url, create_valid_object('market'), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
@@ -580,7 +580,7 @@ describe "V3 Object API -- Create Market Positive Smoke", :stg => true do
       check_200 response
       HelperVars.set_object JSON.parse(response.body)
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end       
   end
   

@@ -50,7 +50,7 @@ describe "Affinity API -- #{q}", :test => true do
     begin
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end

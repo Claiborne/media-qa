@@ -112,7 +112,7 @@ describe "V3 Object API -- Create Game", :stg => true do
     begin 
       @response = RestClient.post @url, create_game_body(HelperVars.return_object_slug('game')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -151,7 +151,7 @@ describe "V3 Object API -- Create Company", :stg => true do
     begin 
       @response = RestClient.post @url, create_company_body(HelperVars.return_number,HelperVars.return_object_slug('company')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -190,7 +190,7 @@ describe "V3 Object API -- Create Feature", :stg => true do
     begin 
       @response = RestClient.post @url, create_feature_body(HelperVars.return_number,HelperVars.return_object_slug('feature')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -229,7 +229,7 @@ describe "V3 Object API -- Create Genre", :stg => true do
     begin 
       @response = RestClient.post @url, create_genre_body(HelperVars.return_number,HelperVars.return_object_slug('genre')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -268,7 +268,7 @@ describe "V3 Object API -- Create Hardware", :stg => true do
     begin 
       @response = RestClient.post @url, create_hardware_body(HelperVars.return_number,HelperVars.return_object_slug('hardware'),HelperVars.return_company_id), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -307,7 +307,7 @@ describe "V3 Object API -- Create Market", :stg => true do
     begin 
       @response = RestClient.post @url, create_market_body(HelperVars.return_number,HelperVars.return_object_slug('market')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -346,7 +346,7 @@ describe "V3 Object API -- Create Release", :stg => true do
     begin 
       @response = RestClient.post @url, create_release_body(HelperVars.return_number,HelperVars.return_game_id,HelperVars.return_company_id,HelperVars.return_feature_id,HelperVars.return_genre_id,HelperVars.return_hardware_id,HelperVars.return_market_id), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -386,7 +386,7 @@ describe "V3 Object API -- Update Game", :stg => true do
     begin 
       @response = RestClient.put @url, update_game_body(HelperVars.return_object_slug('game')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -424,7 +424,7 @@ describe "V3 Object API -- Update Company", :stg => true do
     begin 
       @response = RestClient.put @url, update_company_body(HelperVars.return_number,HelperVars.return_object_slug('company')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -462,7 +462,7 @@ describe "V3 Object API -- Update Feature", :stg => true do
     begin 
       @response = RestClient.put @url, update_feature_body(HelperVars.return_number,HelperVars.return_object_slug('feature')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -500,7 +500,7 @@ describe "V3 Object API -- Update Genre", :stg => true do
     begin 
       @response = RestClient.put @url, update_genre_body(HelperVars.return_number,HelperVars.return_object_slug('genre')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -538,7 +538,7 @@ describe "V3 Object API -- Update Hardware", :stg => true do
     begin 
       @response = RestClient.put @url, update_hardware_body(HelperVars.return_number,HelperVars.return_object_slug('hardware')), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 
@@ -614,7 +614,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
 

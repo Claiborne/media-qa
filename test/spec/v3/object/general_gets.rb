@@ -16,7 +16,7 @@ describe "V3 Object API -- Releases Query Tests -- /releases?count=35&startIndex
     begin 
       @response = RestClient.get @url
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
   end
