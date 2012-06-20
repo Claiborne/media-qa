@@ -56,7 +56,7 @@ module TopGames
     
     it "should link to an object page when a game's title is clicked" do
       return_top_games_widget(@doc, type).css('div.column-game a.game-title').each do |slot|
-        slot.attribute('href').to_s.match(/.com\/object/).should be_true
+        slot.attribute('href').to_s.match(/.com\/games/).should be_true
       end
     end
     
