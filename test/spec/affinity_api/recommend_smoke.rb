@@ -56,7 +56,7 @@ describe "Affinity API -- do=recommend&id=#{game_id}&count=#{count}" do
     @data['Data'].length == count
   end
 
-  it "should return #{count} 'Data.gameId' non-nil, non-blank values" do
+  it "should return #{count} Data.gameId non-nil, non-blank values" do
     @data['Data'].each do |game|
       game.has_key?('gameId').should be_true
       game['gameId'].should_not be_nil
@@ -64,7 +64,7 @@ describe "Affinity API -- do=recommend&id=#{game_id}&count=#{count}" do
     end
   end
 
-  it "should not return any 'Data.gameId' values that match the game id sent in the service request" do
+  it "should not return any Data.gameId values that match the game id sent in the service request" do
     game_id.split(",").each do |request_id|
       @data['Data'].each do |game|
         game['gameId'].should_not == request_id.to_i
@@ -72,7 +72,7 @@ describe "Affinity API -- do=recommend&id=#{game_id}&count=#{count}" do
     end
   end
 
-  it "should return #{count} 'Data.score' non-nil, non-blank values" do
+  it "should return #{count} Data.score non-nil, non-blank values" do
     @data['Data'].each do |game|
       game.has_key?('score').should be_true
       game['score'].should_not be_nil
@@ -80,7 +80,7 @@ describe "Affinity API -- do=recommend&id=#{game_id}&count=#{count}" do
     end
   end
 
-  it "should return unique 'Data.score' values" do
+  it "should return unique Data.score values" do
     score_data = []
     @data['Data'].each do |game|
       score_data << game['gameId']
@@ -94,7 +94,6 @@ describe "Affinity API -- do=recommend&id=#{game_id}&count=#{count}" do
       score_data << game['score']
     end
     score_data.sort{|x,y| y <=> x }.should == score_data
-
   end
 
   affinity_api_response_time(30)
