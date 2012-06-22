@@ -1,0 +1,8 @@
+Game Indices -- /games
+
+Released GOB Page -- /games/mass-effect-3/xbox-360-14235014
+  Latest Stories
+    should return the same articles the API returns (PENDING: Not Yet Implemented)
+
+v3 Blogroll widget
+    should display the same articles as the API returns (PENDING: Not Yet Implemented)
