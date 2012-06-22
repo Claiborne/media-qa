@@ -87,7 +87,6 @@ describe "Oyster Hubs -- #{hub}" do
   if hub == "/" 
     context "v3 Blogroll widget" do
       widget_blogroll_v3_articles(28, "platform")
-      widget_blogroll_v3_articles_vs_api(28, hub, "us")
       it "should call category_locale=us when loading more articles in the blogroll" do
         @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
       end
@@ -95,7 +94,6 @@ describe "Oyster Hubs -- #{hub}" do
   else
     context "v3 Blogroll widget" do
       widget_blogroll_v3_articles(28, "n/a")
-      widget_blogroll_v3_articles_vs_api(28, hub, "us")
       it "should call category_locale=us when loading more articles in the blogroll" do
         @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
       end
@@ -185,7 +183,6 @@ describe "Oyster Hubs -- #{hub}" do
   
   context "v3 Blogroll widget" do
     widget_blogroll_v3_articles(10, "n/a")
-    widget_blogroll_v3_articles_vs_api(10, hub, "us")
     it "should call category_locale=us when loading more articles in the blogroll" do
       @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
     end
@@ -224,7 +221,6 @@ describe "Oyster Hubs -- /tech" do
   
   context "v3 Blogroll widget" do
     widget_blogroll_v3_articles(11, "n/a")
-    widget_blogroll_v3_articles_vs_api(11, "tech", "us")
   end
   
   context "Global Header Widget" do
@@ -303,7 +299,6 @@ describe "Oyster Hubs --/tech" do
   
   context "v3 Blogroll widget" do
     widget_blogroll_v3_articles(28, "n/a")
-    widget_blogroll_v3_articles_vs_api(28, "tech", "us")
     it "should call category_locale=us when loading more articles in the blogroll" do
       @doc.css('button#loadMore').attribute('data-url').to_s.match(/category_locale=us/).should be_true
     end

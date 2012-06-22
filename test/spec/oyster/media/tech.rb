@@ -84,9 +84,6 @@ describe "Tech #{topic} Topic Page" do
   end
 
   if topic == "lifestyle"
-    context "Tag Cover Stories Widget" do
-      it "should check when implemented on FE"
-    end
   else
     context "Tag Cover Stories Widget" do
       widget_tag_cover_stories

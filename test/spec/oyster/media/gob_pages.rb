@@ -224,8 +224,6 @@ describe "Released GOB Page -- /games/mass-effect-3/xbox-360-14235014" do
       @doc.css('div.leftNav li.updatesItem a.articleTitle').text.delete('^a-zA-Z0-9').length.should > 0
     end
     
-    it "should return the same articles the API returns"
-    
     it "should display ten articles" do
       @doc.css('div.leftNav li.updatesItem a.articleTitle').count.should == 10
       @doc.css('div.leftNav li.updatesItem').each do |article|

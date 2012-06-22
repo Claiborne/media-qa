@@ -427,7 +427,5 @@ describe "Game Indices -- /games" do
   after(:each) do
 
   end
-  
-  it "should..."
 
 end

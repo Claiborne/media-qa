@@ -304,8 +304,10 @@ describe "V3 Object API -- Games Smoke Tests -- /games?count=200" do
       @data[data].to_s.length.should > 0
     end
   end
-  
-  it "should return 200 games"
+
+  it "should return 200 games" do
+    @data['data'].length.should == 200
+  end
   
   it "should return at least 20 games" do
     @data['data'].length.should > 19
@@ -666,8 +668,6 @@ describe "V3 Object API -- Features Smoke Tests -- /features?count=200" do
     end
   end
   
-  it "should return 200 features"
-  
   it "should return at least 20 features" do
     @data['data'].length.should > 19
   end
@@ -808,8 +808,6 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200" do
       @data[data].to_s.length.should > 0
     end
   end
-  
-  it "should return 200 genres"
   
   it "should return at least 20 genres" do
     @data['data'].length.should > 19
@@ -952,8 +950,6 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware?count=200" do
       @data[data].to_s.length.should > 0
     end
   end
-  
-  it "should return 200 hardwares"
   
   it "should return at least 20 hardwares" do
     @data['data'].length.should > 19
