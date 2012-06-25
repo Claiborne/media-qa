@@ -33,7 +33,6 @@ desc "Run all backend tests"
 RSpec::Core::RakeTask.new('backend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
-      'spec/v3/video/*.rb',
       'spec/v3/**/*.rb'
       ]  
 end

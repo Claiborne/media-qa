@@ -82,10 +82,10 @@ def review_assertions
 
   it "should return a review score for each game displayed", :smoke => true do
     @doc.css('div.gameList div.gameList-game').each do |game_list|
-      game_list.css('div.scoreBox-score').should be_true
-      game_list.css('div.scoreBox-score').text.delete("^0-9").length.should > 0
-      game_list.css('div.scoreBox-scorePhrase').should be_true
-      game_list.css('div.scoreBox-scorePhrase').text.delete("^a-zA-Z").length.should > 0
+      game_list.at_css('span.scoreBox-score').should be_true
+      game_list.css('span.scoreBox-score').text.delete("^0-9").length.should > 0
+      game_list.at_css('span.scoreBox-scorePhrase').should be_true
+      game_list.css('span.scoreBox-scorePhrase').text.delete("^a-zA-Z").length.should > 0
     end
   end
 
