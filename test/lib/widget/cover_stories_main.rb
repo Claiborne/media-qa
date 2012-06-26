@@ -43,8 +43,8 @@ module CoverStoriesMain
       @doc.css('div.evo-coverStories div.fuseNav').count.should == 1
     end
     
-    it "should have #{num_of_slots} links in the top nav" do
-      @doc.css('div.evo-coverStories div.fuseNav a').count.should == num_of_slots
+    it "should have at least #{num_of_slots} links in the top nav" do
+      @doc.css('div.evo-coverStories div.fuseNav a').count.should >= num_of_slots
     end
     
     it "should display text in each of the nav links" do

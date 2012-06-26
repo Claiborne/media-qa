@@ -77,7 +77,7 @@ describe "Oyster Hubs -- #{hub}" do
   end
   
   context "Cover Stories Widget" do
-    widget_cover_stories_main_evo(5)
+    widget_cover_stories_main_evo(4)
   end
   
   context "Cover Stories Extra Widget" do
@@ -168,7 +168,7 @@ describe "Oyster Hubs -- #{hub}" do
   end
   
   context "Cover Stories Widget" do
-    widget_cover_stories_main_evo(5)
+    widget_cover_stories_main_evo(4)
   end
   
   unless hub == "/stars" || hub == "/blu-ray"
@@ -236,7 +236,7 @@ describe "Oyster Hubs -- /tech" do
   end
 
   context "Cover Stories Widget" do
-    widget_cover_stories_main_evo(5)
+    widget_cover_stories_main_evo(4)
   end
 
   context "Cover Stories Extra Widget" do
