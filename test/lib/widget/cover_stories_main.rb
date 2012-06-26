@@ -100,14 +100,6 @@ module CoverStoriesMain
         item.css('li').count.should > 0
       end
     end
-    
-    it "should have a link for every subitem for each cover story", :smoke => true do
-      check_have_a_link_for_each('div.evo-coverStories ul.evo-coverStories-subitems li')
-    end
-    
-    it "should have a text for every subitem for each cover story", :smoke => true do
-      check_display_text_for_each('div.evo-coverStories ul.evo-coverStories-subitems li')
-    end
 
   end
 end
