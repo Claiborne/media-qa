@@ -6,7 +6,23 @@ require 'open_page'
 
 include OpenPage
 
-describe "Images HomePage -- /images", :selenium => true do
+def set_locale(locale)
+
+  it "should set the locale" do
+    if locale=='US'
+      selenium_get(@selenium, "http://www.ign.com/?setccpref=US")
+      @selenium.current_url.match(/www.ign.com/).should be_true
+    elsif locale=='UK'
+      selenium_get(@selenium, "http://uk.ign.com/?setccpref=UK")
+      @selenium.current_url.match(/uk.ign.com/).should be_true
+    else
+      raise "Could not set locale. Locale did not == US or UK"
+    end
+  end
+end
+
+%w(US UK).each do |locale|
+describe "Images #{locale} HomePage -- /images", :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
@@ -14,9 +30,10 @@ describe "Images HomePage -- /images", :selenium => true do
     
     BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
     @browser_config = BrowserConfig.new
-    
-    @page = "http://#{@config.options['baseurl']}/images"
-    puts @page+" using "+@browser_config.options['browser']
+
+    @path = "/images"
+    @page = "http://#{@config.options['baseurl']}#{@path}"
+    puts @path+" using "+@browser_config.options['browser']
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
   end
@@ -32,16 +49,20 @@ describe "Images HomePage -- /images", :selenium => true do
   after(:each) do
 
   end
+
+  set_locale(locale)
   
   it "should 301 from /images to /index/images.html", :smoke => true do
     selenium_get(@selenium, @page)
     # Do I need to wait for load?
-    @selenium.current_url.should == "http://#{@config.options['baseurl']}/index/images.html"
+    @selenium.current_url.match(@path).should be_true
   end
-  
+
 end
 
-describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selenium => true do
+######################################################################
+
+describe "Images Gallery #{locale} Page -- /images/games/far-cry-3-xbox-360-53491", :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
@@ -49,9 +70,10 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
     
     BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
     @browser_config = BrowserConfig.new
-    
-    @page = "http://#{@config.options['baseurl']}/images/games/far-cry-3-xbox-360-53491"
-    puts @page+" using "+@browser_config.options['browser']
+
+    @path = "/images/games/far-cry-3-xbox-360-53491"
+    @page = "http://#{@config.options['baseurl']}#{@path}"
+    puts @path+" using "+@browser_config.options['browser']
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
   end
@@ -68,10 +90,12 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
 
   end
 
+  set_locale(locale)
+
   it "should open the Far Cry 3 gallery page", :smoke => true do
     selenium_get(@selenium, @page)
     # Do I need to wait for load?
-    @selenium.current_url.should == @page
+    @selenium.current_url.match(Regexp.new(@path)).should be_true
       
   end
 
@@ -91,7 +115,8 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
   end
   
   it "should display pagination with a link to the second page" do
-   @selenium.find_element(:css => "div.pagination a").attribute('href').should == @page+"?page=2"
+   @selenium.find_element(:css => "div.pagination a").attribute('href').to_s.match(/\?page=2/).should be_true
+   @selenium.find_element(:css => "div.pagination a").attribute('href').to_s.match(@path).should be_true
   end
   
   it "should display a non-broken viewer-image above the thumbnails when a thumbnail is clicked ", :smoke => true do
@@ -108,8 +133,7 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
     matching_thumb.should == matching_viewer
   end
   
-  it "should change the URL when a thumbnail is cliked", :smoke => true do
-    puts @selenium.current_url
+  it "should change the URL when a thumbnail is clicked", :smoke => true do
     @selenium.current_url.match(/far-cry-3-xbox-360-53491\/[0-9a-f]{24,32}/).should be_true
   end
   
@@ -154,7 +178,7 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
     # Check clicking back from here takes you to the original gallery page with no image in the viewr
     @selenium.navigate.back
     @wait.until { @selenium.find_element(:css => "div#peekWindow a img").displayed? == false }
-    @wait.until { @selenium.current_url == @page }
+    @wait.until { @selenium.current_url.match(@path) }
     
     # Check clicking forward from here takes you back to the previous image you were viewing
     @selenium.navigate.forward
@@ -241,4 +265,5 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
 
   end
 
+end
 end
