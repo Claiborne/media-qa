@@ -554,9 +554,9 @@ describe "V3 Object API -- GET Search for Bioware Releases By Dev legacyId: #{bi
   
 end
 
-################################################################ 
-['released','unreleased'].each do |is_released|
-describe "V3 Object API -- GET Search for Releases Released Boolean: #{release_by_is_released(is_released)}" do
+################################################################
+['released','unreleased','canceled'].each do |is_released|
+describe "V3 Object API -- GET Search for Releases by status==#{is_released}: #{release_by_is_released(is_released)}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
