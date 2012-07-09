@@ -1,5 +1,23 @@
 module ObjectPostSearch
 
+def update_with_review_score
+  {
+    :network => {
+      :ign => {
+        :review => {
+          :metadata => {
+            :publishDate => "2012-03-06T08:00:00+0000"
+          },
+          :system => "ign-games",
+          :score => 9.5,
+          :editorsChoice => true
+        }
+      }
+    }
+  }.to_json
+end
+
+
   def create_release_draft(num)
     {
       "metadata" => {
@@ -77,18 +95,6 @@ module ObjectPostSearch
         :hardwareId=> hardware_id
       }
     }, # END HARDWARE
-    :network=> {
-      :ign=> {
-        :review=> {
-          :metadata=> {
-            :publishDate=> "2012-03-06T08:00:00+0000"
-          },
-          :system=> "ign-games",
-          :score=> 9.5,
-          :editorsChoice=> true
-        }
-      }
-    }, # END NETWORK
     :legacyData=> {
       :boxArt=> [
         {
