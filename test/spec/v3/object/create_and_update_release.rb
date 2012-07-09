@@ -430,13 +430,6 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
     @data['metadata']['state'].should == 'published'
   end
 
-  ['createdAt','updatedAt'].each do |val|
-    it "should return a non-nil, non-blank system.#{val} value" do
-      @data['system'][val].should_not be_nil
-      @data['system'][val].to_s.delete("^a-zA-Z0-9").length.should > 0
-    end
-  end
-
   it "should return a metadata.region value of 'UK'" do
     @data['metadata']['region'].should == 'UK'
   end
@@ -498,15 +491,16 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
   end
 
   %w(publishers developers).each do |company|
-    it "should return a companies.#{company}.metadata.name with a value of 'BioWare'" do
-      @data['companies'][company][0]['metadata']['name'].should == 'BioWare'
+    it "should return a non-nil, non-blank companies.#{company}.metadata.name value" do
+      @data['companies'][company][0]['metadata']['name'].should_not be_nil
+      @data['companies'][company][0]['metadata']['name'].to_s.delete('^a-zA-Z').length.should > 0
     end
   end
 
   %w(publishers developers).each do |company|
     it "should return a non-nil, non-blank companies.#{company}.metadata.description value" do
       @data['companies'][company][0]['metadata']['description'].should_not be_nil
-      @data['companies'][company][0]['metadata']['description'].to_s.delete('^a-z').length.should > 0
+      @data['companies'][company][0]['metadata']['description'].to_s.delete('^a-zA-Z').length.should > 0
     end
   end
 
@@ -539,7 +533,7 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
   it "should return a non-blank, non-nil content.supports.featureId value" do
     @data['content']['supports'].each do |content_supports|
       content_supports['featureId'].should_not be_nil
-      content_supports['featureId'].to_s.delete('^a-z').length.should > 0
+      content_supports['featureId'].to_s.delete('^a-zA-Z').length.should > 0
     end
   end
 
@@ -609,8 +603,9 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
       @data['content'][genre]['metadata']['legacyId'].to_s.delete('^0-9').length.should > 0
     end
 
-    it "should return a content.#{genre}.metadata.name value of 'Action'" do
-      @data['content'][genre]['metadata']['name'].should == 'Action'
+    it "should return a non-blank, non-nil content.#{genre}.metadata.name value" do
+      @data['content'][genre]['metadata']['name'].should_not be_nil
+      @data['content'][genre]['metadata']['name'].to_s.delete('^a-zA-Z').length.should > 0
     end
 
     it "should return a content.#{genre}.metadata.slug value of 'action'" do
@@ -768,13 +763,6 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
     @data['metadata']['state'].should == 'published'
   end
 
-  ['createdAt','updatedAt'].each do |val|
-    it "should return a non-nil, non-blank system.#{val} value" do
-      @data['system'][val].should_not be_nil
-      @data['system'][val].to_s.delete("^a-zA-Z0-9").length.should > 0
-    end
-  end
-
   it "should return a metadata.region value of 'UK'" do
     @data['metadata']['region'].should == 'UK'
   end
@@ -836,15 +824,16 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
   end
 
   %w(publishers developers).each do |company|
-    it "should return a companies.#{company}.metadata.name with a value of 'BioWare'" do
-      @data['companies'][company][0]['metadata']['name'].should == 'BioWare'
+    it "should return a non-nil, non-blank companies.#{company}.metadata.name value" do
+      @data['companies'][company][0]['metadata']['name'].should_not be_nil
+      @data['companies'][company][0]['metadata']['name'].to_s.delete('^a-zA-Z').length.should > 0
     end
   end
 
   %w(publishers developers).each do |company|
     it "should return a non-nil, non-blank companies.#{company}.metadata.description value" do
       @data['companies'][company][0]['metadata']['description'].should_not be_nil
-      @data['companies'][company][0]['metadata']['description'].to_s.delete('^a-z').length.should > 0
+      @data['companies'][company][0]['metadata']['description'].to_s.delete('^a-zA-Z').length.should > 0
     end
   end
 
@@ -877,7 +866,7 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
   it "should return a non-blank, non-nil content.supports.featureId value" do
     @data['content']['supports'].each do |content_supports|
       content_supports['featureId'].should_not be_nil
-      content_supports['featureId'].to_s.delete('^a-z').length.should > 0
+      content_supports['featureId'].to_s.delete('^a-zA-Z').length.should > 0
     end
   end
 
@@ -947,8 +936,9 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
       @data['content'][genre]['metadata']['legacyId'].to_s.delete('^0-9').length.should > 0
     end
 
-    it "should return a content.#{genre}.metadata.name value of 'Action'" do
-      @data['content'][genre]['metadata']['name'].should == 'Action'
+    it "should return a non-blank, non-nil content.#{genre}.metadata.name value" do
+      @data['content'][genre]['metadata']['name'].should_not be_nil
+      @data['content'][genre]['metadata']['name'].to_s.delete('^a-zA-Z').length.should > 0
     end
 
     it "should return a content.#{genre}.metadata.slug value of 'action'" do
