@@ -71,7 +71,7 @@ end
 ####################################################################
 # CREATE DRAFT
 
-describe "V3 Object API -- Create Draft Release", :test => true do
+describe "V3 Object API -- Create Draft Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -111,7 +111,8 @@ end
 
 ####################################################################
 # CHECK
-describe "V3 Object API -- Check Draft Release", :test => true do
+
+describe "V3 Object API -- Check Draft Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -136,7 +137,7 @@ describe "V3 Object API -- Check Draft Release", :test => true do
 
   common_checks
 
-  it "should return a releaseId value of #{HelperVars.return_release_id}" do
+  it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
   end
 
@@ -165,7 +166,7 @@ end
 ####################################################################
 # UPDATE DRAFT
 
-describe "V3 Object API -- Update Draft Release", :test => true do
+describe "V3 Object API -- Update Draft Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -190,7 +191,7 @@ describe "V3 Object API -- Update Draft Release", :test => true do
 
   common_checks
 
-  it "should return a releaseId value of #{HelperVars.return_release_id}" do
+  it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
   end
 
@@ -199,7 +200,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Draft Release", :test => true do
+describe "V3 Object API -- Check Updated Draft Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -224,7 +225,7 @@ describe "V3 Object API -- Check Updated Draft Release", :test => true do
 
   common_checks
 
-  it "should return a releaseId value of #{HelperVars.return_release_id}" do
+  it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
   end
 
@@ -257,7 +258,7 @@ end
 ####################################################################
 # UPDATE TO PUBLISHED
 
-describe "V3 Object API -- Update Draft Release To Published", :test => true do
+describe "V3 Object API -- Update Draft Release To Published", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -282,7 +283,7 @@ describe "V3 Object API -- Update Draft Release To Published", :test => true do
 
   common_checks
 
-  it "should return a releaseId value of #{HelperVars.return_release_id}" do
+  it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
   end
 
@@ -291,7 +292,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Published Release", :test => true do
+describe "V3 Object API -- Check Updated Published Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -316,7 +317,7 @@ describe "V3 Object API -- Check Updated Published Release", :test => true do
 
   common_checks
 
-  it "should return a releaseId value of #{HelperVars.return_release_id}" do
+  it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
   end
 
@@ -349,7 +350,7 @@ end
 ####################################################################
 # UPDATE TO ADD ALL INFO
 
-describe "V3 Object API -- Update Published", :test => true do
+describe "V3 Object API -- Update Published", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -384,7 +385,7 @@ describe "V3 Object API -- Update Published", :test => true do
 
   common_checks
 
-  it "should return a releaseId value of #{HelperVars.return_release_id}" do
+  it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
   end
 
@@ -393,7 +394,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Published", :test => true do
+describe "V3 Object API -- Check Updated Published", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -417,7 +418,7 @@ describe "V3 Object API -- Check Updated Published", :test => true do
 
   common_checks
 
-  it "should return a releaseId value of #{HelperVars.return_release_id}" do
+  it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
   end
 
@@ -697,7 +698,7 @@ end
 ####################################################################
 # ADD REVIEW SCORE
 
-describe "V3 Object API -- Update Published with Review Score", :test => true do
+describe "V3 Object API -- Update Published with Review Score", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -722,7 +723,7 @@ describe "V3 Object API -- Update Published with Review Score", :test => true do
 
   common_checks
 
-  it "should return a releaseId value of #{HelperVars.return_release_id}" do
+  it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
   end
 
@@ -731,7 +732,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Published with Review Score", :test => true do
+describe "V3 Object API -- Check Updated Published with Review Score", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -755,7 +756,7 @@ describe "V3 Object API -- Check Updated Published with Review Score", :test => 
 
   common_checks
 
-  it "should return a releaseId value of #{HelperVars.return_release_id}" do
+  it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
   end
 
@@ -1048,7 +1049,7 @@ end
 ####################################################################
 # CLEAN UP / DELETE RELEASE
 
-describe "V3 Object API -- Clean up / Delete", :test => true do
+describe "V3 Object API -- Clean up / Delete", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
