@@ -1064,7 +1064,7 @@ describe "V3 Object API -- Clean up / Delete", :stg => true do
 
   common_checks
 
-  it "should return a 404 when requesting the release deleted from the service" do
+  it "should return a 404 when deleting the release" do
     expect {RestClient.get "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}"}.to raise_error(RestClient::ResourceNotFound)
   end
 

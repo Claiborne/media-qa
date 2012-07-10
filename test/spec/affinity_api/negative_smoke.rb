@@ -41,7 +41,7 @@ def affinity_api_neg_assertions
 end
 
 queries_that_400.each do |q|
-describe "Affinity API -- #{q}", :test => true do
+describe "Affinity API -- #{q}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/affinity_api.yml"

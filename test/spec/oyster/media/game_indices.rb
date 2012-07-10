@@ -125,7 +125,7 @@ end
 ####################################################################################
 
 platform_list.each do |platform|
-describe "Game Indices -- /games/reviews/#{platform}", :test => true do
+describe "Game Indices -- /games/reviews/#{platform}" do
   
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"

@@ -143,6 +143,18 @@ describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
   it "should autogenerate metadata.state with a value of 'draft'" do
     HelperVars.return_object['metadata']['state'].should == 'draft'
   end
+
+  it "should return a 404 when deleting the release" do
+
+    del_url = "http://10.92.218.26:8080/releases/#{@data['releaseId']}?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.delete del_url
+    rescue => e
+      raise Exception.new(e.message+" "+del_url)
+    end
+
+    expect {RestClient.get "http://10.92.218.26:8080/releases/#{@data['releaseId']}"}.to raise_error(RestClient::ResourceNotFound)
+  end
   
 end
 
@@ -205,6 +217,18 @@ describe "V3 Object API -- Create Game Positive Smoke", :stg => true do
   end
   
   basic_checks 'gameId'
+
+  it "should return a 404 when deleting the game" do
+
+    del_url = "http://10.92.218.26:8080/games/#{@data['gameId']}?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.delete del_url
+    rescue => e
+      raise Exception.new(e.message+" "+del_url)
+    end
+
+    expect {RestClient.get "http://10.92.218.26:8080/games/#{@data['gameId']}"}.to raise_error(RestClient::ResourceNotFound)
+  end
   
 end
 
@@ -281,6 +305,18 @@ describe "V3 Object API -- Create Company Positive Smoke", :stg => true do
   end
   
   basic_checks 'companyId'
+
+  it "should return a 404 when deleting the company" do
+
+    del_url = "http://10.92.218.26:8080/companies/#{@data['companyId']}?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.delete del_url
+    rescue => e
+      raise Exception.new(e.message+" "+del_url)
+    end
+
+    expect {RestClient.get "http://10.92.218.26:8080/companies/#{@data['companyId']}"}.to raise_error(RestClient::ResourceNotFound)
+  end
   
 end
 
@@ -357,6 +393,18 @@ describe "V3 Object API -- Create Feature Positive Smoke", :stg => true do
   end
   
   basic_checks 'featureId'
+
+  it "should return a 404 when deleting the feature" do
+
+    del_url = "http://10.92.218.26:8080/features/#{@data['featureId']}?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.delete del_url
+    rescue => e
+      raise Exception.new(e.message+" "+del_url)
+    end
+
+    expect {RestClient.get "http://10.92.218.26:8080/features/#{@data['featureId']}"}.to raise_error(RestClient::ResourceNotFound)
+  end
   
 end
 
@@ -433,6 +481,18 @@ describe "V3 Object API -- Create Genre Positive Smoke", :stg => true do
   end
   
   basic_checks 'genreId'
+
+  it "should return a 404 when deleting the genre" do
+
+    del_url = "http://10.92.218.26:8080/genres/#{@data['genreId']}?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.delete del_url
+    rescue => e
+      raise Exception.new(e.message+" "+del_url)
+    end
+
+    expect {RestClient.get "http://10.92.218.26:8080/genres/#{@data['genreId']}"}.to raise_error(RestClient::ResourceNotFound)
+  end
   
 end
 
@@ -509,6 +569,18 @@ describe "V3 Object API -- Create Hardware Positive Smoke", :stg => true do
   end
   
   basic_checks 'hardwareId'
+
+  it "should return a 404 when deleting the hardware" do
+
+    del_url = "http://10.92.218.26:8080/hardware/#{@data['hardwareId']}?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.delete del_url
+    rescue => e
+      raise Exception.new(e.message+" "+del_url)
+    end
+
+    expect {RestClient.get "http://10.92.218.26:8080/hardware/#{@data['hardwareId']}"}.to raise_error(RestClient::ResourceNotFound)
+  end
   
 end
 
@@ -585,6 +657,18 @@ describe "V3 Object API -- Create Market Positive Smoke", :stg => true do
   end
   
   basic_checks 'marketId'
+
+  it "should return a 404 when deleting the market" do
+
+    del_url = "http://10.92.218.26:8080/markets/#{@data['marketId']}?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.delete del_url
+    rescue => e
+      raise Exception.new(e.message+" "+del_url)
+    end
+
+    expect {RestClient.get "http://10.92.218.26:8080/markets/#{@data['marketId']}"}.to raise_error(RestClient::ResourceNotFound)
+  end
   
 end
 
