@@ -2,7 +2,7 @@ development:
   baseurl: 10.92.218.26:8080
 
 staging:
-  baseurl: 10.92.218.26:8080
+  baseurl: media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3
 
 production:
   baseurl: apis.lan.ign.com/object/v3

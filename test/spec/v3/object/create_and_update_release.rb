@@ -76,7 +76,7 @@ describe "V3 Object API -- Create Draft Release", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{HelperVars.return_token}"
     begin
       @response = RestClient.post @url, create_release_draft(HelperVars.return_number), :content_type => "application/json"
     rescue => e
@@ -117,7 +117,7 @@ describe "V3 Object API -- Check Draft Release", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -171,7 +171,7 @@ describe "V3 Object API -- Update Draft Release", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_release_draft, :content_type => "application/json"
     rescue => e
@@ -205,7 +205,7 @@ describe "V3 Object API -- Check Updated Draft Release", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -263,7 +263,7 @@ describe "V3 Object API -- Update Draft Release To Published", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
     begin
       @response = RestClient.put @url, {:metadata=>{:state=>"published"}}.to_json, :content_type => "application/json"
     rescue => e
@@ -297,7 +297,7 @@ describe "V3 Object API -- Check Updated Published Release", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -355,17 +355,17 @@ describe "V3 Object API -- Update Published", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_release_published(
-        JSON.parse(RestClient.get("http://10.92.218.26:8080/games/slug/mass-effect-3").body)['gameId'].to_s,
-        JSON.parse(RestClient.get("http://10.92.218.26:8080/companies/slug/bioware").body)['companyId'].to_s,
-        JSON.parse(RestClient.get("http://10.92.218.26:8080/companies/slug/bioware").body)['companyId'].to_s,
-        JSON.parse(RestClient.get("http://10.92.218.26:8080/features/slug/1080i").body)['featureId'].to_s,
-        JSON.parse(RestClient.get("http://10.92.218.26:8080/features/slug/1080i").body)['featureId'].to_s,
-        JSON.parse(RestClient.get("http://10.92.218.26:8080/genres/slug/action").body)['genreId'].to_s,
-        JSON.parse(RestClient.get("http://10.92.218.26:8080/genres/slug/action").body)['genreId'].to_s,
-        JSON.parse(RestClient.get("http://10.92.218.26:8080/hardware/slug/xbox-360").body)['hardwareId'].to_s
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/slug/mass-effect-3").body)['gameId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/slug/bioware").body)['companyId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/slug/bioware").body)['companyId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/slug/1080i").body)['featureId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/slug/1080i").body)['featureId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/action").body)['genreId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/action").body)['genreId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/slug/xbox-360").body)['hardwareId'].to_s
       ),
       :content_type => "application/json"
     rescue => e
@@ -399,7 +399,7 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -466,9 +466,9 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
 
   it "should return the same metadata.game.metadata. legacyId & slug values the game returns" do
     begin
-      response = RestClient.get "http://10.92.218.26:8080/games/#{@data['metadata']['game']['gameId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['metadata']['game']['gameId']}"
     rescue => e
-      raise Exception.new(e.message+" http://10.92.218.26:8080/games/#{@data['metadata']['game']['gameId']}")
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['metadata']['game']['gameId']}")
     end
     game_data = JSON.parse(response.body)
 
@@ -513,9 +513,9 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
   %w(publishers developers).each do |company|
     it "should return the same companies.#{company}.metadata. name, description, slug, & legacyId value the game returns" do
       begin
-        response = RestClient.get "http://10.92.218.26:8080/companies/#{@data['companies'][company][0]['companyId']}"
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companies'][company][0]['companyId']}"
       rescue => e
-        raise Exception.new(e.message+" http://10.92.218.26:8080/companies/#{@data['companies'][company][0]['companyId']}")
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companies'][company][0]['companyId']}")
       end
       company_data = JSON.parse(response.body)
 
@@ -564,9 +564,9 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
   it "should return the same content.metadata name, slug & legacyId values as the feature returns" do
     @data['content']['supports'].each do |content_supports|
       begin
-        response = RestClient.get "http://10.92.218.26:8080/features/#{content_supports['featureId']}"
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{content_supports['featureId']}"
       rescue => e
-        raise Exception.new(e.message+" http://10.92.218.26:8080/features/#{content_supports['featureId']}")
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{content_supports['featureId']}")
       end
       feature_data = JSON.parse(response.body)
 
@@ -614,9 +614,9 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
 
     it "should return the same content.#{genre} name, slug & legacyId values as the genre returns" do
       begin
-        response = RestClient.get "http://10.92.218.26:8080/genres/#{@data['content'][genre]['genreId']}"
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{@data['content'][genre]['genreId']}"
       rescue => e
-        raise Exception.new(e.message+" http://10.92.218.26:8080/genres/#{@data['content'][genre]['genreId']}")
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{@data['content'][genre]['genreId']}")
       end
       genre_data = JSON.parse(response.body)
 
@@ -648,9 +648,9 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
 
   it "should return the same hardware.metadata name, description, slug, shortName, legacyId, type & releaseData.date values as the hardware returns" do
     begin
-      response = RestClient.get "http://10.92.218.26:8080/hardware/#{@data['hardware']['platform']['hardwareId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{@data['hardware']['platform']['hardwareId']}"
     rescue => e
-      raise Exception.new(e.message+" http://10.92.218.26:8080/hardware/#{@data['hardware']['platform']['hardwareId']}")
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{@data['hardware']['platform']['hardwareId']}")
     end
     hardware_data = JSON.parse(response.body)
 
@@ -698,7 +698,7 @@ describe "V3 Object API -- Update Published with Review Score", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_with_review_score, :content_type => "application/json"
     rescue => e
@@ -732,7 +732,7 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -799,9 +799,9 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
 
   it "should return the same metadata.game.metadata. legacyId & slug values the game returns" do
     begin
-      response = RestClient.get "http://10.92.218.26:8080/games/#{@data['metadata']['game']['gameId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['metadata']['game']['gameId']}"
     rescue => e
-      raise Exception.new(e.message+" http://10.92.218.26:8080/games/#{@data['metadata']['game']['gameId']}")
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['metadata']['game']['gameId']}")
     end
     game_data = JSON.parse(response.body)
 
@@ -846,9 +846,9 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
   %w(publishers developers).each do |company|
     it "should return the same companies.#{company}.metadata. name, description, slug, & legacyId value the game returns" do
       begin
-        response = RestClient.get "http://10.92.218.26:8080/companies/#{@data['companies'][company][0]['companyId']}"
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companies'][company][0]['companyId']}"
       rescue => e
-        raise Exception.new(e.message+" http://10.92.218.26:8080/companies/#{@data['companies'][company][0]['companyId']}")
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companies'][company][0]['companyId']}")
       end
       company_data = JSON.parse(response.body)
 
@@ -897,9 +897,9 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
   it "should return the same content.metadata name, slug & legacyId values as the feature returns" do
     @data['content']['supports'].each do |content_supports|
       begin
-        response = RestClient.get "http://10.92.218.26:8080/features/#{content_supports['featureId']}"
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{content_supports['featureId']}"
       rescue => e
-        raise Exception.new(e.message+" http://10.92.218.26:8080/features/#{content_supports['featureId']}")
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{content_supports['featureId']}")
       end
       feature_data = JSON.parse(response.body)
 
@@ -947,9 +947,9 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
 
     it "should return the same content.#{genre} name, slug & legacyId values as the genre returns" do
       begin
-        response = RestClient.get "http://10.92.218.26:8080/genres/#{@data['content'][genre]['genreId']}"
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{@data['content'][genre]['genreId']}"
       rescue => e
-        raise Exception.new(e.message+" http://10.92.218.26:8080/genres/#{@data['content'][genre]['genreId']}")
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{@data['content'][genre]['genreId']}")
       end
       genre_data = JSON.parse(response.body)
 
@@ -981,9 +981,9 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
 
   it "should return the same hardware.metadata name, description, slug, shortName, legacyId, type & releaseData.date values as the hardware returns" do
     begin
-      response = RestClient.get "http://10.92.218.26:8080/hardware/#{@data['hardware']['platform']['hardwareId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{@data['hardware']['platform']['hardwareId']}"
     rescue => e
-      raise Exception.new(e.message+" http://10.92.218.26:8080/hardware/#{@data['hardware']['platform']['hardwareId']}")
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{@data['hardware']['platform']['hardwareId']}")
     end
     hardware_data = JSON.parse(response.body)
 
@@ -1044,7 +1044,7 @@ describe "V3 Object API -- Clean up / Delete", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
     begin
       @response = RestClient.delete @url
     rescue => e
@@ -1065,7 +1065,7 @@ describe "V3 Object API -- Clean up / Delete", :stg => true do
   common_checks
 
   it "should return a 404 when deleting the release" do
-    expect {RestClient.get "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end

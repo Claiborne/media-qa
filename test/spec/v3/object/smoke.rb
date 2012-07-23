@@ -114,7 +114,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200" do
   
   it "should return a releaseId value that is a 24-character hash for all releases" do
     @data['data'].each do |release|
-      release['releaseId'].match(/^[0-9a-f]{24,32}$/).should be_true
+      release['releaseId'].match(/^[0-9a-f]{24}$/).should be_true
     end
   end
   
@@ -325,7 +325,7 @@ describe "V3 Object API -- Games Smoke Tests -- /games?count=200" do
   
   it "should return a gameId value that is a 24-character hash for all games" do
     @data['data'].each do |game|
-      game['gameId'].match(/^[0-9a-f]{24,32}$/).should be_true
+      game['gameId'].match(/^[0-9a-f]{24}$/).should be_true
     end
   end
   
@@ -468,7 +468,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies?count=200" do
   
   it "should return a companyId value that is a 24-character hash for all companies" do
     @data['data'].each do |company|
-      company['companyId'].match(/^[0-9a-f]{24,32}$/).should be_true
+      company['companyId'].match(/^[0-9a-f]{24}$/).should be_true
     end
   end
   
@@ -684,7 +684,7 @@ describe "V3 Object API -- Features Smoke Tests -- /features?count=200" do
   
   it "should return a featureId value that is a 24-character hash for all features" do
     @data['data'].each do |feature|
-      feature['featureId'].match(/^[0-9a-f]{24,32}$/).should be_true
+      feature['featureId'].match(/^[0-9a-f]{24}$/).should be_true
     end
   end
   
@@ -711,7 +711,7 @@ end
 ###################################################
 
 ["/#{ObjectIds.high_def_id}","/slug/1080p"].each do |call|
-describe "V3 Object API -- Features Smoke Tests -- /feaures#{call}" do
+describe "V3 Object API -- Features Smoke Tests -- /features#{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -825,7 +825,7 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200" do
   
   it "should return a genreId value that is a 24-character hash for all genres" do
     @data['data'].each do |genre|
-      genre['genreId'].match(/^[0-9a-f]{24,32}$/).should be_true
+      genre['genreId'].match(/^[0-9a-f]{24}$/).should be_true
     end
   end
   
@@ -967,7 +967,7 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware?count=200" do
   
   it "should return a hardwareId value that is a 24-character hash for all hardwares" do
     @data['data'].each do |hardware|
-      hardware['hardwareId'].match(/^[0-9a-f]{24,32}$/).should be_true
+      hardware['hardwareId'].match(/^[0-9a-f]{24}$/).should be_true
     end
   end
   
@@ -1051,4 +1051,143 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}" do
   end
   
 end
+end
+
+###################################################
+
+describe "V3 Object API -- Movies Smoke Tests -- /movies?count=200", :test => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/movies?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  ['count','startIndex','endIndex','isMore'].each do |data|
+    it "should return '#{data}' data with a non-nil, non-blank value" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+    end
+  end
+
+  it "should return at least 20 movies"
+
+  ['movieId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all movies" do
+      @data['data'].each do |movie|
+        movie.has_key?(data).should be_true
+        movie[data].should_not be_nil
+        movie[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a movieId value that is a 24-character hash for all features" do
+    @data['data'].each do |feature|
+      feature['featureId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  it "should return metadata.slug data with a non-nil, non-blank value for all movies" do
+    @data['data'].each do |movie|
+      movie['metadata'].has_key?('slug').should be_true
+      movie['metadata']['slug'].should_not be_nil
+      movie['metadata']['slug'].to_s.length.should > 0
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all features" do
+      @data['data'].each do |movie|
+        movie['system'].has_key?(data).should be_true
+        movie['system'][data].should_not be_nil
+        movie['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.high_def_id}","/slug/1080p"].each do |call|
+  describe "V3 Object API -- Movies Smoke Tests -- /movies#{call}", :test => true do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/features#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return a feature with a featureId value of #{ObjectIds.high_def_id}" do
+      @data.has_key?('featureId').should be_true
+      @data['featureId'].should == ObjectIds.high_def_id
+    end
+
+    it "should return a feature with a metadata.slug value of '1080p'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('slug').should be_true
+      @data['metadata']['slug'].should == '1080p'
+    end
+
+    it "should return a feature with a non-nil, non-blank metadata.legacyId value" do
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should_not be_nil
+      @data['metadata']['legacyId'].to_s.length.should > 0
+    end
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a feature with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
 end

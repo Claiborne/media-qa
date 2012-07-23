@@ -109,7 +109,7 @@ describe "V3 Object API -- Create Game", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/games?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.post @url, create_game_body(HelperVars.return_object_slug('game')), :content_type => "application/json"
     rescue => e
@@ -148,7 +148,7 @@ describe "V3 Object API -- Create Company", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/companies?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.post @url, create_company_body(HelperVars.return_number,HelperVars.return_object_slug('company')), :content_type => "application/json"
     rescue => e
@@ -187,7 +187,7 @@ describe "V3 Object API -- Create Feature", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/features?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.post @url, create_feature_body(HelperVars.return_number,HelperVars.return_object_slug('feature')), :content_type => "application/json"
     rescue => e
@@ -226,7 +226,7 @@ describe "V3 Object API -- Create Genre", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/genres?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.post @url, create_genre_body(HelperVars.return_number,HelperVars.return_object_slug('genre')), :content_type => "application/json"
     rescue => e
@@ -265,7 +265,7 @@ describe "V3 Object API -- Create Hardware", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/hardware?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.post @url, create_hardware_body(HelperVars.return_number,HelperVars.return_object_slug('hardware'),HelperVars.return_company_id), :content_type => "application/json"
     rescue => e
@@ -304,7 +304,7 @@ describe "V3 Object API -- Create Market", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/markets?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.post @url, create_market_body(HelperVars.return_number,HelperVars.return_object_slug('market')), :content_type => "application/json"
     rescue => e
@@ -343,7 +343,7 @@ describe "V3 Object API -- Create Release", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.post @url, create_release_body(HelperVars.return_number,HelperVars.return_game_id,HelperVars.return_company_id,HelperVars.return_feature_id,HelperVars.return_genre_id,HelperVars.return_hardware_id,HelperVars.return_market_id), :content_type => "application/json"
     rescue => e
@@ -383,7 +383,7 @@ describe "V3 Object API -- Update Game", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/games/#{HelperVars.return_game_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{HelperVars.return_game_id}?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.put @url, update_game_body(HelperVars.return_object_slug('game')), :content_type => "application/json"
     rescue => e
@@ -421,7 +421,7 @@ describe "V3 Object API -- Update Company", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/companies/#{HelperVars.return_company_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{HelperVars.return_company_id}?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.put @url, update_company_body(HelperVars.return_number,HelperVars.return_object_slug('company')), :content_type => "application/json"
     rescue => e
@@ -459,7 +459,7 @@ describe "V3 Object API -- Update Feature", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/features/#{HelperVars.return_feature_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{HelperVars.return_feature_id}?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.put @url, update_feature_body(HelperVars.return_number,HelperVars.return_object_slug('feature')), :content_type => "application/json"
     rescue => e
@@ -497,7 +497,7 @@ describe "V3 Object API -- Update Genre", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/genres/#{HelperVars.return_genre_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{HelperVars.return_genre_id}?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.put @url, update_genre_body(HelperVars.return_number,HelperVars.return_object_slug('genre')), :content_type => "application/json"
     rescue => e
@@ -535,7 +535,7 @@ describe "V3 Object API -- Update Hardware", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/hardware/#{HelperVars.return_hardware_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{HelperVars.return_hardware_id}?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.put @url, update_hardware_body(HelperVars.return_number,HelperVars.return_object_slug('hardware')), :content_type => "application/json"
     rescue => e
@@ -573,7 +573,7 @@ describe "V3 Object API -- Update Market", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/markets/#{HelperVars.return_market_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets/#{HelperVars.return_market_id}?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.put @url, update_market_body(HelperVars.return_number,HelperVars.return_object_slug('market')), :content_type => "application/json"
     rescue => e
@@ -611,7 +611,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://10.92.218.26:8080/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -722,14 +722,14 @@ describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
 
     {:games => HelperVars.return_game_id, :companies => HelperVars.return_company_id, :features => HelperVars.return_feature_id, :genres => HelperVars.return_genre_id, :hardware => HelperVars.return_hardware_id, :markets => HelperVars.return_market_id, :releases => HelperVars.return_release_id}.each do |k,v|
 
-      del_url = "http://10.92.218.26:8080/#{k}/#{v}?oauth_token=#{HelperVars.return_token}"
+      del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{k}/#{v}?oauth_token=#{HelperVars.return_token}"
       begin
         @response = RestClient.delete del_url
       rescue => e
         raise Exception.new(e.message+" "+del_url)
       end
 
-      expect {RestClient.get "http://10.92.218.26:8080/#{k}/#{v}"}.to raise_error(RestClient::ResourceNotFound)
+      expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{k}/#{v}"}.to raise_error(RestClient::ResourceNotFound)
     end
   end
   
