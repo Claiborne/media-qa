@@ -18,6 +18,7 @@ class ObjectIds
   @high_def_feature_id = get_feature_id('1080p')
   @action_genre_id = get_genre_id('action')
   @xbox_hardware_id = get_hardware_id('xbox-360')
+  @movie_id = get_movie_id('the-dark-knight')
   
   def self.me3_release_ids
     @me3_release_ids
@@ -45,6 +46,10 @@ class ObjectIds
   
   def self.xbox_id
     @xbox_hardware_id
+  end
+
+  def self.movie_id
+    @movie_id
   end
   
 end
@@ -1107,15 +1112,17 @@ describe "V3 Object API -- Movies Smoke Tests -- /movies?count=200", :test => tr
 
   it "should return a movieId value that is a 24-character hash for all features" do
     @data['data'].each do |feature|
-      feature['featureId'].match(/^[0-9a-f]{24}$/).should be_true
+      feature['movieId'].match(/^[0-9a-f]{24}$/).should be_true
     end
   end
 
-  it "should return metadata.slug data with a non-nil, non-blank value for all movies" do
-    @data['data'].each do |movie|
-      movie['metadata'].has_key?('slug').should be_true
-      movie['metadata']['slug'].should_not be_nil
-      movie['metadata']['slug'].to_s.length.should > 0
+  %w(slug type).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all movies" do
+      @data['data'].each do |movie|
+        movie['metadata'].has_key?(data).should be_true
+        movie['metadata'][data].should_not be_nil
+        movie['metadata'][data].to_s.length.should > 0
+      end
     end
   end
 
@@ -1133,13 +1140,13 @@ end
 
 ###################################################
 
-["/#{ObjectIds.high_def_id}","/slug/1080p"].each do |call|
+["/#{ObjectIds.movie_id}","/slug/the-dark-knight"].each do |call|
   describe "V3 Object API -- Movies Smoke Tests -- /movies#{call}", :test => true do
 
     before(:all) do
       Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = Configuration.new
-      @url = "http://#{@config.options['baseurl']}/features#{call}"
+      @url = "http://#{@config.options['baseurl']}/movies#{call}"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -1164,25 +1171,25 @@ end
       check_not_blank(@data)
     end
 
-    it "should return a feature with a featureId value of #{ObjectIds.high_def_id}" do
-      @data.has_key?('featureId').should be_true
-      @data['featureId'].should == ObjectIds.high_def_id
+    it "should return a movie with a movieId value of #{ObjectIds.movie_id}" do
+      @data.has_key?('movieId').should be_true
+      @data['movieId'].should == ObjectIds.movie_id
     end
 
-    it "should return a feature with a metadata.slug value of '1080p'" do
+    it "should return a movie with a metadata.slug value of 'the-dark-knight'" do
       @data.has_key?('metadata').should be_true
       @data['metadata'].has_key?('slug').should be_true
-      @data['metadata']['slug'].should == '1080p'
+      @data['metadata']['slug'].should == 'the-dark-knight'
     end
 
-    it "should return a feature with a non-nil, non-blank metadata.legacyId value" do
-      @data['metadata'].has_key?('legacyId').should be_true
-      @data['metadata']['legacyId'].should_not be_nil
-      @data['metadata']['legacyId'].to_s.length.should > 0
+    it "should return metadata.type data with a non-nil, non-blank value" do
+      @data['metadata'].has_key?('type').should be_true
+      @data['metadata']['type'].should_not be_nil
+      @data['metadata']['type'].to_s.length.should > 0
     end
 
     ['createdAt','updatedAt'].each do |data|
-      it "should return a feature with non-nil, non-blank system.#{data} data" do
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
         @data['system'].has_key?(data).should be_true
         @data['system'][data].should_not be_nil
         @data['system'][data].to_s.length.should > 0
