@@ -1060,7 +1060,7 @@ end
 
 ###################################################
 
-describe "V3 Object API -- Movies Smoke Tests -- /movies?count=200" do
+describe "V3 Object API -- Movies Smoke Tests -- /movies?count=200", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -1141,7 +1141,7 @@ end
 ###################################################
 
 ["/#{ObjectIds.movie_id}","/slug/the-dark-knight"].each do |call|
-  describe "V3 Object API -- Movies Smoke Tests -- /movies#{call}" do
+  describe "V3 Object API -- Movies Smoke Tests -- /movies#{call}", :stg => true do
 
     before(:all) do
       Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
