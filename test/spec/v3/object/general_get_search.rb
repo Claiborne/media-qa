@@ -189,6 +189,22 @@ def search_using_condition_in(val,field,cond)
       "states"=>["published"],
       "regions"=>["US"]
   }.to_json
+
+  def movies_by_type(type)
+    {
+        "rules"=>[
+            {
+                "field"=>"metadata.type",
+                "condition"=>"term",
+                "value"=>type.to_s
+            }
+        ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>25
+    }.to_json
+  end
+
 end
 
 ########################### BEGIN ASSERTION METHODS #############################
@@ -783,3 +799,49 @@ describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{sea
 
 end
 end
+
+################################################################
+
+%w(theater).each do |type|
+describe "V3 Object API -- GET Search for Movies by Type: #{movies_by_type(type)}" do
+
+    it "should implement V3 Object API -- GET Search for Movies by Type: #{movies_by_type(type)}"
+=begin
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/movies/search?q="+movies_by_type(type).to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  common_assertions(75)
+
+  check_id('movieId')
+
+  it "should only return movies with a metadata.type value of #{type}" do
+    @data['data'].each do |release|
+      release['metadata']['type'].should == type
+    end
+  end
+=end
+end
+end
+
