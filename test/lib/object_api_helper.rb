@@ -96,5 +96,18 @@ module ObjectApiHelper
       if d['metadata']['region'] == "UK"; return d['releaseId']; end
     end
   end #end def
+
+  def get_movie_id(slug)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/movies/slug/the-dark-knight"
+    begin
+      response = RestClient.get url
+    rescue => e
+      raise Exception.new(e.message+" "+url+" "+e.response.to_s)
+    end
+    data = JSON.parse(response.body)
+    data['movieId'].to_s
+  end #end def
   
 end
