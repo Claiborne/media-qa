@@ -1,22 +1,21 @@
 module ObjectPostSearch
 
-def update_with_review_score
-  {
-    :network => {
-      :ign => {
-        :review => {
-          :metadata => {
-            :publishDate => "2012-03-06T08:00:00+0000"
-          },
-          :system => "ign-games",
-          :score => 9.5,
-          :editorsChoice => true
+  def update_with_review_score
+    {
+      :network => {
+        :ign => {
+          :review => {
+            :metadata => {
+              :publishDate => "2012-03-06T08:00:00+0000"
+            },
+            :system => "ign-games",
+            :score => 9.5,
+            :editorsChoice => true
+          }
         }
       }
-    }
-  }.to_json
-end
-
+    }.to_json
+  end
 
   def create_release_draft(num)
     {
@@ -117,7 +116,7 @@ end
     }.to_json
   end
 
-  def create_release_body(num,game_id,company_id,feature_id,genre_id,hardware_id,market_id)
+  def create_release_body(num,game_id,company_id,feature_id,genre_id,hardware_id,market_id,movie_id)
     {
       "metadata" => {
           "name" => "QA Test Release #{num}",
@@ -130,7 +129,8 @@ end
           "releaseDate" => {
               "date" => "2020-12-31"
           },
-          "game" => {"gameId" => game_id.to_s}
+          "game" => {"gameId" => game_id.to_s},
+          "movie" => {"movieId" => movie_id.to_s}
       }, #end metadata
       "companies" => {
           "developers" => [{"companyId" => company_id.to_s}],

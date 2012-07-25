@@ -394,7 +394,7 @@ describe "V3 Object API -- Create Release", :stg => true do
     @config = Configuration.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{HelperVars.return_token}"
     begin 
-      @response = RestClient.post @url, create_release_body(HelperVars.return_number,HelperVars.return_game_id,HelperVars.return_company_id,HelperVars.return_feature_id,HelperVars.return_genre_id,HelperVars.return_hardware_id,HelperVars.return_market_id), :content_type => "application/json"
+      @response = RestClient.post @url, create_release_body(HelperVars.return_number,HelperVars.return_game_id,HelperVars.return_company_id,HelperVars.return_feature_id,HelperVars.return_genre_id,HelperVars.return_hardware_id,HelperVars.return_market_id,HelperVars.return_movie_id), :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -729,6 +729,18 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
     @data['metadata']['game']['metadata']['slug'].match(/updated/).should be_true 
   end
   
+  it "should return the correct metadata.movie.movieId value" do
+    @data['metadata']['movie']['movieId'].should == HelperVars.return_movie_id
+  end
+
+  it "should return metadata.movie.metadata.slug with the updated value" do
+    @data['metadata']['movie']['metadata']['slug'].match(/updated/).should be_true
+  end
+
+  it "should return metadata.movie.metadata.type with the updated value" do
+    @data['metadata']['movie']['metadata']['type'].match(/on-demand/).should be_true
+  end
+  
   it "should return the correct companies.publishers.companyId value" do
     @data['companies']['publishers'][0]['companyId'].should == HelperVars.return_company_id
   end
@@ -807,7 +819,7 @@ end
 
 describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
 
-  it "should return a 404 when deleting objects" do
+  it "should return a 404 when requesting deleted objects" do
 
     {:games => HelperVars.return_game_id, :companies => HelperVars.return_company_id, :features => HelperVars.return_feature_id, :genres => HelperVars.return_genre_id, :hardware => HelperVars.return_hardware_id, :markets => HelperVars.return_market_id, :releases => HelperVars.return_release_id, :movies => HelperVars.return_movie_id}.each do |k,v|
 
