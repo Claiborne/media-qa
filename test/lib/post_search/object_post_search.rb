@@ -272,11 +272,20 @@ end
   end
   
   def create_market_body(num,slug)
+  {
+      "metadata" => {
+          "slug" => slug.to_s,
+          "name" => "QA Test Market #{num}",
+          "description" => "market description"
+      }
+  }.to_json
+  end
+
+  def create_movie_body(slug)
     {
       "metadata" => {
         "slug" => slug.to_s,
-        "name" => "QA Test Market #{num}",
-        "description" => "market description"
+        "type" => "theater"
       }
     }.to_json
   end
@@ -358,6 +367,15 @@ end
         "name" => "QA Test Market #{num} updated",
         "description" => "market description updated"
       }
+    }.to_json
+  end
+
+  def update_movie_body(slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s+"-updated",
+            "type" => "on-demand"
+        }
     }.to_json
   end
 

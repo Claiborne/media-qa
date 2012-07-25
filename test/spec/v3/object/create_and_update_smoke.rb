@@ -24,6 +24,7 @@ class HelperVars
   @hardware_id = ""
   @market_id = ""
   @release_id = ""
+  @movie_id = ""
   
   def self.return_token
     @token
@@ -64,6 +65,10 @@ class HelperVars
   def self.return_release_id
     @release_id
   end
+
+  def self.return_movie_id
+    @movie_id
+  end
   
   # 
   
@@ -94,10 +99,15 @@ class HelperVars
   def self.set_release_id(id)
     @release_id = id
   end
+
+  def self.set_movie_id(id)
+    @movie_id = id
+  end
   
 end
 
 # FIRST SET: CREATE
+    #TODO: CHECK CREATED
 # SECOND SET: UPDATES
 # THIRD SET: CHECK UPDATES
 # CLEAN UP: DELETE OBJECTS
@@ -135,7 +145,7 @@ describe "V3 Object API -- Create Game", :stg => true do
   end
   
   it "should return a gameId value that is a 24-character hash" do
-    @data['gameId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    @data['gameId'].match(/^[0-9a-f]{24}$/).should be_true
     HelperVars.set_game_id @data['gameId']
   end
     
@@ -174,7 +184,7 @@ describe "V3 Object API -- Create Company", :stg => true do
   end
 
   it "should return a companyId value that is a 24-character hash" do
-    @data['companyId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    @data['companyId'].match(/^[0-9a-f]{24}$/).should be_true
     HelperVars.set_company_id @data['companyId']
   end
   
@@ -213,7 +223,7 @@ describe "V3 Object API -- Create Feature", :stg => true do
   end
 
   it "should return a featureId value that is a 24-character hash" do
-    @data['featureId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    @data['featureId'].match(/^[0-9a-f]{24}$/).should be_true
     HelperVars.set_feature_id @data['featureId']
   end
   
@@ -252,7 +262,7 @@ describe "V3 Object API -- Create Genre", :stg => true do
   end
 
   it "should return a genreId value that is a 24-character hash" do
-    @data['genreId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    @data['genreId'].match(/^[0-9a-f]{24}$/).should be_true
     HelperVars.set_genre_id @data['genreId']
   end
   
@@ -291,7 +301,7 @@ describe "V3 Object API -- Create Hardware", :stg => true do
   end
 
   it "should return a hardwareId value that is a 24-character hash" do
-    @data['hardwareId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    @data['hardwareId'].match(/^[0-9a-f]{24}$/).should be_true
     HelperVars.set_hardware_id  @data['hardwareId']
   end
   
@@ -330,10 +340,49 @@ describe "V3 Object API -- Create Market", :stg => true do
   end
 
   it "should return a marketId value that is a 24-character hash" do
-    @data['marketId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    @data['marketId'].match(/^[0-9a-f]{24}$/).should be_true
     HelperVars.set_market_id @data['marketId']
   end
-  
+
+end
+
+####################################################################
+
+describe "V3 Object API -- Create Movie", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.post @url, create_movie_body(HelperVars.return_object_slug('movie')), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a movieId key" do
+    @data.has_key?('movieId').should be_true
+  end
+
+  it "should return a movieId value that is a 24-character hash" do
+    @data['movieId'].match(/^[0-9a-f]{24}$/).should be_true
+    HelperVars.set_movie_id @data['movieId']
+  end
+
 end
 
 #################################################################### 
@@ -370,7 +419,7 @@ describe "V3 Object API -- Create Release", :stg => true do
   end
 
   it "should return a releaseId value that is a 24-character hash" do
-    @data['releaseId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    @data['releaseId'].match(/^[0-9a-f]{24}$/).should be_true
     HelperVars.set_release_id @data['releaseId']
   end
   
@@ -601,8 +650,48 @@ describe "V3 Object API -- Update Market", :stg => true do
   it "should return the correct marketId value" do
     @data['marketId'].should == HelperVars.return_market_id
   end
-  
+
 end
+
+####################################################################
+
+# todo
+describe "V3 Object API -- Update Movie", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/#{HelperVars.return_movie_id}?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.put @url, update_movie_body(HelperVars.return_object_slug('movie')), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a marketId key" do
+    @data.has_key?('movieId').should be_true
+  end
+
+  it "should return the correct marketId value" do
+    @data['movieId'].should == HelperVars.return_movie_id
+  end
+
+end
+
 
 ################################## THIRD SET: CHECK UPDATES ################################## 
 
@@ -720,7 +809,7 @@ describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
 
   it "should return a 404 when deleting objects" do
 
-    {:games => HelperVars.return_game_id, :companies => HelperVars.return_company_id, :features => HelperVars.return_feature_id, :genres => HelperVars.return_genre_id, :hardware => HelperVars.return_hardware_id, :markets => HelperVars.return_market_id, :releases => HelperVars.return_release_id}.each do |k,v|
+    {:games => HelperVars.return_game_id, :companies => HelperVars.return_company_id, :features => HelperVars.return_feature_id, :genres => HelperVars.return_genre_id, :hardware => HelperVars.return_hardware_id, :markets => HelperVars.return_market_id, :releases => HelperVars.return_release_id, :movies => HelperVars.return_movie_id}.each do |k,v|
 
       del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{k}/#{v}?oauth_token=#{HelperVars.return_token}"
       begin
