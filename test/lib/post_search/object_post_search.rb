@@ -33,7 +33,7 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def update_release_published(game_id,company_id,company_2_id,feature_id,feature_2_id,genre_id,genre_2_id,hardware_id)
+  def update_release_published(game_id,company_id,company_2_id,feature_id,feature_2_id,genre_id,genre_2_id,hardware_id,movie_id)
     {
     :metadata => {
       :releaseDate=> {
@@ -41,11 +41,15 @@ module ObjectPostSearch
         :status=> "released",
         :display=> "March 6, 2012"
       },
+      :tagLine=> "qa tag line",
       :description=> "qa-test description",
       :shortDescription=> "qa-test shortDescription",
       :alternateNames=> ["qa-test alternateNames 1","qa-test alternateNames 2" ],
       :game=> {
         :gameId=> game_id
+      },
+      :movie=> {
+        :movieId=> movie_id
       }
     }, # END METADATA
     :companies=> {
@@ -65,29 +69,33 @@ module ObjectPostSearch
         "qa-test feature 1",
         "qa-test feature 2"
       ],
-    :supports=> [
-      {
-      :featureId=> feature_id
-      },
-      {
-      :featureId=> feature_2_id
-      }
-    ],
-    :rating=> {
-      :system=> "ESRB",
-      :description=> [
-        "qa-test description 1",
-        "qa-test description 2"
+      :mediaType => "theater",
+      :runTime => 65,
+      :synopsis => "qa synopsis",
+      :supports=> [
+        {
+        :featureId=> feature_id
+        },
+        {
+        :featureId=> feature_2_id
+        }
       ],
-      :rating=> "M",
-      :summary=> "qa-test summary"
-    },
-    :primaryGenre=> {
-      :genreId=> genre_id
-    },
-    :secondaryGenre=> {
-      :genreId=> genre_2_id
-    }
+      :rating=> {
+        :system=> "ESRB",
+        :description=> [
+          "qa-test description 1",
+          "qa-test description 2"
+        ],
+        :rating=> "M",
+        :summary=> "qa-test summary"
+      },
+      :primaryGenre=> {
+        :genreId=> genre_id
+      },
+      :secondaryGenre=> {
+        :genreId=> genre_2_id
+      },
+      :additionalGenres => [{:genreId=> genre_id},{:genreId=> genre_2_id}]
     }, # END CONTENT
     :hardware=> {
       :platform=> {

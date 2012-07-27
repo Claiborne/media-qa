@@ -71,7 +71,7 @@ end
 ####################################################################
 # CREATE DRAFT
 
-describe "V3 Object API -- Create Draft Release", :stg => true do
+describe "V3 Object API -- Create Draft Release", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -112,7 +112,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Draft Release", :stg => true do
+describe "V3 Object API -- Check Draft Release", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -166,7 +166,7 @@ end
 ####################################################################
 # UPDATE DRAFT
 
-describe "V3 Object API -- Update Draft Release", :stg => true do
+describe "V3 Object API -- Update Draft Release", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -200,7 +200,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Draft Release", :stg => true do
+describe "V3 Object API -- Check Updated Draft Release", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -258,7 +258,7 @@ end
 ####################################################################
 # UPDATE TO PUBLISHED
 
-describe "V3 Object API -- Update Draft Release To Published", :stg => true do
+describe "V3 Object API -- Update Draft Release To Published", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -292,7 +292,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Published Release", :stg => true do
+describe "V3 Object API -- Check Updated Published Release", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -350,7 +350,7 @@ end
 ####################################################################
 # UPDATE TO ADD ALL INFO
 
-describe "V3 Object API -- Update Published", :stg => true do
+describe "V3 Object API -- Update Published", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -365,7 +365,8 @@ describe "V3 Object API -- Update Published", :stg => true do
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/slug/1080i").body)['featureId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/action").body)['genreId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/action").body)['genreId'].to_s,
-        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/slug/xbox-360").body)['hardwareId'].to_s
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/slug/xbox-360").body)['hardwareId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/slug/the-dark-knight").body)['movieId'].to_s
       ),
       :content_type => "application/json"
     rescue => e
@@ -394,7 +395,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Published", :stg => true do
+describe "V3 Object API -- Check Updated Published", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -451,6 +452,8 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
     end
   end
 
+  # Game assertions
+
   it "should return a metadata.game.gameId value that is a 24-character hash" do
     @data['metadata']['game']['gameId'].match(/^[0-9a-f]{24}$/).should be_true
   end
@@ -464,18 +467,45 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
     @data['metadata']['game']['metadata']['slug'].should == 'mass-effect-3'
   end
 
-  it "should return the same metadata.game.metadata. legacyId & slug values the game returns" do
+  it "should return the same metadata.game.metadata.legacyId & slug values the game returns" do
     begin
       response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['metadata']['game']['gameId']}"
     rescue => e
       raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['metadata']['game']['gameId']}")
     end
+
     game_data = JSON.parse(response.body)
 
     @data['metadata']['game']['metadata']['legacyId'].should == game_data['metadata']['legacyId']
     @data['metadata']['game']['metadata']['slug'].should == game_data['metadata']['slug']
 
   end
+
+  # Movie assertions
+
+  it "should return a metadata.movie.movieId value that is a 24-character hash" do
+    @data['metadata']['movie']['movieId'].match(/^[0-9a-f]{24}$/).should be_true
+  end
+
+  it "should return a metadata.movie.metadata.slug with a value of 'the-dark-knight'" do
+    @data['metadata']['movie']['metadata']['slug'].should == 'the-dark-knight'
+  end
+
+  it "should return the same metadata.movie.metadata.slug & type values the movie returns" do
+    begin
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/#{@data['metadata']['movie']['movieId']}"
+    rescue => e
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/#{@data['metadata']['movie']['movieId']}")
+    end
+
+    movie_data = JSON.parse(response.body)
+
+    @data['metadata']['movie']['metadata']['slug'].should == movie_data['metadata']['slug']
+    @data['metadata']['movie']['metadata']['type'].should == movie_data['metadata']['type']
+
+  end
+
+  # Company assertions
 
   %w(publishers developers).each do |company|
     it "should return a non-nil, non-blank companies.#{company}.companyId value" do
@@ -526,16 +556,12 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
     end
   end
 
-  it "should return a content.features value of 'qa-test feature 1, qa-test feature 2'" do
-    @data['content']['features'].should == ["qa-test feature 1", "qa-test feature 2"]
+  %w(publishers developers).each do |company|
+    it "should implement #{company} checks for companies.producers when data is migrated"
+    it "should implement #{company} checks for companies.effects when data is migrated"
   end
 
-  it "should return a non-blank, non-nil content.supports.featureId value" do
-    @data['content']['supports'].each do |content_supports|
-      content_supports['featureId'].should_not be_nil
-      content_supports['featureId'].to_s.delete('^a-zA-Z').length.should > 0
-    end
-  end
+  # Feature assertions
 
   it "should return a content.supports.featureId value that is a 24-character hash" do
     @data['content']['supports'].each do |content_supports|
@@ -576,21 +602,7 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
     end
   end
 
-  it "should return a content.rating.system value of 'ESRB'" do
-    @data['content']['rating']['system'].should == 'ESRB'
-  end
-
-  it "should return a content.rating.summary value of 'qa-test summary'" do
-    @data['content']['rating']['summary'].should == 'qa-test summary'
-  end
-
-  it "should return a content.rating.description value of 'qa-test description 1, qa-test description 2'" do
-    @data['content']['rating']['description'].should == ["qa-test description 1", "qa-test description 2"]
-  end
-
-  it "should return a content.rating.rating value of 'M'" do
-    @data['content']['rating']['rating'].should == 'M'
-  end
+  # Genre assertions
 
   %w(primaryGenre secondaryGenre).each do |genre|
 
@@ -626,6 +638,52 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
     end
 
   end # end genre iteration
+
+  it "should return a content.additionalGenres value that is a 24-character hash for each additional genre" do
+    @data['content']['additionalGenres'].each do |genre|
+      genre['genreId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  it "should return a non-nil, non-blank content.additionalGenres.metadata.legacyId value for each additional genre" do
+    @data['content']['additionalGenres'].each do |genre|
+      genre['metadata']['legacyId'].should_not be_nil
+      genre['metadata']['legacyId'].to_s.delete('^0-9').length.should > 0
+    end
+  end
+
+  it "should return a non-blank, non-nil content.additionalGenres.metadata.name value for each additional genre" do
+    @data['content']['additionalGenres'].each do |genre|
+      genre['metadata']['name'].should_not be_nil
+      genre['metadata']['name'].to_s.delete('^a-zA-Z').length.should > 0
+    end
+  end
+
+  it "should return a content.additionalGenres.metadata.slug value of 'action' for each additional genre" do
+    @data['content']['additionalGenres'].each do |genre|
+      genre['metadata']['slug'].should == 'action'
+    end
+  end
+
+  it "should return the same content.additionalGenres.name, slug & legacyId values as the genre returns for each additional genre" do
+
+    @data['content']['additionalGenres'].each do |genre|
+
+      begin
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{genre['genreId']}"
+      rescue => e
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{genre['genreId']}")
+      end
+      genre_data = JSON.parse(response.body)
+
+      genre['metadata']['name'].should == genre_data['metadata']['name']
+      genre['metadata']['legacyId'].should == genre_data['metadata']['legacyId']
+      genre['metadata']['slug'].should == genre_data['metadata']['slug']
+
+    end
+  end
+
+  # Hardware assertions
 
   it "should return a hardware.platform.hardwareId value that is a 24-character hash" do
     @data['hardware']['platform']['hardwareId'].match(/^[0-9a-f]{24}$/).should be_true
@@ -664,6 +722,51 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
 
   end
 
+  # Other assertions
+
+  it "should return a metadata.tagLine with a value of 'qa tag line'" do
+    @data['metadata']['tagLine'].should == 'qa tag line'
+  end
+
+  it "should return a content.features value of 'qa-test feature 1, qa-test feature 2'" do
+    @data['content']['features'].should == ["qa-test feature 1", "qa-test feature 2"]
+  end
+
+  it "should return a non-blank, non-nil content.supports.featureId value" do
+    @data['content']['supports'].each do |content_supports|
+      content_supports['featureId'].should_not be_nil
+      content_supports['featureId'].to_s.delete('^a-zA-Z').length.should > 0
+    end
+  end
+
+  it "should return a content.mediaType with a value of 'theater'" do
+    @data['content']['mediaType'].should == 'theater'
+  end
+
+  it "should return a content.runTime with a value of 65" do
+    @data['content']['runTime'].should == 65
+  end
+
+  it "should return a content.synopsis with a value of 'qa synopsis'" do
+    @data['content']['synopsis'].should == 'qa synopsis'
+  end
+
+  it "should return a content.rating.system value of 'ESRB'" do
+    @data['content']['rating']['system'].should == 'ESRB'
+  end
+
+  it "should return a content.rating.summary value of 'qa-test summary'" do
+    @data['content']['rating']['summary'].should == 'qa-test summary'
+  end
+
+  it "should return a content.rating.description value of 'qa-test description 1, qa-test description 2'" do
+    @data['content']['rating']['description'].should == ["qa-test description 1", "qa-test description 2"]
+  end
+
+  it "should return a content.rating.rating value of 'M'" do
+    @data['content']['rating']['rating'].should == 'M'
+  end
+
   {:url => "http://pspmedia.ign.com/ps-vita/image/object/142/14235014/mass_effect_3_360_mboxart_60w.jpg", :width => 60, :height => 85, :positionId => 19}.each do |k,v|
     it "should return a legacyData.boxArt.#{k} value of #{v}" do
       @data['legacyData']['boxArt'][0][k.to_s].should == v
@@ -690,10 +793,11 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
   end
 
 end
+
 ####################################################################
 # ADD REVIEW SCORE
 
-describe "V3 Object API -- Update Published with Review Score", :stg => true do
+describe "V3 Object API -- Update Published with Review Score", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -727,7 +831,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Published with Review Score", :stg => true do
+describe "V3 Object API -- Check Updated Published with Review Score", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -1039,7 +1143,7 @@ end
 ####################################################################
 # CLEAN UP / DELETE RELEASE
 
-describe "V3 Object API -- Clean up / Delete", :stg => true do
+describe "V3 Object API -- Clean up / Delete", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
