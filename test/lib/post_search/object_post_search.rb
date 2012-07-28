@@ -53,16 +53,11 @@ module ObjectPostSearch
       }
     }, # END METADATA
     :companies=> {
-      :developers=> [
-        {
-        :companyId=> company_id
-        }
-      ],
-      :publishers=> [
-        {
-        :companyId=> company_2_id
-        }
-      ]
+      :developers=> [{:companyId=> company_id}],
+      :publishers=> [{:companyId=> company_id}],
+      :distributors=> [{:companyId=> company_id}],
+      :producers=> [{:companyId=> company_id}],
+      :effects=> [{:companyId=> company_id}]
     }, # END COMPANIES
     :content=> {
       :features=> [
@@ -142,7 +137,10 @@ module ObjectPostSearch
       }, #end metadata
       "companies" => {
           "developers" => [{"companyId" => company_id.to_s}],
-          "publishers" => [{"companyId" => company_id.to_s}]
+          "publishers" => [{"companyId" => company_id.to_s}],
+          "distributors" => [{"companyId" => company_id.to_s}],
+          "producers" => [{"companyId" => company_id.to_s}],
+          "effects" => [{"companyId" => company_id.to_s}]
       }, #end companies
       "content" => {
           "rating" => {
@@ -154,6 +152,7 @@ module ObjectPostSearch
           "features" => ["feature description"],
           "supports" => [{"featureId" => feature_id.to_s}],
           "primaryGenre" => {"genreId" => genre_id.to_s},
+          "additionalGenres" => [{"genreId" => genre_id.to_s},{"genreId" => genre_id.to_s},],
           "minimumRequirements" => ["min requirements"]
       }, #end content
       "hardware" => {
@@ -273,7 +272,7 @@ module ObjectPostSearch
         "manufacturers" => [
           {
             "companyId" => id.to_s
-          }      
+          }
           ]
       }
     }.to_json

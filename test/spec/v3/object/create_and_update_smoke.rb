@@ -254,7 +254,8 @@ describe "V3 Object API -- Create Genre", :stg => true do
 
   end
 
-  it "should return 200" do  
+  it "should return 200" do
+    puts @data['genreId']
   end
 
   it "should return a genreId key" do
@@ -692,7 +693,6 @@ describe "V3 Object API -- Update Movie", :stg => true do
 
 end
 
-
 ################################## THIRD SET: CHECK UPDATES ################################## 
 
 describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => true do
@@ -718,7 +718,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
     
   end
   
-  it "should return 200" do  
+  it "should return 200" do
   end
   
   it "should return the correct metadata.game.gameId value" do
@@ -741,11 +741,12 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
     @data['metadata']['movie']['metadata']['type'].match(/on-demand/).should be_true
   end
   
-  it "should return the correct companies.publishers.companyId value" do
-    @data['companies']['publishers'][0]['companyId'].should == HelperVars.return_company_id
-  end
-  
-  ['publishers','developers'].each do |co_type|
+  %w(publishers developers distributors producers effects).each do |co_type|
+
+    it "should return the correct companies.#{co_type}.companyId value" do
+      @data['companies'][co_type][0]['companyId'].should == HelperVars.return_company_id
+    end
+
     ['slug','name','alternateNames','commonName',"description"].each do |field|
       it "should return companies.#{co_type}.metadata.#{field} with the updated value" do
         @data['companies'][co_type][0]['metadata'][field].to_s.match(/updated/).should be_true
@@ -766,16 +767,31 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
   it "should return content.supports.metadata.valueTwoLabel with the added value" do
     @data['content']['supports'][0]['metadata']['valueTwoLabel'].to_s.match(/added/).should be_true
   end
-  
+
+
   it "should return the correct content.primaryGenre.genreId value" do
     @data['content']['primaryGenre']['genreId'].should == HelperVars.return_genre_id
   end
-  
-  ['name','description','slug'].each do |field|
+
+  it "should return the correct content.additionalGenres.genreId value for each additional genre" do
+    @data['content']['additionalGenres'].each do |genre|
+      genre['genreId'].should == HelperVars.return_genre_id
+    end
+  end
+
+  %w(name description slug).each do |field|
     it "should return content.primaryGenre.metadata.#{field} with the updated value" do
       @data['content']['primaryGenre']['metadata'][field].to_s.match(/updated/).should be_true
     end
   end
+
+  %w(name description slug).each do |field|
+    it "should return content.additionalGenres.metadata.#{field} with the updated value for the first genre" do
+    @data['content']['additionalGenres'][0]['metadata'].to_s.match(/updated/).should be_true
+    end
+  end
+
+  it "should return content.additionalGenres.metadata.slug,description,name with the updated value for the first genre"
   
   it "should return the correct hardware.platform.hardwareId value" do
     @data['hardware']['platform']['hardwareId'].should == HelperVars.return_hardware_id
@@ -787,7 +803,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
     end
   end
   
-  it "should return hardware.platform.metadata.tyoe with the added value" do
+  it "should return hardware.platform.metadata.type with the added value" do
     @data['hardware']['platform']['metadata']['type'].should == 'console'
   end
   

@@ -189,6 +189,7 @@ def search_using_condition_in(val,field,cond)
       "states"=>["published"],
       "regions"=>["US"]
   }.to_json
+end
 
   def movies_by_type(type)
     {
@@ -204,8 +205,6 @@ def search_using_condition_in(val,field,cond)
         "count"=>25
     }.to_json
   end
-
-end
 
 ########################### BEGIN ASSERTION METHODS #############################
 

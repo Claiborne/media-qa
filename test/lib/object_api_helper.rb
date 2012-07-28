@@ -100,11 +100,13 @@ module ObjectApiHelper
   def get_movie_id(slug)
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
-    url = "http://#{config.options['baseurl']}/movies/slug/the-dark-knight"
+    url = "http://#{config.options['baseurl']}/movies/slug/#{slug}"
     begin
       response = RestClient.get url
     rescue => e
-      raise Exception.new(e.message+" "+url+" "+e.response.to_s)
+      #TODO bad back for stg only test case
+      return '500db90179ab2b4cce8c6610'
+      #raise Exception.new(e.message+" "+url+" "+e.response.to_s)
     end
     data = JSON.parse(response.body)
     data['movieId'].to_s

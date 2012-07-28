@@ -71,7 +71,7 @@ end
 ####################################################################
 # CREATE DRAFT
 
-describe "V3 Object API -- Create Draft Release", :test => true do
+describe "V3 Object API -- Create Draft Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -112,7 +112,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Draft Release", :test => true do
+describe "V3 Object API -- Check Draft Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -166,7 +166,7 @@ end
 ####################################################################
 # UPDATE DRAFT
 
-describe "V3 Object API -- Update Draft Release", :test => true do
+describe "V3 Object API -- Update Draft Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -200,7 +200,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Draft Release", :test => true do
+describe "V3 Object API -- Check Updated Draft Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -258,7 +258,7 @@ end
 ####################################################################
 # UPDATE TO PUBLISHED
 
-describe "V3 Object API -- Update Draft Release To Published", :test => true do
+describe "V3 Object API -- Update Draft Release To Published", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -292,7 +292,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Published Release", :test => true do
+describe "V3 Object API -- Check Updated Published Release", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -350,7 +350,7 @@ end
 ####################################################################
 # UPDATE TO ADD ALL INFO
 
-describe "V3 Object API -- Update Published", :test => true do
+describe "V3 Object API -- Update Published", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -395,7 +395,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Published", :test => true do
+describe "V3 Object API -- Check Updated Published", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -507,40 +507,40 @@ describe "V3 Object API -- Check Updated Published", :test => true do
 
   # Company assertions
 
-  %w(publishers developers).each do |company|
+  %w(publishers developers distributors producers effects).each do |company|
     it "should return a non-nil, non-blank companies.#{company}.companyId value" do
       @data['companies'][company][0]['companyId'].should_not be_nil
       @data['companies'][company][0]['companyId'].to_s.delete('^0-9').length.should > 0
     end
   end
 
-  %w(publishers developers).each do |company|
+  %w(publishers developers distributors producers effects).each do |company|
     it "should return a companies.#{company}.companyId value that is a 24-character hash" do
       @data['companies'][company][0]['companyId'].match(/^[0-9a-f]{24}$/).should be_true
     end
   end
 
-  %w(publishers developers).each do |company|
+  %w(publishers developers distributors producers effects).each do |company|
     it "should return a non-nil, non-blank companies.#{company}.metadata.name value" do
       @data['companies'][company][0]['metadata']['name'].should_not be_nil
       @data['companies'][company][0]['metadata']['name'].to_s.delete('^a-zA-Z').length.should > 0
     end
   end
 
-  %w(publishers developers).each do |company|
+  %w(publishers developers distributors producers effects).each do |company|
     it "should return a non-nil, non-blank companies.#{company}.metadata.description value" do
       @data['companies'][company][0]['metadata']['description'].should_not be_nil
       @data['companies'][company][0]['metadata']['description'].to_s.delete('^a-zA-Z').length.should > 0
     end
   end
 
-  %w(publishers developers).each do |company|
+  %w(publishers developers distributors producers effects).each do |company|
     it "should return a companies.#{company}.metadata.slug with a value of 'bioware'" do
       @data['companies'][company][0]['metadata']['slug'].should == 'bioware'
     end
   end
 
-  %w(publishers developers).each do |company|
+  %w(publishers developers distributors producers effects).each do |company|
     it "should return the same companies.#{company}.metadata. name, description, slug, & legacyId value the game returns" do
       begin
         response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companies'][company][0]['companyId']}"
@@ -554,11 +554,6 @@ describe "V3 Object API -- Check Updated Published", :test => true do
       @data['companies'][company][0]['metadata']['slug'].should == company_data['metadata']['slug']
       @data['companies'][company][0]['metadata']['legacyId'].should == company_data['metadata']['legacyId']
     end
-  end
-
-  %w(publishers developers).each do |company|
-    it "should implement #{company} checks for companies.producers when data is migrated"
-    it "should implement #{company} checks for companies.effects when data is migrated"
   end
 
   # Feature assertions
@@ -797,7 +792,7 @@ end
 ####################################################################
 # ADD REVIEW SCORE
 
-describe "V3 Object API -- Update Published with Review Score", :test => true do
+describe "V3 Object API -- Update Published with Review Score", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -831,7 +826,7 @@ end
 ####################################################################
 # CHECK
 
-describe "V3 Object API -- Check Updated Published with Review Score", :test => true do
+describe "V3 Object API -- Check Updated Published with Review Score", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -1143,7 +1138,7 @@ end
 ####################################################################
 # CLEAN UP / DELETE RELEASE
 
-describe "V3 Object API -- Clean up / Delete", :test => true do
+describe "V3 Object API -- Clean up / Delete", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
