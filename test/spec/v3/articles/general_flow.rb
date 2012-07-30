@@ -503,5 +503,35 @@ describe "V3 Articles API -- Check Article Just Updated -- 10.92.218.21:8081/v3/
   end
 =end
   # content assertions
-  
+
+end
+
+####################################################################
+# CLEAN UP / DELETE RELEASE
+
+describe "V3 Articles API -- Clean up / Delete -- 10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}", :stg => true do
+
+  before(:all) do
+    @url = "http://10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}?oauth_token=#{token}"
+    begin
+      @response = RestClient.delete @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return a 404 after deleting the article" do
+    expect {RestClient.get "10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}"}.to raise_error(RestClient::ResourceNotFound)
+  end
+
 end
