@@ -127,7 +127,14 @@ RSpec::Core::RakeTask.new('affinityapi') do |t|
   t.pattern = 'spec/affinity_api/*.rb'
 end
 
-############# NON-SPEC SCRIPTS ############# 
+############# NON-SPEC SCRIPTS #############
+
+# RUN LINK CHECKER APP
+
+desc "Run link-checker app"
+task "checklinks" do
+  ruby 'spec/link_checker/*.rb'
+end
 
 ############# DEPRECATED / INVALID ############# 
 
