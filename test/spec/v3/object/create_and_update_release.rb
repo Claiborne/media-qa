@@ -66,6 +66,8 @@ end
 # CHECK
 # ADD REVIEW SCORE
 # CHECK
+# UPDATE (CHANGE) OBJECTS
+# CHECK
 # CLEAN UP / DELETE RELEASE
 
 ####################################################################
@@ -362,9 +364,9 @@ describe "V3 Object API -- Update Published", :stg => true do
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/slug/bioware").body)['companyId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/slug/bioware").body)['companyId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/slug/1080i").body)['featureId'].to_s,
-        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/slug/1080i").body)['featureId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/slug/720p").body)['featureId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/action").body)['genreId'].to_s,
-        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/action").body)['genreId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/adventure").body)['genreId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/slug/xbox-360").body)['hardwareId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/slug/the-dark-knight").body)['movieId'].to_s
       ),
@@ -582,6 +584,11 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
     end
   end
 
+  it "should return content.supports.metadata.slug with values of '1080i' and '720p'" do
+    @data['content']['supports'][0]['metadata']['slug'].should == '1080i'
+    @data['content']['supports'][1]['metadata']['slug'].should == '720p'
+  end
+
   it "should return the same content.metadata name, slug & legacyId values as the feature returns" do
     @data['content']['supports'].each do |content_supports|
       begin
@@ -615,8 +622,14 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
       @data['content'][genre]['metadata']['name'].to_s.delete('^a-zA-Z').length.should > 0
     end
 
-    it "should return a content.#{genre}.metadata.slug value of 'action'" do
-      @data['content'][genre]['metadata']['slug'].should == 'action'
+    if genre == 'primaryGenre'
+      it "should return a content.#{genre}.metadata.slug value of 'action'" do
+        @data['content'][genre]['metadata']['slug'].should == 'action'
+      end
+    else
+      it "should return a content.#{genre}.metadata.slug value of 'adventure'" do
+        @data['content'][genre]['metadata']['slug'].should == 'adventure'
+      end
     end
 
     it "should return the same content.#{genre} name, slug & legacyId values as the genre returns" do
@@ -654,10 +667,9 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
     end
   end
 
-  it "should return a content.additionalGenres.metadata.slug value of 'action' for each additional genre" do
-    @data['content']['additionalGenres'].each do |genre|
-      genre['metadata']['slug'].should == 'action'
-    end
+  it "should return a content.additionalGenres.metadata.slug value of 'action' and 'adventure' for each additional genre" do
+    @data['content']['additionalGenres'][0]['metadata']['slug'].should == 'action'
+    @data['content']['additionalGenres'][1]['metadata']['slug'].should == 'adventure'
   end
 
   it "should return the same content.additionalGenres.name, slug & legacyId values as the genre returns for each additional genre" do
@@ -697,6 +709,10 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
       @data['hardware']['platform']['metadata'][hardware_field].should_not be_nil
       @data['hardware']['platform']['metadata'][hardware_field].to_s.delete('^a-zA-Z').length.should > 0
     end
+  end
+
+  it "should return a hardware.platform.metadata.slug value of 'xbox-360'" do
+    @data['hardware']['platform']['metadata']['slug'].should == 'xbox-360'
   end
 
   it "should return the same hardware.metadata name, description, slug, shortName, legacyId, type & releaseData.date values as the hardware returns" do
@@ -1040,8 +1056,14 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
       @data['content'][genre]['metadata']['name'].to_s.delete('^a-zA-Z').length.should > 0
     end
 
-    it "should return a content.#{genre}.metadata.slug value of 'action'" do
-      @data['content'][genre]['metadata']['slug'].should == 'action'
+    if genre == 'primaryGenre'
+      it "should return a content.#{genre}.metadata.slug value of 'action'" do
+        @data['content'][genre]['metadata']['slug'].should == 'action'
+      end
+    else
+      it "should return a content.#{genre}.metadata.slug value of 'adventure'" do
+        @data['content'][genre]['metadata']['slug'].should == 'adventure'
+      end
     end
 
     it "should return the same content.#{genre} name, slug & legacyId values as the genre returns" do
@@ -1131,6 +1153,204 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
     it "should return a network.ign.review.#{v} value of #{v}" do
       @data['network']['ign']['review'][k.to_s].should == v
     end
+  end
+
+end
+
+####################################################################
+# UPDATE (CHANGE) OBJECTS
+
+describe "V3 Object API -- Change Objects", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    begin
+      @response = RestClient.put @url, update_objects(
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/slug/mass-effect-2").body)['gameId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/slug/scea").body)['companyId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/slug/dualshock").body)['featureId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/slug/kinect").body)['featureId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/fighting").body)['genreId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/platformer").body)['genreId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/slug/ps3").body)['hardwareId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/slug/the-matrix").body)['movieId'].to_s),  :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  common_checks
+
+  it "should return the expected releaseId value" do
+    @data['releaseId'].should == HelperVars.return_release_id
+  end
+
+end
+
+####################################################################
+# CHECK
+
+describe "V3 Object API -- Check Nested Object Changes", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  common_checks
+
+  it "should return the expected releaseId value" do
+    @data['releaseId'].should == HelperVars.return_release_id
+  end
+
+  it "should return a metadata.game.metadata.slug with a value of 'mass-effect-2'" do
+    @data['metadata']['game']['metadata']['slug'].should == 'mass-effect-2'
+  end
+
+  it "should return the same metadata.game.metadata. legacyId & slug values the game returns" do
+    begin
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['metadata']['game']['gameId']}"
+    rescue => e
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['metadata']['game']['gameId']}")
+    end
+    game_data = JSON.parse(response.body)
+
+    @data['metadata']['game']['metadata']['legacyId'].should == game_data['metadata']['legacyId']
+    @data['metadata']['game']['metadata']['slug'].should == game_data['metadata']['slug']
+
+  end
+
+  it "should return metadata.movie.metadata.slug with a value of 'the-matrix" do
+    @data['metadata']['movie']['metadata']['slug'].should == 'the-matrix'
+  end
+
+  it "should return the same metadata.movie.metadata slug & type values as the movie returns" do
+    begin
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/#{@data['metadata']['movie']['movieId']}"
+    rescue => e
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/#{@data['metadata']['movie']['movieId']}")
+    end
+    movie_data = JSON.parse(response.body)
+
+    @data['metadata']['movie']['metadata']['slug'].should == movie_data['metadata']['slug']
+    @data['metadata']['movie']['metadata']['type'].should == movie_data['metadata']['type']
+
+  end
+
+  %w(publishers developers).each do |company|
+    it "should return a companies.#{company}.metadata.slug with a value of 'scea'" do
+      @data['companies'][company][0]['metadata']['slug'].should == 'scea'
+    end
+  end
+
+  %w(publishers developers).each do |company|
+    it "should return the same companies.#{company}.metadata. name, description, slug, & legacyId value the game returns" do
+      begin
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companies'][company][0]['companyId']}"
+      rescue => e
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companies'][company][0]['companyId']}")
+      end
+      company_data = JSON.parse(response.body)
+
+      @data['companies'][company][0]['metadata']['name'].should == company_data['metadata']['name']
+      @data['companies'][company][0]['metadata']['description'].should == company_data['metadata']['description']
+      @data['companies'][company][0]['metadata']['slug'].should == company_data['metadata']['slug']
+      @data['companies'][company][0]['metadata']['legacyId'].should == company_data['metadata']['legacyId']
+    end
+  end
+
+  it "should return content.supports.metadata.slug with values of 'dualshock' and 'kinect'" do
+    @data['content']['supports'][0]['metadata']['slug'].should == 'dualshock'
+    @data['content']['supports'][1]['metadata']['slug'].should == 'kinect'
+  end
+
+  it "should return the same content.metadata name, slug & legacyId values as the feature returns" do
+    @data['content']['supports'].each do |content_supports|
+      begin
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{content_supports['featureId']}"
+      rescue => e
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{content_supports['featureId']}")
+      end
+      feature_data = JSON.parse(response.body)
+
+      content_supports['metadata']['name'].should == feature_data['metadata']['name']
+      content_supports['metadata']['slug'].should == feature_data['metadata']['slug']
+      content_supports['metadata']['legacyId'].should == feature_data['metadata']['legacyId']
+    end
+  end
+
+  %w(primaryGenre secondaryGenre).each do |genre|
+
+    if genre == 'primaryGenre'
+      it "should return a content.#{genre}.metadata.slug value of 'fighting'" do
+        @data['content'][genre]['metadata']['slug'].should == 'fighting'
+      end
+    else
+      it "should return a content.#{genre}.metadata.slug value of 'platformer'" do
+        @data['content'][genre]['metadata']['slug'].should == 'platformer'
+      end
+    end
+
+    it "should return the same content.#{genre} name, slug & legacyId values as the genre returns" do
+      begin
+        response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{@data['content'][genre]['genreId']}"
+      rescue => e
+        raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{@data['content'][genre]['genreId']}")
+      end
+      genre_data = JSON.parse(response.body)
+
+      @data['content'][genre]['metadata']['name'].should == genre_data['metadata']['name']
+      @data['content'][genre]['metadata']['legacyId'].should == genre_data['metadata']['legacyId']
+      @data['content'][genre]['metadata']['slug'].should == genre_data['metadata']['slug']
+    end
+
+  end # end genre iteration
+
+  it "should return a hardware.platform.metadata.slug value of 'ps3'" do
+    @data['hardware']['platform']['metadata']['slug'].should == 'ps3'
+  end
+
+  it "should return the same hardware.metadata name, description, slug, shortName, legacyId, type & releaseData.date values as the hardware returns" do
+    begin
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{@data['hardware']['platform']['hardwareId']}"
+    rescue => e
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{@data['hardware']['platform']['hardwareId']}")
+    end
+    hardware_data = JSON.parse(response.body)
+
+    @data['hardware']["platform"]['metadata']['name'].should == hardware_data['metadata']['name']
+    @data['hardware']["platform"]['metadata']['description'].should == hardware_data['metadata']['description']
+    @data['hardware']["platform"]['metadata']['slug'].should == hardware_data['metadata']['slug']
+    @data['hardware']["platform"]['metadata']['shortName'].should == hardware_data['metadata']['shortName']
+    @data['hardware']["platform"]['metadata']['legacyId'].should == hardware_data['metadata']['legacyId']
+    @data['hardware']["platform"]['metadata']['type'].should == hardware_data['metadata']['type']
+    @data['hardware']["platform"]['metadata']['releaseDate']['date'].should == hardware_data['metadata']['releaseDate']['date']
+
   end
 
 end

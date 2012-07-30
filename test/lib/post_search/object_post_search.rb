@@ -119,7 +119,49 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def create_release_body(num,game_id,company_id,feature_id,genre_id,hardware_id,market_id,movie_id)
+  def update_objects(game_id,company_id,feature_id,feature_2_id,genre_id,genre_2_id,hardware_id,movie_id)
+    {
+      :metadata => {
+          :game=> {
+              :gameId=> game_id
+          },
+          :movie=> {
+              :movieId=> movie_id
+          }
+      }, # END METADATA
+      :companies=> {
+          :developers=> [{:companyId=> company_id}],
+          :publishers=> [{:companyId=> company_id}],
+          :distributors=> [{:companyId=> company_id}],
+          :producers=> [{:companyId=> company_id}],
+          :effects=> [{:companyId=> company_id}]
+      }, # END COMPANIES
+      :content=> {
+          :supports=> [
+              {
+                  :featureId=> feature_id
+              },
+              {
+                  :featureId=> feature_2_id
+              }
+          ],
+          :primaryGenre=> {
+              :genreId=> genre_id
+          },
+          :secondaryGenre=> {
+              :genreId=> genre_2_id
+          },
+          :additionalGenres => [{:genreId=> genre_id},{:genreId=> genre_2_id}]
+      }, # END CONTENT
+      :hardware=> {
+          :platform=> {
+              :hardwareId=> hardware_id
+          }
+      } # END HARDWARE
+    }.to_json
+  end
+
+  def create_release_body(num,game_id,company_id,feature_id,genre_id,genre2_id,hardware_id,market_id,movie_id)
     {
       "metadata" => {
           "name" => "QA Test Release #{num}",
@@ -152,7 +194,7 @@ module ObjectPostSearch
           "features" => ["feature description"],
           "supports" => [{"featureId" => feature_id.to_s}],
           "primaryGenre" => {"genreId" => genre_id.to_s},
-          "additionalGenres" => [{"genreId" => genre_id.to_s},{"genreId" => genre_id.to_s},],
+          "additionalGenres" => [{"genreId" => genre_id.to_s},{"genreId" => genre2_id.to_s},],
           "minimumRequirements" => ["min requirements"]
       }, #end content
       "hardware" => {
