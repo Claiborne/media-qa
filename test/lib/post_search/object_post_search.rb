@@ -33,7 +33,7 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def update_release_published(game_id,company_id,company_2_id,feature_id,feature_2_id,genre_id,genre_2_id,hardware_id,movie_id)
+  def update_release_published(game_id,company_id,company_2_id,feature_id,feature_2_id,genre_id,genre_2_id,hardware_id,movie_id,book_id)
     {
     :metadata => {
       :releaseDate=> {
@@ -50,6 +50,9 @@ module ObjectPostSearch
       },
       :movie=> {
         :movieId=> movie_id
+      },
+      :book=> {
+          :bookId=> book_id
       }
     }, # END METADATA
     :companies=> {
@@ -161,7 +164,7 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def create_release_body(num,game_id,company_id,feature_id,genre_id,genre2_id,hardware_id,market_id,movie_id)
+  def create_release_body(num,game_id,company_id,feature_id,genre_id,genre2_id,hardware_id,market_id,movie_id,book_id)
     {
       "metadata" => {
           "name" => "QA Test Release #{num}",
@@ -175,7 +178,8 @@ module ObjectPostSearch
               "date" => "2020-12-31"
           },
           "game" => {"gameId" => game_id.to_s},
-          "movie" => {"movieId" => movie_id.to_s}
+          "movie" => {"movieId" => movie_id.to_s},
+          "book" => {"bookId" => book_id.to_s}
       }, #end metadata
       "companies" => {
           "developers" => [{"companyId" => company_id.to_s}],
@@ -338,6 +342,27 @@ module ObjectPostSearch
       }
     }.to_json
   end
+
+  def create_volume_body(num,slug)
+    {
+        "metadata" => {
+            "name" => "QA Test Volume #{num}",
+            "slug" => slug.to_s,
+            "state" => "published",
+            "type" => "novel",
+            "misspelledNames" => ['misspelled one','misspelled two']
+        }
+    }.to_json
+  end
+
+  def create_book_body(slug,vol)
+    {
+        "metadata" => {
+            "slug" => slug.to_s,
+            "volume"=>{"volumeId"=>vol}
+        }
+    }.to_json
+  end
   
   def update_game_body(slug)
     {
@@ -424,6 +449,28 @@ module ObjectPostSearch
         "metadata" => {
             "slug" => slug.to_s+"-updated",
             "type" => "on-demand"
+        }
+    }.to_json
+  end
+
+  def update_volume_body(num,slug)
+    {
+        "metadata" => {
+            "name" => "QA Test Volume #{num} updated", #changed
+            "slug" => slug.to_s+"-updated", #changed
+            "description" => "qa volume description", #added
+            "type" => "comic", #changed
+            "commonName" => "qa common name",
+            "misspelledNames" => ['misspelled one updated','misspelled two updated','misspelled three updated'] #changed one and two; added three
+        }
+    }.to_json
+  end
+
+  def update_book_body(slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s+"-updated", #changed
+            "order" => 11 #added
         }
     }.to_json
   end

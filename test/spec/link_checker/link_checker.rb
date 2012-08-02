@@ -16,7 +16,7 @@ puts "BROKEN LINKS:"
 
   begin
     RestClient.get link
-  rescue => e
+  rescue
     puts link.to_s
   end
 

@@ -368,7 +368,8 @@ describe "V3 Object API -- Update Published", :stg => true do
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/action").body)['genreId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/adventure").body)['genreId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/slug/xbox-360").body)['hardwareId'].to_s,
-        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/slug/the-dark-knight").body)['movieId'].to_s
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/slug/the-dark-knight").body)['movieId'].to_s,
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/slug/batman-the-dark-knight-vol-2-issue-11").body)['bookId'].to_s
       ),
       :content_type => "application/json"
     rescue => e
@@ -504,6 +505,51 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
 
     @data['metadata']['movie']['metadata']['slug'].should == movie_data['metadata']['slug']
     @data['metadata']['movie']['metadata']['type'].should == movie_data['metadata']['type']
+
+  end
+
+  # Book assertions
+
+  it "should return a metadata.book.bookId value that is a 24-character hash" do
+    @data['metadata']['book']['bookId'].match(/^[0-9a-f]{24}$/).should be_true
+  end
+
+  it "should return a metadata.book.metadata.slug with a value of 'batman-the-dark-knight-vol-2-issue-11'" do
+    @data['metadata']['book']['metadata']['slug'].should == 'batman-the-dark-knight-vol-2-issue-11'
+  end
+
+  it "should return the same metadata.book.metadata.slug & order values the book returns" do
+    begin
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/#{@data['metadata']['book']['bookId']}"
+    rescue => e
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/#{@data['metadata']['book']['bookId']}")
+    end
+
+    book_data = JSON.parse(response.body)
+
+    @data['metadata']['book']['metadata']['slug'].should == book_data['metadata']['slug']
+    @data['metadata']['book']['metadata']['order'].should == book_data['metadata']['order']
+
+  end
+
+  it "should return the same metadata.book.metadata.volume.metadata values the book volume returns" do
+    begin
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{@data['metadata']['book']['metadata']['volume']['volumeId']}"
+    rescue => e
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{@data['metadata']['book']['metadata']['volume']['volumeId']}")
+    end
+
+    volume_data = JSON.parse(response.body)
+
+    @data['metadata']['book']['metadata']['volume']['metadata']['slug'].should == volume_data['metadata']['slug']
+    @data['metadata']['book']['metadata']['volume']['metadata']['name'].should == volume_data['metadata']['name']
+    @data['metadata']['book']['metadata']['volume']['metadata']['state'].should == volume_data['metadata']['state']
+    @data['metadata']['book']['metadata']['volume']['metadata']['description'].should == volume_data['metadata']['description']
+    @data['metadata']['book']['metadata']['volume']['metadata']['commonName'].should == volume_data['metadata']['commonName']
+    @data['metadata']['book']['metadata']['volume']['metadata']['shortDescription'].should == volume_data['metadata']['shortDescription']
+    @data['metadata']['book']['metadata']['volume']['metadata']['type'].should == volume_data['metadata']['type']
+    @data['metadata']['book']['metadata']['volume']['metadata']['legacyId'].should == volume_data['metadata']['legacyId']
+    @data['metadata']['book']['metadata']['volume']['metadata']['misspelledNames'].should == volume_data['metadata']['misspelledNames']
 
   end
 
