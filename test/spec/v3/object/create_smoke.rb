@@ -919,7 +919,7 @@ describe "V3 Object API -- Create Volume Positive Smoke", :stg => true do
     @config = Configuration.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{HelperVars.return_token}"
     begin
-      @response = RestClient.post @url, create_valid_volume('volume'), :content_type => "application/json"
+      @response = RestClient.post @url, create_valid_object('volume'), :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -946,6 +946,19 @@ describe "V3 Object API -- Create Volume Positive Smoke", :stg => true do
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
+  end
+
+  it "should autogenerate metadata.state field" do
+    HelperVars.return_object.has_key?('metadata').should be_true
+    HelperVars.return_object['metadata'].has_key?('state').should be_true
+  end
+
+  it "should autogenerate metadata.state value" do
+    HelperVars.return_object['metadata']['state'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  end
+
+  it "should autogenerate metadata.state with a value of 'draft'" do
+    HelperVars.return_object['metadata']['state'].should == 'draft'
   end
 
   it "should not return blank data" do
@@ -1013,17 +1026,6 @@ def create_valid_object(obj)
     }
   }.to_json
 end
-
-def create_valid_volume(obj)
-  {
-      "metadata" => {
-          "name" => "Media QA Test #{obj} #{HelperVars.return_number}",
-          "slug" => "media-qa-test-#{obj}-#{HelperVars.return_number}",
-          "state" => 'published'
-      }
-  }.to_json
-end
-
 
 ########## CREATE INVALID ##########
 
