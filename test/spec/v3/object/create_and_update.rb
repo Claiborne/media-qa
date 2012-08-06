@@ -29,6 +29,10 @@ class HelperVarsA
   @movie_id = ""
   @book_id = ""
   @volume_id = ""
+  @role_id = ""
+  @roletype_id = ""
+  @person_id = ""
+  @character_id = ""
   
   def self.return_token
     @token
@@ -89,6 +93,22 @@ class HelperVarsA
   def self.return_volume_id
     @volume_id
   end
+
+  def self.return_role_id
+    @role_id
+  end
+
+  def self.return_roletype_id
+    @roletype_id
+  end
+
+  def self.return_character_id
+    @character_id
+  end
+
+  def self.return_person_id
+    @person_id
+  end
   
   # 
   
@@ -134,6 +154,22 @@ class HelperVarsA
 
   def self.set_volume_id(id)
     @volume_id = id
+  end
+
+  def self.set_role_id(id)
+    @role_id = id
+  end
+
+  def self.set_roletype_id(id)
+    @roletype_id = id
+  end
+
+  def self.set_character_id(id)
+    @character_id = id
+  end
+
+  def self.set_person_id(id)
+    @person_id = id
   end
   
 end
@@ -211,7 +247,7 @@ describe "V3 Object API -- Create Company", :stg => true do
   it "should return 200" do  
   end
 
-  it "should return a gameId key" do
+  it "should return a companyId key" do
     @data.has_key?('companyId').should be_true  
   end
 
@@ -531,6 +567,162 @@ describe "V3 Object API -- Create Book", :stg => true do
   it "should return a bookId value that is a 24-character hash" do
     @data['bookId'].match(/^[0-9a-f]{24}$/).should be_true
     HelperVarsA.set_book_id @data['bookId']
+  end
+
+end
+
+####################################################################
+
+describe "V3 Object API -- Create Person", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{HelperVarsA.return_token}"
+    begin
+      @response = RestClient.post @url, create_person_body(HelperVarsA.return_number,HelperVarsA.return_object_slug('person',HelperVarsA.return_number)), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a personId key" do
+    @data.has_key?('personId').should be_true
+  end
+
+  it "should return a personId value that is a 24-character hash" do
+    @data['personId'].match(/^[0-9a-f]{24}$/).should be_true
+    HelperVarsA.set_person_id @data['personId']
+  end
+
+end
+
+####################################################################
+
+describe "V3 Object API -- Create Character", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{HelperVarsA.return_token}"
+    begin
+      @response = RestClient.post @url, create_character_body(HelperVarsA.return_number,HelperVarsA.return_object_slug('character',HelperVarsA.return_number)), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a characterId key" do
+    @data.has_key?('characterId').should be_true
+  end
+
+  it "should return a characterId value that is a 24-character hash" do
+    @data['characterId'].match(/^[0-9a-f]{24}$/).should be_true
+    HelperVarsA.set_character_id @data['characterId']
+  end
+
+end
+
+####################################################################
+
+describe "V3 Object API -- Create RoleType", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes?oauth_token=#{HelperVarsA.return_token}"
+    begin
+      @response = RestClient.post @url, create_roletype_body(HelperVarsA.return_number,HelperVarsA.return_object_slug('roletype',HelperVarsA.return_number)), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a roleTypeId key" do
+    @data.has_key?('roleTypeId').should be_true
+  end
+
+  it "should return a roleTypeId value that is a 24-character hash" do
+    @data['roleTypeId'].match(/^[0-9a-f]{24}$/).should be_true
+    HelperVarsA.set_roletype_id @data['roleTypeId']
+  end
+
+end
+
+####################################################################
+
+describe "V3 Object API -- Create Role", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{HelperVarsA.return_token}"
+    begin
+      @response = RestClient.post @url, create_role_body(HelperVarsA.return_number,HelperVarsA.return_object_slug('role',HelperVarsA.return_number), HelperVarsA.return_movie_id, HelperVarsA.return_character_id, HelperVarsA.return_roletype_id, HelperVarsA.return_game_id, HelperVarsA.return_book_id,HelperVarsA.return_person_id), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a roleId key" do
+    @data.has_key?('roleId').should be_true
+  end
+
+  it "should return a roleId value that is a 24-character hash" do
+    @data['roleId'].match(/^[0-9a-f]{24}$/).should be_true
+    HelperVarsA.set_role_id @data['roleId']
   end
 
 end
@@ -955,6 +1147,118 @@ describe "V3 Object API -- Update Book", :stg => true do
 
 end
 
+####################################################################
+
+describe "V3 Object API -- Update Person", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/#{HelperVarsA.return_person_id}?oauth_token=#{HelperVarsA.return_token}"
+    begin
+      @response = RestClient.put @url, update_person_body(HelperVarsA.return_number,HelperVarsA.return_object_slug('person',HelperVarsA.return_number)), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a personId key" do
+    @data.has_key?('personId').should be_true
+  end
+
+  it "should return the correct personId value" do
+    @data['personId'].should == HelperVarsA.return_person_id
+  end
+
+end
+
+####################################################################
+
+describe "V3 Object API -- Update Character", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/#{HelperVarsA.return_character_id}?oauth_token=#{HelperVarsA.return_token}"
+    begin
+      @response = RestClient.put @url, update_character_body(HelperVarsA.return_number,HelperVarsA.return_object_slug('character',HelperVarsA.return_number)), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a characterId key" do
+    @data.has_key?('characterId').should be_true
+  end
+
+  it "should return the correct characterId value" do
+    @data['characterId'].should == HelperVarsA.return_character_id
+  end
+
+end
+
+describe "V3 Object API -- Update RoleType", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes/#{HelperVarsA.return_roletype_id}?oauth_token=#{HelperVarsA.return_token}"
+    begin
+      @response = RestClient.put @url, update_roletype_body(HelperVarsA.return_number,HelperVarsA.return_object_slug('roletype',HelperVarsA.return_number)), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a roleTypeId key" do
+    @data.has_key?('roleTypeId').should be_true
+  end
+
+  it "should return the correct roleTypeId value" do
+    @data['roleTypeId'].should == HelperVarsA.return_roletype_id
+  end
+
+end
+
 ################################## THIRD SET: CHECK UPDATES ##################################
 
 describe "V3 Object API -- Check Nested Updates Reflect in Book", :stg => true do
@@ -1009,6 +1313,109 @@ describe "V3 Object API -- Check Nested Updates Reflect in Book", :stg => true d
   end
 
 end
+
+####################################################################
+
+describe "V3 Object API -- Check Nested Updates Reflect in Role", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{HelperVarsA.return_role_id}"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+
+    @movie_data = @data['metadata']['movie']['metadata']
+    @character_data = @data['metadata']['character']['metadata']
+    @roletype_data = @data['metadata']['roleType']['metadata']
+    @game_data = @data['metadata']['game']['metadata']
+    @book_data = @data['metadata']['book']['metadata']
+    @person_data = @data['metadata']['person']['metadata']
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return the updated metadata.movie.metadata.slug value" do
+    @movie_data['slug'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.movie.metadata.type value" do
+    @movie_data['type'].should == 'on-demand'
+  end
+
+  it "should return the updated metadata.character.metadata.slug value" do
+    @character_data['slug'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.character.metadata.name value" do
+    @character_data['name'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.character.metadata.alternateNames value" do
+    @character_data['alternateNames'].should == ["alt name one updated", "alt name two"]
+  end
+
+  it "should return the updated metadata.character.metadata.firstAppearance value" do
+    @character_data['firstAppearance'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.character.metadata.description value" do
+    @character_data['description'].should == "character description"
+  end
+
+  it "should return the updated metadata.roleType.metadata.slug value" do
+    @roletype_data['slug'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.roleType.metadata.name value" do
+    @roletype_data['name'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.game.metadata.slug value" do
+    @game_data['slug'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.book.metadata.slug value" do
+    @book_data['slug'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.book.metadata.order value" do
+    @book_data['order'].should == 11
+  end
+
+  it "should return the updated metadata.person.metadata.slug value" do
+    @person_data['slug'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.person.metadata.name value" do
+    @person_data['name'].to_s.match(/updated/).should be_true
+  end
+
+  it "should return the updated metadata.person.metadata.misspelledNames value" do
+    @person_data['misspelledNames'].should == ["misspelled name one updated", "misspelled name two"]
+  end
+
+  it "should return the updated metadata.person.metadata.description value" do
+    @person_data['description'].should == "person description updated"
+  end
+
+end
+
+####################################################################
 
 describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => true do
 
@@ -1187,15 +1594,19 @@ end
 
 describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
 
+
+
   it "should return a 404 when requesting deleted objects" do
 
-    {:games => HelperVarsA.return_game_id, :companies => HelperVarsA.return_company_id, :features => HelperVarsA.return_feature_id, :genres => HelperVarsA.return_genre_id, :hardware => HelperVarsA.return_hardware_id, :markets => HelperVarsA.return_market_id, :releases => HelperVarsA.return_release_id, :movies => HelperVarsA.return_movie_id, :books => HelperVarsA.return_book_id, :volumes => HelperVarsA.return_volume_id}.each do |k,v|
+    {:games => HelperVarsA.return_game_id, :companies => HelperVarsA.return_company_id, :features => HelperVarsA.return_feature_id, :genres => HelperVarsA.return_genre_id, :hardware => HelperVarsA.return_hardware_id, :markets => HelperVarsA.return_market_id, :releases => HelperVarsA.return_release_id, :movies => HelperVarsA.return_movie_id, :books => HelperVarsA.return_book_id, :volumes => HelperVarsA.return_volume_id, :people => HelperVarsA.return_person_id, :characters => HelperVarsA.return_character_id, :roletypes => HelperVarsA.return_roletype_id, :roles => HelperVarsA.return_role_id}.each do |k,v|
 
       del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{k}/#{v}?oauth_token=#{HelperVarsA.return_token}"
       begin
         @response = RestClient.delete del_url
       rescue => e
         raise Exception.new(e.message+" "+del_url)
+      ensure
+        next
       end
 
       expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{k}/#{v}"}.to raise_error(RestClient::ResourceNotFound)
