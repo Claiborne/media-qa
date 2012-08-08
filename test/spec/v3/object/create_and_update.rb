@@ -1594,34 +1594,54 @@ end
 
 describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
 
+  obj = %w(games companies features genres genres hardware markets releases movies books volumes people characters roletypes roles)
+  obj.each_index do |val|
+  it "should return a 404 after deleting #{obj[val]} object" do
 
-
-  it "should return a 404 when requesting deleted objects" do
-
-    {:games => HelperVarsA.return_game_id, :companies => HelperVarsA.return_company_id, :features => HelperVarsA.return_feature_id, :genres => HelperVarsA.return_genre_id, :hardware => HelperVarsA.return_hardware_id, :markets => HelperVarsA.return_market_id, :releases => HelperVarsA.return_release_id, :movies => HelperVarsA.return_movie_id, :books => HelperVarsA.return_book_id, :volumes => HelperVarsA.return_volume_id, :people => HelperVarsA.return_person_id, :characters => HelperVarsA.return_character_id, :roletypes => HelperVarsA.return_roletype_id, :roles => HelperVarsA.return_role_id}.each do |k,v|
-
-      del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{k}/#{v}?oauth_token=#{HelperVarsA.return_token}"
-      begin
-        @response = RestClient.delete del_url
-      rescue => e
-        raise Exception.new(e.message+" "+del_url)
-      ensure
-        next
-      end
-
-      expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{k}/#{v}"}.to raise_error(RestClient::ResourceNotFound)
+    case val
+      when 0
+        id = HelperVarsA.return_game_id
+      when 1
+        id = HelperVarsA.return_company_id
+      when 2
+        id =  HelperVarsA.return_feature_id
+      when 3
+        id = HelperVarsA.return_genre_id
+      when 4
+        id = HelperVarsA.return_genre2_id
+      when 5
+        id = HelperVarsA.return_hardware_id
+      when 6
+        id = HelperVarsA.return_market_id
+      when 7
+        id = HelperVarsA.return_release_id
+      when 8
+        id = HelperVarsA.return_movie_id
+      when 9
+        id = HelperVarsA.return_book_id
+      when 10
+        id = HelperVarsA.return_volume_id
+      when 11
+        id = HelperVarsA.return_person_id
+      when 12
+        id =  HelperVarsA.return_character_id
+      when 13
+        id =  HelperVarsA.return_roletype_id
+      when 14
+        id = HelperVarsA.return_role_id
+      else
+        id = ""
     end
 
-    {:genres => HelperVarsA.return_genre2_id}.each do |k,v|
+  del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{obj[val]}/#{id}?oauth_token=#{HelperVarsA.return_token}"
+  begin
+    @response = RestClient.delete del_url
+  rescue => e
+    raise Exception.new(e.message+" "+del_url)
+  end
 
-      del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{k}/#{v}?oauth_token=#{HelperVarsA.return_token}"
-      begin
-        @response = RestClient.delete del_url
-      rescue => e
-        raise Exception.new(e.message+" "+del_url)
-      end
+  expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{obj[val]}/#{id}"}.to raise_error(RestClient::ResourceNotFound)
 
-      expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{k}/#{v}"}.to raise_error(RestClient::ResourceNotFound)
-    end
+  end 
   end
 end

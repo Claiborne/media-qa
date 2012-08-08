@@ -51,7 +51,40 @@ class ObjectIds
   def self.movie_id
     @movie_id
   end
-  
+
+end
+
+describe "V3 Object API -- Releases Smoke Tests -- /ping" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/ping"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = @response.body
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+
+  it "should return a response of 'pong\/n'" do
+    @data.should == "pong\n"
+  end
+
 end
 
 describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200" do

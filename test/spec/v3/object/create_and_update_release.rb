@@ -41,7 +41,7 @@ class HelperVars
 
 end
 
-def common_checks
+shared_examples "v3 object create and update" do
 
   it "should return 200" do
   end
@@ -137,7 +137,7 @@ describe "V3 Object API -- Check Draft Release", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -191,7 +191,7 @@ describe "V3 Object API -- Update Draft Release", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -225,7 +225,7 @@ describe "V3 Object API -- Check Updated Draft Release", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -283,7 +283,7 @@ describe "V3 Object API -- Update Draft Release To Published", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -317,7 +317,7 @@ describe "V3 Object API -- Check Updated Published Release", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -358,8 +358,7 @@ describe "V3 Object API -- Update Published", :stg => true do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
-    begin
-      @response = RestClient.put @url, update_release_published(
+    @response = RestClient.put @url, update_release_published(
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/slug/mass-effect-3").body)['gameId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/slug/bioware").body)['companyId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/slug/bioware").body)['companyId'].to_s,
@@ -372,9 +371,6 @@ describe "V3 Object API -- Update Published", :stg => true do
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/slug/batman-the-dark-knight-vol-2-issue-11").body)['bookId'].to_s
       ),
       :content_type => "application/json"
-    rescue => e
-      raise Exception.new(e.message+" "+@url)
-    end
     @data = JSON.parse(@response.body)
 
   end
@@ -387,7 +383,7 @@ describe "V3 Object API -- Update Published", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -420,7 +416,7 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -877,7 +873,7 @@ describe "V3 Object API -- Update Published with Review Score", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -910,7 +906,7 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -1235,7 +1231,7 @@ describe "V3 Object API -- Change Objects", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -1268,7 +1264,7 @@ describe "V3 Object API -- Check Nested Object Changes", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
     @data['releaseId'].should == HelperVars.return_release_id
@@ -1427,7 +1423,7 @@ describe "V3 Object API -- Clean up / Delete", :stg => true do
 
   end
 
-  common_checks
+  include_examples "v3 object create and update"
 
   it "should return a 404 when deleting the release" do
     expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"}.to raise_error(RestClient::ResourceNotFound)

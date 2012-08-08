@@ -1,5 +1,29 @@
 module ObjectPostSearch
 
+  def create_role_min
+    {
+        "metadata" => {
+            "lead" => false,
+            "characterName" => "QA Character"
+        },
+    }.to_json
+  end
+
+  def update_role_with_objects(movie_id,character_id,roletype_id,game_id,book_id,person_id)
+    {
+        "metadata" => {
+            "lead" => true, #chnaged
+            "characterName" => 'updated', #changed
+            "movie" => {"movieId" => movie_id.to_s},
+            "character" => {"characterId" => character_id.to_s},
+            "roleType" => {"roleTypeId" => roletype_id.to_s},
+            "game" => {"gameId" => game_id.to_s},
+            "book" => {"bookId" => book_id.to_s},
+            "person" => {"personId" => person_id.to_s}
+        }
+    }.to_json
+  end
+
   def update_with_review_score
     {
       :network => {
@@ -415,11 +439,6 @@ module ObjectPostSearch
     {
         "metadata" => {
             "lead" => false,
-            "slug" => slug.to_s,
-            "name" => "QA Test Role #{num}",
-            "alternateNames" => ["alt name"],
-            "commonName" => "common name",
-            "description" => "company description",
             "movie" => {"movieId" => movie_id.to_s},
             "character" => {"characterId" => character_id.to_s},
             "roleType" => {"roleTypeId" => roletype_id.to_s},
