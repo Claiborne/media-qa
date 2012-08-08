@@ -35,6 +35,7 @@ describe "V3 Video API -- Search/POST Smoke Tests -- POST /v3/videos/search -- B
     @url = "http://#{@config.options['baseurl']}/v3/videos/search"
     begin
      @response = RestClient.post @url, body_request, :content_type => "application/json"
+      #@response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -77,7 +78,7 @@ describe "V3 Video API -- Search/POST Smoke Tests -- POST /v3/videos/search -- B
     end
   end
 
-  {'start'=>0,'count'=>25,'end'=>24}.each do |k,v|
+  {'startIndex'=>0,'count'=>25,'endIndex'=>24}.each do |k,v|
     it "should return a '#{k}' value of '#{v}'" do
       @data.has_key?(k).should be_true
       @data[k].should == v

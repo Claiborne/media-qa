@@ -43,8 +43,8 @@ describe "V3 Video API -- #{k} -- #{v}" do
     check_not_blank(@data)
   end
   
-  it "should return a hash with 11 indices" do
-    check_indices(@data, 11)
+  it "should return a hash with 12 indices" do
+    check_indices(@data, 12)
   end
   
   ["videoId",
@@ -143,15 +143,15 @@ describe "V3 Video API -- #{k} -- #{v}" do
 
   it "should return 'tag' data with 14 non-nil, non-blank slugs" do
     @data['tags'].each do |video|
-      video.has_key?('slug').should be_true
-      video['slug'].should_not be_nil
-      video['slug'].to_s.delete("^a-zA-Z0-9").length.should > 0
+     video.has_key?('slug').should be_true
+     video['slug'].should_not be_nil
+     video['slug'].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
     @data['tags'].length.should == 14
   end
   
   it "should return a video tagged as 'review' with a tagType of 'classification'" do
-    @data['tags'][4].should eql({"slug"=>"review", "tagType"=>"classification", "displayName"=>"Review"})
+    @data['tags'][11].should eql({"slug"=>"review", "tagType"=>"classification", "displayName"=>"Review"})
   end
   
   ["videoSeries",
@@ -163,14 +163,14 @@ describe "V3 Video API -- #{k} -- #{v}" do
     end
   end
   
-  ["youtubeChannelIds",
-    "legacyArticleIds"].each do |k|
-    it "should return a video with non-nil '#{k}' refs data" do
-      @data['refs'].has_key?(k).should be_true
-      @data['refs'][k].should_not be_nil
-      @data['refs'][k].to_s.length.should > 0
-    end
-  end
+  #["youtubeChannelIds",
+   # "legacyArticleIds"].each do |k|
+    #it "should return a video with non-nil '#{k}' refs data" do
+     # @data['refs'].has_key?(k).should be_true
+      #@data['refs'][k].should_not be_nil
+      #@data['refs'][k].to_s.length.should > 0
+    #end
+  #end
   
   ["encodingProfile",
     "watermarkProfile",
@@ -234,8 +234,8 @@ describe "V3 Video API -- Get Videos in Published State -- #{call}" do
     check_not_blank(@data)
   end
 
-  it "should return a hash with six indices" do
-    check_indices(@data, 6)
+  it "should return a hash with five indices" do
+    check_indices(@data, 5)
   end
     
   it "should return only published videos" do
@@ -283,8 +283,8 @@ describe "V3 Video API -- Get Videos Using Count and Start Index -- #{call}" do
     check_not_blank(@data)
   end
 
-  it "should return a hash with six indices" do
-    check_indices(@data, 6)
+  it "should return a hash with five indices" do
+    check_indices(@data, 5)
   end
     
   it "should return only published videos" do
@@ -303,11 +303,11 @@ describe "V3 Video API -- Get Videos Using Count and Start Index -- #{call}" do
   
   if call.match(/startIndex=36/)
     it "should return start with a value of 36" do
-      @data['start'].should == 36
+      @data['startIndex'].should == 36
     end
     
     it "should return end with a value of 70" do
-      @data['end'].should == 70
+      @data['endIndex'].should == 70
     end
     
   end
@@ -349,8 +349,8 @@ describe "V3 Video API -- Get Videos By Network -- #{call}" do
     check_not_blank(@data)
   end
 
-  it "should return a hash with six indices" do
-    check_indices(@data, 6)
+  it "should return a hash with five indices" do
+    check_indices(@data, 5)
   end
   
   it "should return only videos with networks with a value of 'ign'" do

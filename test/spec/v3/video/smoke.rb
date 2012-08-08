@@ -46,8 +46,8 @@ describe "V3 Video API -- General Smoke Tests -- #{call}" do
     check_not_blank(@data)
   end
   
-  it "should return a hash with six indices" do
-    check_indices(@data, 6)
+  it "should return a hash with five indices" do
+    check_indices(@data, 5)
   end
   
   it "shoud return 'count' data with a non-nil, non-blank value" do
@@ -61,23 +61,23 @@ describe "V3 Video API -- General Smoke Tests -- #{call}" do
   end
   
   it "shoud return 'start' data with a non-nil, non-blank value" do
-    @data.has_key?('start').should be_true
-    @data['start'].should_not be_nil
-    @data['start'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    @data.has_key?('startIndex').should be_true
+    @data['startIndex'].should_not be_nil
+    @data['startIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return 'start' data with a value of 0" do
-    @data['start'].should == 0
+    @data['startIndex'].should == 0
   end
   
   it "shoud return 'end' data with a non-nil, non-blank value" do
-    @data.has_key?('end').should be_true
-    @data['end'].should_not be_nil
-    @data['end'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    @data.has_key?('endIndex').should be_true
+    @data['endIndex'].should_not be_nil
+    @data['endIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
   
   it "should return 'end' data with a value of 19" do
-    @data['end'].should == 19
+    @data['endIndex'].should == 19
   end
   
   it "shoud return 'isMore' data with a non-nil, non-blank value" do
@@ -90,15 +90,15 @@ describe "V3 Video API -- General Smoke Tests -- #{call}" do
     @data['isMore'].should == true
   end
 
-  it "shoud return 'total' data with a non-nil, non-blank value" do
-    @data.has_key?('total').should be_true
-    @data['total'].should_not be_nil
-    @data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
-  end
+ # it "shoud return 'total' data with a non-nil, non-blank value" do
+  #  @data.has_key?('total').should be_true
+   # @data['total'].should_not be_nil
+    #@data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  #end
   
-  it "should return 'total' data with a value greater than 20" do
-    @data['total'].should > 20
-  end
+  #it "should return 'total' data with a value greater than 20" do
+   # @data['total'].should > 20
+  #end
   
   it "shoud return 'data' with a non-nil, non-blank value" do
     @data.has_key?('data').should be_true
@@ -172,11 +172,11 @@ describe "V3 Video API -- Playlists Smoke Tests -- /v3/playlists" do
     check_not_blank(@data)
   end
   
-  it "should return a hash with six indices" do
-    check_indices(@data, 6)
+  it "should return a hash with five indices" do
+    check_indices(@data, 5)
   end
   
-  ["count","start","end","isMore","total","data"].each do |k|
+  ["count","startIndex","endIndex","isMore","data"].each do |k|
     it "shoud return '#{k}' data with a non-nil, non-blank value" do
       @data.has_key?('count').should be_true
       @data[k].should_not be_nil
@@ -189,20 +189,20 @@ describe "V3 Video API -- Playlists Smoke Tests -- /v3/playlists" do
   end
   
   it "should return 'start' data with a value of 0" do
-    @data['start'].should == 0
+    @data['startIndex'].should == 0
   end
   
   it "should return 'end' data with a value of 19" do
-    @data['end'].should == 19
+    @data['endIndex'].should == 19
   end
   
   it "should return 'isMore' data with a value of true" do
     @data['isMore'].should == true
   end
   
-  it "should return 'total' data with a value greater than 20" do
-    @data['total'].should > 20
-  end
+  #it "should return 'total' data with a value greater than 20" do
+   # @data['total'].should > 20
+  #end
   
   it "should return 'data' with an array length of 20" do
     @data['data'].length.should == 20
@@ -218,12 +218,12 @@ describe "V3 Video API -- Playlists Smoke Tests -- /v3/playlists" do
     end
   end
   
-  ["name", "url","networks"].each do |key|
+  ["name"].each do |key|
     it "should return '#{key}' metadata with a non-nil, non-blank value for all playlists" do
       @data['data'].each do |playlist|
         playlist['metadata'].has_key?(key).should be_true
-        playlist['metadata'].should_not be_nil
-        playlist['metadata'].to_s.delete("^a-zA-Z0-9").length.should > 0
+        playlist['metadata'][key].should_not be_nil
+        playlist['metadata'][key].to_s.delete("^a-zA-Z0-9").length.should > 0
       end
     end
   end
