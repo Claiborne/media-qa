@@ -188,7 +188,7 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def create_release_body(num,game_id,company_id,feature_id,genre_id,genre2_id,hardware_id,market_id,movie_id,book_id)
+  def create_release_body(num,game_id,company_id,feature_id,genre_id,genre2_id,hardware_id,market_id,movie_id,book_id,season_id)
     {
       "metadata" => {
           "name" => "QA Test Release #{num}",
@@ -203,7 +203,8 @@ module ObjectPostSearch
           },
           "game" => {"gameId" => game_id.to_s},
           "movie" => {"movieId" => movie_id.to_s},
-          "book" => {"bookId" => book_id.to_s}
+          "book" => {"bookId" => book_id.to_s},
+          "season" => {"seasonId" => season_id.to_s}
       }, #end metadata
       "companies" => {
           "developers" => [{"companyId" => company_id.to_s}],
@@ -435,6 +436,27 @@ module ObjectPostSearch
     }.to_json
   end
 
+  def create_show_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s,
+            "name" => "QA Test Show #{num}",
+            "shortDescription" => "short description",
+            "alternateNames" => ["alt name one"]
+        }
+    }.to_json
+  end
+
+  def create_season_body(slug,show_id)
+    {
+      "metadata" => {
+          "order" => 1,
+          "slug" => slug.to_s,
+          "show" => {"showId"=>show_id.to_s}
+        }
+    }.to_json
+  end
+
   def create_role_body(num,slug,movie_id,character_id,roletype_id,game_id,book_id,person_id)
     {
         "metadata" => {
@@ -589,6 +611,29 @@ module ObjectPostSearch
         "metadata" => {
             "slug" => slug.to_s+"-updated", #changed
             "name" => "QA Test Role #{num} updated", #changed
+        }
+    }.to_json
+  end
+
+  def update_show_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s+"-updated", #changed,
+            "name" => "QA Test Show #{num} updated", #changed,
+            "shortDescription" => "short description updated", #changed
+            "description" => "description", #added
+            "alternateNames" => ["alt name one","two"], #changed
+            "commonName" => "common name", #added
+            "misspelledNames" => ['misspelled one','two'] #added
+        }
+    }.to_json
+  end
+
+  def update_season_body(slug)
+    {
+        "metadata" => {
+            "order" => 2, #changed
+            "slug" => slug.to_s+"-updated", #changed
         }
     }.to_json
   end

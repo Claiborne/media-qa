@@ -21,278 +21,284 @@ end
 
 ########################### BEGIN REQUEST BODY METHODS #############################
 
-def release_search_smoke
-  {
-    "rules"=>[
-      {
-        "field"=>"hardware.platform.metadata.slug",
-        "condition"=>"term",
-        "value"=>"xbox-360"
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>75,
-    "sortBy"=>"metadata.releaseDate.date",
-    "sortOrder"=>"desc",
-    "states"=>["published"],
-    "regions"=>["US"]
-  }.to_json
-end
+class GeneralGetSearchHelperMethods
 
-def reviewed_games
-  {
-    "rules"=>[
-      {
-        "field"=>"network.ign.review.score",
-        "condition"=>"exists",
-        "value"=>""
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>75,
-    "sortBy"=>"network.ign.review.score",
-    "sortOrder"=>"desc",
-    "states"=>["published"]
-  }.to_json
-end
-
-def mass_effect_3_releases_by_game_id
-  {
-    "rules"=>[
-      {
-        "field"=>"metadata.game.gameId",
-        "condition"=>"term",
-        "value"=>"#{Me3GameId.me3_game_id}"
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>10,
-    "states"=>["published"]
-  }.to_json  
-end
-
-def mass_effect_3_releases_by_game_legacyid
-  {
-    "rules"=>[
-      {
-        "field"=>"metadata.legacyId",
-        "condition"=>"term",
-        "value"=>"110694"
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>10,
-    "states"=>["published"]
-  }.to_json 
-end
-
-def mass_effect_3_releases_by_game_slug
-  {
-    "rules"=>[
-      {
-        "field"=>"metadata.game.metadata.slug",
-        "condition"=>"term",
-        "value"=>"mass-effect-3"
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>10,
-    "states"=>["published"]
-  }.to_json
-end
-
-def bioware_games_by_dev_name
-  {
-    "rules"=>[
-      {
-        "field"=>"companies.developers.metadata.name",
-        "condition"=>"term",
-        "value"=>"bioware"
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>25,
-    "states"=>["published"]
-  }.to_json
-end
-
-def bioware_games_by_dev_legacyid
-  {
-    "rules"=>[
-      {
-        "field"=>"companies.developers.metadata.legacyId",
-        "condition"=>"term",
-        "value"=>"26717"
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>25,
-    "states"=>["published"]
-  }.to_json
-end
-
-def release_by_is_released(is_released)
-  {
-    "rules"=>[
-      {
-        "field"=>"metadata.releaseDate.status",
-        "condition"=>"term",
-        "value"=>is_released.to_s
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>100,
-    "states"=>["published"]
-  }.to_json
-end
-
-def release_pagination(count,start_index)
-  {
-    "rules"=>[
-      {
-        "field"=>"hardware.platform.metadata.slug",
-        "condition"=>"term",
-        "value"=>"xbox-360"
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>start_index.to_i,
-    "count"=>count.to_i,
-    "sortBy"=>"metadata.releaseDate.date",
-    "sortOrder"=>"desc",
-    "states"=>["published"],
-    "regions"=>["US"]
-  }.to_json
-end
-
-def search_using_condition_in(val,field,cond)
-  {
+  def self.release_search_smoke
+    {
       "rules"=>[
-      {
-          "field"=>field.to_s,
-          "condition"=>cond.to_s,
-          "value"=>val.to_s}
-  ],
+        {
+          "field"=>"hardware.platform.metadata.slug",
+          "condition"=>"term",
+          "value"=>"xbox-360"
+        }
+      ],
       "matchRule"=>"matchAll",
       "startIndex"=>0,
-      "count"=>60,
-      "sortBy"=>"metadata.popularity",
+      "count"=>75,
+      "sortBy"=>"metadata.releaseDate.date",
       "sortOrder"=>"desc",
       "states"=>["published"],
       "regions"=>["US"]
-  }.to_json
-end
-
-  def movies_by_type(type)
-    {
-        "rules"=>[
-            {
-                "field"=>"metadata.type",
-                "condition"=>"term",
-                "value"=>type.to_s
-            }
-        ],
-        "matchRule"=>"matchAll",
-        "startIndex"=>0,
-        "count"=>25
     }.to_json
   end
 
-########################### BEGIN ASSERTION METHODS #############################
-
-def common_assertions(data_count)
-  
-  it "should return a hash with five indices" do
-    check_indices(@data, 6)
+  def self.reviewed_games
+    {
+      "rules"=>[
+        {
+          "field"=>"network.ign.review.score",
+          "condition"=>"exists",
+          "value"=>""
+        }
+      ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>0,
+      "count"=>75,
+      "sortBy"=>"network.ign.review.score",
+      "sortOrder"=>"desc",
+      "states"=>["published"]
+    }.to_json
   end
 
-  it "should return 'count' data with a non-nil, non-blank value" do
-    @data.has_key?('count').should be_true
-    @data['count'].should_not be_nil
-    @data['count'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  def self.mass_effect_3_releases_by_game_id
+    {
+      "rules"=>[
+        {
+          "field"=>"metadata.game.gameId",
+          "condition"=>"term",
+          "value"=>"#{Me3GameId.me3_game_id}"
+        }
+      ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>0,
+      "count"=>10,
+      "states"=>["published"]
+    }.to_json
   end
 
-  it "should return 'count' data with a value of #{data_count}" do
-    @data['count'].should == data_count
+  def self.mass_effect_3_releases_by_game_legacyid
+    {
+      "rules"=>[
+        {
+          "field"=>"metadata.legacyId",
+          "condition"=>"term",
+          "value"=>"110694"
+        }
+      ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>0,
+      "count"=>10,
+      "states"=>["published"]
+    }.to_json
   end
 
-  it "should return 'startIndex' data with a non-nil, non-blank value" do
-    @data.has_key?('startIndex').should be_true
-    @data['startIndex'].should_not be_nil
-    @data['startIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  def self.mass_effect_3_releases_by_game_slug
+    {
+      "rules"=>[
+        {
+          "field"=>"metadata.game.metadata.slug",
+          "condition"=>"term",
+          "value"=>"mass-effect-3"
+        }
+      ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>0,
+      "count"=>10,
+      "states"=>["published"]
+    }.to_json
   end
 
-  it "should return 'startIndex' data with a value of 0" do
-    @data['startIndex'].should == 0
+  def self.bioware_games_by_dev_name
+    {
+      "rules"=>[
+        {
+          "field"=>"companies.developers.metadata.name",
+          "condition"=>"term",
+          "value"=>"bioware"
+        }
+      ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>0,
+      "count"=>25,
+      "states"=>["published"]
+    }.to_json
   end
 
-  it "should return 'endIndex' data with a non-nil, non-blank value" do
-    @data.has_key?('endIndex').should be_true
-    @data['endIndex'].should_not be_nil
-    @data['endIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  def self.bioware_games_by_dev_legacyid
+    {
+      "rules"=>[
+        {
+          "field"=>"companies.developers.metadata.legacyId",
+          "condition"=>"term",
+          "value"=>"26717"
+        }
+      ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>0,
+      "count"=>25,
+      "states"=>["published"]
+    }.to_json
   end
 
-  it "should return 'endIndex' data with a value of #{data_count-1}" do
-    @data['endIndex'].should == data_count-1
+  def self.release_by_is_released(is_released)
+    {
+      "rules"=>[
+        {
+          "field"=>"metadata.releaseDate.status",
+          "condition"=>"term",
+          "value"=>is_released.to_s
+        }
+      ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>0,
+      "count"=>100,
+      "states"=>["published"]
+    }.to_json
   end
 
-  it "should return 'isMore' data with a non-nil, non-blank value" do
-    @data.has_key?('isMore').should be_true
-    @data['isMore'].should_not be_nil
-    @data['isMore'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  def self.release_pagination(count,start_index)
+    {
+      "rules"=>[
+        {
+          "field"=>"hardware.platform.metadata.slug",
+          "condition"=>"term",
+          "value"=>"xbox-360"
+        }
+      ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>start_index.to_i,
+      "count"=>count.to_i,
+      "sortBy"=>"metadata.releaseDate.date",
+      "sortOrder"=>"desc",
+      "states"=>["published"],
+      "regions"=>["US"]
+    }.to_json
   end
 
-  it "should return 'isMore' data with a value of true" do
-    @data['isMore'].should == true
-  end
-  
-  it "should return 'total' data with a non-nil, non-blank value" do
-    @data.has_key?('total').should be_true
-    @data['total'].should_not be_nil
-    @data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
-  end
-  
-  it "should return 'total' data with a value of #{data_count}" do
-    @data['total'].should > data_count
-  end
-
-  it "should return 'data' with a non-nil, non-blank value" do
-    @data.has_key?('data').should be_true
-    @data['data'].should_not be_nil
-    @data['data'].to_s.delete("^a-zA-Z0-9").length.should > 0
+  def self.search_using_condition_in(val,field,cond)
+    {
+        "rules"=>[
+        {
+            "field"=>field.to_s,
+            "condition"=>cond.to_s,
+            "value"=>val.to_s}
+    ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>60,
+        "sortBy"=>"metadata.popularity",
+        "sortOrder"=>"desc",
+        "states"=>["published"],
+        "regions"=>["US"]
+    }.to_json
   end
 
-  it "should return 'data' with an array length of #{data_count}" do
-    @data['data'].length.should == data_count
-  end
-  
+    def self.movies_by_type(type)
+      {
+          "rules"=>[
+              {
+                  "field"=>"metadata.type",
+                  "condition"=>"term",
+                  "value"=>type.to_s
+              }
+          ],
+          "matchRule"=>"matchAll",
+          "startIndex"=>0,
+          "count"=>25
+      }.to_json
+    end
+
 end
 
-def check_id(id)
-  it "should return a #{id} value that is a 24-character hash for all releases" do
-    @data['data'].each do |release|
-      release[id].match(/^[0-9a-f]{24,32}$/).should be_true
+  ########################### BEGIN ASSERTION METHODS #############################
+
+  shared_examples "v3 object general get search common checks" do |data_count|
+
+    it "should return a hash with five indices" do
+      check_indices(@data, 6)
+    end
+
+    it "should return 'count' data with a non-nil, non-blank value" do
+      @data.has_key?('count').should be_true
+      @data['count'].should_not be_nil
+      @data['count'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+
+    it "should return 'count' data with a value of #{data_count}" do
+      @data['count'].should == data_count
+    end
+
+    it "should return 'startIndex' data with a non-nil, non-blank value" do
+      @data.has_key?('startIndex').should be_true
+      @data['startIndex'].should_not be_nil
+      @data['startIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+
+    it "should return 'startIndex' data with a value of 0" do
+      @data['startIndex'].should == 0
+    end
+
+    it "should return 'endIndex' data with a non-nil, non-blank value" do
+      @data.has_key?('endIndex').should be_true
+      @data['endIndex'].should_not be_nil
+      @data['endIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+
+    it "should return 'endIndex' data with a value of #{data_count-1}" do
+      @data['endIndex'].should == data_count-1
+    end
+
+    it "should return 'isMore' data with a non-nil, non-blank value" do
+      @data.has_key?('isMore').should be_true
+      @data['isMore'].should_not be_nil
+      @data['isMore'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+
+    it "should return 'isMore' data with a value of true" do
+      @data['isMore'].should == true
+    end
+
+    it "should return 'total' data with a non-nil, non-blank value" do
+      @data.has_key?('total').should be_true
+      @data['total'].should_not be_nil
+      @data['total'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+
+    it "should return 'total' data with a value of #{data_count}" do
+      @data['total'].should > data_count
+    end
+
+    it "should return 'data' with a non-nil, non-blank value" do
+      @data.has_key?('data').should be_true
+      @data['data'].should_not be_nil
+      @data['data'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+
+    it "should return 'data' with an array length of #{data_count}" do
+      @data['data'].length.should == data_count
+    end
+
+  end
+
+  shared_examples "v3 object general get search check Id" do |id|
+
+    it "should return a #{id} value that is a 24-character hash for all releases" do
+      @data['data'].each do |release|
+        release[id].match(/^[0-9a-f]{24,32}$/).should be_true
+      end
     end
   end
-end
+
 
 ############################ BEGIN SPEC #################################### 
 
 
-describe "V3 Object API -- GET Search for Published 360 Releases: #{release_search_smoke}" do
+describe "V3 Object API -- GET Search for Published 360 Releases: #{GeneralGetSearchHelperMethods.release_search_smoke}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+release_search_smoke.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_search_smoke.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -313,10 +319,10 @@ describe "V3 Object API -- GET Search for Published 360 Releases: #{release_sear
   after(:all) do
 
   end
-  
-  common_assertions(75)
-  
-  check_id('releaseId')
+
+  it_behaves_like "v3 object general get search common checks", 75
+
+  it_behaves_like "v3 object general get search check Id", 'releaseId'
   
   it "should return a releaseId value that is a 24-character hash for all releases" do
     @data['data'].each do |release|
@@ -346,12 +352,12 @@ end
 
 ################################################################ 
 
-describe "V3 Object API -- GET Search for Reviewed Releases: #{reviewed_games}" do
+describe "V3 Object API -- GET Search for Reviewed Releases: #{GeneralGetSearchHelperMethods.reviewed_games}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+reviewed_games.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.reviewed_games.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -372,10 +378,10 @@ describe "V3 Object API -- GET Search for Reviewed Releases: #{reviewed_games}" 
   after(:all) do
 
   end
-  
-  common_assertions(75)
-  
-  check_id('releaseId')
+
+  it_behaves_like "v3 object general get search common checks", 75
+
+  it_behaves_like "v3 object general get search check Id", 'releaseId'
   
   it "should return network.ign.review.score data with a numeric value for all releases" do
     @data['data'].each do |release|
@@ -402,7 +408,7 @@ end
 
 ################################################################ 
 
-{mass_effect_3_releases_by_game_id=>'GameId',mass_effect_3_releases_by_game_legacyid=>'LegacyId',mass_effect_3_releases_by_game_slug=>'Game Slug'}.each do |request_body,description|
+{GeneralGetSearchHelperMethods.mass_effect_3_releases_by_game_id=>'GameId',GeneralGetSearchHelperMethods.mass_effect_3_releases_by_game_legacyid=>'LegacyId',GeneralGetSearchHelperMethods.mass_effect_3_releases_by_game_slug=>'Game Slug'}.each do |request_body,description|
   describe "V3 Object API -- GET Search for Releases by #{description} using: #{request_body}" do
 
     before(:all) do
@@ -434,7 +440,7 @@ end
       @data['data'].count.should > 3  
     end
 
-    check_id('releaseId')
+    it_behaves_like "v3 object general get search check Id", 'releaseId'
     
     it "should only return releases with a metadata.game.gameId value of '#{Me3GameId.me3_game_id}'" do
       @data['data'].each do |release|
@@ -460,11 +466,11 @@ end
 end
 ################################################################ 
 
-describe "V3 Object API -- GET Search for Bioware Releases By Dev Name: #{bioware_games_by_dev_name}" do
+describe "V3 Object API -- GET Search for Bioware Releases By Dev Name: #{GeneralGetSearchHelperMethods.bioware_games_by_dev_name}" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+bioware_games_by_dev_name.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.bioware_games_by_dev_name.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -485,10 +491,10 @@ describe "V3 Object API -- GET Search for Bioware Releases By Dev Name: #{biowar
   after(:all) do
 
   end
-  
-  common_assertions(25)
-  
-  check_id('releaseId')
+
+  it_behaves_like "v3 object general get search common checks", 25
+
+  it_behaves_like "v3 object general get search check Id", 'releaseId'
 
   it "should only return companies.developers.metadata.name data with a value of 'BioWare'" do
     @data['data'].each do |release|
@@ -510,12 +516,12 @@ end
 
 ################################################################ 
 
-describe "V3 Object API -- GET Search for Bioware Releases By Dev legacyId: #{bioware_games_by_dev_legacyid}" do
+describe "V3 Object API -- GET Search for Bioware Releases By Dev legacyId: #{GeneralGetSearchHelperMethods.bioware_games_by_dev_legacyid}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+bioware_games_by_dev_legacyid.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.bioware_games_by_dev_legacyid.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -536,10 +542,10 @@ describe "V3 Object API -- GET Search for Bioware Releases By Dev legacyId: #{bi
   after(:all) do
 
   end
-  
-  common_assertions(25)
-  
-  check_id('releaseId')
+
+  it_behaves_like "v3 object general get search common checks", 25
+
+  it_behaves_like "v3 object general get search check Id", 'releaseId'
   
   it "should only return companies.developers.metadata.name data with a value of 'BioWare'" do
     @data['data'].each do |release|
@@ -571,12 +577,12 @@ end
 
 ################################################################
 ['released','unreleased','canceled'].each do |is_released|
-describe "V3 Object API -- GET Search for Releases by status==#{is_released}: #{release_by_is_released(is_released)}" do
+describe "V3 Object API -- GET Search for Releases by status==#{is_released}: #{GeneralGetSearchHelperMethods.release_by_is_released(is_released)}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+release_by_is_released(is_released).to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_by_is_released(is_released).to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -597,8 +603,8 @@ describe "V3 Object API -- GET Search for Releases by status==#{is_released}: #{
   after(:all) do
 
   end
-  
-  common_assertions(100)
+
+  it_behaves_like "v3 object general get search common checks", 100
   
   it "should only return releases with a metadata.releaseDate.status value of #{is_released}" do
     @data['data'].each do |release|
@@ -611,12 +617,12 @@ end
 
 ################################################################ 
 
-describe "V3 Object API -- GET Search - Test Pagination Using: #{release_pagination(11,0)}" do
+describe "V3 Object API -- GET Search - Test Pagination Using: #{GeneralGetSearchHelperMethods.release_pagination(11,0)}", :test => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+release_pagination(11,0).to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_pagination(11,0).to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -642,14 +648,26 @@ describe "V3 Object API -- GET Search - Test Pagination Using: #{release_paginat
    
   it "should pass basic pagination check" do
     begin 
-      @url2 = "http://#{@config.options['baseurl']}/releases/search?q="+release_pagination(10,10).to_s
+      @url2 = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_pagination(10,10).to_s
       @url2 = @url2.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
       @response = RestClient.get @url2
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
-    @data = JSON.parse(@response.body)
-    @data['data'][0]['releaseId'].should == @eleventh_entry
+    @page_data = JSON.parse(@response.body)
+    begin
+      @page_data['data'][0]['releaseId'].should == @eleventh_entry
+    rescue => e
+      first_11 = []
+      second_10 = []
+      @data['data'].each do |d|
+        first_11 << d['releaseId']
+      end
+      @page_data['data'].each do |d|
+        second_10 << d['releaseId']
+      end
+      Exception.new(e.message+"\nFIRST 11:\n#{first_11}\nSECOND 10:\n#{second_10}")
+    end
   end
 
 end
@@ -657,12 +675,12 @@ end
 ################################################################
 
 ["3ds,nds","xbox-360,pc,ps3","ps,ps2"].each do |in_val|
-describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'hardware.platform.metadata.slug','in')}" do
+describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug','in')}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+search_using_condition_in(in_val,'hardware.platform.metadata.slug',"in").to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug',"in").to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -684,7 +702,7 @@ describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{sea
 
   end
 
-  common_assertions(60)
+  it_behaves_like "v3 object general get search common checks", 60
 
   it "should return only releases with a hardware.platform.metadata.slug value that includes the following: #{in_val}" do
     @data['data'].each do |release|
@@ -708,12 +726,12 @@ end
 ################################################################
 
 ["rpg,action","action","rpg,adventure,fighting"].each do |in_val|
-  describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'content.primaryGenre.metadata.slug','in')}" do
+  describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'content.primaryGenre.metadata.slug','in')}" do
 
     before(:all) do
       Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = Configuration.new
-      @url = "http://#{@config.options['baseurl']}/releases/search?q="+search_using_condition_in(in_val,'content.primaryGenre.metadata.slug',"in").to_s
+      @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'content.primaryGenre.metadata.slug',"in").to_s
       @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
       begin
         @response = RestClient.get @url
@@ -735,7 +753,7 @@ end
 
     end
 
-    common_assertions(60)
+    it_behaves_like "v3 object general get search common checks", 60
 
     it "should return only releases with a content.primaryGenre.metadata.slug value that includes the following: #{in_val}" do
       @data['data'].each do |release|
@@ -759,12 +777,12 @@ end
 ################################################################
 
 ["3ds,nds","xbox-360,pc,ps3","ps,ps2"].each do |in_val|
-describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{search_using_condition_in(in_val,'hardware.platform.metadata.slug','notIn')}" do
+describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug','notIn')}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+search_using_condition_in(in_val,'hardware.platform.metadata.slug',"notIn").to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug',"notIn").to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -786,7 +804,7 @@ describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{sea
 
   end
 
-  common_assertions(60)
+  it_behaves_like "v3 object general get search common checks", 60
 
   in_val.split(",").each do   |slug|
     it "should not return any releases with a hardware.platform.metadata.slug value of #{slug}" do

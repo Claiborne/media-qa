@@ -11,7 +11,7 @@ include Assert
 include ObjectPostSearch
 include TopazToken
 
-class HelperVars
+class UpdateReleaseHelperVars
 
   @token = return_topaz_token('objects')
 
@@ -78,9 +78,9 @@ describe "V3 Object API -- Create Draft Release", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
-      @response = RestClient.post @url, create_release_draft(HelperVars.return_number), :content_type => "application/json"
+      @response = RestClient.post @url, create_release_draft(UpdateReleaseHelperVars.return_number), :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -106,7 +106,7 @@ describe "V3 Object API -- Create Draft Release", :stg => true do
 
   it "should return a releaseId value that is a 24-character hash" do
     @data['releaseId'].match(/^[0-9a-f]{24,32}$/).should be_true
-    HelperVars.set_release_id @data['releaseId']
+    UpdateReleaseHelperVars.set_release_id @data['releaseId']
   end
 
 end
@@ -117,9 +117,10 @@ end
 describe "V3 Object API -- Check Draft Release", :stg => true do
 
   before(:all) do
+    sleep 1
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -140,11 +141,11 @@ describe "V3 Object API -- Check Draft Release", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
-  it "should return a metadata.name value of 'Media QA Test Release #{HelperVars.return_number}'" do
-    @data['metadata']['name'].should == "Media QA Test Release #{HelperVars.return_number}"
+  it "should return a metadata.name value of 'Media QA Test Release #{UpdateReleaseHelperVars.return_number}'" do
+    @data['metadata']['name'].should == "Media QA Test Release #{UpdateReleaseHelperVars.return_number}"
   end
 
   it "should return a metadata.state value of 'draft'" do
@@ -173,7 +174,7 @@ describe "V3 Object API -- Update Draft Release", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_release_draft, :content_type => "application/json"
     rescue => e
@@ -194,7 +195,7 @@ describe "V3 Object API -- Update Draft Release", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
 end
@@ -205,9 +206,10 @@ end
 describe "V3 Object API -- Check Updated Draft Release", :stg => true do
 
   before(:all) do
+    sleep 1
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -228,11 +230,11 @@ describe "V3 Object API -- Check Updated Draft Release", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
-  it "should return a metadata.name value of 'Media QA Test Release #{HelperVars.return_number}'" do
-    @data['metadata']['name'].should == "Media QA Test Release #{HelperVars.return_number}"
+  it "should return a metadata.name value of 'Media QA Test Release #{UpdateReleaseHelperVars.return_number}'" do
+    @data['metadata']['name'].should == "Media QA Test Release #{UpdateReleaseHelperVars.return_number}"
   end
 
   it "should return a metadata.state value of 'draft'" do
@@ -265,7 +267,7 @@ describe "V3 Object API -- Update Draft Release To Published", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.put @url, {:metadata=>{:state=>"published"}}.to_json, :content_type => "application/json"
     rescue => e
@@ -286,7 +288,7 @@ describe "V3 Object API -- Update Draft Release To Published", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
 end
@@ -297,9 +299,10 @@ end
 describe "V3 Object API -- Check Updated Published Release", :stg => true do
 
   before(:all) do
+    sleep 1
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -320,11 +323,11 @@ describe "V3 Object API -- Check Updated Published Release", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
-  it "should return a metadata.name value of 'Media QA Test Release #{HelperVars.return_number}'" do
-    @data['metadata']['name'].should == "Media QA Test Release #{HelperVars.return_number}"
+  it "should return a metadata.name value of 'Media QA Test Release #{UpdateReleaseHelperVars.return_number}'" do
+    @data['metadata']['name'].should == "Media QA Test Release #{UpdateReleaseHelperVars.return_number}"
   end
 
   it "should return a metadata.state value of 'published'" do
@@ -357,7 +360,7 @@ describe "V3 Object API -- Update Published", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     @response = RestClient.put @url, update_release_published(
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/slug/mass-effect-3").body)['gameId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/slug/bioware").body)['companyId'].to_s,
@@ -386,7 +389,7 @@ describe "V3 Object API -- Update Published", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
 end
@@ -397,9 +400,10 @@ end
 describe "V3 Object API -- Check Updated Published", :stg => true do
 
   before(:all) do
+    sleep 1
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -419,11 +423,11 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
-  it "should return a metadata.name value of 'Media QA Test Release #{HelperVars.return_number}'" do
-    @data['metadata']['name'].should == "Media QA Test Release #{HelperVars.return_number}"
+  it "should return a metadata.name value of 'Media QA Test Release #{UpdateReleaseHelperVars.return_number}'" do
+    @data['metadata']['name'].should == "Media QA Test Release #{UpdateReleaseHelperVars.return_number}"
   end
 
   it "should return a metadata.state value of 'published'" do
@@ -855,7 +859,7 @@ describe "V3 Object API -- Update Published with Review Score", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_with_review_score, :content_type => "application/json"
     rescue => e
@@ -876,7 +880,7 @@ describe "V3 Object API -- Update Published with Review Score", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
 end
@@ -887,9 +891,10 @@ end
 describe "V3 Object API -- Check Updated Published with Review Score", :stg => true do
 
   before(:all) do
+    sleep 1
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -909,11 +914,11 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
-  it "should return a metadata.name value of 'Media QA Test Release #{HelperVars.return_number}'" do
-    @data['metadata']['name'].should == "Media QA Test Release #{HelperVars.return_number}"
+  it "should return a metadata.name value of 'Media QA Test Release #{UpdateReleaseHelperVars.return_number}'" do
+    @data['metadata']['name'].should == "Media QA Test Release #{UpdateReleaseHelperVars.return_number}"
   end
 
   it "should return a metadata.state value of 'published'" do
@@ -1207,7 +1212,7 @@ describe "V3 Object API -- Change Objects", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_objects(
           JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/slug/mass-effect-2").body)['gameId'].to_s,
@@ -1234,7 +1239,7 @@ describe "V3 Object API -- Change Objects", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
 end
@@ -1245,9 +1250,10 @@ end
 describe "V3 Object API -- Check Nested Object Changes", :stg => true do
 
   before(:all) do
+    sleep 1
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1267,7 +1273,7 @@ describe "V3 Object API -- Check Nested Object Changes", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return the expected releaseId value" do
-    @data['releaseId'].should == HelperVars.return_release_id
+    @data['releaseId'].should == UpdateReleaseHelperVars.return_release_id
   end
 
   it "should return a metadata.game.metadata.slug with a value of 'mass-effect-2'" do
@@ -1405,7 +1411,7 @@ describe "V3 Object API -- Clean up / Delete", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.delete @url
     rescue => e
@@ -1426,7 +1432,7 @@ describe "V3 Object API -- Clean up / Delete", :stg => true do
   include_examples "v3 object create and update"
 
   it "should return a 404 when deleting the release" do
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{HelperVars.return_release_id}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
