@@ -365,3 +365,84 @@ describe "V3 Video API -- Get Videos By Network -- #{call}" do
   
 end
 end
+
+#########################################################################
+
+describe "V3 Videotags API -- tags/event Tests -- /v3/videotags/event" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/v3/videotags/event"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200", :test => true do
+    check_200(@response)
+  end
+
+  it "should not be blank", :test => true do
+    check_not_blank(@data)
+  end
+
+  it "should return a hash with five indices", :test => true do
+    check_indices(@data, 5)
+  end
+
+  ["count","startIndex","endIndex","isMore","data"].each do |k|
+    it "shoud return '#{k}' data with a non-nil, non-blank value", :test => true do
+      @data.has_key?('count').should be_true
+      @data[k].should_not be_nil
+      @data[k].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+  end
+
+  it "should return 'count' data with a value of 20", :test => true do
+    @data['count'].should == 20
+  end
+
+  it "should return 'startIndex' data with a value of 0", :test => true do
+    @data['startIndex'].should == 0
+  end
+
+  it "should return 'endIndex' data with a value of 19", :test => true do
+    @data['endIndex'].should == 19
+  end
+
+  it "should return 'isMore' data with a value of true", :test => true do
+    @data['isMore'].should == true
+  end
+
+  #it "should return 'total' data with a value greater than 20" do
+  # @data['total'].should > 20
+  #end
+
+  it "should return 'data' with an array length of 20", :test => true do
+    @data['data'].length.should == 20
+  end
+
+  ["tagType","displayName","videotagId"].each do |key|
+    it "should return '#{key}' data with a non-nil, non-blank value for all events", :test => true do
+      @data['data'].each do |events|
+        events.has_key?(key).should be_true
+        events[key].should_not be_nil
+        events[key].to_s.delete("^a-zA-Z0-9").length.should > 0
+      end
+    end
+  end
+
+end
+

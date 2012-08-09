@@ -188,11 +188,11 @@ describe "V3 Video API -- Playlists Smoke Tests -- /v3/playlists" do
     @data['count'].should == 20
   end
   
-  it "should return 'start' data with a value of 0" do
+  it "should return 'startIndex' data with a value of 0" do
     @data['startIndex'].should == 0
   end
   
-  it "should return 'end' data with a value of 19" do
+  it "should return 'endIndex' data with a value of 19" do
     @data['endIndex'].should == 19
   end
   
@@ -227,5 +227,9 @@ describe "V3 Video API -- Playlists Smoke Tests -- /v3/playlists" do
       end
     end
   end
-  
+
 end
+
+
+
+
