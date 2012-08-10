@@ -1,5 +1,29 @@
 module ObjectPostSearch
 
+  def create_role_min
+    {
+        "metadata" => {
+            "lead" => false,
+            "characterName" => "QA Character"
+        },
+    }.to_json
+  end
+
+  def update_role_with_objects(movie_id,character_id,roletype_id,game_id,book_id,person_id)
+    {
+        "metadata" => {
+            "lead" => true, #chnaged
+            "characterName" => 'updated', #changed
+            "movie" => {"movieId" => movie_id.to_s},
+            "character" => {"characterId" => character_id.to_s},
+            "roleType" => {"roleTypeId" => roletype_id.to_s},
+            "game" => {"gameId" => game_id.to_s},
+            "book" => {"bookId" => book_id.to_s},
+            "person" => {"personId" => person_id.to_s}
+        }
+    }.to_json
+  end
+
   def update_with_review_score
     {
       :network => {
@@ -164,7 +188,7 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def create_release_body(num,game_id,company_id,feature_id,genre_id,genre2_id,hardware_id,market_id,movie_id,book_id)
+  def create_release_body(num,game_id,company_id,feature_id,genre_id,genre2_id,hardware_id,market_id,movie_id,book_id,season_id)
     {
       "metadata" => {
           "name" => "QA Test Release #{num}",
@@ -179,7 +203,8 @@ module ObjectPostSearch
           },
           "game" => {"gameId" => game_id.to_s},
           "movie" => {"movieId" => movie_id.to_s},
-          "book" => {"bookId" => book_id.to_s}
+          "book" => {"bookId" => book_id.to_s},
+          "season" => {"seasonId" => season_id.to_s}
       }, #end metadata
       "companies" => {
           "developers" => [{"companyId" => company_id.to_s}],
@@ -363,6 +388,88 @@ module ObjectPostSearch
         }
     }.to_json
   end
+
+  def create_person_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s,
+            "name" => "QA Test Person #{num}",
+
+            "misspelledNames" => ["misspelled name one"],
+            "description" => "person description"
+        },
+        "biography" => {
+            "profile" => "person profile",
+            "gender" => "male",
+            "birth" =>  {
+              # add name in update "name" => "birth name",
+              "date" => "1974-01-30",
+              "place" => "birth place"
+            }
+        }
+    }.to_json
+  end
+
+  def create_character_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s,
+            "name" => "QA Test Character #{num}",
+            "alternateNames" => ["alt name one"],
+            "firstAppearance" => "first appearance",
+            # add description in update "description" => "character description"
+        },
+        "biography" => {
+            # add in update "base" => "character base",
+            "profile" => "character profile",
+            "identity" => "character identity"
+        }
+    }.to_json
+  end
+
+  def create_roletype_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s,
+            "name" => "QA Test Role #{num}",
+        }
+    }.to_json
+  end
+
+  def create_show_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s,
+            "name" => "QA Test Show #{num}",
+            "shortDescription" => "short description",
+            "alternateNames" => ["alt name one"]
+        }
+    }.to_json
+  end
+
+  def create_season_body(slug,show_id)
+    {
+      "metadata" => {
+          "order" => 1,
+          "slug" => slug.to_s,
+          "show" => {"showId"=>show_id.to_s}
+        }
+    }.to_json
+  end
+
+  def create_role_body(num,slug,movie_id,character_id,roletype_id,game_id,book_id,person_id)
+    {
+        "metadata" => {
+            "lead" => false,
+            "movie" => {"movieId" => movie_id.to_s},
+            "character" => {"characterId" => character_id.to_s},
+            "roleType" => {"roleTypeId" => roletype_id.to_s},
+            "game" => {"gameId" => game_id.to_s},
+            "book" => {"bookId" => book_id.to_s},
+            "person" => {"personId" => person_id.to_s}
+        },
+    }.to_json
+  end
   
   def update_game_body(slug)
     {
@@ -471,6 +578,62 @@ module ObjectPostSearch
         "metadata" => {
             "slug" => slug.to_s+"-updated", #changed
             "order" => 11 #added
+        }
+    }.to_json
+  end
+
+  def update_person_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s+"-updated", #changed
+            "name" => "QA Test Person #{num} updated", #changed
+
+            "misspelledNames" => ["misspelled name one updated", "misspelled name two"], #changed
+            "description" => "person description updated" #changed
+        },
+    }.to_json
+  end
+
+  def update_character_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s+"-updated", #changed
+            "name" => "QA Test Character #{num} updated", #changed
+            "alternateNames" => ["alt name one updated", "alt name two"], #changed
+            "firstAppearance" => "first appearance updated", #changed
+            "description" => "character description" #added
+        }
+    }.to_json
+  end
+
+  def update_roletype_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s+"-updated", #changed
+            "name" => "QA Test Role #{num} updated", #changed
+        }
+    }.to_json
+  end
+
+  def update_show_body(num,slug)
+    {
+        "metadata" => {
+            "slug" => slug.to_s+"-updated", #changed,
+            "name" => "QA Test Show #{num} updated", #changed,
+            "shortDescription" => "short description updated", #changed
+            "description" => "description", #added
+            "alternateNames" => ["alt name one","two"], #changed
+            "commonName" => "common name", #added
+            "misspelledNames" => ['misspelled one','two'] #added
+        }
+    }.to_json
+  end
+
+  def update_season_body(slug)
+    {
+        "metadata" => {
+            "order" => 2, #changed
+            "slug" => slug.to_s+"-updated", #changed
         }
     }.to_json
   end

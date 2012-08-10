@@ -1,0 +1,308 @@
+require 'rspec'
+require 'nokogiri'
+require 'configuration'
+require 'rest_client'
+require 'json'
+require 'assert'
+
+describe "Movie Migration /release data" do
+
+  def movie_search(index,count)
+    {
+        "rules"=>[
+            {
+                "field"=>"metadata.movie.movieId",
+                "condition"=>"exists",
+                "value"=>""
+            }
+        ],
+        "startIndex"=>index,
+        "count"=>count,
+    }.to_json
+  end
+
+  %w(0,200,400).each do |index|
+  it "should pass" do
+    valid_movie_types = %w(theater on-demand made-for-tv direct-to-video)
+    valid_movie_region = %w(US UK AU IE CA)
+    puts ""
+    url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/search?q="+movie_search(index,200).to_s
+    url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      response = RestClient.get url
+    rescue => e
+      raise Exception.new(e.message)
+    end
+    data = JSON.parse(response.body)
+
+    data['data'].each do |v3|
+      release_id = v3['releaseId']
+      id = v3['metadata']['legacyId']
+      v1_response = RestClient.get "http://content-api.ign.com/v1/objects/#{id}.json?projection=full"
+      v1 = JSON.parse(v1_response.body)
+
+      #v3 metdadata.state should == published
+      begin
+        v3['metadata']['state'].should == 'published'
+      rescue
+        puts "v3 state not == published"
+        puts release_id
+      end
+
+      #v3 metadata.releaseDate.date should == v1
+      begin
+        if v1['object'].has_key?('releaseDate')
+          v3['metadata']['releaseDate']['date'].to_s.should == v1['object']['releaseDate'].match(/\A\d{4}-\d{2}-\d{2}/).to_s
+        end
+      rescue
+        puts "v1-v3 releaseDate-match failure"
+        puts release_id
+        puts v1['object']['releaseDate'].match(/\A\d{4}-\d{2}-\d{2}/).to_s
+        puts v3['metadata']['releaseDate']['date'].to_s
+      end
+
+      #v3 metadata.name should not be blank
+      begin
+        v3['metadata']['name'].delete('^0-9a-zA-Z').length.should > 0
+      rescue
+        puts "blank name in v3"
+        puts release_id
+      end
+
+      #v3 movie.movieId should be 24 char hash
+      begin
+        release_id.match(/^[0-9a-f]{24,32}$/).should be_true
+      rescue
+        puts "v3 movieId not 24 char hash"
+        puts release_id
+      end
+
+      #v3 embedded legacyId should be same as outer
+      begin
+        v3['metadata']['movie']['metadata']['legacyId'].should == id
+      rescue
+        puts "both v3 legacyIds don't match"
+        puts release_id
+      end
+
+      #v3 slug should not be blank
+      begin
+        v3['metadata']['movie']['metadata']['slug'].delete('^0-9a-z').length.should > 0
+      rescue
+        puts "blank v3 slug"
+        puts release_id
+      end
+
+      #v3 type should be valid
+      begin
+        v3['metadata']['movie']['metadata']['type'].delete('^a-z').length.should > 0
+        valid_movie_types.include?(v3['metadata']['movie']['metadata']['type']).should be_true
+      rescue
+        puts "invalid or blank v3 movie type"
+        puts release_id
+      end
+
+      #v3 metadata.region shouldn't be blank or invalid'
+      begin
+        v3['metadata']['region'].delete('^A-Z').length.should > 0
+        valid_movie_region.include?(v3['metadata']['region']).should be_true
+      rescue
+        puts "invalid or blank region"
+        puts release_id
+      end
+
+      begin
+
+      rescue
+
+      end
+
+      begin
+
+      rescue
+
+      end
+
+      begin
+
+      rescue
+
+      end
+
+
+
+    end
+
+  end;end
+=begin
+  it "should pass" do
+    url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/search?q="+movie_search(0,50).to_s
+    url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      response = RestClient.get url
+    rescue => e
+      raise Exception.new(e.message+" "+e.response.to_s)
+    end
+    data = JSON.parse(response.body)
+
+    data['data'].each do |movie|
+      movie_leg_id = movie['metadata']['movie']['metadata']['legacyId']
+      v3_data = movie
+      begin
+        v1_response = RestClient.get "http://content-api.ign.com/v1/objects/#{movie_leg_id}.json?projection=full"
+      rescue
+        puts "v1 GET fail"
+        puts movie
+      end
+      v1_data = JSON.parse(v1_response.body)
+      #description/synopsis
+      #video trailer
+      #release date
+      # outside legacyId
+      begin
+        v1_data['object']['@name'].should == v3_data['metadata']['name']
+      rescue
+        puts "name fail"
+        puts "releaseId #{movie['releaseId']}"
+        puts v3_data['metadata']['movie']['metadata']['legacyId']
+        puts v1_data['object']['@name']
+        puts v3_data['metadata']['name']
+        puts ""
+      end
+=begin
+      if v1_data['object'].has_key?('description')
+        begin
+          v1_data['object']['description'].should == v3_data['content']['synopsis']
+        rescue
+          puts "description fail"
+          puts "releaseId #{movie['releaseId']}"
+          puts v3_data['metadata']['movie']['metadata']['legacyId']
+          puts v1_data['object']['description']
+          puts v3_data['content']['synopsis']
+          puts ""
+        end
+      end
+
+      if v1_data['object'].has_key?('videoGalleryUrl')
+        begin
+          v1_data['object']['videoGalleryUrl'].should == v3_data['legacyData']['videoTrailerUrl']
+        rescue
+          puts "video trailer fail"
+          puts "releaseId #{movie['releaseId']}"
+          puts v3_data['metadata']['movie']['metadata']['legacyId']
+          puts v1_data['object']['videoGalleryUrl']
+          puts v3_data['legacyData']['videoTrailerUrl']
+          puts ""
+        end
+      end
+
+      if v1_data['object'].has_key?('releaseDate')
+        begin
+          v1_data['object']['releaseDate'].match(/\A\d{4}-\d{2}-\d{2}/).should == v3_data['metadata']['releaseDate']['date']
+        rescue
+          puts "video trailer fail"
+          puts "releaseId #{movie['releaseId']}"
+          puts v3_data['metadata']['movie']['metadata']['legacyId']
+          puts v1_data['object']['releaseDate']
+          puts v3_data['metadata']['releaseDate']['date']
+          puts ""
+        end
+      end
+
+      v3_data['metadata']['movie']['metadata']['legacyId'].should == v3_data['metadata']['legacyId']
+
+    end
+  end
+=end
+end
+=begin
+describe "Movie Migration /movie data", :basic => true do
+
+  it "should pass" do
+
+
+    valid_movie_types = %w(theater on-demand made-for-tv direct-to-video)
+
+    start_index = 1200
+
+    while start_index < 2000
+
+      url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?count=200&startIndex=#{start_index}"
+      response = RestClient.get url
+      data = JSON.parse(response.body)
+
+      data['data'].each do |movie|
+
+        begin
+          movie['movieId'].match(/^[0-9a-f]{24}$/).should be_true
+        rescue
+          puts "movieId failure at url #{url}"
+          puts movie.to_s
+          puts ""
+        end
+
+        begin
+          movie['metadata']['legacyId'].to_s.delete('^0-9').length.should > 1
+        rescue
+          puts "legacyId failure at url #{url}"
+          puts movie.to_s
+          puts ""
+        end
+
+        begin
+          movie['metadata']['slug'].delete('^a-z0-9').length.should > 0
+        rescue
+          puts "slug failure at url #{url}"
+          puts movie.to_s
+          puts ""
+        end
+
+        begin
+          valid_movie_types.include?(movie['metadata']['type']).should be_true
+        rescue
+          puts "type failure at url #{url}"
+          puts movie.to_s
+          puts ""
+        end
+
+        begin
+          ['createdAt','updatedAt'].each do |val|
+              movie['system'][val].match(/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d/)
+            end
+        rescue
+          puts "system data failure at url #{url}"
+          puts movie.to_s
+          puts ""
+        end
+
+        if movie['metadata'].has_key?('legacyId')
+        begin
+          movie_id = movie['metadata']['legacyId']
+          # GET v1 DATA
+          v1_response = RestClient.get "http://content-api.ign.com/v1/objects/#{movie_id}.json?projection=full"
+          v1_data = JSON.parse(v1_response.body)
+          v1_data['object']['@id'].to_s.should == movie['metadata']['legacyId'].to_s
+
+          v1_data['object']['typeName'].should == 'movies'
+          v1_data['object']['@name'].gsub(' ','-').delete('^0-9A-Z-a-z').downcase.should == movie['metadata']['slug']
+        rescue
+          puts "v1-v3 comparison failure at url #{url}"
+          puts movie_id
+          v1_data['object']['@id']
+          puts movie['metadata']['legacyId']
+          puts v1_data['object']['@name']
+          puts movie['metadata']['slug']
+          puts v1_data['object']['typeName']
+          puts ""
+        end
+        end
+      end
+
+      start_index = start_index + 200
+      puts "."
+
+    end
+
+  end
+end
+=end

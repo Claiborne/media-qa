@@ -9,33 +9,35 @@ include Assert
 
 ########################### BEGIN REQUEST BODY METHODS #############################
 
-def release_search_smoke
-  {
-    "rules"=>[
-      {
-        "field"=>"hardware.platform.metadata.slug",
-        "condition"=>"term",
-        "value"=>"xbox-360"
-      }
-    ],
-    "matchRule"=>"matchAll",
-    "startIndex"=>0,
-    "count"=>75,
-    "sortBy"=>"metadata.releaseDate.date",
-    "sortOrder"=>"desc",
-    "states"=>["published"],
-    "regions"=>["US"]
-  }.to_json
-end
+module V3ObjectGeneralPostSearch
+  def self.release_search_smoke
+    {
+      "rules"=>[
+        {
+          "field"=>"hardware.platform.metadata.slug",
+          "condition"=>"term",
+          "value"=>"xbox-360"
+        }
+      ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>0,
+      "count"=>75,
+      "sortBy"=>"metadata.releaseDate.date",
+      "sortOrder"=>"desc",
+      "states"=>["published"],
+      "regions"=>["US"]
+    }.to_json
+  end
 
-def should_return_405(url)
-  RestClient.post url, release_search_smoke, :content_type => "application/json"
+  def self.should_return_405(url)
+    RestClient.post url, release_search_smoke, :content_type => "application/json"
+  end
 end
 
 ############################ BEGIN SPEC #################################### 
 
 
-describe "V3 Object API -- Post Search for Published 360 Releases: #{release_search_smoke}", :error => true do
+describe "V3 Object API -- Post Search for Published 360 Releases: #{V3ObjectGeneralPostSearch.release_search_smoke}", :error => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -56,7 +58,7 @@ describe "V3 Object API -- Post Search for Published 360 Releases: #{release_sea
   end
   
   it "should return 405" do
-    expect { should_return_405(@url) }.to raise_error(RestClient::MethodNotAllowed)
+    expect { V3ObjectGeneralPostSearch.should_return_405(@url) }.to raise_error(RestClient::MethodNotAllowed)
   end
   
 end

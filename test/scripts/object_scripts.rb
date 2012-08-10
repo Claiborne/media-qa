@@ -3,11 +3,6 @@ require 'json'
 
 @token = '2b405d3ee81080c402f9de4897a377056c86f1bb'
 
-
-{
-  
-}.to.json
-
 def new_release_min
   {
       "metadata" => {
@@ -324,10 +319,6 @@ def testing
   }.to_json
 end
 
-
-
-
-
 def review_index
   
   # www.ign.com/games/reviews
@@ -368,9 +359,21 @@ end
 def editors_choice_index
   
   # www.ign.com/games/editors-choice
-  
-  
-  
+
+end
+
+def movie_search
+  {
+      "rules"=>[
+          {
+              "field"=>"metadata.movie.movieId",
+              "condition"=>"exists",
+              "value"=>""
+          }
+      ],
+      "startIndex"=>0,
+      "count"=>200,
+  }.to_json
 end
 
 #@url = "http://10.92.218.26:8080/releases/4f8e020d99e7ba201065dc8b"
@@ -390,9 +393,10 @@ File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@respon
 #@url = "http://10.92.218.26:8080/releases/search"
 
 #@url = "http://10.92.218.26:8080/releases/search"
-@url = "http://apis.lan.ign.com/object/v3/releases/search?q="+return_stuff.to_s
-@url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
 
+
+@url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/search?q="+movie_search.to_s
+@url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
 begin
   @response = RestClient.get @url
 rescue => e
@@ -400,6 +404,7 @@ rescue => e
 end
 @data = JSON.parse(@response.body)
 File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@response.to_s) }
+
 #puts"DATA"
 #puts"-------------------------"
 #puts @data
