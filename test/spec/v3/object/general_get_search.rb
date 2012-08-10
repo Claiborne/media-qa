@@ -16,6 +16,13 @@ class Me3GameId
   def self.me3_game_id
     @me3_game_id
   end
+
+  @dark_knight_legacy_id = get_movie_legacy_id('the-dark-knight-rises')
+
+  def self.dark_knight_legacy_id
+    @dark_knight_legacy_id
+  end
+
   
 end
 
@@ -193,18 +200,62 @@ class GeneralGetSearchHelperMethods
     }.to_json
   end
 
-    def self.movies_by_type(type)
+    def self.search_movies_by_type(type)
       {
           "rules"=>[
               {
-                  "field"=>"metadata.type",
+                  "field"=>"metadata.movie.metadata.type",
                   "condition"=>"term",
                   "value"=>type.to_s
               }
           ],
           "matchRule"=>"matchAll",
           "startIndex"=>0,
-          "count"=>25
+          "count"=>55
+      }.to_json
+    end
+
+    def self.search_movie_by_legacy_id(id)
+      {
+          "rules"=>[
+              {
+                  "field"=>"metadata.legacyId",
+                  "condition"=>"term",
+                  "value"=>id
+              }
+          ]
+      }.to_json
+    end
+
+    def self.search_movie_by_legacy_id_embedded(id)
+      {
+          "rules"=>[
+              {
+                  "field"=>"metadata.movie.metadata.legacyId",
+                  "condition"=>"term",
+                  "value"=>id
+              }
+          ]
+      }.to_json
+    end
+
+    def self.search_movie_by_genre(genre)
+      {
+          "rules"=>[
+              {
+                  "field"=>"metadata.movie.slug",
+                  "condition"=>"exists",
+                  "value"=>""
+              },
+              {
+                  "field"=>"content.primaryGenre.slug",
+                  "condition"=>"term",
+                  "value"=>genre
+              }
+          ],
+          "matchRule"=>"matchAll",
+          "startIndex"=>0,
+          "count"=>200
       }.to_json
     end
 
@@ -777,12 +828,55 @@ end
 ################################################################
 
 ["3ds,nds","xbox-360,pc,ps3","ps,ps2"].each do |in_val|
-describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug','notIn')}" do
+  describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug','notIn')}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug',"notIn").to_s
+      @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    after(:all) do
+
+    end
+
+    it_behaves_like "v3 object general get search common checks", 60
+
+    in_val.split(",").each do   |slug|
+      it "should not return any releases with a hardware.platform.metadata.slug value of #{slug}" do
+        @data['data'].each do |release|
+          release['hardware']['platform']['metadata']['slug'].should_not == slug
+        end
+      end
+    end
+
+  end
+end
+
+################################################################
+
+%w(theater on-demand made-for-tv direct-to-video).each do |movie_type|
+describe "V3 Object API -- GET Search - Search Movies By Type using: #{GeneralGetSearchHelperMethods.search_movies_by_type(movie_type)}", :stg => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug',"notIn").to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_movies_by_type(movie_type).to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -804,15 +898,95 @@ describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{Gen
 
   end
 
-  it_behaves_like "v3 object general get search common checks", 60
+  it_behaves_like "v3 object general get search common checks", 55
 
-  in_val.split(",").each do   |slug|
-    it "should not return any releases with a hardware.platform.metadata.slug value of #{slug}" do
-      @data['data'].each do |release|
-        release['hardware']['platform']['metadata']['slug'].should_not == slug
-      end
+  it "should return only releases with a metadata.movie.metadata.type with a value of '#{movie_type}'" do
+    @data['data'].each do |movie|
+      movie['metadata']['movie']['metadata']['type'].should == movie_type
     end
   end
 
+end
+end
+
+################################################################
+
+[GeneralGetSearchHelperMethods.search_movie_by_legacy_id(Me3GameId.dark_knight_legacy_id),GeneralGetSearchHelperMethods.search_movie_by_legacy_id_embedded(Me3GameId.dark_knight_legacy_id)].each do |call|
+describe "V3 Object API -- GET Search - Search Movies By legacyId using: #{call}", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+call.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it "should return one releases" do
+    @data['data'].length.should == 1
+  end
+
+  it "should return a release with a metadata.name value of 'The Dark Knight Rises'" do
+    @data['data'][0]['metadata']['name'].should == "The Dark Knight Rises"
+  end
+end
+end
+
+################################################################
+
+%w(action comedy drama thriller).each do |genre|
+[GeneralGetSearchHelperMethods.search_movie_by_genre(genre)].each do |call|
+describe "V3 Object API -- GET Search - Search Movies By Genre using: #{call}", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+call.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it "should return only movies with a content.primaryGenre.slug value of 'action'" do
+    puts @data.length.to_s+": THIS IS HOW MANY********"
+    @data['data'].each do |movie|
+      movie['metadata']['movie'].has_key?('movieId').should be_true
+      movie['content']['primaryGenre']['slug'].should == genre
+    end
+  end
+end
 end
 end
