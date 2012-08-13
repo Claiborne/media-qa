@@ -871,7 +871,7 @@ end
 ################################################################
 
 %w(theater on-demand made-for-tv direct-to-video).each do |movie_type|
-describe "V3 Object API -- GET Search - Search Movies By Type using: #{GeneralGetSearchHelperMethods.search_movies_by_type(movie_type)}", :stg => true do
+describe "V3 Object API -- GET Search - Search Movies By Type using: #{GeneralGetSearchHelperMethods.search_movies_by_type(movie_type)}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -912,7 +912,7 @@ end
 ################################################################
 
 [GeneralGetSearchHelperMethods.search_movie_by_legacy_id(Me3GameId.dark_knight_legacy_id),GeneralGetSearchHelperMethods.search_movie_by_legacy_id_embedded(Me3GameId.dark_knight_legacy_id)].each do |call|
-describe "V3 Object API -- GET Search - Search Movies By legacyId using: #{call}", :stg => true do
+describe "V3 Object API -- GET Search - Search Movies By legacyId using: #{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -940,7 +940,7 @@ describe "V3 Object API -- GET Search - Search Movies By legacyId using: #{call}
   end
 
   it "should return one releases" do
-    @data['data'].length.should == 1
+    @data['data'].length.should == 3
   end
 
   it "should return a release with a metadata.name value of 'The Dark Knight Rises'" do
@@ -953,7 +953,7 @@ end
 
 %w(action comedy drama thriller).each do |genre|
 [GeneralGetSearchHelperMethods.search_movie_by_genre(genre)].each do |call|
-describe "V3 Object API -- GET Search - Search Movies By Genre using: #{call}", :stg => true do
+describe "V3 Object API -- GET Search - Search Movies By Genre using: #{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"

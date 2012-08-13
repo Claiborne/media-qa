@@ -54,7 +54,7 @@ describe "V3 Object API -- Releases Query Tests -- /releases?count=35&startIndex
     @data['data'].length.should == 35
   end
   
-  ['releaseId','metadata','content','hardware','system'].each do |data|
+  ['releaseId','metadata','content','system'].each do |data|
     it "should return #{data} data with a non-nil, not-blank value for all releases" do
       @data['data'].each do |release|
         release.has_key?(data).should be_true
