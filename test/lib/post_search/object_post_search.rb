@@ -450,7 +450,6 @@ module ObjectPostSearch
   def create_season_body(slug,show_id)
     {
       "metadata" => {
-          "order" => 1,
           "slug" => slug.to_s,
           "show" => {"showId"=>show_id.to_s}
         }
@@ -577,7 +576,6 @@ module ObjectPostSearch
     {
         "metadata" => {
             "slug" => slug.to_s+"-updated", #changed
-            "order" => 11 #added
         }
     }.to_json
   end

@@ -939,7 +939,7 @@ describe "V3 Object API -- GET Search - Search Movies By legacyId using: #{call}
 
   end
 
-  it "should return one releases", :prd => true do
+  it "should return #{k} releases", :prd => true do
     if  k == 1
       @data['data'].length.should == 1
     else

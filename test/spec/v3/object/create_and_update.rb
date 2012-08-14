@@ -1532,10 +1532,6 @@ describe "V3 Object API -- Check Nested Updates Reflect in Role", :stg => true d
     @book_data['slug'].to_s.match(/updated/).should be_true
   end
 
-  it "should return the updated metadata.book.metadata.order value" do
-    @book_data['order'].should == 11
-  end
-
   it "should return the updated metadata.person.metadata.slug value" do
     @person_data['slug'].to_s.match(/updated/).should be_true
   end
@@ -1604,10 +1600,6 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
 
   it "should return the updated metadata.book.metadata.slug value" do
     @data['metadata']['book']['metadata']['slug'].to_s.match(/updated/).should be_true
-  end
-
-  it "should return the updated metadata.book.metadata.order value" do
-    @data['metadata']['book']['metadata']['order'].should == 11
   end
 
   it "should return the updated metadata.book.metadata.volume.metadata.name value" do

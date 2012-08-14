@@ -123,13 +123,15 @@ end
 
 ############# NON-SPEC SCRIPTS #############
 
-# CHECK FOR MISSING REVIEW AND PREVIEW DATA IN V1 AND V3
+# ADD OBJECTS TO OBJECT-API NEW BUILDS OR REFRESHES
 
 desc "Add data comic, stars, and tv data to object-api"
 RSpec::Core::RakeTask.new('addobject') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/scripts/add_object_data.rb'
 end
+
+# CHECK FOR MISSING REVIEW AND PREVIEW DATA IN V1 AND V3
 
 desc "Run review data tests"
 RSpec::Core::RakeTask.new('gamedata') do |t|
