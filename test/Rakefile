@@ -63,12 +63,6 @@ RSpec::Core::RakeTask.new('v3object') do |t|
     t.pattern = 'spec/v3/object/*.rb'
 end
 
-desc "Run review data tests"
-RSpec::Core::RakeTask.new('gamedata') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/review_data/*.rb' 
-end
-
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"
@@ -128,6 +122,20 @@ RSpec::Core::RakeTask.new('affinityapi') do |t|
 end
 
 ############# NON-SPEC SCRIPTS #############
+
+# CHECK FOR MISSING REVIEW AND PREVIEW DATA IN V1 AND V3
+
+desc "Add data comic, stars, and tv data to object-api"
+RSpec::Core::RakeTask.new('addobject') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/scripts/add_object_data.rb'
+end
+
+desc "Run review data tests"
+RSpec::Core::RakeTask.new('gamedata') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/scripts/review_data.rb'
+end
 
 # RUN LINK CHECKER APP
 

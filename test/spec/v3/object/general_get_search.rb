@@ -911,7 +911,7 @@ end
 
 ################################################################
 
-[GeneralGetSearchHelperMethods.search_movie_by_legacy_id(Me3GameId.dark_knight_legacy_id),GeneralGetSearchHelperMethods.search_movie_by_legacy_id_embedded(Me3GameId.dark_knight_legacy_id)].each do |call|
+{1=>GeneralGetSearchHelperMethods.search_movie_by_legacy_id(Me3GameId.dark_knight_legacy_id),2=>GeneralGetSearchHelperMethods.search_movie_by_legacy_id_embedded(Me3GameId.dark_knight_legacy_id)}.each do |k,call|
 describe "V3 Object API -- GET Search - Search Movies By legacyId using: #{call}" do
 
   before(:all) do
@@ -939,8 +939,16 @@ describe "V3 Object API -- GET Search - Search Movies By legacyId using: #{call}
 
   end
 
-  it "should return one releases" do
-    @data['data'].length.should == 3
+  it "should return one releases", :prd => true do
+    if  k == 1
+      @data['data'].length.should == 1
+    else
+      @data['data'].length.should == 3
+    end
+  end
+
+  it "should return one releases", :stg => true do
+      @data['data'].length.should == 1
   end
 
   it "should return a release with a metadata.name value of 'The Dark Knight Rises'" do
@@ -981,7 +989,6 @@ describe "V3 Object API -- GET Search - Search Movies By Genre using: #{call}" d
   end
 
   it "should return only movies with a content.primaryGenre.slug value of 'action'" do
-    puts @data.length.to_s+": THIS IS HOW MANY********"
     @data['data'].each do |movie|
       movie['metadata']['movie'].has_key?('movieId').should be_true
       movie['content']['primaryGenre']['slug'].should == genre

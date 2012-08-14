@@ -134,7 +134,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200" do
     @data['data'].length.should == 200
   end
   
-  ['releaseId','metadata','hardware','system'].each do |data|
+  ['releaseId','metadata','system'].each do |data|
     it "should return #{data} data with a non-nil, not-blank value for all releases" do
       @data['data'].each do |release|
         begin
@@ -1028,7 +1028,6 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware?count=200" do
   end
   
 end
-
 
 ###################################################
 
