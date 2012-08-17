@@ -259,6 +259,80 @@ class GeneralGetSearchHelperMethods
       }.to_json
     end
 
+    def self.search_books
+      {
+        "rules"=>[
+        {
+            "field"=>"metadata.book.bookId",
+            "condition"=>"exists",
+            "value"=>""
+        }
+        ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>200
+      }.to_json
+    end
+
+    def self.search_books_by_legacy_id
+      {
+          "rules"=>[
+              {
+                  "field"=>"metadata.book.metadata.legacyId",
+                  "condition"=>"term",
+                  "value"=>138260
+              }
+          ]
+      }.to_json
+    end
+
+    def self.search_books_by_slug
+      {
+          "rules"=>[
+              {
+                  "field"=>"metadata.book.metadata.slug",
+                  "condition"=>"term",
+                  "value"=>"batman-the-dark-knight-vol-2-issue-11"
+              }
+          ]
+      }.to_json
+    end
+
+    def self.search_books_by_volume
+      {
+          "rules"=>[
+              {
+                  "field"=>"metadata.book.bookId",
+                  "condition"=>"exists",
+                  "value"=>""
+              },
+              {
+                  "field"=>"metadata.book.metadata.volume.legacyId",
+                  "condition"=>"term",
+                  "value"=>110600
+              }
+          ],
+          "matchRule"=>"matchAll",
+          "startIndex"=>0,
+          "count"=>200
+      }.to_json
+    end
+
+    def self.search_volumes
+      {
+          "rules"=>[
+              {
+                  "field"=>"metadata.book.metadata.volume.volumeId",
+                  "condition"=>"exists",
+                  "value"=>""
+              }
+          ],
+          "matchRule"=>"matchAll",
+          "startIndex"=>0,
+          "count"=>200
+      }.to_json
+    end
+
 end
 
   ########################### BEGIN ASSERTION METHODS #############################
@@ -939,16 +1013,12 @@ describe "V3 Object API -- GET Search - Search Movies By legacyId using: #{call}
 
   end
 
-  it "should return #{k} releases", :prd => true do
+  it "should return #{k} releases" do
     if  k == 1
       @data['data'].length.should == 1
     else
       @data['data'].length.should == 3
     end
-  end
-
-  it "should return one releases", :stg => true do
-      @data['data'].length.should == 1
   end
 
   it "should return a release with a metadata.name value of 'The Dark Knight Rises'" do
@@ -997,3 +1067,86 @@ describe "V3 Object API -- GET Search - Search Movies By Genre using: #{call}" d
 end
 end
 end
+
+################################################################
+
+describe "V3 Object API -- GET Search - Search Books using: #{GeneralGetSearchHelperMethods.search_books}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_books.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it "should return 200 entries" do
+    @data['data'].length.should == 200
+  end
+
+  it "should return a metadata.book.bookId value that is a 24-character hash for all releases" do
+    @data['data'].each do |book|
+      book['metadata']['book']['bookId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+end
+
+################################################################
+=begin
+describe "V3 Object API -- GET Search - Search Books using: #{}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_books.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it "should return 200 entries" do
+    @data['data'].length.should == 200
+  end
+
+  it "should return a metadata.book.bookId value that is a 24-character hash for all releases" do
+    @data['data'].each do |book|
+      book['metadata']['book']['bookId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+end
+=end

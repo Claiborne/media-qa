@@ -309,7 +309,7 @@ As a mysterious figure slinks through the halls of Arkham Asylum, Batman must fi
   def book(volume_id)
     {
         "metadata"=> {
-            "slug"=> "batman-the-dark-knight-vol-2-issue-11",
+            "slug"=> "batman-the-dark-knight-2011-11",
             "legacyId"=> 138260,
             "order"=> 11,
             "volume"=> {

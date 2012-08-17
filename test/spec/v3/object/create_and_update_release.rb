@@ -371,7 +371,7 @@ describe "V3 Object API -- Update Published", :stg => true do
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/slug/adventure").body)['genreId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/slug/xbox-360").body)['hardwareId'].to_s,
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/slug/the-dark-knight").body)['movieId'].to_s,
-        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/slug/batman-the-dark-knight-vol-2-issue-11").body)['bookId'].to_s
+        JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/slug/batman-the-dark-knight-2011-11").body)['bookId'].to_s
       ),
       :content_type => "application/json"
     @data = JSON.parse(@response.body)
@@ -514,8 +514,8 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
     @data['metadata']['book']['bookId'].match(/^[0-9a-f]{24}$/).should be_true
   end
 
-  it "should return a metadata.book.metadata.slug with a value of 'batman-the-dark-knight-vol-2-issue-11'" do
-    @data['metadata']['book']['metadata']['slug'].should == 'batman-the-dark-knight-vol-2-issue-11'
+  it "should return a metadata.book.metadata.slug with a value of 'batman-the-dark-knight-2011-11'" do
+    @data['metadata']['book']['metadata']['slug'].should == 'batman-the-dark-knight-2011-11'
   end
 
   it "should return the same metadata.book.metadata.slug & order values the book returns" do

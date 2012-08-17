@@ -165,7 +165,7 @@ describe "V3 Object API -- Update To Add All Objects To Role", :stg => true do
           JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/slug/batman").body)['characterId'].to_s,
           JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes/slug/actor").body)['roleTypeId'].to_s,
           JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/slug/mass-effect-3").body)['gameId'].to_s,
-          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/slug/batman-the-dark-knight-vol-2-issue-11").body)['bookId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/slug/batman-the-dark-knight-2011-11").body)['bookId'].to_s,
           JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/slug/christian-bale").body)['personId'].to_s,
       ), :content_type => "application/json"
     @data = JSON.parse(@response.body)

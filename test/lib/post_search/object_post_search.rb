@@ -572,10 +572,12 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def update_book_body(slug)
+  def update_book_body(slug, add1, add2)
     {
         "metadata" => {
             "slug" => slug.to_s+"-updated", #changed
+            "additionalVolumes" => [{"volumeId"=> add1},{"volumeId"=> add2}]
+
         }
     }.to_json
   end

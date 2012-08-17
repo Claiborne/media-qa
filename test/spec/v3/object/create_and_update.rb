@@ -1214,9 +1214,11 @@ describe "V3 Object API -- Update Book", :stg => true do
     @config = Configuration.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/#{UpdateHelperVars.return_book_id}?oauth_token=#{UpdateHelperVars.return_token}"
     begin
-      @response = RestClient.put @url, update_book_body(UpdateHelperVars.return_object_slug('book',UpdateHelperVars.return_number)), :content_type => "application/json"
+      vol1 = JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/slug/100-bullets").body)['volumeId']
+      vol2 = JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/slug/batman-the-return").body)['volumeId']
+      @response = RestClient.put @url, update_book_body(UpdateHelperVars.return_object_slug('book',UpdateHelperVars.return_number), vol1, vol2), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message)
     end
     @data = JSON.parse(@response.body)
 
@@ -1451,6 +1453,11 @@ describe "V3 Object API -- Check Nested Updates Reflect in Book", :stg => true d
     @book_data['misspelledNames'].should == ['misspelled one updated','misspelled two updated','misspelled three updated']
   end
 
+  it "should return the updated metadata.additionalVolumes values" do
+    @data['metadata']['additionalVolumes'][0]['metadata']['slug'].should == '100-bullets'
+    @data['metadata']['additionalVolumes'][1]['metadata']['slug'].should == 'batman-the-return'
+  end
+
 end
 
 ####################################################################
@@ -1600,6 +1607,12 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
 
   it "should return the updated metadata.book.metadata.slug value" do
     @data['metadata']['book']['metadata']['slug'].to_s.match(/updated/).should be_true
+  end
+
+
+  it "should return the updated metadata.book.metadata.additionalVolumes values" do
+    @data['metadata']['book']['metadata']['additionalVolumes'][0]['metadata']['slug'].should == '100-bullets'
+    @data['metadata']['book']['metadata']['additionalVolumes'][1]['metadata']['slug'].should == 'batman-the-return'
   end
 
   it "should return the updated metadata.book.metadata.volume.metadata.name value" do

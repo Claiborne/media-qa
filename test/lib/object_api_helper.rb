@@ -101,13 +101,7 @@ module ObjectApiHelper
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/movies/slug/#{slug}"
-    begin
-      response = RestClient.get url
-    rescue => e
-      #TODO bad back for stg only test case
-      return '500db90179ab2b4cce8c6610'
-      #raise Exception.new(e.message+" "+url+" "+e.response.to_s)
-    end
+    response = RestClient.get url
     data = JSON.parse(response.body)
     data['movieId'].to_s
   end #end def
@@ -116,13 +110,7 @@ module ObjectApiHelper
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/movies/slug/#{slug}"
-    begin
-      response = RestClient.get url
-    rescue => e
-      #TODO bad back for stg only test case
-      return ''
-      #raise Exception.new(e.message+" "+url+" "+e.response.to_s)
-    end
+    response = RestClient.get url
     data = JSON.parse(response.body)
     data['metadata']['legacyId']
   end #end def
