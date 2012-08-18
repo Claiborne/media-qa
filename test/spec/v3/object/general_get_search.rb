@@ -292,7 +292,7 @@ class GeneralGetSearchHelperMethods
               {
                   "field"=>"metadata.book.metadata.slug",
                   "condition"=>"term",
-                  "value"=>"batman-the-dark-knight-vol-2-issue-11"
+                  "value"=>"batman-the-dark-knight-2011-11"
               }
           ]
       }.to_json
@@ -307,7 +307,7 @@ class GeneralGetSearchHelperMethods
                   "value"=>""
               },
               {
-                  "field"=>"metadata.book.metadata.volume.legacyId",
+                  "field"=>"metadata.book.metadata.volume.metadata.legacyId",
                   "condition"=>"term",
                   "value"=>110600
               }
@@ -1110,13 +1110,14 @@ describe "V3 Object API -- GET Search - Search Books using: #{GeneralGetSearchHe
 end
 
 ################################################################
-=begin
-describe "V3 Object API -- GET Search - Search Books using: #{}" do
+[GeneralGetSearchHelperMethods.search_books_by_legacy_id, GeneralGetSearchHelperMethods.search_books_by_slug].each do |call|
+
+ describe "V3 Object API -- GET Search - Search Books using: #{call}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_books.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{call}"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1138,15 +1139,105 @@ describe "V3 Object API -- GET Search - Search Books using: #{}" do
 
   end
 
-  it "should return 200 entries" do
-    @data['data'].length.should == 200
+  it "should return one release" do
+    @data['data'].length.should == 1
   end
 
-  it "should return a metadata.book.bookId value that is a 24-character hash for all releases" do
-    @data['data'].each do |book|
-      book['metadata']['book']['bookId'].match(/^[0-9a-f]{24}$/).should be_true
+  it "should return a book with a metadata.slug value of 'batman-the-dark-knight-2011-11'" do
+    @data['data'][0]['metadata']['book']['metadata']['slug'].should == 'batman-the-dark-knight-2011-11'
+  end
+
+  it "should return a book with a metadata.legacyId value of '138260'" do
+    @data['data'][0]['metadata']['book']['metadata']['legacyId'].should == 138260
+  end
+
+end
+end
+
+################################################################
+
+describe "V3 Object API -- GET Search - Search Volumes using: #{GeneralGetSearchHelperMethods.search_books_by_volume}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.search_books_by_volume}"
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it "should return at least one release" do
+    @data['data'].length.should > 0
+  end
+
+  it "should return a volume with a metadata.book.metadata.volume.metadata.slug value of 'batman-the-dark-knight-2011' for all releases" do
+    @data['data'].each do  |vol|
+      vol['metadata']['book']['metadata']['volume']['metadata']['slug'].should == 'batman-the-dark-knight-2011'
+    end
+  end
+
+  it "should return a volume with a metadata.book.metadata.volume.metadata.legacyId value of '110600' for all releases" do
+    @data['data'].each do  |vol|
+      vol['metadata']['book']['metadata']['volume']['metadata']['legacyId'].should == 110600
     end
   end
 
 end
-=end
+
+################################################################
+
+describe "V3 Object API -- GET Search - Search Volumes using: #{GeneralGetSearchHelperMethods.search_volumes}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.search_volumes}"
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it "should return 200 releases" do
+    @data['data'].length.should == 200
+  end
+
+  it "should return metadata.book.metadata.volume.volumeId value that is a 24-character hash for all releases" do
+    @data['data'].each do |vol|
+      vol['metadata']['book']['metadata']['volume']['volumeId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    end
+  end
+
+end
