@@ -19,6 +19,8 @@ class ObjectIds
   @action_genre_id = get_genre_id('action')
   @xbox_hardware_id = get_hardware_id('xbox-360')
   @movie_id = get_movie_id('the-dark-knight')
+  @book_id = get_book_id('batman-the-dark-knight-2011-11')
+  @volume_id = get_volume_id('batman-the-dark-knight-2011')
   
   def self.me3_release_ids
     @me3_release_ids
@@ -50,6 +52,14 @@ class ObjectIds
 
   def self.movie_id
     @movie_id
+  end
+
+  def self.book_id
+    @book_id
+  end
+
+  def self.volume_id
+    @volume_id
   end
 
 end
@@ -1130,7 +1140,9 @@ describe "V3 Object API -- Movies Smoke Tests -- /movies?count=200" do
     end
   end
 
-  it "should return at least 20 movies"
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
 
   ['movieId','metadata','system'].each do |data|
     it "should return #{data} data with a non-nil, non-blank value for all movies" do
@@ -1142,9 +1154,9 @@ describe "V3 Object API -- Movies Smoke Tests -- /movies?count=200" do
     end
   end
 
-  it "should return a movieId value that is a 24-character hash for all features" do
-    @data['data'].each do |feature|
-      feature['movieId'].match(/^[0-9a-f]{24}$/).should be_true
+  it "should return a movieId value that is a 24-character hash for all movies" do
+    @data['data'].each do |movie|
+      movie['movieId'].match(/^[0-9a-f]{24}$/).should be_true
     end
   end
 
@@ -1159,7 +1171,7 @@ describe "V3 Object API -- Movies Smoke Tests -- /movies?count=200" do
   end
 
   ['createdAt','updatedAt'].each do |data|
-    it "should return system.createdAt data with a non-nil, non-blank value for all features" do
+    it "should return system.createdAt data with a non-nil, non-blank value for all movies" do
       @data['data'].each do |movie|
         movie['system'].has_key?(data).should be_true
         movie['system'][data].should_not be_nil
@@ -1218,6 +1230,294 @@ end
       @data['metadata'].has_key?('type').should be_true
       @data['metadata']['type'].should_not be_nil
       @data['metadata']['type'].to_s.length.should > 0
+    end
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
+end
+
+"where am i - i am below this line changin movie to comic"
+
+###################################################
+
+describe "V3 Object API -- Books Smoke Tests -- /books?count=200" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/books?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  ['count','startIndex','endIndex','isMore'].each do |data|
+    it "should return '#{data}' data with a non-nil, non-blank value" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+    end
+  end
+
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
+
+  ['bookId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all books" do
+      @data['data'].each do |book|
+        book.has_key?(data).should be_true
+        book[data].should_not be_nil
+        book[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a bookId value that is a 24-character hash for all books" do
+    @data['data'].each do |book|
+      book['bookId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  %w(slug legacyId).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all books" do
+      @data['data'].each do |book|
+        book['metadata'].has_key?(data).should be_true
+        book['metadata'][data].should_not be_nil
+        book['metadata'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all books" do
+      @data['data'].each do |book|
+        book['system'].has_key?(data).should be_true
+        book['system'][data].should_not be_nil
+        book['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.book_id}","/slug/batman-the-dark-knight-2011-11"].each do |call|
+  describe "V3 Object API -- Books Smoke Tests -- /books#{call}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/books#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return a book with a bookId value of #{ObjectIds.book_id}" do
+      @data.has_key?('bookId').should be_true
+      @data['bookId'].should == ObjectIds.book_id
+    end
+
+    it "should return a book with a metadata.slug value of 'batman-the-dark-knight-2011-11'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('slug').should be_true
+      @data['metadata']['slug'].should == 'batman-the-dark-knight-2011-11'
+    end
+
+    it "should return metadata.legacyId data with a non-nil, non-blank value" do
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should_not be_nil
+      @data['metadata']['legacyId'].to_s.delete('^0-9').length.should > 0
+    end
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
+end
+
+###################################################
+
+describe "V3 Object API -- Volumes Smoke Tests -- /volumes?count=200" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/volumes?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  ['count','startIndex','endIndex','isMore'].each do |data|
+    it "should return '#{data}' data with a non-nil, non-blank value" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+    end
+  end
+
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
+
+  ['volumeId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all volumes" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a volumeId value that is a 24-character hash for all volumes" do
+    @data['data'].each do |vol|
+      vol['volumeId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  %w(name state slug type legacyId).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all volumes" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all volumes" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.volume_id}","/slug/batman-the-dark-knight-2011"].each do |call|
+  describe "V3 Object API -- Volume Smoke Tests -- /volumes#{call}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/volumes#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return a volume with a volumeId value of #{ObjectIds.volume_id}" do
+      @data.has_key?('volumeId').should be_true
+      @data['volumeId'].should == ObjectIds.volume_id
+    end
+
+    it "should return a volume with a metadata.slug value of 'batman-the-dark-knight-2011'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('slug').should be_true
+      @data['metadata']['slug'].should == 'batman-the-dark-knight-2011'
+    end
+
+    it "should return metadata.legacyId data with a non-nil, non-blank value" do
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should_not be_nil
+      @data['metadata']['legacyId'].to_s.delete('^0-9').length.should > 0
     end
 
     ['createdAt','updatedAt'].each do |data|

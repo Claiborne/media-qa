@@ -287,9 +287,9 @@ Upon his return to Gotham, he channeled his skills, his wealth, and his hatred o
   def volume
     {
         "metadata"=> {
-            "slug"=> "batman-the-dark-knight-vol-2",
+            "slug"=> "batman-the-dark-knight-2011",
             "legacyId"=> 110600,
-            "name"=> "Batman: The Dark Knight Vol. 2",
+            "name"=> "Batman: The Dark Knight [2011]",
             "type"=> "comic",
             "state"=> "published",
             "commonName"=> "Batman: The Dark Knight",

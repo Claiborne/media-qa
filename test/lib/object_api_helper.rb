@@ -114,5 +114,23 @@ module ObjectApiHelper
     data = JSON.parse(response.body)
     data['metadata']['legacyId']
   end #end def
+
+  def get_book_id(slug)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/books/slug/#{slug}"
+    response = RestClient.get url
+    data = JSON.parse(response.body)
+    data['bookId'].to_s
+  end #end def
+
+  def get_volume_id(slug)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/volumes/slug/#{slug}"
+    response = RestClient.get url
+    data = JSON.parse(response.body)
+    data['volumeId'].to_s
+  end #end def
   
 end
