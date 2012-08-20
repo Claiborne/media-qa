@@ -1448,7 +1448,7 @@ describe "V3 Object API -- Volumes Smoke Tests -- /volumes?count=200" do
     end
   end
 
-  %w(name state slug type legacyId).each do |data|
+  %w(name state slug legacyId).each do |data|
     it "should return metadata.#{data} data with a non-nil, non-blank value for all volumes" do
       @data['data'].each do |vol|
         vol['metadata'].has_key?(data).should be_true
