@@ -884,6 +884,14 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200" do
       genre['metadata']['slug'].to_s.length.should > 0
     end
   end
+
+  it "should return metadata.type data with a non-nil, non-blank value for all genres" do
+    @data['data'].each do |genre|
+      genre['metadata'].has_key?('type').should be_true
+      genre['metadata']['type'].should_not be_nil
+      genre['metadata']['type'].to_s.length.should > 0
+    end
+  end
   
   ['createdAt','updatedAt'].each do |data|
     it "should return system.createdAt data with a non-nil, non-blank value for all genres" do
