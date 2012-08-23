@@ -9,3 +9,249 @@ require 'json'
 include OpenPage
 include FeChecker
 
+%w(halo-4/xbox-360-110563 darksiders-ii/xbox-360-14336768).each do |url_slug|
+%w(www uk au).each do |domain_locale|
+
+describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = Configuration.new
+    @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
+    @url = "http://#{@base_url}/games/#{url_slug}"
+    @cookie =  get_international_cookie(domain_locale)
+    @doc = nokogiri_not_301_open(@url,@cookie)
+    @legacy_id = url_slug.match(/[0-9]{1,8}\z/)
+    case domain_locale
+      when 'www'
+        @locale = 'US'
+      when 'uk'
+        @locale = 'UK'
+      when 'au'
+        @locale = 'AU'
+      else
+        Exception.new 'Unable to set locale variable'
+    end
+
+    #articles = ({"matchRule"=>"matchAll","count"=>10,"rules"=>[{"field"=>"metadata.articleType","condition"=>"is","value"=>"article"},{"field"=>"legacyData.objectRelations","condition"=>"is","value"=>"#{@legacy_id}"},{"field"=>"categoryLocales","condition"=>"contains","value"=>"#{@locale.downcase}"}]}.to_json).to_s
+    articles = ({"matchRule"=>"matchAll","count"=>10,"rules"=>[{"field"=>"metadata.articleType","condition"=>"is","value"=>"article"},{"field"=>"legacyData.objectRelations","condition"=>"is","value"=>"#{@legacy_id}"}]}.to_json).to_s
+    articles = articles.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    videos =    ({"matchRule"=>"matchAll","prime"=>false,"networks"=>"ign","count"=>3,"startIndex"=>0,"states"=>"published","rules"=>[{"field"=>"objectRelations.legacyId","condition"=>"is","value"=>@legacy_id}],"fields"=>["metadata"]}.to_json).to_s
+    videos = videos.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    images = ({"matchRule"=>"matchAll","rules"=>[{"field"=>"legacyData.objectRelations","condition"=>"is","value"=>@legacy_id},{"field"=>"tags","condition"=>"containsOne","value"=>"gallery"}],"startIndex"=>0,"count"=>1,"sortBy"=>"system.createdAt","dateType"=>"system.createdAt","states"=>"published"}.to_json).to_s
+    images = images.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+
+    @images = (JSON.parse RestClient.get("http://apis.lan.ign.com/image/v3/images/search?q=#{images}").body)['data'][0]
+    @articles = (JSON.parse RestClient.get("http://apis.lan.ign.com/article/v3/articles/search?q=#{articles}").body)
+    @videos = (JSON.parse RestClient.get("http://apis.lan.ign.com/video/v3/videos/search?q=#{videos}").body)
+    @data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/releases/legacyId/#@legacy_id?metadata.region=#@locale").body)['data'][0]
+    @us_data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/releases/legacyId/#@legacy_id?metadata.region=US").body)['data'][0]
+    @all_data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/releases/legacyId/#@legacy_id").body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return the #{domain_locale} page" do
+    get_local(@base_url,@cookie).should == domain_locale
+  end
+
+  context "Object Header" do
+
+    it "should display text" do
+      check_display_text('div.contentHeaderNav')
+    end
+
+    it "should have a link" do
+      check_have_a_link('div.contentHeaderNav')
+    end
+
+    it "should display the same title name the object API returns" do
+      @doc.css('h2.contentTitle').text.strip.should == @data['metadata']['name']
+    end
+
+    it "should link to #{url_slug} in the title" do
+      @doc.css('h2.contentTitle a').attribute('href').to_s.match(url_slug).should be_true
+    end
+
+    it "should display the same platform the object API returns" do
+      @doc.css('div.contentPlatformsText').text.should == @data['hardware']['platform']['metadata']['name']
+    end
+
+    it "should display the same release data the object API returns" do
+      @doc.css('div.releaseDate strong').text.should == @data['metadata']['releaseDate']['display']
+    end
+
+    it "should include the follow social touch-point" do
+      @doc.at_css('div.myIgnFollowInstance').should be_true
+    end
+
+    if @locale == 'US'
+      it "should include the GameStop link" do
+        @doc.at_css("div[class='contentHead-gameStop contentHead-gameStopPrice'] a").should be_true
+      end
+    end
+
+    it "should include the Facebook Like button" do
+      @doc.at_css('div.fb-like iframe').attribute('src').to_s.match(/facebook.com/).should be_true
+    end
+
+  end
+
+  context "Object Navigation" do
+
+    it "should have at least eight links" do
+      @doc.css('ul.contentNav li a').count.should > 7
+    end
+
+    it "should display text for each link" do
+      check_display_text_for_each('ul.contentNav li a')
+    end
+
+    %w(games wikis videos images faqs cheats articles boards).each do |link|
+      it "should link to #{link}" do
+        @doc.at_css("ul.contentNav li a[href*='"+link.to_s+"']").should be_true
+      end
+    end
+
+    it "should not contain any broken links" do
+      check_links_not_301_home('ul.contentNav')
+    end
+
+  end
+
+  context "Highlight Area" do
+
+    it "should display the same image the object API returns" do
+      if @data['legacyData'].has_key?('boxArt')
+        @doc.css('div.mainBoxArt img').attribute('src').to_s.should == @data['legacyData']['boxArt'][2]['url']
+      elsif @us_data['legacyData'].has_key?('boxArt')
+        @doc.css('div.mainBoxArt img').attribute('src').to_s.should == @us_data['legacyData']['boxArt'][2]['url']
+      else
+      end
+    end
+
+    it "should display a highlight image" do
+      @doc.css("div[class*='contentBackground grid_16']").attribute('style').to_s.match(/http/).should be_true
+    end
+
+    it "should display and link to a preview article if one exists and no review exists" do
+      review = ""
+      @all_data['data'].each do |release|
+        release['legacyData'].has_key?('reviewUrl') ? review = true : review = false
+      end
+      if review == false
+        @doc.css('div.reviewTitle-wrapper h3').text.match(/Preview/).should be_true
+        @doc.css('div.reviewTitle-wrapper h3 a').attribute('href').to_s.match('articles').should be_true
+        check_return_200_without_301_to_home @doc.css('div.reviewTitle-wrapper h3 a').attribute('href').to_s
+        @doc.css('div.articlesubHeadline span.text').text.delete('^a-z').length.should > 1
+      end
+    end
+
+    it "should display and link to the review article if one exists, including box art image" do
+      review = ""
+      @all_data['data'].each do |release|
+        release['legacyData'].has_key?('reviewUrl') ? review = true : review = false
+      end
+      if review == true
+        @doc.css('div.reviewTitle-wrapper h3').text.match(/Review/).should be_true
+        @doc.css('div.reviewTitle-wrapper h3 a').attribute('href').to_s.match('articles').should be_true
+        RestClient.get @doc.css('div.reviewTitle-wrapper h3 a').attribute('href').to_s
+        @doc.css('div.articlesubHeadline span.text').text.delete('^a-z').length.should > 1
+        @doc.css('div.scoreBox-score a').text.delete('^0-9').length.should > 0
+        @doc.css('div.scoreBox-score a').attribute('href').to_s.match('articles').should be_true
+        RestClient.get @doc.css('div.scoreBox-score a').attribute('href').to_s
+      end
+    end
+
+  end
+
+  context "Wiki Area" do
+
+    it "should display at least four thumbs" do
+      @doc.css('div.wikiToC-image img').count.should > 3
+      check_for_broken_images('div.wikiToC-image')
+    end
+
+    it "should display at least four wiki titles" do
+      @doc.css('a.wikiToC-title').count.should > 3
+      @doc.css('a.wikiToC-title').text.delete('^a-z').length.should > 0
+    end
+
+  end
+
+  context "Latest Stories" do
+
+     it "should display the same articles as the article API" do
+       fe_slugs = []; api_slugs = []
+       @doc.css('ul.updatesList h3 a.articleTitle').each do |article|
+         fe_slugs << article.attribute('href').to_s.match(/[^\/]{1,}\z/).to_s
+       end
+       @articles['data'].each do |article|
+        api_slugs << article['metadata']['slug']
+       end
+       fe_slugs.should == api_slugs
+     end
+
+    context "View All Stories Button" do
+
+      it "should link to 'articles/games/#{url_slug}'" do
+        @doc.css("a.articleButton[href*='articles']").attribute('href').to_s.match(/articles\/games\/#{url_slug}/).should be_true
+      end
+
+      it "should not 404 when clicked" do
+        check_return_200_without_301_to_home @base_url.to_s+"/"+@doc.css("a.articleButton[href*='articles']").attribute('href').to_s
+      end
+
+    end
+
+  end
+
+  context "Latest Videos" do
+
+    it "should display the same videos as the video API returns" do
+      fe_slugs = []; api_slugs = []
+      @doc.css('div.ign-latestVideos a').each do |video|
+        fe_slugs << video.attribute('href').to_s.match(/[^\/]{1,}\z/).to_s
+      end
+      @videos['data'].each do |video|
+        api_slugs << video['metadata']['slug']
+      end
+      fe_slugs.should == api_slugs
+    end
+
+    it "should display three thumbnails" do
+      @doc.css('div.ign-latestVideos img.latestVideo-thumbnail').count.should == 3
+      check_for_broken_images('div.latestVideo')
+    end
+
+  end
+
+  context "Latest Image" do
+
+    it "should display an image" do
+      RestClient.get @doc.css('div.latestImage img.latestImage-thumbnail').attribute('src').to_s
+    end
+
+    it "should display the same image as the image API returns" do
+      @doc.css('div.latestImage img.latestImage-thumbnail').attribute('src').to_s == @images['asset']['url'].gsub(/\.[a-zA-Z]{1,}\z/,"")
+    end
+
+    it "should link to the image gallery page" do
+      @doc.css('div.latestImage a').attribute('href').to_s.match(/\/images\/games\/#{url_slug}/)
+    end
+
+  end
+
+
+end #end describe
+end;end #end url_slug and domain_locale iteration

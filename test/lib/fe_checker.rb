@@ -60,6 +60,35 @@ module FeChecker
       response.code.should eql(200)
     end
   end
+
+  def get_international_cookie(cookie)
+    case cookie
+      when 'www'
+        return :cookies=>{"i18n-ccpref"=>"6-US"}
+      when 'uk'
+        return :cookies=>{"i18n-ccpref"=>"6-UK"}
+      when 'au'
+        return :cookies=>{"i18n-ccpref"=>"6-AU"}
+      else
+        return Exception.new("Can't return international cookie from get_international_cookie method in lib/fe_checker.rb")
+    end
+  end
+
+  def get_local(base_url,cookie)
+    response = RestClient.get("http://#{base_url}/i18n",cookie)
+    doc = Nokogiri::HTML(response)
+    locale = doc.at_css('table tr:nth-child(5) td:nth-child(2)').text
+    case locale
+      when 'US'
+        return 'www'
+      when 'UK'
+        return 'uk'
+      when 'AU'
+        return 'au'
+      else
+        return Exception.new("BASE URL: http://#{base_url}/i18n, COOKIE: #{cookie}, LOCALE FROM BASE URL: #{locale}")
+    end
+  end
   
   ############# START LINK CHECKER #############
   
