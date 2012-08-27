@@ -77,8 +77,8 @@ RSpec::Core::RakeTask.new('hubs') do |t|
     t.pattern = 'spec/oyster/media/hubs.rb'
 end
 
-desc "Run Object Page Frontend Tests"
-RSpec::Core::RakeTask.new('objectpagefrontend') do |t|
+desc "Run Object Pages Frontend Tests"
+RSpec::Core::RakeTask.new('objectpagesfrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = %w(spec/oyster/media/game_object_page.rb
                   spec/oyster/media/comic_object_page.rb

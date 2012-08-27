@@ -9,7 +9,7 @@ require 'json'
 include OpenPage
 include FeChecker
 
-%w(halo-4/xbox-360-110563 darksiders-ii/xbox-360-14336768).each do |url_slug|
+%w(halo-4/xbox-360-110563 darksiders-ii/xbox-360-14336768 heavenly-sword/ps3-700186).each do |url_slug|
 %w(www uk au).each do |domain_locale|
 
 describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}" do
@@ -131,11 +131,20 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
 
   context "Highlight Area" do
 
-    it "should display the same image the object API returns" do
+    it "should display the same image the object API returns", :test => true do
       if @data['legacyData'].has_key?('boxArt')
-        @doc.css('div.mainBoxArt img').attribute('src').to_s.should == @data['legacyData']['boxArt'][2]['url']
+        box_art = []
+        @data['legacyData']['boxArt'].each do |art|
+          box_art << art['url']
+        end
+        box_art.include?(@doc.css('div.mainBoxArt img').attribute('src').to_s).should be_true
       elsif @us_data['legacyData'].has_key?('boxArt')
-        @doc.css('div.mainBoxArt img').attribute('src').to_s.should == @us_data['legacyData']['boxArt'][2]['url']
+        box_art = []
+        @us_data['legacyData']['boxArt'].each do |art|
+          box_art << art['url']
+        end
+        box_art.include?(@doc.css('div.mainBoxArt img').attribute('src').to_s).should be_true
+
       else
       end
     end
@@ -171,6 +180,29 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
         @doc.css('div.scoreBox-score a').attribute('href').to_s.match('articles').should be_true
         RestClient.get @doc.css('div.scoreBox-score a').attribute('href').to_s
       end
+    end
+
+    it "should display a link to the review or preview video if one exists" do
+      video_review = ""
+      @all_data['data'].each do |vid|
+         if vid['legacyData'].has_key?('videoReviewUrl'); video_review = true end
+      end
+
+      video_preview = ""
+      @all_data['data'].each do |vid|
+        if vid['legacyData'].has_key?('videoTrailerUrl'); video_preview = true end
+      end
+
+      if video_review != ""
+        @doc.css('div.highlight-links a').attribute('href').to_s.match(/\/videos\//).should be_true
+        @doc.css('div.highlight-links a').text.match(/Review/).should be_true
+      end
+
+      if video_preview != ""
+        @doc.css('div.highlight-links a').attribute('href').to_s.match(/\/videos\//).should be_true
+        @doc.css('div.highlight-links a').text.match(/Preview/).should be_true
+      end
+
     end
 
   end
@@ -243,11 +275,32 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
     end
 
     it "should display the same image as the image API returns" do
-      @doc.css('div.latestImage img.latestImage-thumbnail').attribute('src').to_s == @images['asset']['url'].gsub(/\.[a-zA-Z]{1,}\z/,"")
+      @doc.css('div.latestImage img.latestImage-thumbnail').attribute('src').to_s == @images['asset']['url'].gsub(/_[^_]{1,}\z/,"")
     end
 
     it "should link to the image gallery page" do
       @doc.css('div.latestImage a').attribute('href').to_s.match(/\/images\/games\/#{url_slug}/)
+    end
+
+  end
+
+  context "Games You May Like" do
+
+    it "should display six games" do
+      @doc.css("div.GameYouMayLike_Details_Game_Name a").count.should == 6
+      @doc.css("div.GameYouMayLike_Details_Game_Name a").each do |game|
+        game.text.delete('^a-zA-Z').length.should > 0
+      end
+    end
+
+  end
+
+  context "About This Game" do
+
+    it "should display summary content" do
+      check_display_text "div#summary div.gameInfo"
+      check_display_text "div#summary div[class='gameInfo-list leftColumn']"
+      check_display_text "div#summary div.gameInfo-list"
     end
 
   end
