@@ -1,0 +1,18 @@
+
+
+***********************************************************************
+Fatal NI connect error 12514, connecting to:
+ (DESCRIPTION=(CONNECT_DATA=(SERVICE_NAME=nibdb4)(CID=(PROGRAM=ruby)(HOST=sfmbpwclaiborne.hq.ign.com)(USER=wclaiborne)))(ADDRESS=(PROTOCOL=TCP)(HOST=10.93.48.91)(PORT=1521)))
+
+  VERSION INFORMATION:
+	TNS for MacOS X Server: Version 10.2.0.4.0 - Production
+	TCP/IP NT Protocol Adapter for MacOS X Server: Version 10.2.0.4.0 - Production
+  Time: 27-AUG-2012 17:21:02
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12564
+    TNS-12564: Message 12564 not found; No message file for product=network, facility=TNS
+    ns secondary err code: 0
+    nt main err code: 0
+    nt secondary err code: 0
+    nt OS err code: 0

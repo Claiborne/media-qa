@@ -141,6 +141,12 @@ RSpec::Core::RakeTask.new('gamedata') do |t|
   t.pattern = 'spec/scripts/review_data.rb'
 end
 
+desc "Run review data tests"
+RSpec::Core::RakeTask.new('entdata') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/scripts/review_data_two.rb'
+end
+
 # RUN LINK CHECKER APP
 
 desc "Run link-checker app"
