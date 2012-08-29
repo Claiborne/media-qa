@@ -132,5 +132,41 @@ module ObjectApiHelper
     data = JSON.parse(response.body)
     data['volumeId'].to_s
   end #end def
-  
+
+  def get_person_id(slug)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/people/slug/#{slug}"
+    response = RestClient.get url
+    data = JSON.parse(response.body)
+    data['personId'].to_s
+  end #end def
+
+  def get_character_id(slug)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/characters/slug/#{slug}"
+    response = RestClient.get url
+    data = JSON.parse(response.body)
+    data['characterId'].to_s
+  end #end def
+
+  def get_role_id(legacy_id)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/roles/legacyId/#{legacy_id}"
+    response = RestClient.get url
+    data = JSON.parse(response.body)
+    data['roleId'].to_s
+  end #end def
+
+  def get_roletype_id(slug)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/roleTypes/slug/#{slug}"
+    response = RestClient.get url
+    data = JSON.parse(response.body)
+    data['roleTypeId'].to_s
+  end #end def
+
 end

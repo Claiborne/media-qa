@@ -21,6 +21,10 @@ class ObjectIds
   @movie_id = get_movie_id('the-dark-knight')
   @book_id = get_book_id('batman-the-dark-knight-2011-11')
   @volume_id = get_volume_id('batman-the-dark-knight-2011')
+  @person_id = get_person_id('christian-bale')
+  @character_id = get_character_id('batman')
+  @role_id = get_role_id(940319)
+  @roletype_id = get_roletype_id('actor')
   
   def self.me3_release_ids
     @me3_release_ids
@@ -60,6 +64,22 @@ class ObjectIds
 
   def self.volume_id
     @volume_id
+  end
+
+  def self.person_id
+    @person_id
+  end
+
+  def self.character_id
+    @character_id
+  end
+
+  def self.role_id
+    @role_id
+  end
+
+  def self.roletype_id
+    @roletype_id
   end
 
 end
@@ -1526,6 +1546,610 @@ end
       @data['metadata'].has_key?('legacyId').should be_true
       @data['metadata']['legacyId'].should_not be_nil
       @data['metadata']['legacyId'].to_s.delete('^0-9').length.should > 0
+    end
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
+end
+
+###################################################
+
+describe "V3 Object API -- People Smoke Tests -- /people?count=200" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/people?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  ['count','startIndex','endIndex','isMore'].each do |data|
+    it "should return '#{data}' data with a non-nil, non-blank value" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+    end
+  end
+
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
+
+  ['personId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all people" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a personId value that is a 24-character hash for all people" do
+    @data['data'].each do |vol|
+      vol['personId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  %w(name state slug legacyId).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all people" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all people" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.person_id}","/slug/christian-bale"].each do |call|
+  describe "V3 Object API -- People Smoke Tests -- /people#{call}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/people#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return a person with a personId value of #{ObjectIds.person_id}" do
+      @data.has_key?('personId').should be_true
+      @data['personId'].should == ObjectIds.person_id
+    end
+
+    it "should return a person with a metadata.slug value of 'christian-bale'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('slug').should be_true
+      @data['metadata']['slug'].should == 'christian-bale'
+    end
+
+    it "should return metadata.legacyId data with a non-nil, non-blank value" do
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should_not be_nil
+      @data['metadata']['legacyId'].to_s.delete('^0-9').length.should > 0
+    end
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
+end
+
+###################################################
+
+describe "V3 Object API -- Character Smoke Tests -- /characters?count=200" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/characters?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  ['count','startIndex','endIndex','isMore'].each do |data|
+    it "should return '#{data}' data with a non-nil, non-blank value" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+    end
+  end
+
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
+
+  ['characterId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all characters" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a characterId value that is a 24-character hash for all characters" do
+    @data['data'].each do |vol|
+      vol['characterId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  %w(name state slug legacyId).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all characters" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all characters" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.character_id}","/slug/batman"].each do |call|
+  describe "V3 Object API -- Character Smoke Tests -- /characters#{call}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/characters#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return a character with a characterId value of #{ObjectIds.character_id}" do
+      @data.has_key?('characterId').should be_true
+      @data['characterId'].should == ObjectIds.character_id
+    end
+
+    it "should return a character with a metadata.slug value of 'batman'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('slug').should be_true
+      @data['metadata']['slug'].should == 'batman'
+    end
+
+    it "should return metadata.legacyId data with a non-nil, non-blank value" do
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should_not be_nil
+      @data['metadata']['legacyId'].to_s.delete('^0-9').length.should > 0
+    end
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
+end
+
+###################################################
+
+describe "V3 Object API -- RoleType Smoke Tests -- /roleTypes?count=200" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/roleTypes?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  ['count','startIndex','endIndex','isMore'].each do |data|
+    it "should return '#{data}' data with a non-nil, non-blank value" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+    end
+  end
+
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
+
+  ['roleTypeId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all roletypes" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a roleTypeId value that is a 24-character hash for all roletypes" do
+    @data['data'].each do |vol|
+      vol['roleTypeId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  %w(name slug legacyId).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all roletypes" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all roletypes" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.roletype_id}","/slug/actor"].each do |call|
+  describe "V3 Object API -- RoleTypes Smoke Tests -- /roleTypes#{call}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/roleTypes#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return a character with a roleTypeId value of #{ObjectIds.roletype_id}" do
+      @data.has_key?('roleTypeId').should be_true
+      @data['roleTypeId'].should == ObjectIds.roletype_id
+    end
+
+    it "should return a character with a metadata.slug value of 'actor'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('slug').should be_true
+      @data['metadata']['slug'].should == 'actor'
+    end
+
+    it "should return metadata.legacyId data with a non-nil, non-blank value" do
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should_not be_nil
+      @data['metadata']['legacyId'].to_s.delete('^0-9').length.should > 0
+    end
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
+end
+
+###################################################
+
+describe "V3 Object API -- Role Smoke Tests -- /roles?count=200" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/roles?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  {'count'=>200,'startIndex'=>0,'endIndex'=>199,'isMore'=>true}.each do |data,value|
+    it "should return '#{data}' data with a value of #{value}" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+      @data[data].should == value
+    end
+  end
+
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
+
+  ['roleId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all roles" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a roleId value that is a 24-character hash for all roles" do
+    @data['data'].each do |vol|
+      vol['roleId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  %w(book movie season character person roleType legacyId).each do |data|
+    it "should return metadata.#{data} key for all roles" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+      end
+    end
+  end
+
+  %w(roleType legacyId).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all roles" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.delete('^a-z0-9').length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all roles" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.role_id}","/legacyId/940319"].each do |call|
+  describe "V3 Object API -- Character Smoke Tests -- /roles#{call}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/roles#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return a role with a roleId value of #{ObjectIds.role_id}" do
+      @data.has_key?('roleId').should be_true
+      @data['roleId'].should == ObjectIds.role_id
+    end
+
+    it "should return a role with a metadata.legacyId value of '940319'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should == 940319
+    end
+
+    it "should return a role with a metadata.lead value of 'true'" do
+      @data['metadata'].has_key?('lead').should be_true
+      @data['metadata']['lead'].should == true
+    end
+
+    %w(movie person roleType).each do |k|
+      it "should return a metadata.#{k}.#{k}Id value that is a 24-character hash" do
+        @data['metadata'][k][k.to_s+"Id"].match(/^[0-9a-f]{24}$/).should be_true
+      end
+    end
+
+    {:legacyId=>752133, :slug=>'the-dark-knight', :type=>'theater'}.each do |field,value|
+      it "should return a role with a metadata.movie.metadata.#{field} value of '#{value}'" do
+        @data['metadata']['movie']['metadata'][field.to_s].should == value
+      end
+    end
+
+    {:name=>'Christian Bale', :state=>'published', :slug=>'christian-bale', :legacyId=>913820}.each do |field,value|
+      it "should return a role with a metadata.person.metadata.#{field} value of '#{value}'" do
+        @data['metadata']['person']['metadata'][field.to_s].should == value
+      end
+    end
+
+    {:name=>'Actor', :legacyId=>14208299, :slug=>'actor'}.each do |field,value|
+      it "should return a role with a metadata.roleType.metadata.#{field} value of '#{value}'" do
+        @data['metadata']['roleType']['metadata'][field.to_s].should == value
+      end
     end
 
     ['createdAt','updatedAt'].each do |data|
