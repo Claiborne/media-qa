@@ -27,6 +27,7 @@ class ObjectIds
   @roletype_id = get_roletype_id('actor')
   @show_id = get_show_id('batman-the-animated-series')
   @season_id = get_season_id('batman-the-animated-series-season-1')
+  @episode_id = get_episode_id('dreams-in-darkness')
   
   def self.me3_release_ids
     @me3_release_ids
@@ -90,6 +91,10 @@ class ObjectIds
 
   def self.season_id
     @season_id
+  end
+
+  def self.episode_id
+    @episode_id
   end
 
 end
@@ -2295,7 +2300,7 @@ end
       check_not_blank(@data)
     end
 
-    it "should return a role with a showId value of #{ObjectIds.show_id}" do
+    it "should return a show with a showId value of #{ObjectIds.show_id}" do
       @data.has_key?('showId').should be_true
       @data['showId'].should == ObjectIds.show_id
     end
@@ -2356,5 +2361,533 @@ end
     end
 
   end
+end
+
+###################################################
+
+describe "V3 Object API -- Seasons Smoke Tests -- /seasons?count=200" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/seasons?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  {'count'=>200,'startIndex'=>0,'endIndex'=>199,'isMore'=>true}.each do |data,value|
+    it "should return '#{data}' data with a value of #{value}" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+      @data[data].should == value
+    end
+  end
+
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
+
+  ['seasonId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all seasons" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a seasonId value that is a 24-character hash for all seasons" do
+    @data['data'].each do |vol|
+      vol['seasonId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  %w(slug legacyId).each do |data|
+    it "should return metadata.#{data} key for all seasons" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+      end
+    end
+  end
+
+  %w(slug legacyId).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all seasons" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.delete('^a-z0-9').length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all seasons" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.season_id}","/slug/batman-the-animated-series-season-1"].each do |call|
+  describe "V3 Object API -- Seasons Smoke Tests -- /seasons#{call}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/seasons#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return a season with a seasonId value of #{ObjectIds.season_id}" do
+      @data.has_key?('seasonId').should be_true
+      @data['seasonId'].should == ObjectIds.season_id
+    end
+
+    it "should return a season with a metadata.legacyId value of '909539'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should == 909539
+    end
+
+
+    it "should return a season with a metadata.slug value of 'batman-the-animated-series-season-1'" do
+      @data['metadata']['slug'].should == 'batman-the-animated-series-season-1'
+    end
+
+    it "should return a season with a metadata.show.metadata.slug value of 'batman-the-animated-series'" do
+      @data['metadata'].has_key?('show').should be_true
+      @data['metadata']['show']['metadata']['slug'].should == 'batman-the-animated-series'
+    end
+
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
+end
+
+###################################################
+
+describe "V3 Object API -- Episodes Smoke Tests -- /episodes?count=200" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/episodes?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  {'count'=>200,'startIndex'=>0,'endIndex'=>199,'isMore'=>true}.each do |data,value|
+    it "should return '#{data}' data with a value of #{value}" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+      @data[data].should == value
+    end
+  end
+
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
+
+  ['episodeId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all episodes" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a episodeId value that is a 24-character hash for all episodes" do
+    @data['data'].each do |vol|
+      vol['episodeId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  %w(name legacyId state).each do |data|
+    it "should return metadata.#{data} key for all seasons" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+      end
+    end
+  end
+
+  %w(name legacyId state).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all episodes" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.delete('^a-z0-9').length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all episodes" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.episode_id}","/slug/dreams-in-darkness"].each do |call|
+  describe "V3 Object API -- Episodes Smoke Tests -- /episodes#{call}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/episodes#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return an episode with a episodeId value of #{ObjectIds.episode_id}" do
+      @data.has_key?('episodeId').should be_true
+      @data['episodeId'].should == ObjectIds.episode_id
+    end
+
+    it "should return an episode with a metadata.legacyId value of '14236366'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should == 14236366
+    end
+
+    it "should return an episode with a metadata.state value of 'published'" do
+      @data['metadata']['state'].should == 'published'
+    end
+
+
+    it "should return a show with a metadata.slug value of 'dreams-in-darkness'" do
+      @data['metadata']['slug'].should == 'dreams-in-darkness'
+    end
+
+    it "should return an episode with a metadata.season.metadata.show.metadata.slug value of 'batman-the-animated-series'" do
+      @data['metadata'].has_key?('season').should be_true
+      @data['metadata']['season']['metadata']['show']['metadata']['slug'].should == 'batman-the-animated-series'
+    end
+
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
+end
+
+###################################################
+
+describe "V3 Object API -- Episodes Smoke Tests -- /episodes/show/#{ObjectIds.show_id}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/episodes/show/#{ObjectIds.show_id}"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  {'count'=>2,'startIndex'=>0,'endIndex'=>1,'isMore'=>false}.each do |data,value|
+    it "should return '#{data}' data with a value of #{value}" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+      @data[data].should == value
+    end
+  end
+
+  it "should return at least one object" do
+    @data['data'].length.should > 0
+  end
+
+  ['episodeId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all episodes" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a episodeId value that is a 24-character hash for all episodes" do
+    @data['data'].each do |vol|
+      vol['episodeId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  it "should return metadata.show.showId data with a value of #{ObjectIds.show_id} for all episodes" do
+    @data['data'].each do |ep|
+      ep['metadata']['show']['showId'].should == ObjectIds.show_id.to_s
+    end
+  end
+
+  {:state=>'published',:slug=>'batman-the-animated-series',:legacyId=>909538}.each do |field,value|
+    it "should return metadata.show.metadata.#{field} data with a value of '#{value}' for all episodes" do
+      @data['data'].each do |ep|
+        ep['metadata']['show']['metadata'][field.to_s].should == value
+      end
+    end
+  end
+
+  %w(name legacyId state).each do |data|
+    it "should return metadata.#{data} key for all seasons" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+      end
+    end
+  end
+
+  %w(name legacyId state).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all episodes" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.delete('^a-z0-9').length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all episodes" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+describe "V3 Object API -- Episodes Smoke Tests -- /episodes/season/#{ObjectIds.season_id}?count=50" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/episodes/season/#{ObjectIds.season_id}?count=50"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  {'count'=>50,'startIndex'=>0,'endIndex'=>49,'isMore'=>true}.each do |data,value|
+    it "should return '#{data}' data with a value of #{value}" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+      @data[data].should == value
+    end
+  end
+
+  it "should return fifty objects" do
+    @data['data'].length.should == 50
+  end
+
+  ['episodeId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all episodes" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a episodeId value that is a 24-character hash for all episodes" do
+    @data['data'].each do |vol|
+      vol['episodeId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  it "should return metadata.season.seasonId data with a value of #{ObjectIds.season_id} for all episodes" do
+    @data['data'].each do |ep|
+      ep['metadata']['season']['seasonId'].should == ObjectIds.season_id.to_s
+    end
+  end
+
+  {:slug=>'batman-the-animated-series-season-1',:legacyId=>909539}.each do |field,value|
+    it "should return metadata.season.metadata.#{field} data with a value of '#{value}' for all episodes" do
+      @data['data'].each do |ep|
+        ep['metadata']['season']['metadata'][field.to_s].should == value
+      end
+    end
+  end
+
+  %w(name legacyId state).each do |data|
+    it "should return metadata.#{data} key for all seasons" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+      end
+    end
+  end
+
+  %w(legacyId state).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all episodes" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.delete('^a-z0-9').length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all episodes" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
 end
 

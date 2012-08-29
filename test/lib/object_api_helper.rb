@@ -187,4 +187,13 @@ module ObjectApiHelper
     data['seasonId'].to_s
   end #end def
 
+  def get_episode_id(slug)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/episodes/slug/#{slug}"
+    response = RestClient.get url
+    data = JSON.parse(response.body)
+    data['episodeId'].to_s
+  end #end def
+
 end
