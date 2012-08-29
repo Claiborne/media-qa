@@ -456,6 +456,17 @@ module ObjectPostSearch
     }.to_json
   end
 
+  def create_episode_body(num,slug,show,season)
+    {
+        "metadata" => {
+          "name" => "QA Episode #{num}",
+          "slug" => slug.to_s,
+          "show" => {"showId" => show.to_s},
+          "season" => {"seasonId" => season.to_s}
+        }
+    }.to_json
+  end
+
   def create_role_body(num,slug,movie_id,character_id,roletype_id,game_id,book_id,person_id)
     {
         "metadata" => {
