@@ -169,4 +169,22 @@ module ObjectApiHelper
     data['roleTypeId'].to_s
   end #end def
 
+  def get_show_id(slug)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/shows/slug/#{slug}"
+    response = RestClient.get url
+    data = JSON.parse(response.body)
+    data['showId'].to_s
+  end #end def
+
+  def get_season_id(slug)
+    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = Configuration.new
+    url = "http://#{config.options['baseurl']}/seasons/slug/#{slug}"
+    response = RestClient.get url
+    data = JSON.parse(response.body)
+    data['seasonId'].to_s
+  end #end def
+
 end

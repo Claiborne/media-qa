@@ -30,6 +30,8 @@ end
 
 class GeneralGetSearchHelperMethods
 
+  #Search /releases
+
   def self.release_search_smoke
     {
       "rules"=>[
@@ -332,6 +334,69 @@ class GeneralGetSearchHelperMethods
           "count"=>200
       }.to_json
     end
+
+    # Search /roles
+
+    def self.search_role_roletype
+      {
+        "rules"=>[
+          {
+              "field"=>"metadata.roleType.metadata.slug",
+              "condition"=>"term",
+              "value"=>"director"
+          }
+        ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>200
+      }.to_json
+    end
+
+    def self.search_role_person
+      {
+        "rules"=>[
+          {
+              "field"=>"metadata.person.metadata.legacyId",
+              "condition"=>"term",
+              "value"=>913626
+          }
+        ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>200
+      }.to_json
+    end
+
+    def self.search_role_movie_exists
+      {
+          "rules"=>[
+              {
+                  "field"=>"metadata.movie.movieId",
+                  "condition"=>"exists",
+                  "value"=>""
+              }
+          ],
+          "matchRule"=>"matchAll",
+          "startIndex"=>0,
+          "count"=>200
+      }.to_json
+    end
+
+  def self.search_role_character
+    {
+        "rules"=>[
+            {
+                "field"=>"metadata.character.metadata.slug",
+                "condition"=>"term",
+                "value"=>"batman"
+            }
+        ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>200
+    }.to_json
+  end
+
 
 end
 
@@ -742,7 +807,7 @@ end
 
 ################################################################ 
 
-describe "V3 Object API -- GET Search - Test Pagination Using: #{GeneralGetSearchHelperMethods.release_pagination(11,0)}", :test => true do
+describe "V3 Object API -- GET Search - Test Pagination Using: #{GeneralGetSearchHelperMethods.release_pagination(11,0)}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -974,6 +1039,8 @@ describe "V3 Object API -- GET Search - Search Movies By Type using: #{GeneralGe
 
   it_behaves_like "v3 object general get search common checks", 55
 
+  it_behaves_like "v3 object general get search check Id", 'releaseId'
+
   it "should return only releases with a metadata.movie.metadata.type with a value of '#{movie_type}'" do
     @data['data'].each do |movie|
       movie['metadata']['movie']['metadata']['type'].should == movie_type
@@ -1058,6 +1125,8 @@ describe "V3 Object API -- GET Search - Search Movies By Genre using: #{call}" d
 
   end
 
+  it_behaves_like "v3 object general get search check Id", 'releaseId'
+
   it "should return only movies with a content.primaryGenre.slug value of 'action'" do
     @data['data'].each do |movie|
       movie['metadata']['movie'].has_key?('movieId').should be_true
@@ -1071,7 +1140,6 @@ end
 ################################################################
 
 describe "V3 Object API -- GET Search - Search Books using: #{GeneralGetSearchHelperMethods.search_books}" do
-
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
@@ -1096,6 +1164,10 @@ describe "V3 Object API -- GET Search - Search Books using: #{GeneralGetSearchHe
   after(:all) do
 
   end
+
+  it_behaves_like "v3 object general get search common checks", 200
+
+  it_behaves_like "v3 object general get search check Id", 'releaseId'
 
   it "should return 200 entries" do
     @data['data'].length.should == 200
@@ -1183,6 +1255,8 @@ describe "V3 Object API -- GET Search - Search Volumes using: #{GeneralGetSearch
 
   end
 
+  it_behaves_like "v3 object general get search check Id", 'releaseId'
+
   it "should return at least one release" do
     @data['data'].length.should > 0
   end
@@ -1230,6 +1304,10 @@ describe "V3 Object API -- GET Search - Search Volumes using: #{GeneralGetSearch
 
   end
 
+  it_behaves_like "v3 object general get search common checks", 200
+
+  it_behaves_like "v3 object general get search check Id", 'releaseId'
+
   it "should return 200 releases" do
     @data['data'].length.should == 200
   end
@@ -1237,6 +1315,203 @@ describe "V3 Object API -- GET Search - Search Volumes using: #{GeneralGetSearch
   it "should return metadata.book.metadata.volume.volumeId value that is a 24-character hash for all releases" do
     @data['data'].each do |vol|
       vol['metadata']['book']['metadata']['volume']['volumeId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    end
+  end
+
+end
+
+# End /release search and begin /roles search
+
+################################################################
+
+describe "V3 Object API -- GET Search - Search Roles RoleType using: #{GeneralGetSearchHelperMethods.search_role_roletype}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_roletype}"
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it_behaves_like "v3 object general get search common checks", 200
+
+  it_behaves_like "v3 object general get search check Id", 'roleId'
+
+  it "should return 200 releases" do
+    @data['data'].length.should == 200
+  end
+
+  it "should return a metadata.roleType.metadata.slug value of 'director' for all roles" do
+    @data['data'].each do |role|
+      role['metadata']['roleType']['metadata']['slug'].should == 'director'
+    end
+  end
+
+end
+
+################################################################
+
+describe "V3 Object API -- GET Search - Search Roles Person using: #{GeneralGetSearchHelperMethods.search_role_person}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_person}"
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it_behaves_like "v3 object general get search check Id", 'roleId'
+
+  it "should return at least one releases" do
+    @data['data'].length.should > 0
+  end
+
+  it "should return a metadata.person.metadata.legacyId value of '913626' for all roles" do
+    @data['data'].each do |role|
+      role['metadata']['person']['metadata']['legacyId'].should == 913626
+    end
+  end
+
+  it "should return a metadata.person.metadata.slug value of 'charles-roven' for all roles" do
+    @data['data'].each do |role|
+      role['metadata']['person']['metadata']['slug'].should == 'charles-roven'
+    end
+  end
+
+end
+
+################################################################
+
+describe "V3 Object API -- GET Search - Search Roles Movie using: #{GeneralGetSearchHelperMethods.search_role_movie_exists}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_movie_exists}"
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it_behaves_like "v3 object general get search common checks", 200
+
+  it_behaves_like "v3 object general get search check Id", 'roleId'
+
+  it "should return at least one releases" do
+    @data['data'].length.should > 0
+  end
+
+  it "should return a metadata.movie.movieId value of that is a 24 character hash for all roles" do
+    @data['data'].each do |role|
+      role['metadata']['movie']['movieId'].match(/^[0-9a-f]{24,32}$/).should be_true
+    end
+  end
+
+  it "should return metadata.movie.metadata.slug data with a non-nil, non-blank value for all roles" do
+    @data['data'].each do |role|
+      role['metadata']['movie']['metadata']['slug'].should_not be_nil
+      role['metadata']['movie']['metadata']['slug'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    end
+  end
+
+end
+
+################################################################
+
+describe "V3 Object API -- GET Search - Search Roles Characters using: #{GeneralGetSearchHelperMethods.search_role_character}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_character}"
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  it_behaves_like "v3 object general get search check Id", 'roleId'
+
+  it "should return at least 60 releases" do
+    @data['data'].length.should > 59
+  end
+
+  it "should return a metadata.character.metadata.slug value of 'batman' for all roles" do
+    @data['data'].each do |role|
+      role['metadata']['character']['metadata']['slug'].should == 'batman'
+    end
+  end
+
+  it "should return a metadata.character.metadata.legacyId value of '924128' for all roles" do
+    @data['data'].each do |role|
+      role['metadata']['character']['metadata']['legacyId'].should == 924128
     end
   end
 

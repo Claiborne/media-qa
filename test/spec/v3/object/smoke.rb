@@ -25,6 +25,8 @@ class ObjectIds
   @character_id = get_character_id('batman')
   @role_id = get_role_id(940319)
   @roletype_id = get_roletype_id('actor')
+  @show_id = get_show_id('batman-the-animated-series')
+  @season_id = get_season_id('batman-the-animated-series-season-1')
   
   def self.me3_release_ids
     @me3_release_ids
@@ -80,6 +82,14 @@ class ObjectIds
 
   def self.roletype_id
     @roletype_id
+  end
+
+  def self.show_id
+    @show_id
+  end
+
+  def self.season_id
+    @season_id
   end
 
 end
@@ -1271,8 +1281,6 @@ end
   end
 end
 
-"where am i - i am below this line changin movie to comic"
-
 ###################################################
 
 describe "V3 Object API -- Books Smoke Tests -- /books?count=200" do
@@ -2082,7 +2090,7 @@ end
 ###################################################
 
 ["/#{ObjectIds.role_id}","/legacyId/940319"].each do |call|
-  describe "V3 Object API -- Character Smoke Tests -- /roles#{call}" do
+  describe "V3 Object API -- Role Smoke Tests -- /roles#{call}" do
 
     before(:all) do
       Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -2162,3 +2170,191 @@ end
 
   end
 end
+
+###################################################
+
+describe "V3 Object API -- Shows Smoke Tests -- /shows?count=200" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/shows?count=200"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    check_200(@response)
+  end
+
+  it "should not be blank" do
+    check_not_blank(@data)
+  end
+
+  {'count'=>200,'startIndex'=>0,'endIndex'=>199,'isMore'=>true}.each do |data,value|
+    it "should return '#{data}' data with a value of #{value}" do
+      @data.has_key?(data).should be_true
+      @data[data].should_not be_nil
+      @data[data].to_s.length.should > 0
+      @data[data].should == value
+    end
+  end
+
+  it "should return at least 200 objects" do
+    @data['data'].length.should == 200
+  end
+
+  ['showId','metadata','system'].each do |data|
+    it "should return #{data} data with a non-nil, non-blank value for all shows" do
+      @data['data'].each do |vol|
+        vol.has_key?(data).should be_true
+        vol[data].should_not be_nil
+        vol[data].to_s.length.should > 0
+      end
+    end
+  end
+
+  it "should return a showId value that is a 24-character hash for all shows" do
+    @data['data'].each do |vol|
+      vol['showId'].match(/^[0-9a-f]{24}$/).should be_true
+    end
+  end
+
+  %w(name state slug legacyId).each do |data|
+    it "should return metadata.#{data} key for all shows" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+      end
+    end
+  end
+
+  %w(state slug legacyId).each do |data|
+    it "should return metadata.#{data} data with a non-nil, non-blank value for all roles" do
+      @data['data'].each do |vol|
+        vol['metadata'].has_key?(data).should be_true
+        vol['metadata'][data].should_not be_nil
+        vol['metadata'][data].to_s.delete('^a-z0-9').length.should > 0
+      end
+    end
+  end
+
+  ['createdAt','updatedAt'].each do |data|
+    it "should return system.createdAt data with a non-nil, non-blank value for all roles" do
+      @data['data'].each do |vol|
+        vol['system'].has_key?(data).should be_true
+        vol['system'][data].should_not be_nil
+        vol['system'][data].to_s.length.should > 0
+      end
+    end
+  end
+
+end
+
+###################################################
+
+["/#{ObjectIds.show_id}","/slug/batman-the-animated-series"].each do |call|
+  describe "V3 Object API -- Shows Smoke Tests -- /shows#{call}" do
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = Configuration.new
+      @url = "http://#{@config.options['baseurl']}/shows#{call}"
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      check_200(@response)
+    end
+
+    it "should not be blank" do
+      check_not_blank(@data)
+    end
+
+    it "should return a role with a showId value of #{ObjectIds.show_id}" do
+      @data.has_key?('showId').should be_true
+      @data['showId'].should == ObjectIds.show_id
+    end
+
+    it "should return a show with a metadata.legacyId value of '909538'" do
+      @data.has_key?('metadata').should be_true
+      @data['metadata'].has_key?('legacyId').should be_true
+      @data['metadata']['legacyId'].should == 909538
+    end
+
+    it "should return a show with a metadata.state value of 'published'" do
+      @data['metadata'].has_key?('state').should be_true
+      @data['metadata']['state'].should == 'published'
+    end
+
+    it "should return a show with a metadata.slug value of 'batman-the-animated-series'" do
+      @data['metadata']['slug'].should == 'batman-the-animated-series'
+    end
+
+    it "should return a show with a metadata.airDate.status value of 'ended'" do
+      @data['metadata']['airDate']['status'].should == 'ended'
+    end
+
+    it "should return a show with a metadata.name value of 'Batman: The Animated Series'" do
+      @data['metadata']['name'].should == 'Batman: The Animated Series'
+    end
+
+    {:slug=>'fox',:type=>'tv'}.each do |field,value|
+      it "should return a show with a companies.networks.metadata.#{field} value of '#{value}'" do
+        @data['companies']['networks'][0]['metadata'][field.to_s].should == value
+      end
+    end
+
+
+    {:name=>'Animation',:type=>'tv'}.each do |field,value|
+      it "should return a show with a content.primaryGenre.metadata.#{field} value of '#{value}'" do
+        @data['content']['primaryGenre']['metadata'][field.to_s].should == value
+      end
+    end
+
+    it "should return a show with six legacyData.boxArt.url that match 'http'" do
+      @data['legacyData']['boxArt'].count.should == 6
+      @data['legacyData']['boxArt'].each do |box_art|
+        box_art['url'].to_s.match(/http/).should be_true
+      end
+    end
+
+    it "should return a show with a legacyData.previewUrl of 'http://tv.ign.com/articles/935/935740p1.html'" do
+      @data['legacyData']['previewUrl'].should == 'http://tv.ign.com/articles/935/935740p1.html'
+    end
+
+    ['createdAt','updatedAt'].each do |data|
+      it "should return a movie with non-nil, non-blank system.#{data} data" do
+        @data['system'].has_key?(data).should be_true
+        @data['system'][data].should_not be_nil
+        @data['system'][data].to_s.length.should > 0
+      end
+    end
+
+  end
+end
+
