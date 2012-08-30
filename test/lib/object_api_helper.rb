@@ -157,7 +157,7 @@ module ObjectApiHelper
     url = "http://#{config.options['baseurl']}/roles/legacyId/#{legacy_id}"
     response = RestClient.get url
     data = JSON.parse(response.body)
-    data['roleId'].to_s
+    data['data'][0]['roleId'].to_s
   end #end def
 
   def get_roletype_id(slug)

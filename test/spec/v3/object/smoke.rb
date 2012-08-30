@@ -1898,8 +1898,8 @@ describe "V3 Object API -- RoleType Smoke Tests -- /roleTypes?count=200" do
     end
   end
 
-  it "should return at least 200 objects" do
-    @data['data'].length.should == 200
+  it "should return at least 40 objects" do
+    @data['data'].length.should > 39
   end
 
   ['roleTypeId','metadata','system'].each do |data|
@@ -2106,7 +2106,12 @@ end
       rescue => e
         raise Exception.new(e.message+" "+@url)
       end
-      @data = JSON.parse(@response.body)
+      if call == "/legacyId/940319"
+        @data = JSON.parse(@response.body)
+        @data = @data['data'][0]
+      else
+        @data = JSON.parse(@response.body)
+      end
     end
 
     before(:each) do
