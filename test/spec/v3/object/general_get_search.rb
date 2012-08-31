@@ -250,7 +250,7 @@ class GeneralGetSearchHelperMethods
                   "value"=>""
               },
               {
-                  "field"=>"content.primaryGenre.slug",
+                  "field"=>"content.primaryGenre.metadata.slug",
                   "condition"=>"term",
                   "value"=>genre
               }
@@ -1131,10 +1131,10 @@ describe "V3 Object API -- GET Search - Search Movies By Genre using: #{call}" d
 
   it_behaves_like "v3 object general get search check Id", 'releaseId'
 
-  it "should return only movies with a content.primaryGenre.slug value of 'action'" do
+  it "should return only movies with a content.primaryGenre.metadata.slug value of '#{genre}'" do
     @data['data'].each do |movie|
       movie['metadata']['movie'].has_key?('movieId').should be_true
-      movie['content']['primaryGenre']['slug'].should == genre
+      movie['content']['primaryGenre']['metadata']['slug'].should == genre
     end
   end
 end

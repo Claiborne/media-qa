@@ -137,7 +137,11 @@ module ObjectApiHelper
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/people/slug/#{slug}"
-    response = RestClient.get url
+    begin
+      response = RestClient.get url
+    rescue
+      return "ERROR_IN_OBJ_API_HELPER"
+    end
     data = JSON.parse(response.body)
     data['personId'].to_s
   end #end def
@@ -146,7 +150,11 @@ module ObjectApiHelper
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/characters/slug/#{slug}"
-    response = RestClient.get url
+    begin
+      response = RestClient.get url
+    rescue
+      return "ERROR_IN_OBJ_API_HELPER"
+    end
     data = JSON.parse(response.body)
     data['characterId'].to_s
   end #end def
@@ -155,9 +163,17 @@ module ObjectApiHelper
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/roles/legacyId/#{legacy_id}"
-    response = RestClient.get url
+    begin
+      response = RestClient.get url
+    rescue
+      return "ERROR_IN_OBJ_API_HELPER"
+    end
     data = JSON.parse(response.body)
+    begin
     data['data'][0]['roleId'].to_s
+    rescue
+      return "ERROR_IN_OBJ_API_HELPER"
+    end
   end #end def
 
   def get_roletype_id(slug)
@@ -165,7 +181,11 @@ module ObjectApiHelper
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/roleTypes/slug/#{slug}"
-    response = RestClient.get url
+    begin
+      response = RestClient.get url
+    rescue
+      return "ERROR_IN_OBJ_API_HELPER"
+    end
     data = JSON.parse(response.body)
     data['roleTypeId'].to_s
   end #end def
@@ -174,7 +194,11 @@ module ObjectApiHelper
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/shows/slug/#{slug}"
-    response = RestClient.get url
+    begin
+      response = RestClient.get url
+    rescue
+      return "ERROR_IN_OBJ_API_HELPER"
+    end
     data = JSON.parse(response.body)
     data['showId'].to_s
   end #end def
@@ -183,7 +207,11 @@ module ObjectApiHelper
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/seasons/slug/#{slug}"
-    response = RestClient.get url
+    begin
+      response = RestClient.get url
+    rescue
+      return "ERROR_IN_OBJ_API_HELPER"
+    end
     data = JSON.parse(response.body)
     data['seasonId'].to_s
   end #end def
@@ -192,7 +220,11 @@ module ObjectApiHelper
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/episodes/slug/#{slug}"
-    response = RestClient.get url
+    begin
+      response = RestClient.get url
+    rescue
+      return "ERROR_IN_OBJ_API_HELPER"
+    end
     data = JSON.parse(response.body)
     data['episodeId'].to_s
   end #end def
