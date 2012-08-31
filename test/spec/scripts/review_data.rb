@@ -102,15 +102,17 @@ data['data'].each do |article|
       game_data = JSON.parse(object_response.body)
       game_data['data'].each do |game_data|
         if game_data['metadata']['region'] == 'US'
-          if game_data.has_key?('network')
-            if (game_data['network']['ign']['review']['score'].to_s.length > 0) & game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//)
-              #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-            else
-              #puts "--------> FAILURE:"
-              puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-              #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              puts ""
-            end
+          begin
+            game_data['network']['ign']['review']['score']
+          rescue
+            #puts "--------> FAILURE:"
+            puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+            #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+            puts ""
+            next
+          end
+          if (game_data['network']['ign']['review']['score'].to_s.length > 0) & game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//)
+            #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
           else
             #puts "--------> FAILURE:"
             puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
