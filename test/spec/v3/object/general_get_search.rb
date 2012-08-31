@@ -245,7 +245,7 @@ class GeneralGetSearchHelperMethods
       {
           "rules"=>[
               {
-                  "field"=>"metadata.movie.slug",
+                  "field"=>"metadata.movie.movieId",
                   "condition"=>"exists",
                   "value"=>""
               },
@@ -471,6 +471,10 @@ end
   end
 
   shared_examples "v3 object general get search check Id" do |id|
+
+    it "should return at least one release" do
+      @data['data'].count.should > 0
+    end
 
     it "should return a #{id} value that is a 24-character hash for all releases" do
       @data['data'].each do |release|

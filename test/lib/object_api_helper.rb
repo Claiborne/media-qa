@@ -161,6 +161,7 @@ module ObjectApiHelper
   end #end def
 
   def get_roletype_id(slug)
+
     Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
     config = Configuration.new
     url = "http://#{config.options['baseurl']}/roleTypes/slug/#{slug}"
