@@ -11,7 +11,7 @@ include TopazToken
 
 class HelperVars
   
-  @article_id = ""
+  @article_id = "ARTICLE_ID"
   
   @token = return_topaz_token('articles')
   
@@ -48,10 +48,10 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Create An Article -- POST 10.92.218.21:8081/v3/articles?oauth_token={token}", :stg => true do
+describe "V3 Articles API -- Create An Article -- POST media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles?oauth_token={token}", :stg => true do
 
   before(:all) do
-    @url = "http://10.92.218.21:8081/v3/articles?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles?oauth_token=#{HelperVars.return_token}"
     begin 
       @response = RestClient.post @url, body_request, :content_type => "application/json"
     rescue => e
@@ -94,10 +94,10 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Created -- 10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}", :stg => true do
+describe "V3 Articles API -- Check Article Just Created -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}"
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -282,11 +282,11 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Update Article Just Created -- PUT 10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}?oauth_token={token}", :stg => true do
+describe "V3 Articles API -- Update Article Just Created -- PUT media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}?oauth_token={token}", :stg => true do
 
   before(:all) do
     put_body = {"content" => ["Test Content Change #{Random.rand(10000-99999)}"]}.to_json
-    @url = "http://10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}?oauth_token=#{HelperVars.return_token}"
     begin
       @response = RestClient.put @url, put_body, :content_type => "application/json"
     rescue => e
@@ -319,10 +319,10 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Updated -- 10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}", :stg => true do
+describe "V3 Articles API -- Check Article Just Updated -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}"
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -509,10 +509,10 @@ end
 ####################################################################
 # CLEAN UP / DELETE RELEASE
 
-describe "V3 Articles API -- Clean up / Delete -- 10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}", :stg => true do
+describe "V3 Articles API -- Clean up / Delete -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}?oauth_token=#{token}"
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}?oauth_token=#{HelperVars.return_token}"
     begin
       @response = RestClient.delete @url
     rescue => e
@@ -531,7 +531,7 @@ describe "V3 Articles API -- Clean up / Delete -- 10.92.218.21:8081/v3/articles/
   end
 
   it "should return a 404 after deleting the article" do
-    expect {RestClient.get "10.92.218.21:8081/v3/articles/#{HelperVars.return_article_id}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
