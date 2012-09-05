@@ -199,8 +199,15 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
       end
 
       if video_preview != ""
-        @doc.css('div.highlight-links a').attribute('href').to_s.match(/\/videos\//).should be_true
-        @doc.css('div.highlight-links a').text.match(/Preview/).should be_true
+        prev = true
+        @all_data['data'].each do |vid|
+          if vid['legacyData'].has_key?('reviewUrl'); prev = "" end
+        end
+
+        if prev != ""
+          @doc.css('div.highlight-links a').attribute('href').to_s.match(/\/videos\//).should be_true
+          @doc.css('div.highlight-links a').text.match(/Preview/).should be_true
+        end
       end
 
     end
