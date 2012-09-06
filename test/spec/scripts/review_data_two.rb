@@ -16,7 +16,7 @@ pass = "saturn1"
 
 def ent_review_articles
   {"matchRule"=>"matchAll",
-   "count"=>10,
+   "count"=>20,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -38,7 +38,7 @@ end
 
 def ent_preview_articles
   {"matchRule"=>"matchAll",
-   "count"=>10,
+   "count"=>15,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -62,7 +62,7 @@ begin
 
   #db = DBI.connect(dev_connect,dev_user,dev_pass)
   db = DBI.connect(connect,user,pass)
-=begin
+
   puts ""
   puts "--------------------- REVIEWS ---------------------"
   puts ""
@@ -95,9 +95,8 @@ begin
       end
     end
   end
-=end
-  # END REVIEWS
 
+  # END REVIEWS
   puts ""
   puts "--------------------- PREVIEWS ---------------------"
   puts ""
@@ -131,6 +130,9 @@ begin
     end
   end
 
+rescue => e
+  puts e.class.to_s
+  puts e.message.to_s
 ensure
   db.disconnect if db
 end
