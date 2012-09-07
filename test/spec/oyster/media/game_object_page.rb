@@ -76,11 +76,11 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
     end
 
     it "should display the same title name the object API returns" do
-      @doc.css('h2.contentTitle').text.strip.should == @data['metadata']['name']
+      @doc.css('h1.contentTitle').text.strip.should == @data['metadata']['name']
     end
 
     it "should link to #{url_slug} in the title" do
-      @doc.css('h2.contentTitle a').attribute('href').to_s.match(url_slug).should be_true
+      @doc.css('h1.contentTitle a').attribute('href').to_s.match(url_slug).should be_true
     end
 
     it "should display the same platform the object API returns" do
