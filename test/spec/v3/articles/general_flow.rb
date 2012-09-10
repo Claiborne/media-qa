@@ -9,41 +9,40 @@ require 'topaz_token'
 include Assert
 include TopazToken
 
-class HelperVars
-  
+class HelperVarsArticleFlow
+
   @article_id = "ARTICLE_ID"
-  
+
   @token = return_topaz_token('articles')
-  
+
   def self.return_token
-    @token  
+    @token
   end
 
   def self.return_article_id
-    @article_id 
+    @article_id
   end
-  
+
   def self.set_article_id(id)
     @article_id  = id
   end
-  
-end
 
+  def self.body_request
+    {
+        "metadata" => {
+            "headline"=>"Media QA Test Article #{Random.rand(100000-999999)}",
+            "articleType"=>"article",
+            "state"=>"published"
+        },
+        "authors" => [
+            {
+                "name"=>"Media-QA"
+            }
+        ],
+        "content" => ["Test Content Body. Media QA Test Article..."]
+    }.to_json
+  end
 
-def body_request
-  {
-    "metadata" => {
-      "headline"=>"Media QA Test Article #{Random.rand(100000-999999)}",
-      "articleType"=>"article",
-      "state"=>"published"
-    },
-    "authors" => [
-        {
-          "name"=>"Media-QA"
-        }
-    ],
-    "content" => ["Test Content Body. Media QA Test Article..."]
-  }.to_json
 end
 
 ##################################################################
@@ -51,9 +50,9 @@ end
 describe "V3 Articles API -- Create An Article -- POST media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles?oauth_token={token}", :stg => true do
 
   before(:all) do
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles?oauth_token=#{HelperVars.return_token}"
-    begin 
-      @response = RestClient.post @url, body_request, :content_type => "application/json"
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles?oauth_token=#{HelperVarsArticleFlow.return_token}"
+    begin
+      @response = RestClient.post @url, HelperVarsArticleFlow.body_request, :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -65,13 +64,13 @@ describe "V3 Articles API -- Create An Article -- POST media-article-stg-service
   end
 
   after(:each) do
-    
+
   end
-  
+
   after(:all) do
     sleep 3
   end
-  
+
   it "should return a response of 200" do
     @response.code.should eql(201)
   end
@@ -79,26 +78,26 @@ describe "V3 Articles API -- Create An Article -- POST media-article-stg-service
   it "should not be blank" do
     check_not_blank(@data)
   end
-  
+
   it "shoud return an 'articleID' key" do
     @data.has_key?('articleId').should be_true
   end
-  
+
   it "should return an 'articleID' value that is a 24-character hash" do
     @data['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
-    HelperVars.set_article_id(@data['articleId'].to_s)
+    HelperVarsArticleFlow.set_article_id(@data['articleId'].to_s)
     puts @data['articleId'].to_s
   end
-  
+
 end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Created -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}", :stg => true do
+describe "V3 Articles API -- Check Article Just Created -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}"
-    begin 
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}"
+    begin
       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url)
@@ -111,45 +110,45 @@ describe "V3 Articles API -- Check Article Just Created -- media-article-stg-ser
   end
 
   after(:each) do
-    
+
   end
-  
+
   after(:all) do
     sleep 3
   end
-  
+
   it "should return a response of 200" do
     @response.code.should eql(200)
   end
-  
+
   it "should not be blank" do
     check_not_blank(@data)
   end
-  
+
   ["articleId",
     "metadata",
-    "review", 
-    "legacyData", 
-    "metadata", 
-    "system", 
+    "review",
+    "legacyData",
+    "metadata",
+    "system",
     "tags",
     "refs",
     "authors",
     "categoryLocales",
     "promo",
     "categories",
-    "content"].each do |k| 
+    "content"].each do |k|
     it "should return an article with #{k} data" do
       @data.has_key?(k).should be_true
-    end   
+    end
   end
-  
+
   ["articleId",
     "metadata",
-    #"review", 
-    #"legacyData", 
-    "metadata", 
-    "system", 
+    #"review",
+    #"legacyData",
+    "metadata",
+    "system",
     #"tags",
     #"refs",
     "authors",
@@ -157,21 +156,21 @@ describe "V3 Articles API -- Check Article Just Created -- media-article-stg-ser
     #"promo",
     #"categories",
     #"content"
-    ].each do |k| 
+    ].each do |k|
     it "should return an article with non-nil, non-blank #{k} data" do
       @data[k].should_not be_nil
       @data[k].to_s.delete("^a-zA-Z0-9").length.should > 0
-    end   
+    end
   end
-  
+
   # articleId assertions
 
   it "should return an article with an articleId value that is a 24-character hash" do
     @data['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
   end
 
-  it "should return an article with an articleId value of #{HelperVars.return_article_id}" do
-    @data['articleId'].should == HelperVars.return_article_id
+  it "should return an article with an articleId value of #{HelperVarsArticleFlow.return_article_id}" do
+    @data['articleId'].should == HelperVarsArticleFlow.return_article_id
   end
 
   # metadata assertions
@@ -204,7 +203,7 @@ describe "V3 Articles API -- Check Article Just Created -- media-article-stg-ser
     @data['metadata']['headline'].match(/Media QA Test Article/).should be_true
   end
 
-  # review assertions  
+  # review assertions
 
   # legacyData assertions
 
@@ -229,7 +228,7 @@ describe "V3 Articles API -- Check Article Just Created -- media-article-stg-ser
   end
 
   ['displayName','slug'].each do |k|
-    it "should return an article with non-nil, non-blank '#{k}' data for each tag" do 
+    it "should return an article with non-nil, non-blank '#{k}' data for each tag" do
       @data['tags'].each do |tag|
         tag.has_key?(k).should be_true
         tag[k].should_not be_nil
@@ -264,7 +263,7 @@ describe "V3 Articles API -- Check Article Just Created -- media-article-stg-ser
   end
 
   ['displayName','slug'].each do |k|
-    it "should return an article with non-nil, non-blank #{k} data for each categories" do 
+    it "should return an article with non-nil, non-blank #{k} data for each categories" do
       @data['categories'].each do |categories|
         categories.has_key?(k).should be_true
         categories[k].should_not be_nil
@@ -274,7 +273,7 @@ describe "V3 Articles API -- Check Article Just Created -- media-article-stg-ser
   end
 =end
   # content assertions
-  
+
   it "should return an article with content value of 'Test Content Body. Media QA Test Article...'" do
     @data['content'][0].should == "Test Content Body. Media QA Test Article..."
   end
@@ -282,11 +281,11 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Update Article Just Created -- PUT media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}?oauth_token={token}", :stg => true do
+describe "V3 Articles API -- Update Article Just Created -- PUT media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token={token}", :stg => true do
 
   before(:all) do
     put_body = {"content" => ["Test Content Change #{Random.rand(10000-99999)}"]}.to_json
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token=#{HelperVarsArticleFlow.return_token}"
     begin
       @response = RestClient.put @url, put_body, :content_type => "application/json"
     rescue => e
@@ -300,30 +299,30 @@ describe "V3 Articles API -- Update Article Just Created -- PUT media-article-st
   end
 
   after(:each) do
-    
+
   end
-  
+
   after(:all) do
     sleep 3
   end
-  
+
   it "should return a response of 200" do
     @response.code.should eql(200)
   end
-  
-  it "should return an article with an articleId value of #{HelperVars.return_article_id}" do
-    @data['articleId'].should == HelperVars.return_article_id
+
+  it "should return an article with an articleId value of #{HelperVarsArticleFlow.return_article_id}" do
+    @data['articleId'].should == HelperVarsArticleFlow.return_article_id
   end
-  
+
 end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Updated -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}", :stg => true do
+describe "V3 Articles API -- Check Article Just Updated -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}"
-    begin 
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}"
+    begin
       @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url)
@@ -336,49 +335,49 @@ describe "V3 Articles API -- Check Article Just Updated -- media-article-stg-ser
   end
 
   after(:each) do
-    
+
   end
-  
+
   after(:all) do
     sleep 3
   end
-  
+
   it "should return a response of 200" do
     @response.code.should eql(200)
   end
-  
+
   it "should not be blank" do
     check_not_blank(@data)
   end
-  
+
   it "should return an article with content value of 'Test Content Change'" do
     @data['content'][0].match(/Test Content Change/).should be_true
   end
-  
+
   ["articleId",
     "metadata",
-    "review", 
-    "legacyData", 
-    "metadata", 
-    "system", 
+    "review",
+    "legacyData",
+    "metadata",
+    "system",
     "tags",
     "refs",
     "authors",
     "categoryLocales",
     "promo",
     "categories",
-    "content"].each do |k| 
+    "content"].each do |k|
     it "should return an article with #{k} data" do
       @data.has_key?(k).should be_true
-    end   
+    end
   end
-  
+
   ["articleId",
     "metadata",
-    #"review", 
-    #"legacyData", 
-    "metadata", 
-    "system", 
+    #"review",
+    #"legacyData",
+    "metadata",
+    "system",
     #"tags",
     #"refs",
     "authors",
@@ -386,21 +385,21 @@ describe "V3 Articles API -- Check Article Just Updated -- media-article-stg-ser
     #"promo",
     #"categories",
     #"content"
-    ].each do |k| 
+    ].each do |k|
     it "should return an article with non-nil, non-blank #{k} data" do
       @data[k].should_not be_nil
       @data[k].to_s.delete("^a-zA-Z0-9").length.should > 0
-    end   
+    end
   end
-  
+
   # articleId assertions
 
   it "should return an article with an articleId value that is a 24-character hash" do
     @data['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
   end
 
-  it "should return an article with an articleId value of #{HelperVars.return_article_id}" do
-    @data['articleId'].should == HelperVars.return_article_id
+  it "should return an article with an articleId value of #{HelperVarsArticleFlow.return_article_id}" do
+    @data['articleId'].should == HelperVarsArticleFlow.return_article_id
   end
 
   # metadata assertions
@@ -433,7 +432,7 @@ describe "V3 Articles API -- Check Article Just Updated -- media-article-stg-ser
     @data['metadata']['headline'].match(/Media QA Test Article/).should be_true
   end
 
-  # review assertions  
+  # review assertions
 
   # legacyData assertions
 
@@ -458,7 +457,7 @@ describe "V3 Articles API -- Check Article Just Updated -- media-article-stg-ser
   end
 
   ['displayName','slug'].each do |k|
-    it "should return an article with non-nil, non-blank '#{k}' data for each tag" do 
+    it "should return an article with non-nil, non-blank '#{k}' data for each tag" do
       @data['tags'].each do |tag|
         tag.has_key?(k).should be_true
         tag[k].should_not be_nil
@@ -493,7 +492,7 @@ describe "V3 Articles API -- Check Article Just Updated -- media-article-stg-ser
   end
 
   ['displayName','slug'].each do |k|
-    it "should return an article with non-nil, non-blank #{k} data for each categories" do 
+    it "should return an article with non-nil, non-blank #{k} data for each categories" do
       @data['categories'].each do |categories|
         categories.has_key?(k).should be_true
         categories[k].should_not be_nil
@@ -509,10 +508,10 @@ end
 ####################################################################
 # CLEAN UP / DELETE RELEASE
 
-describe "V3 Articles API -- Clean up / Delete -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}", :stg => true do
+describe "V3 Articles API -- Clean up / Delete -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}?oauth_token=#{HelperVars.return_token}"
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token=#{HelperVarsArticleFlow.return_token}"
     begin
       @response = RestClient.delete @url
     rescue => e
@@ -531,7 +530,7 @@ describe "V3 Articles API -- Clean up / Delete -- media-article-stg-services-01.
   end
 
   it "should return a 404 after deleting the article" do
-    expect {RestClient.get "media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVars.return_article_id}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end

@@ -16,7 +16,7 @@ pass = "saturn1"
 
 def ent_review_articles
   {"matchRule"=>"matchAll",
-   "count"=>20,
+   "count"=>100,  #rerun these again to check for failures after first republish
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -38,7 +38,7 @@ end
 
 def ent_preview_articles
   {"matchRule"=>"matchAll",
-   "count"=>15,
+   "count"=>100,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -83,11 +83,13 @@ begin
     end
 
     objectRelations.each do |obj|
-      sleep 0.5
-      x = db.execute("SELECT review_url FROM obj_network_resources WHERE obj_id = '#{obj}' and network = '12'")
+      sleep 0.2
+      x = db.execute("SELECT review_url, overall_rating FROM obj_network_resources WHERE obj_id = '#{obj}' and network = '12'")
 
       x.fetch_hash do |row|
-        if row['REVIEW_URL'] == nil
+        #if (row['REVIEW_URL'] == nil || row['OVERALL_RATING'] == nil)
+        if (row['REVIEW_URL'].to_s.match(/blogs/) || row['REVIEW_URL'].to_s.match(/\d\/preview/))
+          puts row['REVIEW_URL'].to_s
           puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           puts obj
         else
@@ -95,7 +97,7 @@ begin
       end
 
       # CHECK V3 REVIEW DATA EXISTS
-
+=begin
       catch (:error_404) do
         objectRelations.each do |object|
           begin
@@ -110,28 +112,29 @@ begin
                 game_data['network']['ign']['review']['score']
               rescue
                 #puts "--------> FAILURE:"
-                puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+                puts "#{object}"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                puts ""
+                #puts ""
                 next
               end
               if (game_data['network']['ign']['review']['score'].to_s.length > 0) & game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//)
                 #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
               else
                 #puts "--------> FAILURE:"
-                puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+                puts "#{object}"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                puts ""
+                #puts ""
               end
             end
           end
         end #end objectRelations iteration
       end #end catch
-
+=end
     end
   end
 
   # END REVIEWS
+
   puts ""
   puts "--------------------- PREVIEWS ---------------------"
   puts ""
@@ -156,15 +159,18 @@ begin
       x = db.execute("SELECT preview_url FROM obj_network_resources WHERE obj_id = '#{obj}' and network = '12'")
 
       x.fetch_hash do |row|
-        if row['PREVIEW_URL'] == nil
+        #if row['PREVIEW_URL'] == nil
+        if row['PREVIEW_URL'].to_s.match(/\d\/preview/) || row['PREVIEW_URL'].to_s.match(/blogs/)
+          puts row['PREVIEW_URL']
           puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           puts obj
         else
         end
+
       end
 
       # CHECK V3 PREVIEW DATA EXISTS
-
+=begin
       catch (:error_404) do
         objectRelations.each do |object|
           begin
@@ -180,21 +186,21 @@ begin
                   #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
                 else
                   #puts "--------> FAILURE:"
-                  puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+                  puts "#{object}"
                   #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                  puts ""
+                  #puts ""
                 end
               else
                 #puts "--------> FAILURE:"
-                puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+                puts "#{object}"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                puts ""
+                #puts ""
               end
             end
           end
         end #end objectRelations iteration
       end #end catch
-
+=end
     end
   end
 
