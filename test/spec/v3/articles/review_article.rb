@@ -31,7 +31,7 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Create A Review Article -- POST media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles?oauth_token={token}", :test => true do
+describe "V3 Articles API -- Create A Review Article -- POST media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles?oauth_token={token}", :stg => true do
 
   before(:all) do
     TopazToken.set_token('articles')
@@ -78,7 +78,7 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Review Article Just Created -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :test => true do
+describe "V3 Articles API -- Check Review Article Just Created -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :stg => true do
 
   before(:all) do
     @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}"
@@ -169,7 +169,7 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Change A Review Article -- PUT media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :test => true do
+describe "V3 Articles API -- Change A Review Article -- PUT media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :stg => true do
 
   before(:all) do
     TopazToken.set_token('articles')
@@ -210,7 +210,7 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Review Article Just Changed -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :test => true do
+describe "V3 Articles API -- Check Review Article Just Changed -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :stg => true do
 
   before(:all) do
     @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}"
@@ -307,7 +307,7 @@ end
 ####################################################################
 # CLEAN UP / DELETE RELEASE
 
-describe "V3 Articles API -- Clean up / Delete -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :test => true do
+describe "V3 Articles API -- Clean up / Delete -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :stg => true do
 
   before(:all) do
     @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}?oauth_token=#{TopazToken.return_token}"
