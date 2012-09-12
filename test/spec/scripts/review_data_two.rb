@@ -16,7 +16,7 @@ pass = "saturn1"
 
 def ent_review_articles
   {"matchRule"=>"matchAll",
-   "count"=>100,  #rerun these again to check for failures after first republish
+   "count"=>25,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -38,7 +38,7 @@ end
 
 def ent_preview_articles
   {"matchRule"=>"matchAll",
-   "count"=>100,
+   "count"=>0,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -87,17 +87,17 @@ begin
       x = db.execute("SELECT review_url, overall_rating FROM obj_network_resources WHERE obj_id = '#{obj}' and network = '12'")
 
       x.fetch_hash do |row|
-        #if (row['REVIEW_URL'] == nil || row['OVERALL_RATING'] == nil)
-        if (row['REVIEW_URL'].to_s.match(/blogs/) || row['REVIEW_URL'].to_s.match(/\d\/preview/))
-          puts row['REVIEW_URL'].to_s
+        if (row['REVIEW_URL'] == nil || row['OVERALL_RATING'] == nil || row['OVERALL_RATING'] == 0 || row['OVERALL_RATING'] == 0.0 || row['REVIEW_URL'].to_s.match(/blogs/) || row['REVIEW_URL'].to_s.match(/\d\/preview/))
+          puts "#{row['REVIEW_URL'].to_s} #{row['OVERALL_RATING']}"
           puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           puts obj
+          puts ""
         else
         end
       end
 
       # CHECK V3 REVIEW DATA EXISTS
-=begin
+
       catch (:error_404) do
         objectRelations.each do |object|
           begin
@@ -112,24 +112,38 @@ begin
                 game_data['network']['ign']['review']['score']
               rescue
                 #puts "--------> FAILURE:"
-                puts "#{object}"
+                puts "v3 failure #{object} no network.ign.review.score key in json"
+                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                #puts ""
+                puts ""
                 next
               end
-              if (game_data['network']['ign']['review']['score'].to_s.length > 0) & game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//)
+              begin
+                game_data['legacyData']['reviewUrl']
+              rescue
+                #puts "--------> FAILURE:"
+                puts "v3 failure #{object} no legacyData.reviewUrl in json"
+                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+                #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+                puts ""
+                next
+              end
+              if (game_data['network']['ign']['review']['score'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['reviewUrl'].to_s.match(/blogs/) || game_data['legacyData']['reviewUrl'].to_s.length < 1 || game_data['network']['ign']['review']['score'] == nil || game_data['legacyData']['reviewUrl'] == nil)
                 #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
               else
                 #puts "--------> FAILURE:"
-                puts "#{object}"
+                puts "v3 failure #{object}"
+                puts "score #{game_data['network']['ign']['review']['score']}"
+                puts "review_url #{game_data['legacyData']['reviewUrl']}"
+                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                #puts ""
+                puts ""
               end
             end
           end
         end #end objectRelations iteration
       end #end catch
-=end
+
     end
   end
 
@@ -159,18 +173,18 @@ begin
       x = db.execute("SELECT preview_url FROM obj_network_resources WHERE obj_id = '#{obj}' and network = '12'")
 
       x.fetch_hash do |row|
-        #if row['PREVIEW_URL'] == nil
-        if row['PREVIEW_URL'].to_s.match(/\d\/preview/) || row['PREVIEW_URL'].to_s.match(/blogs/)
+        if (row['PREVIEW_URL'].to_s.match(/\d\/preview/) || row['PREVIEW_URL'].to_s.match(/blogs/) || row['PREVIEW_URL'] == nil || row['PREVIEW_URL'] == "")
           puts row['PREVIEW_URL']
           puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           puts obj
+          puts ""
         else
         end
 
       end
 
       # CHECK V3 PREVIEW DATA EXISTS
-=begin
+
       catch (:error_404) do
         objectRelations.each do |object|
           begin
@@ -181,26 +195,31 @@ begin
           game_data = JSON.parse(object_response.body)
           game_data['data'].each do |game_data|
             if game_data['metadata']['region'] == 'US'
-              if game_data.has_key?('legacyData')
-                if game_data['legacyData']['previewUrl'].to_s.match(/com\/articles\//)
-                  #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-                else
-                  #puts "--------> FAILURE:"
-                  puts "#{object}"
-                  #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                  #puts ""
-                end
+              begin
+                game_data['legacyData']['previewUrl']
+              rescue
+                #puts "--------> FAILURE:"
+                puts "#v3 failure #{object} no legacyData.previewUrl key in json"
+                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+                #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+                puts ""
+                next
+              end
+              if (game_data['legacyData']['previewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1)
+                #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
               else
                 #puts "--------> FAILURE:"
-                puts "#{object}"
+                puts "v3 failure #{object}"
+                puts "previewUrl: #{game_data['legacyData']['previewUrl']}"
+                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                #puts ""
+                puts ""
               end
             end
           end
         end #end objectRelations iteration
       end #end catch
-=end
+
     end
   end
 
