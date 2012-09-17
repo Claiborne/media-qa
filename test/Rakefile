@@ -89,37 +89,37 @@ RSpec::Core::RakeTask.new('objectpages') do |t|
 end
 
 desc "Run Game Pages Frontend Tests"
-RSpec::Core::RakeTask.new('gamepages') do |t|
+RSpec::Core::RakeTask.new('gamepage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/oyster/media/game_object_page.rb'
 end
 
 desc "Run Comic Pages Frontend Tests"
-RSpec::Core::RakeTask.new('comicpagesfrontend') do |t|
+RSpec::Core::RakeTask.new('comicpage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/oyster/media/comic_object_page.rb'
 end
 
 desc "Run Movie Pages Frontend Tests"
-RSpec::Core::RakeTask.new('moviepages') do |t|
+RSpec::Core::RakeTask.new('moviepage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/oyster/media/movie_object_page.rb'
 end
 
 desc "Run TV Pages Frontend Tests"
-RSpec::Core::RakeTask.new('tvpages') do |t|
+RSpec::Core::RakeTask.new('tvpage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/oyster/media/tv_object_page.rb'
 end
 
 desc "Run Stars Pages Frontend Tests"
-RSpec::Core::RakeTask.new('starspages') do |t|
+RSpec::Core::RakeTask.new('starspage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/oyster/media/stars_object_page.rb'
 end
 
 desc "Run Characters Pages Frontend Tests"
-RSpec::Core::RakeTask.new('characterspages') do |t|
+RSpec::Core::RakeTask.new('characterspage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/oyster/media/characters_object_page.rb'
 end

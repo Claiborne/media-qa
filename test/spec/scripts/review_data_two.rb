@@ -16,7 +16,7 @@ pass = "saturn1"
 
 def ent_review_articles
   {"matchRule"=>"matchAll",
-   "count"=>25,
+   "count"=>15,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -38,7 +38,7 @@ end
 
 def ent_preview_articles
   {"matchRule"=>"matchAll",
-   "count"=>0,
+   "count"=>20,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -64,7 +64,7 @@ begin
   db = DBI.connect(connect,user,pass)
 
   puts ""
-  puts "--------------------- REVIEWS ---------------------"
+  puts "--------------------- ENT REVIEWS ---------------------"
   puts ""
 
   url = "http://apis.lan.ign.com/article/v3/articles/search?q="+ent_review_articles.to_s
@@ -115,7 +115,6 @@ begin
                 puts "v3 failure #{object} no network.ign.review.score key in json"
                 puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                puts ""
                 next
               end
               begin
@@ -125,7 +124,6 @@ begin
                 puts "v3 failure #{object} no legacyData.reviewUrl in json"
                 puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                puts ""
                 next
               end
               if (game_data['network']['ign']['review']['score'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['reviewUrl'].to_s.match(/blogs/) || game_data['legacyData']['reviewUrl'].to_s.length < 1 || game_data['network']['ign']['review']['score'] == nil || game_data['legacyData']['reviewUrl'] == nil)
@@ -137,10 +135,10 @@ begin
                 puts "review_url #{game_data['legacyData']['reviewUrl']}"
                 puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                puts ""
               end
             end
           end
+          puts "."
         end #end objectRelations iteration
       end #end catch
 
@@ -150,7 +148,7 @@ begin
   # END REVIEWS
 
   puts ""
-  puts "--------------------- PREVIEWS ---------------------"
+  puts "--------------------- ENT PREVIEWS ---------------------"
   puts ""
 
   url = "http://apis.lan.ign.com/article/v3/articles/search?q="+ent_preview_articles.to_s
@@ -174,10 +172,9 @@ begin
 
       x.fetch_hash do |row|
         if (row['PREVIEW_URL'].to_s.match(/\d\/preview/) || row['PREVIEW_URL'].to_s.match(/blogs/) || row['PREVIEW_URL'] == nil || row['PREVIEW_URL'] == "")
-          puts row['PREVIEW_URL']
+          puts "Preview URL "+row['PREVIEW_URL']
           puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           puts obj
-          puts ""
         else
         end
 
@@ -202,7 +199,6 @@ begin
                 puts "#v3 failure #{object} no legacyData.previewUrl key in json"
                 puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                puts ""
                 next
               end
               if (game_data['legacyData']['previewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1)
@@ -213,7 +209,6 @@ begin
                 puts "previewUrl: #{game_data['legacyData']['previewUrl']}"
                 puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
                 #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                puts ""
               end
             end
           end
@@ -221,6 +216,7 @@ begin
       end #end catch
 
     end
+    puts "."
   end
 
 rescue => e

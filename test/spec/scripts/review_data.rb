@@ -57,7 +57,7 @@ def game_preview_articles
 end
 
 puts ""
-puts "--------------------- REVIEWS ---------------------"
+puts "--------------------- GAME REVIEWS ---------------------"
 puts ""
 
 url = "http://apis.lan.ign.com/article/v3/articles/search?q="+game_review_articles.to_s
@@ -83,9 +83,9 @@ data['data'].each do |article|
     if game_data['game']['reviewUrl'].to_s.match(/com\/articles\//)
       #puts "PASS: http://content-api.ign.com/v1/games/#{object}.json"
     else
-      #puts "--------> FAILURE:"
-      puts "--------> http://content-api.ign.com/v1/games/#{object}.json"
-      puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+      #puts "FAILURE:"
+      puts "http://content-api.ign.com/v1/games/#{object}.json"
+      puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
     end
   end #end objectRelations iteration
   end #end catch
@@ -105,19 +105,17 @@ data['data'].each do |article|
           begin
             game_data['network']['ign']['review']['score']
           rescue
-            #puts "--------> FAILURE:"
-            puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-            #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-            puts ""
+            #puts "FAILURE:"
+            puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+            #puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
             next
           end
           if (game_data['network']['ign']['review']['score'].to_s.length > 0) & game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//)
             #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
           else
-            #puts "--------> FAILURE:"
-            puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-            #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-            puts ""
+            #puts "FAILURE:"
+            puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+            #puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           end
         end
       end
@@ -127,7 +125,7 @@ data['data'].each do |article|
 end #end article iteration
 
 puts ""
-puts "--------------------- PREVIEWS ---------------------"
+puts "--------------------- GAME PREVIEWS ---------------------"
 puts ""
 
 url = "http://apis.lan.ign.com/article/v3/articles/search?q="+game_preview_articles.to_s
@@ -152,11 +150,12 @@ data['data'].each do |article|
     if game_data['game']['previewUrl'].to_s.match(/com\/articles\//) || game_data['game']['previewUrl'].to_s.match(/\/articles\//)
       #puts "PASS: http://content-api.ign.com/v1/games/#{object}.json"
     else
-      #puts "--------> FAILURE:"
-      puts "--------> http://content-api.ign.com/v1/games/#{object}.json"
-      puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+      #puts "FAILURE:"
+      puts "http://content-api.ign.com/v1/games/#{object}.json"
+      puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
     end
   end #end objectRelations iteration
+  puts "."
   end #end catch
 
   # CHECK V3 PREVIEW DATA EXISTS
@@ -175,20 +174,19 @@ data['data'].each do |article|
             if game_data['legacyData']['previewUrl'].to_s.match(/com\/articles\//)
               #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
             else
-              #puts "--------> FAILURE:"
-              puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-              #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              puts ""
+              #puts "FAILURE:"
+              puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+              #puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
             end
           else
-            #puts "--------> FAILURE:"
-            puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-            #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-            puts ""
+            #puts "FAILURE:"
+            puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+            #puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           end
         end
       end
     end #end objectRelations iteration
+    puts "."
   end #end catch
     
 end #end article iteration

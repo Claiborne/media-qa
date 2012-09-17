@@ -9,7 +9,7 @@ require 'json'
 include OpenPage
 include FeChecker
 
-%w(halo-4/xbox-360-110563 darksiders-ii/xbox-360-14336768 heavenly-sword/ps3-700186).each do |url_slug|
+%w(halo-4/xbox-360-110563 darksiders-ii/xbox-360-14336768 heavenly-sword/ps3-700186 littlebigplanet/vita-98907 nhl-13/xbox-360-128182 metal-gear-solid-844505/gbc-13458 call-of-duty-black-ops-ii/pc-126314 professional-fishermans-tour-big-bass-open/3ds-87854).each do |url_slug|
 %w(www uk au).each do |domain_locale|
 
 describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}" do
@@ -40,8 +40,11 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
     videos = videos.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     images = ({"matchRule"=>"matchAll","rules"=>[{"field"=>"legacyData.objectRelations","condition"=>"is","value"=>@legacy_id},{"field"=>"tags","condition"=>"containsOne","value"=>"gallery"}],"startIndex"=>0,"count"=>1,"sortBy"=>"system.createdAt","dateType"=>"system.createdAt","states"=>"published"}.to_json).to_s
     images = images.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
-
-    @images = (JSON.parse RestClient.get("http://apis.lan.ign.com/image/v3/images/search?q=#{images}").body)['data'][0]
+    begin
+      @images = (JSON.parse RestClient.get("http://apis.lan.ign.com/image/v3/images/search?q=#{images}").body)['data'][0]
+    rescue
+      @images = "ERROR_GETTING_IMAGES"
+    end
     @articles = (JSON.parse RestClient.get("http://apis.lan.ign.com/article/v3/articles/search?q=#{articles}").body)
     @videos = (JSON.parse RestClient.get("http://apis.lan.ign.com/video/v3/videos/search?q=#{videos}").body)
     @data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/releases/legacyId/#@legacy_id?metadata.region=#@locale").body)['data'][0]
@@ -154,9 +157,11 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
     end
 
     it "should display and link to a preview article if one exists and no review exists" do
-      review = ""
+      review = false
       @all_data['data'].each do |release|
-        release['legacyData'].has_key?('reviewUrl') ? review = true : review = false
+        if release.has_key?('legacyData')
+          if release['legacyData'].has_key?('reviewUrl'); review = true end
+        end
       end
       if review == false
         @doc.css('div.reviewTitle-wrapper h3').text.match(/Preview/).should be_true
@@ -167,9 +172,11 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
     end
 
     it "should display and link to the review article if one exists, including box art image" do
-      review = ""
+      review = false
       @all_data['data'].each do |release|
-        release['legacyData'].has_key?('reviewUrl') ? review = true : review = false
+        if release.has_key?('legacyData')
+          if release['legacyData'].has_key?('reviewUrl'); review = true end
+        end
       end
       if review == true
         @doc.css('div.reviewTitle-wrapper h3').text.match(/Review/).should be_true
