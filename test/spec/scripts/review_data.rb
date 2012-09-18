@@ -119,6 +119,7 @@ data['data'].each do |article|
           end
         end
       end
+      puts "."
     end #end objectRelations iteration
   end #end catch
 
@@ -176,12 +177,12 @@ data['data'].each do |article|
             else
               #puts "FAILURE:"
               puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-              #puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+              puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
             end
           else
             #puts "FAILURE:"
             puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-            #puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+            puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           end
         end
       end

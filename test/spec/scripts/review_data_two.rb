@@ -38,7 +38,7 @@ end
 
 def ent_preview_articles
   {"matchRule"=>"matchAll",
-   "count"=>20,
+   "count"=>15,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -88,10 +88,9 @@ begin
 
       x.fetch_hash do |row|
         if (row['REVIEW_URL'] == nil || row['OVERALL_RATING'] == nil || row['OVERALL_RATING'] == 0 || row['OVERALL_RATING'] == 0.0 || row['REVIEW_URL'].to_s.match(/blogs/) || row['REVIEW_URL'].to_s.match(/\d\/preview/))
-          puts "#{row['REVIEW_URL'].to_s} #{row['OVERALL_RATING']}"
+          puts "NIB Review URL: #{row['REVIEW_URL'].to_s} NIB Rating: #{row['OVERALL_RATING']}"
           puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           puts obj
-          puts ""
         else
         end
       end
@@ -141,7 +140,6 @@ begin
           puts "."
         end #end objectRelations iteration
       end #end catch
-
     end
   end
 
@@ -172,7 +170,7 @@ begin
 
       x.fetch_hash do |row|
         if (row['PREVIEW_URL'].to_s.match(/\d\/preview/) || row['PREVIEW_URL'].to_s.match(/blogs/) || row['PREVIEW_URL'] == nil || row['PREVIEW_URL'] == "")
-          puts "Preview URL "+row['PREVIEW_URL']
+          puts "NIB Preview URL: "+row['PREVIEW_URL'].to_s
           puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           puts obj
         else
@@ -222,6 +220,7 @@ begin
 rescue => e
   puts e.class.to_s
   puts e.message.to_s
+  puts e.backtrace
 ensure
   db.disconnect if db
 end
