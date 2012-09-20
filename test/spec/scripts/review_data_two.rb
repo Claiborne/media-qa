@@ -154,7 +154,6 @@ begin
       end
     end
     end
-    puts ""
   end
 
   # END REVIEWS
@@ -238,7 +237,6 @@ begin
       end
     end
     end
-    puts ""
   end
 
 rescue => e
