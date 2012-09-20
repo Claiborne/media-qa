@@ -6,7 +6,7 @@ require 'json'
 
 def game_review_articles
   {"matchRule"=>"matchAll",
-  "count"=>10,
+  "count"=>20,
   "startIndex"=>0,
   "networks"=>"ign",
   "states"=>"published",
@@ -32,7 +32,7 @@ end
 
 def game_preview_articles
   {"matchRule"=>"matchAll",
-  "count"=>10,
+  "count"=>20,
   "startIndex"=>0,
   "networks"=>"ign",
   "states"=>"published",
@@ -119,7 +119,6 @@ data['data'].each do |article|
           end
         end
       end
-      puts "."
     end #end objectRelations iteration
   end #end catch
 
@@ -156,7 +155,6 @@ data['data'].each do |article|
       puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
     end
   end #end objectRelations iteration
-  puts "."
   end #end catch
 
   # CHECK V3 PREVIEW DATA EXISTS
@@ -177,19 +175,16 @@ data['data'].each do |article|
             else
               #puts "FAILURE:"
               puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-              puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
             end
           else
             #puts "FAILURE:"
             puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-            puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           end
         end
       end
     end #end objectRelations iteration
-    puts "."
   end #end catch
-    
+
 end #end article iteration
 
 

@@ -9,7 +9,9 @@ require 'json'
 include OpenPage
 include FeChecker
 
-%w(halo-4/xbox-360-110563 darksiders-ii/xbox-360-14336768 heavenly-sword/ps3-700186 littlebigplanet/vita-98907 nhl-13/xbox-360-128182 metal-gear-solid-844505/gbc-13458 call-of-duty-black-ops-ii/pc-126314 professional-fishermans-tour-big-bass-open/3ds-87854).each do |url_slug|
+#darksiders-ii/xbox-360-14336768 heavenly-sword/ps3-700186 littlebigplanet/vita-98907 nhl-13/xbox-360-128182 metal-gear-solid-844505/gbc-13458 call-of-duty-black-ops-ii/pc-126314 professional-fishermans-tour-big-bass-open/3ds-87854
+
+%w(halo-4/xbox-360-110563).each do |url_slug|
 %w(www uk au).each do |domain_locale|
 
 describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}" do

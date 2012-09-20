@@ -9,28 +9,18 @@ require 'open_page'
 include OpenPage
 
 contents = []
-file = File.new("/Users/wclaiborne/Desktop/new_missing.txt", "r")
+file = File.new("/Users/wclaiborne/Desktop/remigrate_all.txt", "r")
 while (line = file.gets)
   contents << line
 end
 file.close
 
 puts "CONTENTS LENGTH #{contents.length}"
+puts "CONTENTS UNIQUE #{contents.uniq.length}"
 
-ids = []
+puts contents.uniq
 
-contents.each do |c|
-  if c.match(/^\d/)
-    ids << c
-  end
-end
 
-puts "IDS LENGTH #{ids.length}"
-puts ids.uniq.length.to_s
-
-ids.uniq!.each do |i|
-  puts i
-end
 =begin
 contents = []
 file = File.new("/Users/wclaiborne/Desktop/temp1.txt", "r")
@@ -54,6 +44,7 @@ wp_urls_slim.each do |url|
 
 end
 =end
+
 =begin
 describe "Republish Wordpress Articles" do
 
@@ -65,7 +56,7 @@ describe "Republish Wordpress Articles" do
     file = File.new("/Users/wclaiborne/Desktop/urls.txt", "r")
     @wp_urls = []
     while (line = file.gets)
-      @wp_urls << line
+      @wp_urls << "http://write.ign.com/wp-admin/post.php?post=#{line}&action=edit&message=1"
     end
     file.close
 
@@ -90,7 +81,7 @@ describe "Republish Wordpress Articles" do
     pass = @selenium.find_element(:css => "input#password")
     email.send_keys("williamjclaiborne@hotmail.com")
     pass.send_keys("gkastle")
-    @selenium.find_element(:css => "div.ignsignin-signinButton").click
+    @selenium.find_element(:css => "input.ignsignin-formButton").click
     @wp_urls.each do |i|
       @selenium.get i
       button = @selenium.find_element(:css => "div#publishing-action input#publish")

@@ -16,7 +16,7 @@ pass = "saturn1"
 
 def ent_review_articles
   {"matchRule"=>"matchAll",
-   "count"=>15,
+   "count"=>25,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -38,7 +38,7 @@ end
 
 def ent_preview_articles
   {"matchRule"=>"matchAll",
-   "count"=>15,
+   "count"=>20,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -71,9 +71,7 @@ begin
   url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
   response = RestClient.get url
   data = JSON.parse(response.body)
-  objects = []
   data['data'].each do |article|
-
     if article.has_key?('legacyData')
       if article["legacyData"].has_key?('objectRelations')
         objectRelations = article["legacyData"]["objectRelations"]
@@ -88,59 +86,75 @@ begin
 
       x.fetch_hash do |row|
         if (row['REVIEW_URL'] == nil || row['OVERALL_RATING'] == nil || row['OVERALL_RATING'] == 0 || row['OVERALL_RATING'] == 0.0 || row['REVIEW_URL'].to_s.match(/blogs/) || row['REVIEW_URL'].to_s.match(/\d\/preview/))
-          puts "NIB Review URL: #{row['REVIEW_URL'].to_s} NIB Rating: #{row['OVERALL_RATING']}"
           puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-          puts obj
         else
         end
       end
+    end
 
-      # CHECK V3 REVIEW DATA EXISTS
+    # CHECK V3 REVIEW DATA EXISTS
 
-      catch (:error_404) do
-        objectRelations.each do |object|
-          begin
-            object_response = RestClient.get "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-          rescue
-            throw :error_404
-          end
-          game_data = JSON.parse(object_response.body)
-          game_data['data'].each do |game_data|
-            if game_data['metadata']['region'] == 'US'
-              begin
-                game_data['network']['ign']['review']['score']
-              rescue
-                #puts "--------> FAILURE:"
-                puts "v3 failure #{object} no network.ign.review.score key in json"
-                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                next
-              end
-              begin
-                game_data['legacyData']['reviewUrl']
-              rescue
-                #puts "--------> FAILURE:"
-                puts "v3 failure #{object} no legacyData.reviewUrl in json"
-                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                next
-              end
-              if (game_data['network']['ign']['review']['score'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['reviewUrl'].to_s.match(/blogs/) || game_data['legacyData']['reviewUrl'].to_s.length < 1 || game_data['network']['ign']['review']['score'] == nil || game_data['legacyData']['reviewUrl'] == nil)
-                #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-              else
-                #puts "--------> FAILURE:"
-                puts "v3 failure #{object}"
-                puts "score #{game_data['network']['ign']['review']['score']}"
-                puts "review_url #{game_data['legacyData']['reviewUrl']}"
-                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              end
+    catch (:error_404) do
+      objectRelations.each do |object|
+        begin
+          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+        rescue
+          throw :error_404
+        end
+        game_data = JSON.parse(object_response.body)
+
+        game_data['data'].each do |game_data|
+          if game_data['metadata']['region'] == 'US'
+            begin
+              game_data['network']['ign']['review']['score']
+            rescue
+              puts object
+              next
+            end
+            begin
+              game_data['legacyData']['reviewUrl']
+            rescue
+              puts object
+              next
+            end
+            if (game_data['network']['ign']['review']['score'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['reviewUrl'].to_s.match(/blogs/) || game_data['legacyData']['reviewUrl'].to_s.length < 1 || game_data['network']['ign']['review']['score'] == nil || game_data['legacyData']['reviewUrl'] == nil)
+            else
+              puts object
             end
           end
-          puts "."
-        end #end objectRelations iteration
-      end #end catch
+        end
+      end
     end
+
+    %w(episodes shows volumes).each do |o|
+    catch (:error_404) do
+      objectRelations.each do |object|
+        begin
+          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/#{o}/legacyId/#{object}"
+        rescue
+          throw :error_404
+        end
+        game_data = JSON.parse(object_response.body)
+        begin
+          game_data['network']['ign']['review']['score']
+        rescue
+          puts object
+          next
+        end
+        begin
+          game_data['legacyData']['reviewUrl']
+        rescue
+          puts object
+          next
+        end
+        if (game_data['network']['ign']['review']['score'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['reviewUrl'].to_s.match(/blogs/) || game_data['legacyData']['reviewUrl'].to_s.length < 1 || game_data['network']['ign']['review']['score'] == nil || game_data['legacyData']['reviewUrl'] == nil)
+        else
+          puts object
+        end
+      end
+    end
+    end
+    puts ""
   end
 
   # END REVIEWS
@@ -153,7 +167,6 @@ begin
   url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
   response = RestClient.get url
   data = JSON.parse(response.body)
-  objects = []
   data['data'].each do |article|
 
     if article.has_key?('legacyData')
@@ -170,51 +183,62 @@ begin
 
       x.fetch_hash do |row|
         if (row['PREVIEW_URL'].to_s.match(/\d\/preview/) || row['PREVIEW_URL'].to_s.match(/blogs/) || row['PREVIEW_URL'] == nil || row['PREVIEW_URL'] == "")
-          puts "NIB Preview URL: "+row['PREVIEW_URL'].to_s
           puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-          puts obj
         else
         end
-
       end
+    end
 
-      # CHECK V3 PREVIEW DATA EXISTS
-
-      catch (:error_404) do
-        objectRelations.each do |object|
-          begin
-            object_response = RestClient.get "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-          rescue
-            throw :error_404
-          end
-          game_data = JSON.parse(object_response.body)
-          game_data['data'].each do |game_data|
-            if game_data['metadata']['region'] == 'US'
-              begin
-                game_data['legacyData']['previewUrl']
-              rescue
-                #puts "--------> FAILURE:"
-                puts "#v3 failure #{object} no legacyData.previewUrl key in json"
-                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                next
-              end
-              if (game_data['legacyData']['previewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1)
-                #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-              else
-                #puts "--------> FAILURE:"
-                puts "v3 failure #{object}"
-                puts "previewUrl: #{game_data['legacyData']['previewUrl']}"
-                puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-                #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              end
+    # CHECK V3 PREVIEW DATA EXISTS
+    catch (:error_404) do
+      objectRelations.each do |object|
+        begin
+          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+        rescue
+          throw :error_404
+        end
+        game_data = JSON.parse(object_response.body)
+        game_data['data'].each do |game_data|
+          if game_data['metadata']['region'] == 'US'
+            begin
+              game_data['legacyData']['previewUrl']
+            rescue
+              puts object
+              next
+            end
+            if (game_data['legacyData']['previewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1)
+              #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+            else
+              puts object
             end
           end
-        end #end objectRelations iteration
-      end #end catch
-
+        end
+      end
     end
-    puts "."
+
+    %w(episodes shows volumes).each do |o|
+    catch (:error_404) do
+      objectRelations.each do |object|
+        begin
+          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/#{o}/legacyId/#{object}"
+        rescue
+          throw :error_404
+        end
+        game_data = JSON.parse(object_response.body)
+        begin
+          game_data['legacyData']['previewUrl']
+        rescue
+          puts object
+          next
+        end
+        if (game_data['legacyData']['previewUrl'].to_s.match(/com\/articles\//) || game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1)
+        else
+          puts object
+        end
+      end
+    end
+    end
+    puts ""
   end
 
 rescue => e
