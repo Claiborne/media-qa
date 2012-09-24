@@ -11,7 +11,5 @@ module ObjectHeader
 
     object_header_basic
 
-
-
   end
 end

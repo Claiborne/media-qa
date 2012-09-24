@@ -5,6 +5,7 @@ require 'rest_client'
 require 'open_page'
 require 'fe_checker'
 require 'json'
+require 'time'
 
 include OpenPage
 include FeChecker
@@ -18,10 +19,10 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/tv/#{url_slug}" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
-    @url = "http://#{@base_url}/games/#{url_slug}"
+    @url = "http://#{@base_url}/tv/#{url_slug}"
     @cookie =  get_international_cookie(domain_locale)
     @doc = nokogiri_not_301_open(@url,@cookie)
-    @legacy_id = url_slug.match(/[0-9]{1,8}\z/)
+    @legacy_id = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/shows/slug/game-of-thrones").body)['metadata']['legacyId'].to_s
     case domain_locale
       when 'www'
         @locale = 'US'
@@ -32,7 +33,9 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/tv/#{url_slug}" do
       else
         Exception.new 'Unable to set locale variable'
     end
-  end
+    @data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/shows/legacyId/#@legacy_id").body)
+    @us_data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/shows/legacyId/#@legacy_id?").body)
+  end # end before all
 
   it "should return 200" do
   end
@@ -59,22 +62,12 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/tv/#{url_slug}" do
       @doc.css('h1.contentTitle a').attribute('href').to_s.match(url_slug).should be_true
     end
 
-    it "should display the same platform the object API returns" do
-      @doc.css('div.contentPlatformsText').text.should == @data['hardware']['platform']['metadata']['name']
+    it "should display the same air status the object API returns" do
+      @doc.css('div.contentDetails div:nth-child(2) strong').text.downcase.should == @data['metadata']['airDate']['status']
     end
 
-    it "should display the same release data the object API returns" do
-      @doc.css('div.releaseDate strong').text.should == @data['metadata']['releaseDate']['display']
-    end
-
-    it "should include the follow social touch-point" do
-      @doc.at_css('div.myIgnFollowInstance').should be_true
-    end
-
-    if @locale == 'US'
-      it "should include the GameStop link" do
-        @doc.at_css("div[class='contentHead-gameStop contentHead-gameStopPrice'] a").should be_true
-      end
+    it "should display the same air date the object API returns" do
+      Time.parse(@doc.css('div.contentDetails div:nth-child(4) strong').text).to_s.match(/^.{10}/).to_s.should == @data['metadata']['airDate']['show']
     end
 
     it "should include the Facebook Like button" do
@@ -82,5 +75,32 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/tv/#{url_slug}" do
     end
 
   end
+
+  context "Object Navigation" do
+
+    it "should have at least four links" do
+      @doc.css('ul.contentNav li a').count.should > 3
+    end
+
+    it "should display text for each link" do
+      check_display_text_for_each('ul.contentNav li a')
+    end
+
+    %w(tv videos images articles).each do |link|
+      it "should link to #{link}" do
+        @doc.at_css("ul.contentNav li a[href*='"+link.to_s+"']").should be_true
+      end
+    end
+
+    it "should link to /tv/#{url_slug}" do
+      @doc.at_css("ul.contentNav li a[href*='tv/#{url_slug}']").should be_true
+    end
+
+    it "should not contain any broken links" do
+      check_links_not_301_home('ul.contentNav')
+    end
+
+  end
+
 end end end
 

@@ -128,6 +128,10 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
       end
     end
 
+    it "should link to /tv/#{url_slug}" do
+      @doc.at_css("ul.contentNav li a[href*='tv/#{url_slug}']").should be_true
+    end
+
     it "should not contain any broken links" do
       check_links_not_301_home('ul.contentNav')
     end
@@ -136,7 +140,7 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
 
   context "Highlight Area" do
 
-    it "should display the same image the object API returns", :test => true do
+    it "should display the same image the object API returns" do
       if @data['legacyData'].has_key?('boxArt')
         box_art = []
         @data['legacyData']['boxArt'].each do |art|
