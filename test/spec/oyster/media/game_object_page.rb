@@ -128,8 +128,8 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
       end
     end
 
-    it "should link to /tv/#{url_slug}" do
-      @doc.at_css("ul.contentNav li a[href*='tv/#{url_slug}']").should be_true
+    it "should link to /games/#{url_slug}" do
+      @doc.at_css("ul.contentNav li a[href*='games/#{url_slug}']").should be_true
     end
 
     it "should not contain any broken links" do
