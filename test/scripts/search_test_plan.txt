@@ -1,0 +1,78 @@
+Assert This For All:
+-relevancy
+-no tba in title
+-only state=published games
+-no status=cancelled games
+-review if review
+-score if score
+-wikis, not guides (and not 404 wiki)
+-game pages link to correct slug format ign.com/games/game_name/plat-legacyId
+-box art
+-image 404 b/c the link to old v1 url
+-if query is product, then returned only products (not all)
+
+
+'borderlands 2'
+-360, ps3, pc version show
+
+'fifa 2012'
+
+'dark souls'
+
+'call of dut'.should =='call of duty' (auto-fill)
+
+'the secret world'
+pc 360
+
+'the dark knight rises'
+-Dark Knight Rises
+
+'mcgrath'
+
+
+'guild wars'
+-GW2 PC
+
+'guild wars 2'
+-360, pc, also collectors
+
+'the walking dead game'
+-360, ps3 (the walking dead: the game)
+
+'tomb raider' filter 360
+-new tomb raider
+
+'metal gear rising'
+-360, ps3, pc
+
+'resistance 3'
+-resistance 3 ps3
+
+'ghost recon future soldier'
+-xbox 360 standard
+
+'brotherhood'
+-itself
+
+'Assassin's Creed Brotherhood'
+-itself
+
+'rock of ages'
+-itself
+
+'max payne 3'
+-360, ps3, pc, and special edition of each
+
+'rayman legends'
+-wii u
+
+### MORE BESIDES GAMES: MOVIES, COMICS ETC. AT LEAST TWO EACH: one popular, one not popular
+### articles, videos, wikis, people too
+
+'skyrim kinect'
+
+
+
+
+
+
