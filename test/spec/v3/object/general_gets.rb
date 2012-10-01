@@ -240,3 +240,122 @@ end
   end
 end
 end
+
+############################################################
+
+# GAME, MOVIE, BOOK, SEASON
+{'700186' => 'releases',
+'85074' => 'releases',
+'101233' => 'releases',
+'63760' => 'releases',
+'63022' => 'shows',
+'14211921' => 'episodes',
+'923183' => 'characters',
+'913498' =>  'people',
+'14273415' => 'volumes',
+'14333681' => 'companies',
+'850837' => 'hardware'
+}.each do |id,type|
+describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/#{id}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+
+  end
+
+  it "should return a response of 'endpoint: #{type}'" do
+    @data['endpoint'].should == type
+  end
+end
+end
+
+############################################################
+
+%w(releases shows episodes characters people volumes companies hardware).each do |type|
+describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/_ID_" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/#{type}?startIndex=#{Random.rand(65)}"
+    @object_url = "http://#{@config.options['baseurl']}/objects/legacyId/"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+    @ids = []
+    @data['data'].each do |data|
+      if data['metadata']['legacyId']
+        @ids << data['metadata']['legacyId']
+      end
+    end
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+
+  end
+
+  it "should return a response of 'endpoint: #{type}'" do
+    @ids.each do |id|
+      response =  RestClient.get("#@object_url#{id}")
+      data = JSON.parse(response.body)
+      data['endpoint'].should == type
+    end
+  end
+end
+end
+
+############################################################
+
+%w(abc 347537459274).each do |id|
+describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/#{id}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}"
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 404" do
+    expect { RestClient.get(@url) }.to raise_error(RestClient::ResourceNotFound)
+  end
+
+end
+end
