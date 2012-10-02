@@ -29,7 +29,6 @@ pc 360
 
 'mcgrath'
 
-
 'guild wars'
 -GW2 PC
 
@@ -66,11 +65,17 @@ pc 360
 'rayman legends'
 -wii u
 
+'the tribez'
+-wiki
+
 ### MORE BESIDES GAMES: MOVIES, COMICS ETC. AT LEAST TWO EACH: one popular, one not popular
 ### articles, videos, wikis, people too
 
 'skyrim kinect'
+-3 articles
 
+'Might & Magic: Duel of Champions'
+-itself
 
 
 

@@ -55,17 +55,7 @@ def rest_client_not_301_open(page)
 end
 
 def selenium_get(driver, page)
-  stitial_count = 0
   driver.get page
-  while driver.find_element(:css => "div#sugarad-stitial-overlay").displayed?
-    driver.get page
-    stitial_count += 1
-    if stitial_count > 3
-      raise Exception.new("An endless stitial loop on #{page} prevented this test case from running")
-    elsif stitial_count > 2
-      driver.get page+"?special=noads"
-    end
-  end
 end
 
 

@@ -6,6 +6,7 @@ require 'open_page'
 
 include OpenPage
 
+=begin
 def set_locale(locale)
 
   it "should set the locale" do
@@ -20,49 +21,11 @@ def set_locale(locale)
     end
   end
 end
-
-%w(US UK).each do |locale|
-describe "Images #{locale} HomePage -- /images", :selenium => true do
-
-  before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
-    
-    BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
-    @browser_config = BrowserConfig.new
-
-    @path = "/images"
-    @page = "http://#{@config.options['baseurl']}#{@path}"
-    puts @path+" using "+@browser_config.options['browser']
-    @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-    @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
-  end
-  
-  after(:all) do
-    @selenium.quit
-  end
-
-  before(:each) do
-    
-  end
-
-  after(:each) do
-
-  end
-
-  set_locale(locale)
-  
-  it "should 301 from /images to /index/images.html", :smoke => true do
-    selenium_get(@selenium, @page)
-    # Do I need to wait for load?
-    @selenium.current_url.match(@path).should be_true
-  end
-
-end
+=end
 
 ######################################################################
 
-describe "Images Gallery #{locale} Page -- /images/games/far-cry-3-xbox-360-53491", :selenium => true do
+describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
@@ -90,13 +53,10 @@ describe "Images Gallery #{locale} Page -- /images/games/far-cry-3-xbox-360-5349
 
   end
 
-  set_locale(locale)
-
   it "should open the Far Cry 3 gallery page", :smoke => true do
-    selenium_get(@selenium, @page)
+    @selenium.get @page
     # Do I need to wait for load?
     @selenium.current_url.match(Regexp.new(@path)).should be_true
-      
   end
 
   it "should display 20 thumbnails", :smoke => true do
@@ -265,5 +225,4 @@ describe "Images Gallery #{locale} Page -- /images/games/far-cry-3-xbox-360-5349
 
   end
 
-end
 end

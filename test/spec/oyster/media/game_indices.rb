@@ -59,7 +59,7 @@ def common_assertions
   it "should display a genre for each game" do
     @doc.css('div.gameList div.gameList-game').each do |game|
       game.at_css('span.game-genre').should be_true
-      game.at_css('span.game-genre').text.delete("^a-zA-Z").length.should > 0
+      game.at_css('span.game-genre').text.delete("^a-zA-Z0-9").length.should > 0
     end
   end
   
