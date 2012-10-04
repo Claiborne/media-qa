@@ -776,6 +776,50 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
     @doc.css('div#disqus_thread').count.should == 1
   end
 
+  context "Article Header" do
+
+    it "should display the article header" do
+      @doc.css('h1.article_title').text.should == 'Dark Shadows Blu-ray Review'
+    end
+
+    it "should display the article subtitle" do
+      @doc.css('h2.article_subtitle').text.should == "Tim Burton's latest disappointment."
+    end
+
+  end
+
+  context "Author Byline" do
+
+    it "should display the author's name" do
+      @doc.at_css('div.article_byLine div.article_author').text.should == 'by RL Shaffer'
+    end
+
+    it "should display the publish date" do
+      @doc.at_css('div.article_byLine div.article_pub_date').text.should == ' October 4, 2012'
+    end
+
+  end
+
+  context "Content Body" do
+
+    it "should display at least 500 characters of content" do
+      @doc.css('div.article_content').text.delete('^a-z').length.should > 499
+    end
+
+  end
+
+  context "Content Verdict" do
+
+    it "should display the verdict header" do
+      @doc.css('div.articleVerdictHeader').text.should == 'The Verdict'
+    end
+
+    it "should display at least 100 characters of content" do
+      @doc.css('div.articleVerdictText').text.delete('^a-z').length.should > 99
+    end
+
+  end
+
   context "Score Breakdown Box" do
 
     it "should display the correct object name and platform" do
