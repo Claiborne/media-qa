@@ -513,7 +513,7 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
     end
 
     it "should display a score of 10" do
-      @doc.css('div#review-breakdown div.score-container').text.match(/10/).should be_true
+      @doc.css('div#review-breakdown div.score-container').text.match(/10 /).should be_true
     end
 
     it "should display a description of 'GOOD'" do
@@ -690,11 +690,11 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
       @doc.css('div#review-breakdown span.object-title a').attribute('href').to_s.should == "http://tv.ign.com/objects/144/144180.html"
     end
 
-    it "should display a score of 7.9" do
+    it "should display a score of 8.7" do
       @doc.css('div#review-breakdown div.score-container').text.match(/8.7/).should be_true
     end
 
-    it "should display a description of 'GOOD'" do
+    it "should display a description of 'GREAT'" do
       @doc.css('div#review-breakdown div.score-text').text.to_s.should == 'Great'
     end
 
@@ -713,6 +713,108 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
     it "should display no pros or cons" do
       @doc.css('div.pros-cons-container ul.pros-cons-list').count.should == 0
       @doc.css('div.pros-cons-container li').count.should == 0
+    end
+
+  end
+
+end end end
+
+############################################################################################
+# Old View, New Breakdown Box
+
+%w(/articles/2012/10/04/dark-shadows-blu-ray-review).each do |review|
+%w(www uk au).each do |domain_locale|
+describe "New Review Article Page -- #{domain_locale} #{review}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = Configuration.new
+    @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
+    @url = "#@base_url#{review}"
+    @cookie =  get_international_cookie(domain_locale)
+    @doc = nokogiri_not_301_open(@url,@cookie)
+    case domain_locale
+      when 'www'
+        @locale = 'US'
+      when 'uk'
+        @locale = 'UK'
+      when 'au'
+        @locale = 'AU'
+      else
+        Exception.new 'Unable to set locale variable'
+    end
+  end # end before all
+
+  it "should return 200" do
+  end
+
+  it "should return the #{domain_locale} page" do
+    get_locale(@base_url,@cookie).should == domain_locale
+  end
+
+  it "should include at least one css file" do
+    check_include_at_least_one_css_file(@doc)
+  end
+
+  it "should not include any css files that return 400 or 500" do
+    check_css_files(@doc)
+  end
+
+  context "Global Header Widget" do
+    widget_evo_header
+  end
+
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+
+  it "should include the share this widget twice" do
+    (@doc.css("div[class*='addthis_toolbox']").count == 2).should be_true
+  end
+
+  it "should include the discus comments widget once" do
+    @doc.css('div#disqus_thread').count.should == 1
+  end
+
+  context "Score Breakdown Box" do
+
+    it "should display the correct object name and platform" do
+      @doc.css('div.breakdown-box div.title-container').text.should == 'Dark Shadows on Blu-ray'
+    end
+
+    it "should link to the game's object page in the name" do
+      @doc.css('div.breakdown-box span.object-title a').attribute('href').to_s.should == "http://bluray.ign.com/objects/138/138690.html"
+    end
+
+    it "should display a score of 5.3" do
+      @doc.css('div.breakdown-box div.score-container').text.match(/5.3/).should be_true
+    end
+
+    it "should display a description of 'MEDIOCRE'" do
+      @doc.css('div.breakdown-box div.score-text').text.to_s.should == 'Mediocre'
+    end
+
+    it "should display the score blurb" do
+      @doc.css('div.breakdown-box div.blurb').text.match(/The Blu-ray looks and sounds great, but Dark Shadows is yet another misfire for Tim Burton./).should be_true
+    end
+
+    it "should display the author's name" do
+      @doc.css('div.breakdown-box div.byline').text.to_s.match(/RL Shaffer /).should be_true
+    end
+
+    it "should display the publish date" do
+      @doc.css('div.breakdown-box span.publish-date').text.to_s.should == '4 Oct 2012'
+    end
+
+    it "should display two pros and cons" do
+      @doc.css('div.pros-cons-container ul.pros-cons-list').count.should == 2
+      @doc.css('div.pros-cons-container li').count.should == 4
+      check_display_text_for_each 'div.pros-cons-container li'
+      i = 1
+      @doc.css('div.pros-cons-container li span').each do |pm|
+        if i < 3; pm.text.should == '+' else pm.text.should == "–" end
+        i = i+1
+      end
     end
 
   end
