@@ -41,7 +41,7 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/tv/#{url_slug}" do
   end
 
   it "should return the #{domain_locale} page" do
-    get_local(@base_url,@cookie).should == domain_locale
+    get_locale(@base_url,@cookie).should == domain_locale
   end
 
   context "Object Header" do

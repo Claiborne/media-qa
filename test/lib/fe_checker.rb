@@ -8,10 +8,12 @@ module FeChecker
   include OpenPage
   
   def check_display_text(locator)
+    @doc.at_css("#{locator}").should be_true
     @doc.css(locator).text.delete("^a-zA-Z").length.should > 0
   end
   
   def check_display_text_for_each(locator)
+    @doc.at_css("#{locator}").should be_true
     @doc.css(locator).each do |li|
       li.text.delete("^a-zA-Z").length.should > 0
     end
@@ -23,6 +25,7 @@ module FeChecker
   end
   
   def check_have_a_link_for_each(locator)
+    @doc.at_css("#{locator} a").should be_true
     @doc.css(locator).each do |li|
       li.at_css("a[href*='http']").should be_true
     end
@@ -34,6 +37,7 @@ module FeChecker
   end
   
   def check_have_an_img_for_each(locator)
+    @doc.at_css("#{locator} img").should be_true
     @doc.css(locator).each do |li|
       li.at_css("img").should be_true
       li.at_css("img[src*='http']").should be_true
@@ -74,7 +78,7 @@ module FeChecker
     end
   end
 
-  def get_local(base_url,cookie)
+  def get_locale(base_url,cookie)
     response = RestClient.get("http://#{base_url}/i18n",cookie)
     doc = Nokogiri::HTML(response)
     locale = doc.at_css('table tr:nth-child(5) td:nth-child(2)').text
