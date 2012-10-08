@@ -77,6 +77,8 @@ pc 360
 'Might & Magic: Duel of Champions'
 -itself
 
+---review score links to object page not review article
+
 
 
 

@@ -25,35 +25,56 @@ include ObjectScore
 
 class ArticlesFe
   def article_pages
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    setup_config = Configuration.new
-    setup_page = "http://#{setup_config.options['baseurl']}/"
-    setup_doc = nokogiri_not_301_open(setup_page)
+
+    not_new_review = {
+        "matchRule"=>"matchAll",
+        "rules"=>[
+    {
+        "field"=>"metadata.articleType",
+        "condition"=>"is",
+        "value"=>"article"
+    },
+    {
+        "field"=>"tags",
+        "condition"=>"containsNone",
+        "value"=>"review"
+    },
+    {
+        "field"=>"tags",
+        "condition"=>"containsOne",
+        "value"=>"news"
+    }
+    ],
+        "startIndex"=>0,
+        "count"=>3,
+        "networks"=>"ign",
+        "states"=>"published",
+        "fields"=>["metadata.slug"]
+    }.to_json
+
     articles_pages = []
-    i = 0
-    setup_doc.css('div.blogrollContainer div.listElmnt-thumb a.listElmnt-storyHeadline').each do |article_link|
-      if i > 2; break; end
-      if article_link.attribute('href').to_s.match(/www.ign.com\/articles/)
-        articles_pages << article_link.attribute('href').to_s
-        i+=1
-      end
+    url = "http://apis.lan.ign.com/article/v3/articles/search?q=#{not_new_review}"
+    url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    res = RestClient.get(url)
+    articles = JSON.parse(res.body)
+    articles['data'].each do |article|
+      articles_pages << article['metadata']['slug']
     end
-    puts articles_pages
     articles_pages
   end
 end
 
-ArticlesFe.new.article_pages.each do |article|
+ArticlesFe.new.article_pages.each do |article_slug|
 %w(www uk au).each do |domain_locale|
-describe "Article Page -- #{article.gsub(/www./,"#{domain_locale}.")}" do
+describe "Article Page -- #{domain_locale} #{article_slug}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
     @config = Configuration.new
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
-    @url = article.gsub(/www./,"#{domain_locale}.")
-    @cookie =  get_international_cookie(domain_locale)
-    @doc = nokogiri_not_301_open(@url,@cookie)
+    @url = @base_url+"/articles/2012/01/01/#{article_slug}"
+    @pref_cookie =  get_international_cookie(domain_locale)
+    @doc = nokogiri_not_301_home_open(@url,@cookie)
     case domain_locale
       when 'www'
         @locale = 'US'
@@ -69,8 +90,8 @@ describe "Article Page -- #{article.gsub(/www./,"#{domain_locale}.")}" do
   it "should return 200" do
   end
 
-  it "should return the #{domain_locale} page" do
-    get_locale(@base_url,@cookie).should == domain_locale
+  it "should return the #{domain_locale} page"  do
+    get_locale(@base_url,@pref_cookie).should == domain_locale
   end
 
   it "should include at least one css file", :smoke => true do
@@ -513,7 +534,7 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
     end
 
     it "should display a score of 10" do
-      @doc.css('div#review-breakdown div.score-container').text.match(/10 /).should be_true
+      @doc.css('div#review-breakdown div.score-container').text.match(/10\s/).should be_true
     end
 
     it "should display a description of 'GOOD'" do

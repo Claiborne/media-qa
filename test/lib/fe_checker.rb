@@ -81,6 +81,9 @@ module FeChecker
   def get_locale(base_url,cookie)
     response = RestClient.get("http://#{base_url}/i18n",cookie)
     doc = Nokogiri::HTML(response)
+    puts ""
+    puts doc.at_css('table tr:nth-child(5)').to_s
+    puts ""
     locale = doc.at_css('table tr:nth-child(5) td:nth-child(2)').text
     case locale
       when 'US'
@@ -90,7 +93,7 @@ module FeChecker
       when 'AU'
         return 'au'
       else
-        return Exception.new("BASE URL: http://#{base_url}/i18n, COOKIE: #{cookie}, LOCALE FROM BASE URL: #{locale}")
+        return Exception.new("URL: http://#{base_url}/i18n, COOKIE: #{cookie}, PREF COOKIE: #{locale}")
     end
   end
   
