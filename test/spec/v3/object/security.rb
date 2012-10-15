@@ -96,7 +96,7 @@ end end end end
 # If the requested object has metadata.state set to anything other than published, and no oauth_token is supplied by the client, the API will return 401
 # This also applies to the /objects endpoint, even though it doesn't return full objects
 
-describe "V3 Object API -- GET Specific Draft Object WITHOUT OAuth", :test1 => true do
+describe "V3 Object API -- GET Specific Draft & Deleted Object WITHOUT & WITHOUT OAuth", :test1 => true do
 
 before(:all) do
   Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -105,18 +105,14 @@ before(:all) do
   @base_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/"
   @object_array = []
 
-  #%w(releases people volumes shows episodes characters roles).each do |obj|
-  %w(releases).each do |obj|
+  %w(releases people volumes shows episodes characters roles).each do |obj|
     begin
       response = RestClient.post "#@base_url#{obj}?oauth_token=#{TopazToken.return_token}", create_object_min_both(Random.rand(10000)), :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message)
     end
-    puts JSON.parse(response.body)
     @object_array << response.body.to_s.match(/[a-z0-9]{24}/)
   end
-
-  puts @object_array[0]
 
   end
 
@@ -128,9 +124,51 @@ before(:all) do
 
   end
 
+  it "should return a 401 when requesting /ID endpoint on a draft object WITHOUT OAuth" do
+    i = 0
+    %w(releases people volumes shows episodes characters roles).each do |o|
+      expect {RestClient.get "#@base_url#{o}/#{@object_array[i]}"}.to raise_error(RestClient::Unauthorized)
+      i = i+1
+    end
+  end
+
+  it "should return a 200 when requesting /ID endpoint on a draft object WITH OAuth" do
+    i = 0
+    %w(releases people volumes shows episodes characters roles).each do |o|
+      (RestClient.get "#@base_url#{o}/#{@object_array[i]}?oauth_token=#{TopazToken.return_token}").code.should == 200
+      i = i+1
+    end
+  end
+
+  it "should change draft state to deleted state" do
+    i = 0
+    %w(releases people volumes shows episodes characters roles).each do |o|
+      RestClient.put "#@base_url#{o}/#{@object_array[i]}?oauth_token=#{TopazToken.return_token}", {"metadata"=>{"state"=>"deleted"}}.to_json, :content_type => "application/json"
+      i = i+1
+    end
+  end
+
+  it "should return a 401 when requesting /ID endpoint on a deleted object" do
+    i = 0
+    %w(releases people volumes shows episodes characters roles).each do |o|
+      expect {RestClient.get "#@base_url#{o}/#{@object_array[i]}"}.to raise_error(RestClient::Unauthorized)
+      i = i+1
+    end
+  end
+
+  it "should return a 200 when requesting /ID endpoint on a deleted object WITH OAuth" do
+    i = 0
+    %w(releases people volumes shows episodes characters roles).each do |o|
+      (RestClient.get "#@base_url#{o}/#{@object_array[i]}?oauth_token=#{TopazToken.return_token}").code.should == 200
+      i = i+1
+    end
+  end
+
   it "should clean up" do
-    %w(releases).each do |o|
-      RestClient.delete "#@base_url#{o}/#{@object_array[0]}?oauth_token=#{TopazToken.return_token}"
+    i = 0
+    %w(releases people volumes shows episodes characters roles).each do |o|
+      RestClient.delete "#@base_url#{o}/#{@object_array[i]}?oauth_token=#{TopazToken.return_token}"
+      i = i+1
     end
   end
 
