@@ -4,6 +4,20 @@ require 'configuration'
 require 'rest_client'
 require 'json'
 require 'assert'
+require 'topaz_token'
+
+include Assert
+include TopazToken
+
+class GeneralGetsHelperVars
+
+  @token = return_topaz_token('objects')
+
+  def self.return_token
+    @token
+  end
+
+end
 
 include Assert
 
@@ -256,12 +270,12 @@ end
 '14333681' => 'companies',
 '850837' => 'hardware'
 }.each do |id,type|
-describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/#{id}" do
+describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/#{id}?oauth_token=#{GeneralGetsHelperVars.return_token}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}"
+    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}?oauth_token=#{GeneralGetsHelperVars.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -299,7 +313,7 @@ describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/
     @url = "http://#{@config.options['baseurl']}/#{type}?startIndex=#{Random.rand(65)}"
     @object_url = "http://#{@config.options['baseurl']}/objects/legacyId/"
     begin
-      @response = RestClient.get @url
+      @response = RestClient.get "#@url?oauth_token=#{GeneralGetsHelperVars.return_token}"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -326,7 +340,7 @@ describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/
 
   it "should return a response of 'endpoint: #{type}'" do
     @ids.each do |id|
-      response =  RestClient.get("#@object_url#{id}")
+      response =  RestClient.get("#@object_url#{id}?oauth_token=#{GeneralGetsHelperVars.return_token}")
       data = JSON.parse(response.body)
       data['endpoint'].should == type
     end

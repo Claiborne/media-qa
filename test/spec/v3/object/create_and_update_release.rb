@@ -120,7 +120,7 @@ describe "V3 Object API -- Check Draft Release", :stg => true do
     sleep 1
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -209,7 +209,7 @@ describe "V3 Object API -- Check Updated Draft Release", :stg => true do
     sleep 1
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e

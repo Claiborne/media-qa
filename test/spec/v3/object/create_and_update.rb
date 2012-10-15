@@ -1455,7 +1455,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Episode", :stg => tru
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/episodes/#{UpdateHelperVars.return_episode_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/episodes/#{UpdateHelperVars.return_episode_id}?oauth_token=#{UpdateHelperVars.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1567,7 +1567,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Role", :stg => true d
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{UpdateHelperVars.return_role_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{UpdateHelperVars.return_role_id}?oauth_token=#{UpdateHelperVars.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1664,7 +1664,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateHelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateHelperVars.return_release_id}?oauth_token=#{UpdateHelperVars.return_token}"
     begin 
       @response = RestClient.get @url
     rescue => e
