@@ -133,7 +133,7 @@ describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
   
   it "should return a 200 when called via GET" do
     begin 
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{@data['releaseId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{@data['releaseId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -954,7 +954,7 @@ describe "V3 Object API -- Create Volume Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{@data['volumeId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{@data['volumeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1078,7 +1078,7 @@ describe "V3 Object API -- Create Role Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{@data['roleId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{@data['roleId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1166,7 +1166,7 @@ describe "V3 Object API -- Create Person Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/#{@data['personId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/#{@data['personId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1344,7 +1344,7 @@ describe "V3 Object API -- Create Character Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/#{@data['characterId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/#{@data['characterId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1434,7 +1434,7 @@ describe "V3 Object API -- Create Show Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows/#{@data['showId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows/#{@data['showId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e

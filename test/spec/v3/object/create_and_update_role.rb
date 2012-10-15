@@ -99,7 +99,7 @@ describe "V3 Object API -- Check Minimum Role", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}?oauth_token=#{CreateRoleMetadata.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -205,7 +205,7 @@ describe "V3 Object API -- Check Minimum Role", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}?oauth_token=#{CreateRoleMetadata.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
