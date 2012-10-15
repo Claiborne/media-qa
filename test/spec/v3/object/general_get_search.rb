@@ -397,6 +397,22 @@ class GeneralGetSearchHelperMethods
     }.to_json
   end
 
+  def self.search_without_state_filter(index)
+    {
+    "rules"=>[
+      {
+          "field"=>"metadata.legacyId",
+      "condition"=>"exists",
+      "value"=>""
+      }
+    ],
+      "matchRule"=>"matchAll",
+      "startIndex"=>index.to_i,
+      "count"=>200,
+      "sortBy"=>"system.createdAt",
+      "sortOrder"=>"desc"
+    }.to_json
+  end
 
 end
 
@@ -1520,3 +1536,46 @@ describe "V3 Object API -- GET Search - Search Roles Characters using: #{General
   end
 
 end
+
+################################################################
+
+%w(0 200 400 600).each do |index|
+describe "V3 Object API -- GET Search - Search Releases Using: #{GeneralGetSearchHelperMethods.search_without_state_filter(index)}" do
+
+before(:all) do
+  Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+  @config = Configuration.new
+  @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.search_without_state_filter(index)}"
+  @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+  begin
+    @response = RestClient.get @url
+  rescue => e
+    raise Exception.new(e.message+" "+@url)
+  end
+  @data = JSON.parse(@response.body)
+end
+
+before(:each) do
+
+end
+
+after(:each) do
+
+end
+
+after(:all) do
+
+end
+
+
+  it "should return 200 releases" do
+    @data['data'].length.should == 200
+  end
+
+  it "should return only published releases" do
+    @data['data'].each do |o|
+      o['metadata']['state'].should == 'published'
+    end
+  end
+
+end end
