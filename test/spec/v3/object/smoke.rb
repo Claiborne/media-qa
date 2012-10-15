@@ -919,8 +919,6 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200" do
       genre['metadata']['slug'].to_s.length.should > 0
     end
   end
-
-  end
   
   ['createdAt','updatedAt'].each do |data|
     it "should return system.createdAt data with a non-nil, non-blank value for all genres" do
@@ -933,7 +931,6 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200" do
   end
   
 end
-
 
 ###################################################
 
