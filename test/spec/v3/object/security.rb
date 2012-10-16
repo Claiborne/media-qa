@@ -22,7 +22,7 @@ include TopazToken
 
 %w(releases people volumes shows episodes characters roles).each do |obj|
 %w(draft deleted).each do |state|
-describe "V3 Object API -- GET #{obj} with metadata.state=#{state} WITHOUT OAuth", :test => true do
+describe "V3 Object API -- GET #{obj} with metadata.state=#{state} WITHOUT OAuth" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -51,7 +51,7 @@ end end end
 %w(releases people volumes shows episodes characters roles).each do |obj|
 ["", ",", "fairy"].each do |state|
 %w(0 200 400 600 800).each do |start|
-describe "V3 Object API -- GET #{obj} with ?metadata.state=#{state}&count=200&startIndex=#{start} WITHOUT OAuth", :test => true do
+describe "V3 Object API -- GET #{obj} with ?metadata.state=#{state}&count=200&startIndex=#{start} WITHOUT OAuth" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -96,7 +96,7 @@ end end end end
 # If the requested object has metadata.state set to anything other than published, and no oauth_token is supplied by the client, the API will return 401
 # This also applies to the /objects endpoint, even though it doesn't return full objects
 
-describe "V3 Object API -- GET Specific Draft & Deleted Object WITHOUT & WITHOUT OAuth", :test1 => true do
+describe "V3 Object API -- GET Specific Draft & Deleted Object WITHOUT & WITHOUT OAuth" do
 
 before(:all) do
   Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -179,7 +179,6 @@ before(:all) do
     %w(releases roles).each do |o|
       url = "#@base_url#{o}/search?q=#{search_request}"
       url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
-      puts url ####
       response = RestClient.get "#{url}&oauth_token=#{TopazToken.return_token}"
       data = JSON.parse(response.body)
       data['data'].count.should == 1
@@ -255,17 +254,6 @@ before(:all) do
 
 end
 
-#------> make a draft objs
-#------> GET id & assert 401
-#------> GET /object & assert 401
-
-#------> change all objs to del
-#------> GET id & assert 401
-#------> GET /object & assert 401
-
-#------> clean up
-
-#------> test embeds eeek
 
 
 

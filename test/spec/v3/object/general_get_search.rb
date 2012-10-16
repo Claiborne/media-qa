@@ -1541,7 +1541,7 @@ end
 
 %w(0 200 400 600).each do |index|
 %w(releases roles).each do |obj|
-describe "V3 Object API -- GET Search - Search #{obj} Using: #{GeneralGetSearchHelperMethods.search_without_state_filter(index)}", :test => true do
+describe "V3 Object API -- GET Search - Search #{obj} Using: #{GeneralGetSearchHelperMethods.search_without_state_filter(index)}" do
 
 before(:all) do
   Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
