@@ -49,11 +49,29 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def update_release_draft
+  def create_object_min_name(num)
     {
-      "metadata" => {
-          "region" => "UK"
-      }
+        "metadata" => {
+            "name" => "Media QA Test Object #{num}"
+        }
+    }.to_json
+  end
+
+  def create_object_min_slug(num)
+    {
+        "metadata" => {
+            "slug" => "media-qa-test-object-#{num}"
+        }
+    }.to_json
+  end
+
+  def create_object_min_both(num)
+    {
+        "metadata" => {
+            "name" => "Media QA Test Object #{num}",
+            "slug" => "media-qa-test-object-#{num}",
+            "state" => 'draft'
+        }
     }.to_json
   end
 

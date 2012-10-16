@@ -1540,12 +1540,13 @@ end
 ################################################################
 
 %w(0 200 400 600).each do |index|
-describe "V3 Object API -- GET Search - Search Releases Using: #{GeneralGetSearchHelperMethods.search_without_state_filter(index)}" do
+%w(releases roles).each do |obj|
+describe "V3 Object API -- GET Search - Search #{obj} Using: #{GeneralGetSearchHelperMethods.search_without_state_filter(index)}", :test => true do
 
 before(:all) do
   Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
   @config = Configuration.new
-  @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.search_without_state_filter(index)}"
+  @url = "http://#{@config.options['baseurl']}/#{obj}/search?q=#{GeneralGetSearchHelperMethods.search_without_state_filter(index)}"
   @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
   begin
     @response = RestClient.get @url
@@ -1578,4 +1579,9 @@ end
     end
   end
 
-end end
+  it "should return only embedded objects with state==published" do
+    @data.to_s.match(/"state"=>"draft"/).should_not be_true
+    @data.to_s.match(/"state"=>"deleted"/).should_not be_true
+  end
+
+end end end
