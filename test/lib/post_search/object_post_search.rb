@@ -69,7 +69,8 @@ module ObjectPostSearch
     {
         "metadata" => {
             "name" => "Media QA Test Object #{num}",
-            "slug" => "media-qa-test-object-#{num}"
+            "slug" => "media-qa-test-object-#{num}",
+            "state" => 'draft'
         }
     }.to_json
   end

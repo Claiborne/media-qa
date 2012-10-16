@@ -104,10 +104,11 @@ before(:all) do
   TopazToken.set_token('objects')
   @base_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/"
   @object_array = []
+  @rand_num = Random.rand(10000)
 
   %w(releases people volumes shows episodes characters roles).each do |obj|
     begin
-      response = RestClient.post "#@base_url#{obj}?oauth_token=#{TopazToken.return_token}", create_object_min_both(Random.rand(10000)), :content_type => "application/json"
+      response = RestClient.post "#@base_url#{obj}?oauth_token=#{TopazToken.return_token}", create_object_min_both(@rand_num), :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message)
     end
@@ -132,6 +133,59 @@ before(:all) do
     end
   end
 
+  it "should not return a result when searching by slug on a draft object WITHOUT OAuth" do
+
+    search_request = {
+        "rules"=>[
+            {
+                "field"=>"metadata.slug",
+                "condition"=>"term",
+                "value"=>"media-qa-test-object-#@rand_num"
+            }
+        ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>5,
+        "sortBy"=>"system.createdAt",
+        "sortOrder"=>"desc",
+        "state" => "draft"
+    }.to_json
+
+    %w(releases roles).each do |o|
+      url = "#@base_url#{o}/search?q=#{search_request}"
+      url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+      response = RestClient.get url
+      data = JSON.parse(response.body)
+      data['data'].count.should == 0
+    end
+  end
+
+  it "should return a result when searching by slug on a draft object WITH OAuth" do
+
+    search_request = {
+        "rules"=>[
+            {
+                "field"=>"metadata.legacyId",
+                "condition"=>"exists",
+                "value"=>""
+            }
+        ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>1,
+        "state" => "draft"
+    }.to_json
+
+    %w(releases roles).each do |o|
+      url = "#@base_url#{o}/search?q=#{search_request}"
+      url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+      puts url ####
+      response = RestClient.get "#{url}&oauth_token=#{TopazToken.return_token}"
+      data = JSON.parse(response.body)
+      data['data'].count.should == 1
+    end
+  end
+
   it "should return a 200 when requesting /ID endpoint on a draft object WITH OAuth" do
     i = 0
     %w(releases people volumes shows episodes characters roles).each do |o|
@@ -153,6 +207,33 @@ before(:all) do
     %w(releases people volumes shows episodes characters roles).each do |o|
       expect {RestClient.get "#@base_url#{o}/#{@object_array[i]}"}.to raise_error(RestClient::Unauthorized)
       i = i+1
+    end
+  end
+
+  it "should not return a result when searching by slug on a deleted object WITHOUT OAuth" do
+
+    search_request = {
+        "rules"=>[
+            {
+                "field"=>"metadata.slug",
+                "condition"=>"term",
+                "value"=>"media-qa-test-object-#@rand_num"
+            }
+        ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>5,
+        "sortBy"=>"system.createdAt",
+        "sortOrder"=>"desc",
+        "state" => "deleted"
+    }.to_json
+
+    %w(releases roles).each do |o|
+      url = "#@base_url#{o}/search?q=#{search_request}"
+      url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+      response = RestClient.get url
+      data = JSON.parse(response.body)
+      data['data'].count.should == 0
     end
   end
 
