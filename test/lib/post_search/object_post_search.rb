@@ -667,4 +667,12 @@ module ObjectPostSearch
     }.to_json
   end
 
+  def update_release_draft
+    {
+        "metadata" => {
+            "region" => "UK"
+        }
+    }.to_json
+  end
+
 end
