@@ -267,8 +267,7 @@ end
 '923183' => 'characters',
 '913498' =>  'people',
 '14273415' => 'volumes',
-'14333681' => 'companies',
-'850837' => 'hardware'
+'14333681' => 'companies'
 }.each do |id,type|
 describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/#{id}" do
 
@@ -305,7 +304,7 @@ end
 
 ############################################################ Invalid
 =begin
-%w(releases shows episodes characters people volumes companies hardware).each do |type|
+%w(releases shows episodes characters people volumes companies).each do |type|
 describe "V3 Object API -- GET For Unknown Objects -- /objects/legacyId/_ID_" do  #TODO This may be an incorrect test case (checking all /objects/legacyId req OAuth)
 
   before(:all) do
