@@ -104,6 +104,7 @@ before(:all) do
   TopazToken.set_token('objects')
   @base_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/"
   @object_array = []
+  @legacy_id_array = []
   @rand_num = Random.rand(10000)
 
   %w(releases people volumes shows episodes characters roles).each do |obj|
@@ -113,6 +114,19 @@ before(:all) do
       raise Exception.new(e.message)
     end
     @object_array << response.body.to_s.match(/[a-z0-9]{24}/)
+
+  end
+
+  obj_ind = 0
+  %w(releases people volumes shows episodes characters).each do |obj|
+    begin
+      response = RestClient.get "#@base_url#{obj}/#{@object_array[obj_ind]}?oauth_token=#{TopazToken.return_token}"
+      obj_ind = obj_ind + 1
+      data = JSON.parse(response.body)
+      @legacy_id_array << data['metadata']['legacyId'].to_s
+    rescue => e
+
+    end
   end
 
   end
@@ -130,6 +144,21 @@ before(:all) do
     %w(releases people volumes shows episodes characters roles).each do |o|
       expect {RestClient.get "#@base_url#{o}/#{@object_array[i]}"}.to raise_error(RestClient::Unauthorized)
       i = i+1
+    end
+  end
+
+  it "should return a 401 when requesting /objects endpoint on a draft object WITHOUT OAuth" do
+    @legacy_id_array.length.should == 6
+    @legacy_id_array[0].to_s.match(/..../).should be_true
+    @legacy_id_array.each do |id|
+      expect {RestClient.get "#{@base_url}objects/legacyId/#{id}"}.to raise_error(RestClient::Unauthorized)
+    end
+  end
+
+  it "should return a 200 when requesting /objects endpoint on a draft object WITH OAuth" do
+    @legacy_id_array.each do |id|
+      res = RestClient.get "#{@base_url}objects/legacyId/#{id}?oauth_token=#{TopazToken.return_token}"
+      res.code.should == 200
     end
   end
 
@@ -206,6 +235,21 @@ before(:all) do
     %w(releases people volumes shows episodes characters roles).each do |o|
       expect {RestClient.get "#@base_url#{o}/#{@object_array[i]}"}.to raise_error(RestClient::Unauthorized)
       i = i+1
+    end
+  end
+
+  it "should return a 401 when requesting /objects endpoint on a draft object WITHOUT OAuth" do
+    @legacy_id_array.length.should == 6
+    @legacy_id_array[0].to_s.match(/..../).should be_true
+    @legacy_id_array.each do |id|
+      expect {RestClient.get "#{@base_url}objects/legacyId/#{id}"}.to raise_error(RestClient::Unauthorized)
+    end
+  end
+
+  it "should return a 200 when requesting /objects endpoint on a draft object WITH OAuth" do
+    @legacy_id_array.each do |id|
+      res = RestClient.get "#{@base_url}objects/legacyId/#{id}?oauth_token=#{TopazToken.return_token}"
+      res.code.should == 200
     end
   end
 

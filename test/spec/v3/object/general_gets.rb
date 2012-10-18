@@ -270,12 +270,13 @@ end
 '14333681' => 'companies',
 '850837' => 'hardware'
 }.each do |id,type|
-describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/#{id}?oauth_token=#{GeneralGetsHelperVars.return_token}" do
+describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/#{id}" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}?oauth_token=#{GeneralGetsHelperVars.return_token}"
+    TopazToken.set_token('objects')
+    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -302,18 +303,19 @@ describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/
 end
 end
 
-############################################################
-
+############################################################ Invalid
+=begin
 %w(releases shows episodes characters people volumes companies hardware).each do |type|
-describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/_ID_" do
+describe "V3 Object API -- GET For Unknown Objects -- /objects/legacyId/_ID_" do  #TODO This may be an incorrect test case (checking all /objects/legacyId req OAuth)
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
+    TopazToken.set_token('objects')
     @url = "http://#{@config.options['baseurl']}/#{type}?startIndex=#{Random.rand(65)}"
     @object_url = "http://#{@config.options['baseurl']}/objects/legacyId/"
     begin
-      @response = RestClient.get "#@url?oauth_token=#{GeneralGetsHelperVars.return_token}"
+      @response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -340,14 +342,14 @@ describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/
 
   it "should return a response of 'endpoint: #{type}'" do
     @ids.each do |id|
-      response =  RestClient.get("#@object_url#{id}?oauth_token=#{GeneralGetsHelperVars.return_token}")
+      response =  RestClient.get("#@object_url#{id}?oauth_token=#{TopazToken.return_token}")
       data = JSON.parse(response.body)
       data['endpoint'].should == type
     end
   end
 end
 end
-
+=end
 ############################################################
 
 %w(abc 347537459274).each do |id|

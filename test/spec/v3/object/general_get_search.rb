@@ -1579,9 +1579,4 @@ end
     end
   end
 
-  it "should return only embedded objects with state==published" do
-    @data.to_s.match(/"state"=>"draft"/).should_not be_true
-    @data.to_s.match(/"state"=>"deleted"/).should_not be_true
-  end
-
 end end end
