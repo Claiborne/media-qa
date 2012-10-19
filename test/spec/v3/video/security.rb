@@ -11,16 +11,23 @@ include Assert
 include VideoApiHelper
 include TopazToken
 
-# GET VIDEO USING STATE/STATE
-# GET VIDEO USING ?METADATA.STATE=STATE
-# POST VIDEO SEARCH USING STATE
-# GET VIDEO SEARCH USING STATE
-# GET PLAYLIST USING ?METADATA.STATE=STATE
-# POST PLAYLIST SEARCH USING STATE
-# GET PLAYLIST SEARCH USING STATE
-# GET PLAYLIST USING ?METADATA.STATE=STATE
+# GET (UNPUBLISHED) VIDEOS USING STATE/STATE
+# GET VIDEOS USING ?METADATA.STATE=STATE
+# POST VIDEOS SEARCH USING STATE
+# GET VIDEOS SEARCH USING STATE
+# GET PLAYLISTS USING ?METADATA.STATE=STATE
+# POST PLAYLISTS SEARCH USING STATE
+# GET PLAYLISTS SEARCH USING STATE
+# GET PLAYLISTS USING ?METADATA.STATE=STATE
 
-# GET SINGLE VIDEO USING ID AND SLUG
+# GET SINGLE UNPUBLISHED VIDEO USING ID AND SLUG
+  # CREATE
+  # GET VIDEO BY ID WITH OAUTH
+  # GET VIDEO BY SLUG  WITH OAUTH
+  # GET VIDEO BY ID WITHOUT OAUTH
+  # GET VIDEO BY SLUG  WITHOUT OAUTH
+
+# GET SINGLE UNPUBLISHED PLAYLIST USING ID AND SLUG
   # CREATE
   # GET VIDEO BY ID WITH OAUTH
   # GET VIDEO BY SLUG  WITH OAUTH
@@ -29,10 +36,10 @@ include TopazToken
 
 
 ##################################################################
-# GET VIDEO USING STATE/STATE
+# GET (UNPUBLISHED) VIDEOS USING STATE/STATEE
 
 %w(discovered copying draft publishing publish_in_future failed).each do |state|
-describe "V3 Video API -- GET Ask For 'state/#{state}' Videos" do
+describe "V3 Video API -- GET Unpublished Videos Using 'state/#{state}' Endpoint" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -61,10 +68,10 @@ describe "V3 Video API -- GET Ask For 'state/#{state}' Videos" do
 end end
 
 ##################################################################
-# GET VIDEO USING ?METADATA.STATE=STATE W/0 OAUTH
+# GET VIDEOS USING ?METADATA.STATE=STATE W/0 OAUTH
 
 %w(discovered copying draft publishing publish_in_future failed).each do |state|
-describe "V3 Video API -- GET Ask For '?metadata.state=#{state}' Videos" do
+describe "V3 Video API -- GET Unpublished Videos Using '?metadata.state=#{state}' Endpoint" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -93,10 +100,10 @@ describe "V3 Video API -- GET Ask For '?metadata.state=#{state}' Videos" do
 end end
 
 ##################################################################
-# POST VIDEO SEARCH USING STATE
+# POST VIDEOS SEARCH USING STATE
 
 %w(discovered copying draft publishing publish_in_future failed).each do |state|
-describe "V3 Video API -- POST Search Ask For #{state} Videos" do
+describe "V3 Video API -- POST Search #{state} Vidoes" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -125,10 +132,10 @@ describe "V3 Video API -- POST Search Ask For #{state} Videos" do
 end end
 
 ##################################################################
-# GET VIDEO SEARCH USING STATE
+# GET VIDEOS SEARCH USING STATE
 
 %w(discovered copying draft publishing publish_in_future failed).each do |state|
-describe "V3 Video API -- GET Search Ask For #{state} Videos" do
+describe "V3 Video API -- GET Search #{state} Videos" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -158,10 +165,10 @@ describe "V3 Video API -- GET Search Ask For #{state} Videos" do
 end end
 
 ##################################################################
-# GET PLAYLIST USING ?METADATA.STATE=STATE
+# GET PLAYLISTS USING ?METADATA.STATE=STATE
 
 %w(draft).each do |state|
-describe "V3 Video API -- GET Ask For '?metadata.state=#{state}' Playlists" do
+describe "V3 Video API -- GET Unpublished Playlists Using '?metadata.state=#{state}' Endpoint" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -190,10 +197,10 @@ describe "V3 Video API -- GET Ask For '?metadata.state=#{state}' Playlists" do
 end end
 
 ##################################################################
-# POST PLAYLIST SEARCH USING STATE
+# POST PLAYLISTS SEARCH USING STATE
 
 %w(draft).each do |state|
-describe "V3 Video API -- POST Search Ask For #{state} Playlists" do
+describe "V3 Video API -- POST Search #{state} Playlists" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
@@ -221,10 +228,10 @@ describe "V3 Video API -- POST Search Ask For #{state} Playlists" do
 end end
 
 ##################################################################
-# GET PLAYLIST SEARCH USING STATE
+# GET PLAYLISTS SEARCH USING STATE
 
 %w(draft).each do |state|
-describe "V3 Video API -- GET Search Ask For #{state} Playlists" do
+describe "V3 Video API -- GET Search Ask #{state} Playlists" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
@@ -253,10 +260,10 @@ describe "V3 Video API -- GET Search Ask For #{state} Playlists" do
 end end
 
 ##################################################################
-# GET PLAYLIST USING ?METADATA.STATE=STATE
+# GET PLAYLISTS USING ?METADATA.STATE=STATE
 
 %w(draft).each do |state|
-describe "V3 Video API -- GET Ask For '?metadata.state=#{state}' Playlists" do
+describe "V3 Video API -- GET Unpublished Playlists Using '?metadata.state=#{state}' Endpoint" do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -294,7 +301,7 @@ describe "V3 Video API -- GET Specific Non-Published Video", :stg => true do
     @base_url = "http://staging-videoapi.ign.com/v3/videos/"
 
     @rand_num = Random.rand(500)
-    @vid_body = {"metadata"=>{"name"=>"media qa test #{@rand_num}","slug"=>"media-qa-test-#{@rand_num}","networks"=>["abc"]},"state"=>"discovered"}.to_json
+    @vid_body = {"metadata"=>{"name"=>"media qa test #{@rand_num}","slug"=>"media-qa-test-#{@rand_num}","networks"=>["askmen"]},"state"=>"discovered"}.to_json
 
     class Vid
       @video_id = "No ID"
@@ -373,7 +380,7 @@ describe "V3 Video API -- GET Specific Non-Published Playlist", :stg => true do
     @base_url = "http://staging-videoapi.ign.com/v3/playlists/"
 
     @rand_num = Random.rand(500)
-    @vid_body = {"metadata"=>{"name"=>"media qa test #{@rand_num}","slug"=>"media-qa-test-#{@rand_num}","networks"=>["abc"]},"state"=>"discovered"}.to_json
+    @vid_body = {"metadata"=>{"name"=>"media qa test #{@rand_num}","slug"=>"media-qa-test-#{@rand_num}","networks"=>["askmen"]},"state"=>"discovered"}.to_json
 
     class Vid
       @video_id = "No ID"

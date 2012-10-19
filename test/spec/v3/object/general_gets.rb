@@ -305,7 +305,7 @@ end
 ############################################################ Invalid
 =begin
 %w(releases shows episodes characters people volumes companies).each do |type|
-describe "V3 Object API -- GET For Unknown Objects -- /objects/legacyId/_ID_" do  #TODO This may be an incorrect test case (checking all /objects/legacyId req OAuth)
+describe "V3 Object API -- GET For Unknown Objects -- /objects/legacyId/_ID_" do  # TODO This may be an incorrect test case (checking all /objects/legacyId req OAuth)
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
