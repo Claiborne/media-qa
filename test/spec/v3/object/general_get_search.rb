@@ -1626,20 +1626,12 @@ describe "V3 Object API -- GET Search - Search Releases Using: #{GeneralGetSearc
     @data = JSON.parse(@response.body)
   end
 
-  it "should return releases by desc metadata.popularity", :test => true do
+  it "should return releases by desc metadata.popularity" do
     @data['data'].count.should == 100
     popularity = []
     @data['data'].each do |release|
       popularity << release['metadata']['popularity']
     end
-
-    i = 0
-    pop = popularity.sort {|x,y| y <=> x }
-    popularity.each do |p|
-      puts "#{p}  #{pop[i]}"
-      i = i+1
-    end
-
     popularity.length.should > 0
     popularity.sort {|x,y| y <=> x }.should == popularity
   end

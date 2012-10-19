@@ -12,6 +12,10 @@ Assert This For All:
 -if query is product, then returned only products (not all)
 
 
+'dayz'
+--DayZ [Standalone]
+(only [Mod] returns now)
+
 'borderlands 2'
 -360, ps3, pc version show
 
