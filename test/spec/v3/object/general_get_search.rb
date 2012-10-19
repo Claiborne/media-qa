@@ -5,6 +5,7 @@ require 'rest_client'
 require 'json'
 require 'assert'
 require 'object_api_helper'
+require 'time'
 
 include Assert
 include ObjectApiHelper
@@ -162,6 +163,24 @@ class GeneralGetSearchHelperMethods
       "startIndex"=>0,
       "count"=>100,
       "states"=>["published"]
+    }.to_json
+  end
+
+  def self.release_by_popularity
+    {
+        "rules"=>[
+            {
+                "field"=>"metadata.releaseDate.status",
+                "condition"=>"term",
+                "value"=>"released"
+            }
+        ],
+        "matchRule"=>"matchAll",
+        "startIndex"=>0,
+        "count"=>100,
+        "sortBy"=>"metadata.popularity",
+        "sortOrder"=>"desc",
+        "states"=>["published"]
     }.to_json
   end
 
@@ -556,6 +575,15 @@ describe "V3 Object API -- GET Search for Published 360 Releases: #{GeneralGetSe
     @data['data'].each do |release| 
       release['metadata']['region'].should == 'US'
     end
+  end
+
+  it "should return release in desc metadata.releaseDate.date order" do
+    date = []
+    @data['data'].each do |release|
+      date << Time.parse(release['metadata']['releaseDate']['date'])
+    end
+
+    date.sort {|x,y| y <=> x }.should == date
   end
   
 end
@@ -1580,3 +1608,41 @@ end
   end
 
 end end end
+
+################################################################
+
+describe "V3 Object API -- GET Search - Search Releases Using: #{GeneralGetSearchHelperMethods.release_by_popularity}" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.release_by_popularity}"
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  it "should return releases by desc metadata.popularity", :test => true do
+    @data['data'].count.should == 100
+    popularity = []
+    @data['data'].each do |release|
+      popularity << release['metadata']['popularity']
+    end
+
+    i = 0
+    pop = popularity.sort {|x,y| y <=> x }
+    popularity.each do |p|
+      puts "#{p}  #{pop[i]}"
+      i = i+1
+    end
+
+    popularity.length.should > 0
+    popularity.sort {|x,y| y <=> x }.should == popularity
+  end
+
+
+end
