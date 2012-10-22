@@ -68,11 +68,11 @@ module FeChecker
   def get_international_cookie(cookie)
     case cookie
       when 'www'
-        return :cookies=>{"i18n-ccpref"=>"9-US"}
+        return :cookies=>{"i18n-ccpref"=>"9-US-www-1"}
       when 'uk'
-        return :cookies=>{"i18n-ccpref"=>"9-UK"}
+        return :cookies=>{"i18n-ccpref"=>"9-UK-uk-1"}
       when 'au'
-        return :cookies=>{"i18n-ccpref"=>"9-AU"}
+        return :cookies=>{"i18n-ccpref"=>"9-AU-au-1"}
       else
         return Exception.new("Can't return international cookie from get_international_cookie method in lib/fe_checker.rb")
     end
@@ -81,9 +81,6 @@ module FeChecker
   def get_locale(base_url,cookie)
     response = RestClient.get("http://#{base_url}/i18n",cookie)
     doc = Nokogiri::HTML(response)
-    puts ""
-    puts doc.at_css('table tr:nth-child(5)').to_s
-    puts ""
     locale = doc.at_css('table tr:nth-child(5) td:nth-child(2)').text
     case locale
       when 'US'

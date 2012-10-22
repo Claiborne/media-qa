@@ -74,7 +74,7 @@ describe "Article Page -- #{domain_locale} #{article_slug}" do
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
     @url = @base_url+"/articles/2012/01/01/#{article_slug}"
     @pref_cookie =  get_international_cookie(domain_locale)
-    @doc = nokogiri_not_301_home_open(@url,@cookie)
+    @doc = nokogiri_not_301_home_open(@url,@pref_cooki)
     case domain_locale
       when 'www'
         @locale = 'US'
@@ -90,7 +90,7 @@ describe "Article Page -- #{domain_locale} #{article_slug}" do
   it "should return 200" do
   end
 
-  it "should return the #{domain_locale} page"  do
+  it "should return the #{domain_locale} page" do
     get_locale(@base_url,@pref_cookie).should == domain_locale
   end
 
@@ -228,10 +228,6 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
 
     it "should display the author's name" do
       @doc.css('div#review-creator div#creator-name a').text.match(/Richard George/).should be_true
-    end
-
-    it "should display the the author's title" do
-      @doc.css('div#review-creator div#creator-role').text.match(/IGN Editor/).should be_true
     end
 
     it "should link the author's name to his profile" do
@@ -456,10 +452,6 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
       @doc.css('div#review-creator div#creator-name a').text.match(/Jim Vejvoda/).should be_true
     end
 
-    it "should display the the author's title" do
-      @doc.css('div#review-creator div#creator-role').text.match(/IGN Editor/).should be_true
-    end
-
     it "should link the author's name to his profile" do
       @doc.css('div#review-creator div#creator-name a').attribute('href').to_s.should == "http://people.ign.com/StaxIGN"
     end
@@ -652,10 +644,6 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
 
     it "should display the author's name" do
       @doc.css('div#review-creator div#creator-name a').text.match(/Max Nicholson/).should be_true
-    end
-
-    it "should display the the author's title" do
-      @doc.css('div#review-creator div#creator-role').text.match(/IGN Editor/).should be_true
     end
 
     it "should link the author's name to his profile" do
