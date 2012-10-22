@@ -327,7 +327,7 @@ describe "V3 Video API -- GET Specific Non-Published Video", :stg => true do
     res = RestClient.post "#{@base_url}?oauth_token=#{TopazToken.return_token}", @vid_body, :content_type => "application/json"
     data = JSON.parse(res.body)
     puts data['videoId']
-    Vid.video_id = @video_id = data['videoId']
+    Vid.video_id= data['videoId']
     res.code.should == 201
   end
 
@@ -347,7 +347,7 @@ describe "V3 Video API -- GET Specific Non-Published Video", :stg => true do
     end
 
     it "should return a 200 when trying to GET a #{state} video by slug with OAuth" do
-      res = RestClient.get "#{@base_url}/slug/media-qa-test-#@rand_num?oauth_token=#{TopazToken.return_token}&fresh=true"
+      res = RestClient.get "#{@base_url}slug/media-qa-test-#@rand_num?oauth_token=#{TopazToken.return_token}&fresh=true"
       res.code.should == 200
       d = JSON.parse(res.body)
       d['metadata']['state'].should == state

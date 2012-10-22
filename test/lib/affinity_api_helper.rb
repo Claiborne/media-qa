@@ -28,12 +28,4 @@ module AffinityApiHelper
 
   end
 
-
-
-
-
-
-
-
-
 end

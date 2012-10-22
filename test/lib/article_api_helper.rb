@@ -132,4 +132,14 @@ class ArticleAPIHelper
     }.to_json
   end
 
+  def self.get_articles_by_state(state)
+    {"matchRule"=>"matchAll",
+     "count"=>50,
+     "startIndex"=>0,
+     "states"=>state,
+     "rules"=>[
+     ],
+    }.to_json
+  end
+
 end

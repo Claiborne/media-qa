@@ -530,7 +530,7 @@ describe "V3 Articles API -- Clean up / Delete -- media-article-stg-services-01.
   end
 
   it "should return a 404 after deleting the article" do
-    expect {RestClient.get "media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end

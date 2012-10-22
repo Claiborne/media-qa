@@ -81,7 +81,8 @@ end
 describe "V3 Articles API -- Check Review Article Just Created -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}"
+    TopazToken.set_token('articles')
+    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{ArticleReviewHelper.return_article_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
