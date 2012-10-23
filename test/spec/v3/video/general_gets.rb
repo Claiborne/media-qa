@@ -390,39 +390,39 @@ describe "V3 Videotags API -- tags/event Tests -- /v3/videotags/event" do
 
   end
 
-  it "should return 200", :test => true do
+  it "should return 200" do
     check_200(@response)
   end
 
-  it "should not be blank", :test => true do
+  it "should not be blank" do
     check_not_blank(@data)
   end
 
-  it "should return a hash with five indices", :test => true do
+  it "should return a hash with five indices" do
     check_indices(@data, 5)
   end
 
   ["count","startIndex","endIndex","isMore","data"].each do |k|
-    it "shoud return '#{k}' data with a non-nil, non-blank value", :test => true do
+    it "shoud return '#{k}' data with a non-nil, non-blank value" do
       @data.has_key?('count').should be_true
       @data[k].should_not be_nil
       @data[k].to_s.delete("^a-zA-Z0-9").length.should > 0
     end
   end
 
-  it "should return 'count' data with a value of 20", :test => true do
+  it "should return 'count' data with a value of 20" do
     @data['count'].should == 20
   end
 
-  it "should return 'startIndex' data with a value of 0", :test => true do
+  it "should return 'startIndex' data with a value of 0" do
     @data['startIndex'].should == 0
   end
 
-  it "should return 'endIndex' data with a value of 19", :test => true do
+  it "should return 'endIndex' data with a value of 19" do
     @data['endIndex'].should == 19
   end
 
-  it "should return 'isMore' data with a value of true", :test => true do
+  it "should return 'isMore' data with a value of true" do
     @data['isMore'].should == true
   end
 
@@ -430,12 +430,12 @@ describe "V3 Videotags API -- tags/event Tests -- /v3/videotags/event" do
   # @data['total'].should > 20
   #end
 
-  it "should return 'data' with an array length of 20", :test => true do
+  it "should return 'data' with an array length of 20" do
     @data['data'].length.should == 20
   end
 
   ["tagType","displayName","videotagId"].each do |key|
-    it "should return '#{key}' data with a non-nil, non-blank value for all events", :test => true do
+    it "should return '#{key}' data with a non-nil, non-blank value for all events" do
       @data['data'].each do |events|
         events.has_key?(key).should be_true
         events[key].should_not be_nil

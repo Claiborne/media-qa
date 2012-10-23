@@ -133,7 +133,7 @@ describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
   
   it "should return a 200 when called via GET" do
     begin 
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{@data['releaseId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{@data['releaseId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -954,7 +954,7 @@ describe "V3 Object API -- Create Volume Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{@data['volumeId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{@data['volumeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1078,7 +1078,7 @@ describe "V3 Object API -- Create Role Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{@data['roleId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{@data['roleId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1166,7 +1166,7 @@ describe "V3 Object API -- Create Person Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/#{@data['personId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/#{@data['personId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1199,28 +1199,28 @@ describe "V3 Object API -- Create RoleType Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.slug is zero" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
@@ -1233,7 +1233,7 @@ describe "V3 Object API -- Create RoleType Positive Smoke", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('roletype'), :content_type => "application/json"
     rescue => e
@@ -1256,7 +1256,7 @@ describe "V3 Object API -- Create RoleType Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes/#{@data['roleTypeId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{@data['roleTypeId']}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1268,14 +1268,14 @@ describe "V3 Object API -- Create RoleType Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the roletype" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes/#{@data['roleTypeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{@data['roleTypeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes/#{@data['roleTypeId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{@data['roleTypeId']}"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -1344,7 +1344,7 @@ describe "V3 Object API -- Create Character Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/#{@data['characterId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/#{@data['characterId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1434,7 +1434,7 @@ describe "V3 Object API -- Create Show Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows/#{@data['showId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows/#{@data['showId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e

@@ -1,5 +1,5 @@
 development:
-  baseurl: 10.92.218.26:8080
+  baseurl: media-oyster-dev-app-01.sfdev.colo.ignops.com:8080
 
 staging:
   baseurl: media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3

@@ -1,0 +1,95 @@
+require 'rest_client'
+require 'json'
+require 'rspec'
+require 'selenium-webdriver'
+require 'configuration'
+require 'rest-client'
+require 'open_page'
+
+include OpenPage
+
+contents = []
+file = File.new("/Users/wclaiborne/Desktop/remigrate_all.txt", "r")
+while (line = file.gets)
+  contents << line
+end
+file.close
+
+puts "CONTENTS LENGTH #{contents.length}"
+puts "CONTENTS UNIQUE #{contents.uniq.length}"
+
+puts contents.uniq
+
+
+=begin
+contents = []
+file = File.new("/Users/wclaiborne/Desktop/temp1.txt", "r")
+while (line = file.gets)
+  contents << line
+end
+file.close
+
+wp_urls = []
+
+contents.each do |i|
+  if i.match(/write.ign.com/)
+    wp_urls << i
+  end
+end
+
+wp_urls_slim = wp_urls.uniq
+
+wp_urls_slim.each do |url|
+  puts url
+
+end
+=end
+
+=begin
+describe "Republish Wordpress Articles" do
+
+  before(:all) do
+    BrowserConfig.browser_path = File.dirname(__FILE__) + "/../config/browser.yml"
+    @browser_config = BrowserConfig.new
+    @selenium = Selenium::WebDriver.for :firefox
+    @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+    file = File.new("/Users/wclaiborne/Desktop/urls.txt", "r")
+    @wp_urls = []
+    while (line = file.gets)
+      @wp_urls << "http://write.ign.com/wp-admin/post.php?post=#{line}&action=edit&message=1"
+    end
+    file.close
+
+  end
+
+  after(:all) do
+    @selenium.quit
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+
+  it "should republish" do
+    @selenium.get 'https://s.ign.com/'
+    email = @selenium.find_element(:css => "input#email")
+    pass = @selenium.find_element(:css => "input#password")
+    email.send_keys("williamjclaiborne@hotmail.com")
+    pass.send_keys("gkastle")
+    @selenium.find_element(:css => "input.ignsignin-formButton").click
+    @wp_urls.each do |i|
+      @selenium.get i
+      button = @selenium.find_element(:css => "div#publishing-action input#publish")
+      button.click
+      puts i
+    end
+
+  end
+
+end
+=end

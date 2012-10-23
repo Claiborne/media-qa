@@ -8,10 +8,12 @@ module FeChecker
   include OpenPage
   
   def check_display_text(locator)
+    @doc.at_css("#{locator}").should be_true
     @doc.css(locator).text.delete("^a-zA-Z").length.should > 0
   end
   
   def check_display_text_for_each(locator)
+    @doc.at_css("#{locator}").should be_true
     @doc.css(locator).each do |li|
       li.text.delete("^a-zA-Z").length.should > 0
     end
@@ -23,6 +25,7 @@ module FeChecker
   end
   
   def check_have_a_link_for_each(locator)
+    @doc.at_css("#{locator} a").should be_true
     @doc.css(locator).each do |li|
       li.at_css("a[href*='http']").should be_true
     end
@@ -34,6 +37,7 @@ module FeChecker
   end
   
   def check_have_an_img_for_each(locator)
+    @doc.at_css("#{locator} img").should be_true
     @doc.css(locator).each do |li|
       li.at_css("img").should be_true
       li.at_css("img[src*='http']").should be_true
@@ -58,6 +62,38 @@ module FeChecker
       response.code.should_not eql(/4\d\d/)
       response.code.should_not eql(/5\d\d/)
       response.code.should eql(200)
+    end
+  end
+
+  def get_international_cookie(cookie)
+    case cookie
+      when 'www'
+        return :cookies=>{"i18n-ccpref"=>"9-US"}
+      when 'uk'
+        return :cookies=>{"i18n-ccpref"=>"9-UK"}
+      when 'au'
+        return :cookies=>{"i18n-ccpref"=>"9-AU"}
+      else
+        return Exception.new("Can't return international cookie from get_international_cookie method in lib/fe_checker.rb")
+    end
+  end
+
+  def get_locale(base_url,cookie)
+    response = RestClient.get("http://#{base_url}/i18n",cookie)
+    doc = Nokogiri::HTML(response)
+    puts ""
+    puts doc.at_css('table tr:nth-child(5)').to_s
+    puts ""
+    locale = doc.at_css('table tr:nth-child(5) td:nth-child(2)').text
+    case locale
+      when 'US'
+        return 'www'
+      when 'UK'
+        return 'uk'
+      when 'AU'
+        return 'au'
+      else
+        return Exception.new("URL: http://#{base_url}/i18n, COOKIE: #{cookie}, PREF COOKIE: #{locale}")
     end
   end
   

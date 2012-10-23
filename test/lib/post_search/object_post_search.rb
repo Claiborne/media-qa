@@ -49,11 +49,29 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def update_release_draft
+  def create_object_min_name(num)
     {
-      "metadata" => {
-          "region" => "UK"
-      }
+        "metadata" => {
+            "name" => "Media QA Test Object #{num}"
+        }
+    }.to_json
+  end
+
+  def create_object_min_slug(num)
+    {
+        "metadata" => {
+            "slug" => "media-qa-test-object-#{num}"
+        }
+    }.to_json
+  end
+
+  def create_object_min_both(num)
+    {
+        "metadata" => {
+            "name" => "Media QA Test Object #{num}",
+            "slug" => "media-qa-test-object-#{num}",
+            "state" => 'draft'
+        }
     }.to_json
   end
 
@@ -456,6 +474,17 @@ module ObjectPostSearch
     }.to_json
   end
 
+  def create_episode_body(num,slug,show,season)
+    {
+        "metadata" => {
+          "name" => "QA Episode #{num}",
+          "slug" => slug.to_s,
+          "show" => {"showId" => show.to_s},
+          "season" => {"seasonId" => season.to_s}
+        }
+    }.to_json
+  end
+
   def create_role_body(num,slug,movie_id,character_id,roletype_id,game_id,book_id,person_id)
     {
         "metadata" => {
@@ -572,10 +601,12 @@ module ObjectPostSearch
     }.to_json
   end
 
-  def update_book_body(slug)
+  def update_book_body(slug, add1, add2)
     {
         "metadata" => {
             "slug" => slug.to_s+"-updated", #changed
+            "additionalVolumes" => [{"volumeId"=> add1},{"volumeId"=> add2}]
+
         }
     }.to_json
   end
@@ -632,6 +663,14 @@ module ObjectPostSearch
         "metadata" => {
             "order" => 2, #changed
             "slug" => slug.to_s+"-updated", #changed
+        }
+    }.to_json
+  end
+
+  def update_release_draft
+    {
+        "metadata" => {
+            "region" => "UK"
         }
     }.to_json
   end

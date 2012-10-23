@@ -99,7 +99,7 @@ describe "V3 Object API -- Check Minimum Role", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}?oauth_token=#{CreateRoleMetadata.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -163,9 +163,9 @@ describe "V3 Object API -- Update To Add All Objects To Role", :stg => true do
     @response = RestClient.put @url, update_role_with_objects(
           JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/slug/the-dark-knight").body)['movieId'].to_s,
           JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/slug/batman").body)['characterId'].to_s,
-          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes/slug/actor").body)['roleTypeId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/slug/actor").body)['roleTypeId'].to_s,
           JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/slug/mass-effect-3").body)['gameId'].to_s,
-          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/slug/batman-the-dark-knight-vol-2-issue-11").body)['bookId'].to_s,
+          JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/slug/batman-the-dark-knight-2011-11").body)['bookId'].to_s,
           JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/slug/christian-bale").body)['personId'].to_s,
       ), :content_type => "application/json"
     @data = JSON.parse(@response.body)
@@ -205,7 +205,7 @@ describe "V3 Object API -- Check Minimum Role", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}?oauth_token=#{CreateRoleMetadata.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -271,9 +271,9 @@ describe "V3 Object API -- Check Minimum Role", :stg => true do
 
   it "should return the same roleType metadata as the roleType returns" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes/#{@data['metadata']['roleType']['roleTypeId']}"
+      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{@data['metadata']['roleType']['roleTypeId']}"
     rescue => e
-      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes/#{@data['metadata']['roleType']['roleTypeId']}")
+      raise Exception.new(e.message+" http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{@data['metadata']['roleType']['roleTypeId']}")
     end
 
     roletype_data = JSON.parse(response.body)

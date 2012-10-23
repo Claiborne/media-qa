@@ -35,6 +35,7 @@ class UpdateHelperVars
   @character_id = ""
   @show_id = ""
   @season_id = ""
+  @episode_id = ""
   
   def self.return_token
     @token
@@ -119,6 +120,10 @@ class UpdateHelperVars
   def self.return_season_id
     @season_id
   end
+
+  def self.return_episode_id
+    @episode_id
+  end
   
   # 
   
@@ -188,6 +193,10 @@ class UpdateHelperVars
 
   def self.set_season_id(id)
     @season_id = id
+  end
+
+  def self.set_episode_id(id)
+    @episode_id = id
   end
   
 end
@@ -674,7 +683,7 @@ describe "V3 Object API -- Create RoleType", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{UpdateHelperVars.return_token}"
     begin
       @response = RestClient.post @url, create_roletype_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('roletype',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -738,7 +747,7 @@ describe "V3 Object API -- Create Show", :stg => true do
     @data.has_key?('showId').should be_true
   end
 
-  it "should return a roleTypeId value that is a 24-character hash" do
+  it "should return a showId value that is a 24-character hash" do
     @data['showId'].match(/^[0-9a-f]{24}$/).should be_true
     UpdateHelperVars.set_show_id @data['showId']
   end
@@ -777,9 +786,48 @@ describe "V3 Object API -- Create Season", :stg => true do
     @data.has_key?('seasonId').should be_true
   end
 
-  it "should return a roleTypeId value that is a 24-character hash" do
+  it "should return a seasonId value that is a 24-character hash" do
     @data['seasonId'].match(/^[0-9a-f]{24}$/).should be_true
     UpdateHelperVars.set_season_id @data['seasonId']
+  end
+
+end
+
+####################################################################
+
+describe "V3 Object API -- Create Episode", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/episodes?oauth_token=#{UpdateHelperVars.return_token}"
+    begin
+      @response = RestClient.post @url, create_episode_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('episode',UpdateHelperVars.return_number),UpdateHelperVars.return_show_id,UpdateHelperVars.return_season_id), :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  it "should return a episodeId key" do
+    @data.has_key?('episodeId').should be_true
+  end
+
+  it "should return a episodeId value that is a 24-character hash" do
+    @data['episodeId'].match(/^[0-9a-f]{24}$/).should be_true
+    UpdateHelperVars.set_episode_id @data['episodeId']
   end
 
 end
@@ -1214,9 +1262,11 @@ describe "V3 Object API -- Update Book", :stg => true do
     @config = Configuration.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/#{UpdateHelperVars.return_book_id}?oauth_token=#{UpdateHelperVars.return_token}"
     begin
-      @response = RestClient.put @url, update_book_body(UpdateHelperVars.return_object_slug('book',UpdateHelperVars.return_number)), :content_type => "application/json"
+      vol1 = JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/slug/100-bullets").body)['volumeId']
+      vol2 = JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/slug/batman-the-return").body)['volumeId']
+      @response = RestClient.put @url, update_book_body(UpdateHelperVars.return_object_slug('book',UpdateHelperVars.return_number), vol1, vol2), :content_type => "application/json"
     rescue => e
-      raise Exception.new(e.message+" "+@url+" "+e.response.to_s)
+      raise Exception.new(e.message)
     end
     @data = JSON.parse(@response.body)
 
@@ -1326,7 +1376,7 @@ describe "V3 Object API -- Update RoleType", :stg => true do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roletypes/#{UpdateHelperVars.return_roletype_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{UpdateHelperVars.return_roletype_id}?oauth_token=#{UpdateHelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_roletype_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('roletype',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1400,6 +1450,58 @@ end
 
 ################################## THIRD SET: CHECK UPDATES ##################################
 
+describe "V3 Object API -- Check Nested Updates Reflect in Episode", :stg => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = Configuration.new
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/episodes/#{UpdateHelperVars.return_episode_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+  end
+
+  %w(slug name shortDescription ).each do |field|
+    it "should return the updated metadata.show.metadata.#{field} value" do
+      @data['metadata']['show']['metadata'][field].match(/updated/).should be_true
+    end
+  end
+
+  {:description=>"description",:alternateNames=>["alt name one","two"],:commonName=>"common name",:misspelledNames=>['misspelled one','two']}.each do |field,value|
+    it "should return the added metadata.show.metadata.#{field} value" do
+      @data['metadata']['show']['metadata'][field.to_s].should == value
+    end
+  end
+
+  %w(slug name shortDescription ).each do |field|
+    it "should return the updated metadata.season.metadata.show.metadata.#{field} value" do
+      @data['metadata']['season']['metadata']['show']['metadata'][field].match(/updated/).should be_true
+    end
+  end
+
+  {:description=>"description",:alternateNames=>["alt name one","two"],:commonName=>"common name",:misspelledNames=>['misspelled one','two']}.each do |field,value|
+    it "should return the added metadata.season.metadata.show.metadata.#{field} value" do
+      @data['metadata']['season']['metadata']['show']['metadata'][field.to_s].should == value
+    end
+  end
+
+end
+
 describe "V3 Object API -- Check Nested Updates Reflect in Book", :stg => true do
 
   before(:all) do
@@ -1451,6 +1553,11 @@ describe "V3 Object API -- Check Nested Updates Reflect in Book", :stg => true d
     @book_data['misspelledNames'].should == ['misspelled one updated','misspelled two updated','misspelled three updated']
   end
 
+  it "should return the updated metadata.additionalVolumes values" do
+    @data['metadata']['additionalVolumes'][0]['metadata']['slug'].should == '100-bullets'
+    @data['metadata']['additionalVolumes'][1]['metadata']['slug'].should == 'batman-the-return'
+  end
+
 end
 
 ####################################################################
@@ -1460,7 +1567,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Role", :stg => true d
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{UpdateHelperVars.return_role_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{UpdateHelperVars.return_role_id}?oauth_token=#{UpdateHelperVars.return_token}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1557,7 +1664,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = Configuration.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateHelperVars.return_release_id}"
+    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateHelperVars.return_release_id}?oauth_token=#{UpdateHelperVars.return_token}"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -1600,6 +1707,12 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
 
   it "should return the updated metadata.book.metadata.slug value" do
     @data['metadata']['book']['metadata']['slug'].to_s.match(/updated/).should be_true
+  end
+
+
+  it "should return the updated metadata.book.metadata.additionalVolumes values" do
+    @data['metadata']['book']['metadata']['additionalVolumes'][0]['metadata']['slug'].should == '100-bullets'
+    @data['metadata']['book']['metadata']['additionalVolumes'][1]['metadata']['slug'].should == 'batman-the-return'
   end
 
   it "should return the updated metadata.book.metadata.volume.metadata.name value" do
@@ -1806,7 +1919,7 @@ end
 
 describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
 
-  obj = %w(games companies features genres genres hardware markets releases movies books volumes people characters roletypes roles shows seasons)
+  obj = %w(games companies features genres genres hardware markets releases movies books volumes people characters roleTypes roles shows seasons episodes)
   obj.each_index do |val|
   it "should return a 404 after deleting #{obj[val]} object" do
 
@@ -1845,6 +1958,8 @@ describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
         id = UpdateHelperVars.return_show_id
       when 16
         id = UpdateHelperVars.return_season_id
+      when 17
+        id = UpdateHelperVars.return_episode_id
       else
         id = ""
     end

@@ -8,7 +8,7 @@ require 'dbi'
 
 def game_review_articles
   {"matchRule"=>"matchAll",
-  "count"=>10,
+  "count"=>20,
   "startIndex"=>0,
   "networks"=>"ign",
   "states"=>"published",
@@ -34,7 +34,7 @@ end
 
 def game_preview_articles
   {"matchRule"=>"matchAll",
-  "count"=>10,
+  "count"=>20,
   "startIndex"=>0,
   "networks"=>"ign",
   "states"=>"published",
@@ -59,7 +59,7 @@ def game_preview_articles
 end
 
 puts ""
-puts "--------------------- REVIEWS ---------------------"
+puts "--------------------- GAME REVIEWS ---------------------"
 puts ""
 
 url = "http://apis.lan.ign.com/article/v3/articles/search?q="+game_review_articles.to_s
@@ -85,9 +85,9 @@ data['data'].each do |article|
     if game_data['game']['reviewUrl'].to_s.match(/com\/articles\//)
       #puts "PASS: http://content-api.ign.com/v1/games/#{object}.json"
     else
-      #puts "--------> FAILURE:"
-      puts "--------> http://content-api.ign.com/v1/games/#{object}.json"
-      puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+      #puts "FAILURE:"
+      puts "http://content-api.ign.com/v1/games/#{object}.json"
+      puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
     end
   end #end objectRelations iteration
   end #end catch
@@ -104,20 +104,20 @@ data['data'].each do |article|
       game_data = JSON.parse(object_response.body)
       game_data['data'].each do |game_data|
         if game_data['metadata']['region'] == 'US'
-          if game_data.has_key?('network')
-            if (game_data['network']['ign']['review']['score'].to_s.length > 0) & game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//)
-              #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-            else
-              #puts "--------> FAILURE:"
-              puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-              #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              puts ""
-            end
+          begin
+            game_data['network']['ign']['review']['score']
+          rescue
+            #puts "FAILURE:"
+            puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+            #puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+            next
+          end
+          if (game_data['network']['ign']['review']['score'].to_s.length > 0) & game_data['legacyData']['reviewUrl'].to_s.match(/com\/articles\//)
+            #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
           else
-            #puts "--------> FAILURE:"
-            puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-            #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-            puts ""
+            #puts "FAILURE:"
+            puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+            #puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           end
         end
       end
@@ -127,7 +127,7 @@ data['data'].each do |article|
 end #end article iteration
 
 puts ""
-puts "--------------------- PREVIEWS ---------------------"
+puts "--------------------- GAME PREVIEWS ---------------------"
 puts ""
 
 url = "http://apis.lan.ign.com/article/v3/articles/search?q="+game_preview_articles.to_s
@@ -152,9 +152,9 @@ data['data'].each do |article|
     if game_data['game']['previewUrl'].to_s.match(/com\/articles\//) || game_data['game']['previewUrl'].to_s.match(/\/articles\//)
       #puts "PASS: http://content-api.ign.com/v1/games/#{object}.json"
     else
-      #puts "--------> FAILURE:"
-      puts "--------> http://content-api.ign.com/v1/games/#{object}.json"
-      puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
+      #puts "FAILURE:"
+      puts "http://content-api.ign.com/v1/games/#{object}.json"
+      puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
     end
   end #end objectRelations iteration
   end #end catch
@@ -175,16 +175,12 @@ data['data'].each do |article|
             if game_data['legacyData']['previewUrl'].to_s.match(/com\/articles\//)
               #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
             else
-              #puts "--------> FAILURE:"
-              puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-              #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              puts ""
+              #puts "FAILURE:"
+              puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
             end
           else
-            #puts "--------> FAILURE:"
-            puts "--------> http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
-            #puts "--------> http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-            puts ""
+            #puts "FAILURE:"
+            puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
           end
        conn = OCI8.new ('publish','saturn1','nibdb4.las1.colo.ignops.com:1521/nibdb4')
        puts conn
@@ -192,7 +188,7 @@ data['data'].each do |article|
       end
     end #end objectRelations iteration
   end #end catch
-    
+
 end #end article iteration
 
 

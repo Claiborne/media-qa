@@ -251,9 +251,6 @@ describe "V3 Articles API -- General Post Search for published articles sending 
       raise Exception.new(e.message+" "+@url)
     end
     @data = JSON.parse(@response.body)
-    
-    
-    File.open('/Users/wclaiborne/Desktop/article_debug.json', 'w') {|f| f.write(@response.to_s) }
   end
 
   before(:each) do

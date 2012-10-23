@@ -8,7 +8,7 @@ describe "Add Comic Data", :comic => true do
   include TopazToken
 
   before(:all) do
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3"
+    @url = "media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3"
     @token = return_topaz_token('object')
     Obj = ObjectApiJsonBodies.new
   end
@@ -40,7 +40,7 @@ describe "Add TV Data", :tv => true do
   include TopazToken
 
   before(:all) do
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3"
+    @url = "media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3"
     @token = return_topaz_token('object')
     Obj = ObjectApiJsonBodies.new
   end
@@ -67,7 +67,7 @@ describe "Add Stars Data", :stars => true do
   include TopazToken
 
   before(:all) do
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3"
+    @url = "media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3"
     @token = return_topaz_token('object')
     Obj = ObjectApiJsonBodies.new
   end
@@ -120,12 +120,12 @@ class ObjectApiJsonBodies
                 "Christian Morgan Bale",
                 "Christian Bail"
             ],
-            "description"=> "Christian Bale is an actor, best known for his work on the films Empire of the Sun, Newsies, American Psycho, 3=>10 To Yuma, Terminator Salvation and The Dark Knight."
+            "description"=> "Christian Bale is an actor, best known for his work on the films Empire of the Sun, Newsies, American Psycho, 3:10 To Yuma, Terminator Salvation and The Dark Knight."
         },
         "biography"=> {
             "profile"=> "Christian Charles Phillip Bale was born January 30, 1974, in Haverfordwest, Pembrokeshire, Wales. He is an actor who started as a child and has starred in a wide variety of films ranging from small budget independent films to studio blockbusters.
 
-His film debut in 1986 in Anastasia=> The Mystery of Anna, a made-for-TV movie, caught the attention of his co-star, Amy Irving, who was married to Steven Spielberg at the time. Irving recommended Bale for her husband's film Empire of the Sun for which he won \"Best Performance by a Juvenile Actor\", an award that was created for him.
+His film debut in 1986 in Anastasia: The Mystery of Anna, a made-for-TV movie, caught the attention of his co-star, Amy Irving, who was married to Steven Spielberg at the time. Irving recommended Bale for her husband's film Empire of the Sun for which he won \"Best Performance by a Juvenile Actor\", an award that was created for him.
 
 In 1999, Bale starred as Patrick Bateman, a yuppie serial killer in the controversial film adaptation of the book by Brett Easton Ellis, American Psycho.
 
@@ -148,7 +148,7 @@ He is married to Sandra Blazic and they have one daughter.",
                 {
                     "width"=> 160,
                     "height"=> 247,
-                    "url"=> "http=>//starsmedia.ign.com/stars/image/object/913/913820/christianbale_boxboxart_160w.jpg",
+                    "url"=> "http://starsmedia.ign.com/stars/image/object/913/913820/christianbale_boxboxart_160w.jpg",
     "positionId"=> 5,
     }
     ]
@@ -200,7 +200,7 @@ Upon his return to Gotham, he channeled his skills, his wealth, and his hatred o
         "legacyData"=> {
         "boxArt"=> [
             {
-                "url"=> "http=>//starsmedia.ign.com/stars/image/object/924/924128/jimlee_batman_boxboxart_160w.jpg",
+                "url"=> "http://starsmedia.ign.com/stars/image/object/924/924128/jimlee_batman_boxboxart_160w.jpg",
                 "height"=> 226,
                 "width"=> 160,
                 "positionId"=> 5
@@ -249,12 +249,12 @@ Upon his return to Gotham, he channeled his skills, his wealth, and his hatred o
       "metadata"=> {
         "slug"=> "batman-the-animated-series",
         "legacyId"=> 909538,
-        "name"=> "Batman=> The Animated Series",
+        "name"=> "Batman: The Animated Series",
         "state"=> "published",
         "alternateNames"=> [
             "The Adventures of Batman and Robin"
         ],
-        "shortDescription"=> "A moody Caped Crusader defends Gotham City against the usual suspects in this animated series inspired by director Tim Burton's dark theatrical films. The show was renamed The Adventures of Batman and Robin for its final year and yielded a movie, Batman=> Mask of the Phantasm."
+        "shortDescription"=> "A moody Caped Crusader defends Gotham City against the usual suspects in this animated series inspired by director Tim Burton's dark theatrical films. The show was renamed The Adventures of Batman and Robin for its final year and yielded a movie, Batman: Mask of the Phantasm."
       }
     }.to_json
   end
@@ -274,7 +274,7 @@ Upon his return to Gotham, he channeled his skills, his wealth, and his hatred o
   def tv_release(season_id)
     {
       "metadata"=> {
-        "name"=> "Batman=> The Animated Series=> Season 1",
+        "name"=> "Batman: The Animated Series: Season 1",
         "state"=> "published",
         "commonName"=> "Season 1",
         "season"=> {
@@ -287,9 +287,9 @@ Upon his return to Gotham, he channeled his skills, his wealth, and his hatred o
   def volume
     {
         "metadata"=> {
-            "slug"=> "batman-the-dark-knight-vol-2",
+            "slug"=> "batman-the-dark-knight-2011",
             "legacyId"=> 110600,
-            "name"=> "Batman: The Dark Knight Vol. 2",
+            "name"=> "Batman: The Dark Knight [2011]",
             "type"=> "comic",
             "state"=> "published",
             "commonName"=> "Batman: The Dark Knight",
@@ -309,7 +309,7 @@ As a mysterious figure slinks through the halls of Arkham Asylum, Batman must fi
   def book(volume_id)
     {
         "metadata"=> {
-            "slug"=> "batman-the-dark-knight-vol-2-issue-11",
+            "slug"=> "batman-the-dark-knight-2011-11",
             "legacyId"=> 138260,
             "order"=> 11,
             "volume"=> {
@@ -333,8 +333,8 @@ As a mysterious figure slinks through the halls of Arkham Asylum, Batman must fi
     {
         "metadata"=> {
             "legacyId"=> 138260,
-            "name"=> "Batman=> The Dark Knight Vol. 2 #11",
-            "commonName"=> "Batman=> The Dark Knight #11",
+            "name"=> "Batman: The Dark Knight Vol. 2 #11",
+            "commonName"=> "Batman: The Dark Knight #11",
             "state"=> "published",
             "shortDescription"=> "Scarecrow makes a bold move against Batman, using Commissioner Gordan as bait! The terrifying pasts of both Scarecrow and Batman come back to haunt them.",
             "description"=> "Scarecrow makes a bold move against Batman, using Commissioner Gordan as bait! The terrifying pasts of both Scarecrow and Batman come back to haunt them.",
@@ -363,7 +363,7 @@ As a mysterious figure slinks through the halls of Arkham Asylum, Batman must fi
         "legacyData"=> {
             "boxArt"=> [
                 {
-                    "url"=> "http=>//comicsmedia.ign.com/comics/image/object/138/138260/batman-the-dark-knight-11_cover-artboxart_160w.jpg",
+                    "url"=> "http://comicsmedia.ign.com/comics/image/object/138/138260/batman-the-dark-knight-11_cover-artboxart_160w.jpg",
                     "height"=> 242,
                     "width"=> 160,
                     "positionId"=> 5
