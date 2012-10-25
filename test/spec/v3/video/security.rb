@@ -60,9 +60,19 @@ describe "V3 Video API -- GET Unpublished Videos Using 'state/#{state}' Endpoint
     expect {RestClient.get @url}.to raise_error(RestClient::Unauthorized)
   end
 
-  it "should 200 with an oauth token" do
+  it "should 200 with an oauth token", :stg => true do
     res = RestClient.get @url+"&oauth_token=#{TopazToken.return_token}"
     res.code.should == 200
+  end
+
+  if state == 'publishing'
+    it "should 200 or 404 with an oauth token", :prd => true do
+      begin
+      expect {RestClient.get @url+"&oauth_token=#{TopazToken.return_token}"}.to raise_error(RestClient::ResourceNotFound)
+      rescue
+      (RestClient.get @url+"&oauth_token=#{TopazToken.return_token}").code.should == 200
+      end
+    end
   end
 
 end end
@@ -327,7 +337,7 @@ describe "V3 Video API -- GET Specific Non-Published Video", :stg => true do
     res = RestClient.post "#{@base_url}?oauth_token=#{TopazToken.return_token}", @vid_body, :content_type => "application/json"
     data = JSON.parse(res.body)
     puts data['videoId']
-    Vid.video_id= data['videoId']
+    Vid.video_id = @video_id = data['videoId']
     res.code.should == 201
   end
 
@@ -347,7 +357,7 @@ describe "V3 Video API -- GET Specific Non-Published Video", :stg => true do
     end
 
     it "should return a 200 when trying to GET a #{state} video by slug with OAuth" do
-      res = RestClient.get "#{@base_url}slug/media-qa-test-#@rand_num?oauth_token=#{TopazToken.return_token}&fresh=true"
+      res = RestClient.get "#{@base_url}/slug/media-qa-test-#@rand_num?oauth_token=#{TopazToken.return_token}&fresh=true"
       res.code.should == 200
       d = JSON.parse(res.body)
       d['metadata']['state'].should == state

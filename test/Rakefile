@@ -154,6 +154,14 @@ RSpec::Core::RakeTask.new('techfrontend') do |t|
   t.pattern = 'spec/oyster/media/tech.rb'
 end
 
+############# PHANTOM #############
+
+desc "Run Video frontend tests"
+RSpec::Core::RakeTask.new('phantomvideoplayerpage') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/phantom/video/player_page.rb'
+end
+
 ############# SERVICES #############
 
 desc "Run Affinity API tests"
