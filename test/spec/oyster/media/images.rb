@@ -36,7 +36,6 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
 
     @path = "/images/games/far-cry-3-xbox-360-53491"
     @page = "http://#{@config.options['baseurl']}#{@path}"
-    puts @path+" using "+@browser_config.options['browser']
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
   end

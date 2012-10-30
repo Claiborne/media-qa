@@ -234,7 +234,7 @@ def common_assertions
       end
     end    
   end#end iteration
-  
+
 end
 
 ########################## BEGIN SPEC ########################## 
