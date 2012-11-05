@@ -153,7 +153,7 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
     Time.parse(date.text).should == Time.parse(@video_data['metadata']['publishDate'].match(/\d{4}-\d{2}-\d{2}/).to_s)
   end
 
-  it "should display the medrec div once" do
+  it "should display include the medrec elements" do
     @selenium.find_element(:css => "span[id='300x250slot'] form").should be_true
     @selenium.find_element(:css => "span[id='300x250slot'] span").should be_true
   end
