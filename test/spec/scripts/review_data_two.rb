@@ -218,7 +218,7 @@ end
         end
       end
 
-    %w(episodes shows volumes).each do |o|
+    %w(episodes shows volumes books).each do |o|
       objectRelations.each do |object|
         begin
           object_response = RestClient.get "http://apis.lan.ign.com/object/v3/#{o}/legacyId/#{object}"
