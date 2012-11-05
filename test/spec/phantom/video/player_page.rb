@@ -206,10 +206,36 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       related_videos_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/related/#{@video_data['videoId']}"
       related_videos = JSON.parse(related_videos_response.body)
 
+      # IF RELATED VIDEOS NOT ENOUGH, GET OTHER VIDEOS TO FILL
+      fe_count = @selenium.find_elements(:css => "ul#videos-list li").count
+      if related_videos['data'].count < fe_count
+        body = {
+            :rules=>[
+                {
+                    :field=>"category",
+                    :condition=>"is",
+                    :value=>"ign_all"
+                }
+            ],
+            :matchRule=>"matchAll",
+            :prime=>false,
+            :startIndex=>0,
+            :count=>(fe_count - related_videos['data'].count),
+            :networks=>"ign",
+            :regions=>["US"]
+        }.to_json
+        generic_videos_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/search?q=#{body}".gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+        generic_videos = JSON.parse(generic_videos_response.body)
+      end
+
           ## COMPARE TITLES ##
 
       # STORE TITLES FROM API
-      api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
+      if related_videos['data'].count < fe_count
+        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)+VideoPlayerPageHelper.get_api_titles(generic_videos)
+      else
+        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
+      end
 
       # STORE TITLES FROM FE
       fe_titles = []
@@ -219,8 +245,8 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
       # COMPARE API TITLES TO FE TITLES
       (api_titles - fe_titles).length.should < 2
-      api_titles.length.should > 6
-      fe_titles.length.should > 6
+      api_titles.length.should > 9
+      fe_titles.length.should > 9
 
           ## COMPARE LINK ##
 
@@ -228,6 +254,11 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       api_slugs = []
       related_videos['data'].each do |v|
         api_slugs << v['metadata']['slug']
+      end
+      if related_videos['data'].count < fe_count
+        generic_videos['data'].each do |v|
+          api_slugs << v['metadata']['slug']
+        end
       end
 
       # STORE SLUGS FROM FE
@@ -311,8 +342,8 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
       # COMPARE API TITLES TO FE TITLES
       (api_titles - fe_titles).length.should < 2
-      api_titles.length.should > 6
-      fe_titles.length.should > 6
+      api_titles.length.should > 9
+      fe_titles.length.should > 9
 
           ## COMPARE LINK ##
 
@@ -372,8 +403,8 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
       # COMPARE API TITLES TO FE TITLES
       (api_titles - fe_titles).length.should < 2
-      api_titles.length.should > 6
-      fe_titles.length.should > 6
+      api_titles.length.should > 9
+      fe_titles.length.should > 9
 
          ## COMPARE LINK ##
 
@@ -438,8 +469,8 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
       # COMPARE API TITLES TO FE TITLES
       (api_titles - fe_titles).length.should < 2
-      api_titles.length.should > 6
-      fe_titles.length.should > 6
+      api_titles.length.should > 9
+      fe_titles.length.should > 9
 
           ## COMPARE LINK ##
 
@@ -474,13 +505,38 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       related_videos_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/related/#{@video_data['videoId']}"
       related_videos = JSON.parse(related_videos_response.body)
 
+      # IF RELATED VIDEOS NOT ENOUGH, GET OTHER VIDEOS TO FILL
+      fe_count = @selenium.find_elements(:css => "ul#videos-list li").count
+      if related_videos['data'].count < fe_count
+        body = {
+            :rules=>[
+                {
+                    :field=>"category",
+                    :condition=>"is",
+                    :value=>"ign_all"
+                }
+            ],
+            :matchRule=>"matchAll",
+            :prime=>false,
+            :startIndex=>0,
+            :count=>(fe_count - related_videos['data'].count),
+            :networks=>"ign",
+            :regions=>["US"]
+        }.to_json
+        generic_videos_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/search?q=#{body}".gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+        generic_videos = JSON.parse(generic_videos_response.body)
+      end
+
       ## COMPARE TITLES ##
 
       # STORE TITLES FROM API
-      api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
+      if related_videos['data'].count < fe_count
+        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)+VideoPlayerPageHelper.get_api_titles(generic_videos)
+      else
+        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
+      end
 
       # STORE TITLES FROM FE
-      fe_titles = []
       fe_titles = []
       @selenium.find_elements(:css => "ul#videos-list li").each do |t|
         fe_titles << t.text.downcase.strip
@@ -488,8 +544,8 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
       # COMPARE API TITLES TO FE TITLES
       (api_titles - fe_titles).length.should < 2
-      api_titles.length.should > 6
-      fe_titles.length.should > 6
+      api_titles.length.should > 9
+      fe_titles.length.should > 9
 
       ## COMPARE LINK ##
 
@@ -497,6 +553,11 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       api_slugs = []
       related_videos['data'].each do |v|
         api_slugs << v['metadata']['slug']
+      end
+      if related_videos['data'].count < fe_count
+        generic_videos['data'].each do |v|
+          api_slugs << v['metadata']['slug']
+        end
       end
 
       # STORE SLUGS FROM FE
