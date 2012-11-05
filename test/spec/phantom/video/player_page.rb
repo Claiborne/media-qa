@@ -12,7 +12,7 @@ include OpenPage
 class VideoPlayerPageHelper
   def self.get_latest_videos
 
-    count = 1
+    count = 5
 
     DataConfiguration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     data_config = DataConfiguration.new
@@ -80,8 +80,7 @@ end
 
 ######################################################################
 
-#VideoPlayerPageHelper.get_latest_videos.each do |video_page|
-["/videos/2012/11/05/halo-4-grifball-mode-walkthrough-with-343i"].each do |video_page|
+VideoPlayerPageHelper.get_latest_videos.each do |video_page|
 describe "Video Player Page -- #{video_page}", :selenium => true do
 
   before(:all) do
@@ -92,8 +91,7 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
     DataConfiguration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @data_config = DataConfiguration.new
 
-    #@page = "http://#{@config.options['baseurl']}#{video_page}"
-    @page =  "http://#{@config.options['baseurl']}/videos/2012/11/05/halo-4-grifball-mode-walkthrough-with-343i"
+    @page = "http://#{@config.options['baseurl']}#{video_page}"
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
 
@@ -140,7 +138,7 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
     all.displayed?.should be_true
 
-    all.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.should == VideoPlayerPageHelper.get_api_title(@video_data)
+    all.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.downcase.should == VideoPlayerPageHelper.get_api_title(@video_data)
   end
 
   it "should display the duration" do
@@ -156,8 +154,8 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
   end
 
   it "should display the medrec div once" do
-    @selenium.find_elements(:css => "div#sugarad-300x250").count.should == 1
-    @selenium.find_element(:css => "div#sugarad-300x250 iframe").displayed?.should be_true
+    @selenium.find_element(:css => "span[id='300x250slot'] form").should be_true
+    @selenium.find_element(:css => "span[id='300x250slot'] span").should be_true
   end
 
   context "Video Playlist" do
@@ -198,6 +196,10 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       selected.text.should == 'RELATED'
     end
 
+    it "should be populated with 20 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
+    end
+
     it "should display Related videos by default" do
 
       # GET RELATED VIDEOS
@@ -216,7 +218,9 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      api_titles.should == fe_titles
+      (api_titles - fe_titles).length.should < 2
+      api_titles.length.should > 6
+      fe_titles.length.should > 6
 
           ## COMPARE LINK ##
 
@@ -232,7 +236,7 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
         fe_slugs << v.attribute('href').to_s.match(/[^\/]{2,}$/).to_s
       end
 
-      # COMPARE API TITLES TO FE TITLES
+      # COMPARE API SLUGS TO FE SLUGS
       api_slugs.should == fe_slugs
 
     end
@@ -241,6 +245,10 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='shows']").click
       sleep 1
       @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(2) div.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+    end
+
+    it "should be populated with 20 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
     it "should display IGN Shows when clicked" do
@@ -302,7 +310,9 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      api_titles.should == fe_titles
+      (api_titles - fe_titles).length.should < 2
+      api_titles.length.should > 6
+      fe_titles.length.should > 6
 
           ## COMPARE LINK ##
 
@@ -312,7 +322,7 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
         fe_slugs << v.attribute('href').to_s.match(/[^\/]{2,}$/).to_s
       end
 
-      # COMPARE API TITLES TO FE TITLES
+      # COMPARE API SLUGS TO FE SLUGS
       api_slugs.should == fe_slugs
 
     end
@@ -322,6 +332,10 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='reviews']").click
       sleep 1
       @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(3) div.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+    end
+
+    it "should be populated with 20 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
     it "should display Reviews when clicked" do
@@ -357,7 +371,9 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      api_titles.should == fe_titles
+      (api_titles - fe_titles).length.should < 2
+      api_titles.length.should > 6
+      fe_titles.length.should > 6
 
          ## COMPARE LINK ##
 
@@ -373,16 +389,19 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
         fe_slugs << v.attribute('href').to_s.match(/[^\/]{2,}$/).to_s
       end
 
-      # COMPARE API TITLES TO FE TITLES
+      # COMPARE API SLUGS TO FE SLUGS
       api_slugs.should == fe_slugs
 
     end
-
 
     it "should highlight Trailers when clicked" do
       @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='trailers']").click
       sleep 1
       @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(4) div.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+    end
+
+    it "should be populated with 20 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
     it "should display Trailers when clicked" do
@@ -418,7 +437,9 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      api_titles.should == fe_titles
+      (api_titles - fe_titles).length.should < 2
+      api_titles.length.should > 6
+      fe_titles.length.should > 6
 
           ## COMPARE LINK ##
 
@@ -434,7 +455,7 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
         fe_slugs << v.attribute('href').to_s.match(/[^\/]{2,}$/).to_s
       end
 
-      # COMPARE API TITLES TO FE TITLES
+      # COMPARE API SLUGS TO FE SLUGS
       api_slugs.should == fe_slugs
     end
 
@@ -442,6 +463,10 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='related']").click
       sleep 1
       @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button div.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+    end
+
+    it "should be populated with 20 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
     it "should display Related Videos when clicked" do
@@ -462,7 +487,9 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      api_titles.should == fe_titles
+      (api_titles - fe_titles).length.should < 2
+      api_titles.length.should > 6
+      fe_titles.length.should > 6
 
       ## COMPARE LINK ##
 
@@ -478,7 +505,7 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
         fe_slugs << v.attribute('href').to_s.match(/[^\/]{2,}$/).to_s
       end
 
-      # COMPARE API TITLES TO FE TITLES
+      # COMPARE API SLUGS TO FE SLUGS
       api_slugs.should == fe_slugs
 
     end
@@ -494,7 +521,7 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
     it "should display the correct video title" do
       title = @selenium.find_element(:css => "div#object-details div.page-object-title").text.downcase
-      title.chomp.strip.should == @video_data['metadata']['name'].downcase
+      title.chomp.strip.should == VideoPlayerPageHelper.get_api_title(@video_data)
     end
 
     it "should display the video date once" do
@@ -512,9 +539,18 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       @selenium.find_element(:css => "div#object-details span.page-object-description").displayed?.should be_true
     end
 
-    it "should display the correct description date" do
+    it "should display the correct description" do
+
+      begin
+        description = @video_data['promo']['summary']
+        if description.to_s.delete('^a-zA-Z0-9').length < 1; throw Exception.new end
+      rescue
+        description = @video_data['metadata']['description']
+      end
+
       desc = @selenium.find_element(:css => "div#object-details span.page-object-description").text.chomp.strip
-      desc.should == @video_data['metadata']['description']
+      desc.should == description
+
     end
 
   end
