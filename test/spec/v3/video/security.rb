@@ -103,8 +103,19 @@ describe "V3 Video API -- GET Unpublished Videos Using '?metadata.state=#{state}
   end
 
   it "should 200 with an oauth token" do
-    res = RestClient.get @url+"&oauth_token=#{TopazToken.return_token}"
-    res.code.should == 200
+
+    if state == 'publishing'
+      begin
+        res = RestClient.get @url+"&oauth_token=#{TopazToken.return_token}"
+        res.code.should == 200
+      rescue
+        expect {RestClient.get @url+"&oauth_token=#{TopazToken.return_token}"}.to raise_error(RestClient::ResourceNotFound)
+      end
+    else
+      res = RestClient.get @url+"&oauth_token=#{TopazToken.return_token}"
+      res.code.should == 200
+    end
+
   end
 
 end end
