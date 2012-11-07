@@ -12,7 +12,7 @@ include OpenPage
 class VideoPlayerPageHelper
   def self.get_latest_videos
 
-    count = 50
+    count = 1
 
     DataConfiguration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     data_config = DataConfiguration.new
@@ -626,12 +626,108 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
   end
 
+  context "Related Videos Right Rail" do
+
+    it "should display once" do
+      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list").count.should == 1
+      @selenium.find_element(:css => "div.column-supplement ul.must-watch-list").displayed?.should be_true
+    end
+
+    it "should display the header" do
+      @selenium.find_element(:css => "div.column-supplement div.must-watch-header").text.should == 'RELATED VIDEOS'
+    end
+
+    it "should display eight videos" do
+      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li").count.should == 8
+    end
+
+    it "should have a link to for each thumb and title" do
+      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-thumb a img").count.should == 8
+      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details a").count.should == 8
+    end
+
+    it "should display a title for all videos" do
+      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details a").count.should == 8
+      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details a").each do |vid|
+        vid.text.strip.delete('^a-zA-Z').length.should > 0
+      end
+    end
+
+    it "should display a timestamp for all videos" do
+      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details div.date-time").count.should == 8
+      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details div.date-time").each do |vid|
+        vid.text.strip.delete('^a-zA-Z').length.should > 0
+      end
+    end
+
+  end
+
   context "Disqus Widget" do
 
     it "should display once" do
       @selenium.find_elements(:css => "div#disqus_thread").count.should == 1
       @selenium.find_elements(:css => "div#disqus_thread iframe").count.should == 4
       @selenium.find_element(:css => "div#disqus_thread iframe").displayed?.should be_true
+    end
+
+  end
+
+  context "Add This Widget" do
+
+    it "should be on the page once" do
+      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style']").count.should == 1
+      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style']").displayed?.should be_true
+    end
+
+    it "should display the Facebook button once" do
+      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Facebook'] span").count.should == 2
+      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Facebook'] span").displayed?.should be_true
+    end
+
+    it "should display the Twitter button once" do
+      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet This'] span").count.should == 2
+      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet This'] span").displayed?.should be_true
+    end
+
+    it "should display the Reddit button once" do
+      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Reddit'] span").count.should == 2
+      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Reddit'] span").displayed?.should be_true
+    end
+
+    it "should display the Tumblr button once" do
+      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tumblr'] span").count.should == 2
+      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tumblr'] span").displayed?.should be_true
+    end
+
+    it "should display the Google+ button once" do
+      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Google+'] span").count.should == 2
+      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Google+'] span").displayed?.should be_true
+    end
+
+    it "should display the More+ button once" do
+      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a.addthis_button").count.should == 1
+      more = @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a.addthis_button")
+      more.attribute('href').to_s.should == "http://www.addthis.com/bookmark.php"
+      more.displayed?.should be_true
+      more.text.should == 'MORE +'
+    end
+
+  end
+
+  context "Object Details Widget" do
+
+    it "should display the object details widget if applicable" do
+      if @video_data['objectRelations'].length > 0
+        @selenium.find_elements(:css => "div.column-supplement div.objectDetails div.objectDetails-header").count.should == 1
+        @selenium.find_element(:css => "div.column-supplement div.objectDetails-header").text.should == 'DETAILS'
+      end
+    end
+
+    it "should display the object title if applicable" do
+      if @video_data['objectRelations'].length > 0
+        @selenium.find_elements(:css => "div.column-supplement div.objectDetails-objectName a").count.should == 1
+        @selenium.find_element(:css => "div.column-supplement div.objectDetails-objectName a").text.strip.delete('^a-zA-Z0-9').length.should > 0
+      end
     end
 
   end
@@ -647,6 +743,5 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
     end
 
   end
-
 
 end end
