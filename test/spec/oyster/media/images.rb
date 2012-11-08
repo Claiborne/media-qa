@@ -6,14 +6,14 @@ require 'open_page'
 
 include OpenPage
 
-=begin
+
 def set_locale(locale)
 
   it "should set the locale" do
-    if locale=='US'
+    if locale=='us'
       selenium_get(@selenium, "http://www.ign.com/?setccpref=US")
       @selenium.current_url.match(/www.ign.com/).should be_true
-    elsif locale=='UK'
+    elsif locale=='uk'
       selenium_get(@selenium, "http://uk.ign.com/?setccpref=UK")
       @selenium.current_url.match(/uk.ign.com/).should be_true
     else
@@ -21,7 +21,7 @@ def set_locale(locale)
     end
   end
 end
-=end
+
 
 ######################################################################
 
