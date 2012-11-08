@@ -6,26 +6,10 @@ require 'open_page'
 
 include OpenPage
 
-
-def set_locale(locale)
-
-  it "should set the locale" do
-    if locale=='us'
-      selenium_get(@selenium, "http://www.ign.com/?setccpref=US")
-      @selenium.current_url.match(/www.ign.com/).should be_true
-    elsif locale=='uk'
-      selenium_get(@selenium, "http://uk.ign.com/?setccpref=UK")
-      @selenium.current_url.match(/uk.ign.com/).should be_true
-    else
-      raise "Could not set locale. Locale did not == US or UK"
-    end
-  end
-end
-
-
 ######################################################################
 
-describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selenium => true do
+%w(www uk).each do |locale|
+describe "Images Gallery Page -- #{locale} /images/games/far-cry-3-xbox-360-53491", :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
@@ -33,11 +17,14 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
     
     BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
     @browser_config = BrowserConfig.new
-
     @path = "/images/games/far-cry-3-xbox-360-53491"
-    @page = "http://#{@config.options['baseurl']}#{@path}"
+    @base_url = "http://#{@config.options['baseurl']}".gsub('//www',"//#{locale}")
+    @page = @base_url+@path
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 5)
+    if locale == 'uk'
+      @selenium.get "http://uk.ign.com/?setccpref=UK"
+    end
   end
   
   after(:all) do
@@ -52,10 +39,10 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
 
   end
 
-  it "should open the Far Cry 3 gallery page", :smoke => true do
+  it "should open the #{locale} Far Cry 3 gallery page", :smoke => true do
     @selenium.get @page
     # Do I need to wait for load?
-    @selenium.current_url.match(Regexp.new(@path)).should be_true
+    @selenium.current_url.should == @page
   end
 
   it "should display 20 thumbnails", :smoke => true do
@@ -224,4 +211,4 @@ describe "Images Gallery Page -- /images/games/far-cry-3-xbox-360-53491", :selen
 
   end
 
-end
+end end

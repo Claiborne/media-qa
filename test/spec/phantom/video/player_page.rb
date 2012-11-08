@@ -80,8 +80,9 @@ end
 
 ######################################################################
 
+%w(www uk au).each do |locale|
 VideoPlayerPageHelper.get_latest_videos.each do |video_page|
-describe "Video Player Page -- #{video_page}", :selenium => true do
+describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/phantom.yml"
@@ -91,13 +92,19 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
     DataConfiguration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @data_config = DataConfiguration.new
 
-    @page = "http://#{@config.options['baseurl']}#{video_page}"
+    @page = "http://#{@config.options['baseurl']}#{video_page}".gsub('//www',"//#{locale}")
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
 
     data_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/slug/#{video_page.match(/[^\/]{2,}$/)}"
-
     @video_data = JSON.parse(data_response.body)
+
+    if locale == 'uk'
+      @selenium.get "http://uk.ign.com/?setccpref=UK"
+    end
+    if locale == 'au'
+      @selenium.get "http://uk.ign.com/?setccpref=AU"
+    end
   end
 
   after(:all) do
@@ -792,4 +799,4 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
   end
 
-end end
+end end end
