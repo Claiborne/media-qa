@@ -9,7 +9,8 @@ module TopGames
       @doc.at_css('div.right-col-module div.topgames-module').should be_true
     end
   end
-  
+
+  # type expects string 'Games Out Now' or 'Games Coming Soon'
   def widget_top_games(type, num_of_slots)
     
     widget_top_games_smoke(type)
@@ -53,10 +54,10 @@ module TopGames
         slot.text.delete("^0-9").length.should > 0
       end
     end
-    
-    it "should link to an object page when a game's title is clicked" do
+
+    it "should link to an object page or review article when a game's title is clicked" do
       return_top_games_widget(@doc, type).css('div.column-game a.game-title').each do |slot|
-        slot.attribute('href').to_s.match(/.com\/games/).should be_true
+        (slot.attribute('href').to_s.match(/.com\/games/)  || slot.attribute('href').to_s.match(/review/)).should be_true
       end
     end
     
