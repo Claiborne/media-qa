@@ -274,6 +274,12 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
     end
 
+    it "should only contain links that 200", :spam => true do
+      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+        rest_client_not_301_home_open link.attribute('href').to_s
+      end
+    end
+
     it "should highlight IGN Shows when clicked" do
       @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='shows']").click
       sleep 1
@@ -362,6 +368,12 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
     end
 
+    it "should only contain links that 200", :spam => true do
+      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+        rest_client_not_301_home_open link.attribute('href').to_s
+      end
+    end
+
 
     it "should highlight Reviews when clicked" do
       @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='reviews']").click
@@ -431,6 +443,12 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
     end
 
+    it "should only contain links that 200", :spam => true do
+      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+        rest_client_not_301_home_open link.attribute('href').to_s
+      end
+    end
+
     it "should highlight Trailers when clicked" do
       @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='trailers']").click
       sleep 1
@@ -496,6 +514,12 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       (api_slugs - fe_slugs).length.should < 2
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
+    end
+
+    it "should only contain links that 200", :spam => true do
+      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+        rest_client_not_301_home_open link.attribute('href').to_s
+      end
     end
 
     it "should highlight Related videos when clicked" do
@@ -581,6 +605,12 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
 
     end
 
+    it "should only contain links that 200", :spam => true do
+      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+        rest_client_not_301_home_open link.attribute('href').to_s
+      end
+    end
+
   end
 
   context "Video Details (Below Fold)" do
@@ -660,6 +690,14 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       end
     end
 
+    it "should only contain links that return 200", :spam => true do
+      related_vids_links =  @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list a")
+      related_vids_links.length.should > 8
+      related_vids_links.each do |link|
+        rest_client_not_301_home_open link.attribute('href').to_s
+      end
+    end
+
   end
 
   context "Disqus Widget" do
@@ -727,6 +765,16 @@ describe "Video Player Page -- #{video_page}", :selenium => true do
       if @video_data['objectRelations'].length > 0
         @selenium.find_elements(:css => "div.column-supplement div.objectDetails-objectName a").count.should == 1
         @selenium.find_element(:css => "div.column-supplement div.objectDetails-objectName a").text.strip.delete('^a-zA-Z0-9').length.should > 0
+      end
+    end
+
+    it "should only contain links that return 200", :spam => true do
+      if @video_data['objectRelations'].length > 0
+        obj_details_links =  @selenium.find_elements(:css => "div.column-supplement div.objectDetails a")
+        obj_details_links.length.should > 0
+        obj_details_links.each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 

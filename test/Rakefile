@@ -24,6 +24,7 @@ RSpec::Core::RakeTask.new('frontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = [
       'spec/oyster/media/*.rb',
+      'spec/phantom/**/*.rb'
       ]  
 end
 
@@ -32,9 +33,7 @@ end
 desc "Run all backend tests"
 RSpec::Core::RakeTask.new('backend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = [
-      'spec/v3/**/*.rb'
-      ]  
+    t.pattern = 'spec/v3/**/*.rb'
 end
 
 ############# V3 ############# 
@@ -139,7 +138,8 @@ end
 desc "Run Video Frontend Tests"
 RSpec::Core::RakeTask.new('videofrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/video.rb'
+    t.pattern = ['spec/oyster/media/video.rb',
+                 'spec/phantom/video/*.rb']
 end
 
 desc "Run Articles Frontend Tests"
@@ -160,6 +160,12 @@ desc "Run Video frontend tests"
 RSpec::Core::RakeTask.new('videoplayerpage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/phantom/video/player_page.rb'
+end
+
+desc "Run All Phantom Frontend Tests"
+RSpec::Core::RakeTask.new('phantom') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/phantom/**/*.rb'
 end
 
 ############# SERVICES #############
