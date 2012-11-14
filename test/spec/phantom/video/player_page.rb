@@ -179,8 +179,8 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
     it "should correctly display the navigation text" do
       nav_text = ['RELATED','IGN SHOWS', 'REVIEWS', 'TRAILERS']
-      items = @selenium.find_elements(:css => "div.video_playlist_selector a.video_playlist_button div.item")
-      items.count.should.should == 4
+      items = @selenium.find_elements(:css => "div.video_playlist_selector a.video_playlist_button span.item")
+      items.count.should.should == 5
       items.each_with_index do |val, index|
         val.text.should == nav_text[index]
       end
@@ -197,15 +197,100 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       rest_client_not_301_home_open subscribe_page
     end
 
+
+    it "should be populated with at least 10 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
+    end
+
     it "should highlight Related videos in the nav by default" do
-      selected = @selenium.find_element(:css => "div.video_playlist_selector div.item-container")
+      selected = @selenium.find_element(:css => "div.video_playlist_selector span.item-container")
       selected.attribute('class').to_s.match(/container-selected/).should be_true
       selected.text.should == 'RELATED'
     end
 
-    it "should be populated with 20 list item links" do
+    it "should be populated with at least 10 list item links" do
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
+
+=begin
+    ############ WHEN MUST WATCH IS FIRST ############
+
+    it "should highlight Must Watch videos in the nav by default" do
+      selected = @selenium.find_element(:css => "div.video_playlist_selector span.item-container")
+      selected.attribute('class').to_s.match(/container-selected/).should be_true
+      selected.text.should == 'MUST WATCH'
+    end
+
+    it "should be populated with at least 10 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
+    end
+
+    it "should display Must Watch videos by default" do
+      @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
+      @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
+        a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
+        a.text.delete('^a-zA-Z').length.should > 0
+      end
+    end
+
+    it "should only contain links that 200", :spam => true do
+      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+        rest_client_not_301_home_open link.attribute('href').to_s
+      end
+    end
+
+    ############ WHEN MUST WATCH IS FIRST AND NEED TO VERIFY AFTER CLICKING ############
+
+    it "should highlight Must Watch videos when clicked" do
+      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='taboola']").click
+      sleep 1
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+    end
+
+    it "should be populated with at least 10 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
+    end
+
+    it "should display Must Watch videos by default" do
+      @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
+      @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
+        a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
+        a.text.delete('^a-zA-Z').length.should > 0
+      end
+    end
+
+    it "should only contain links that 200", :spam => true do
+      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+        rest_client_not_301_home_open link.attribute('href').to_s
+      end
+    end
+
+    ############ WHEN MUST WATCH IS LAST ############
+
+    it "should highlight Must Watch videos when clicked" do
+      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='taboola']").click
+      sleep 1
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(5) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+    end
+
+    it "should be populated with at least 10 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
+    end
+
+    it "should display Must Watch videos by default" do
+      @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
+      @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
+        a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
+        a.text.delete('^a-zA-Z').length.should > 0
+      end
+    end
+
+    it "should only contain links that 200", :spam => true do
+      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+        rest_client_not_301_home_open link.attribute('href').to_s
+      end
+    end
+=end
 
     it "should display Related videos by default" do
 
@@ -288,12 +373,12 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     end
 
     it "should highlight IGN Shows when clicked" do
-      @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='shows']").click
+      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='shows']").click
       sleep 1
-      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(2) div.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(2) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
     end
 
-    it "should be populated with 20 list item links" do
+    it "should be populated with at least 10 list item links" do
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
@@ -383,12 +468,12 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
 
     it "should highlight Reviews when clicked" do
-      @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='reviews']").click
+      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='reviews']").click
       sleep 1
-      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(3) div.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(3) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
     end
 
-    it "should be populated with 20 list item links" do
+    it "should be populated with at least 10 list item links" do
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
@@ -457,12 +542,12 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     end
 
     it "should highlight Trailers when clicked" do
-      @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='trailers']").click
+      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='trailers']").click
       sleep 1
-      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(4) div.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(4) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
     end
 
-    it "should be populated with 20 list item links" do
+    it "should be populated with at least 10 list item links" do
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
@@ -530,12 +615,12 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     end
 
     it "should highlight Related videos when clicked" do
-      @selenium.find_element(:css => "div.video_playlist_selector div.item-container div[data-type='related']").click
+      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='related']").click
       sleep 1
-      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button div.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
     end
 
-    it "should be populated with 20 list item links" do
+    it "should be populated with at least 10 list item links" do
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
