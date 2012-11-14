@@ -8,33 +8,36 @@ require 'assert'
 
 include Assert
 
-def body_request
-  @body = {
-  "matchRule"=>"matchAll",
-  "rules"=>[
+class VideoGeneralPosts
+
+  def self.legacy_id
     {
-       "condition"=>"is",
-       "field"=>"objectRelations.legacyId",
-       "value"=>"872155"
-    }
-  ],
-  "startIndex"=>0,
-  "count"=>25,
-  "networks"=>"ign",
-  "prime"=>"false",
-  "states"=>"published"
-  }.to_json
+    "matchRule"=>"matchAll",
+    "rules"=>[
+      {
+         "condition"=>"is",
+         "field"=>"objectRelations.legacyId",
+         "value"=>"872155"
+      }
+    ],
+    "startIndex"=>0,
+    "count"=>25,
+    "networks"=>"ign",
+    "prime"=>"false",
+    "states"=>"published"
+    }.to_json
+  end
+
 end
 
-
-describe "V3 Video API -- Search/POST Smoke Tests -- POST /v3/videos/search -- Body = #{body_request} " do
+describe "V3 Video API -- Search/POST Smoke Tests -- POST /v3/videos/search -- Body = #{VideoGeneralPosts.legacy_id} " do
 
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = Configuration.new
     @url = "http://#{@config.options['baseurl']}/v3/videos/search"
     begin
-     @response = RestClient.post @url, body_request, :content_type => "application/json"
+     @response = RestClient.post @url, VideoGeneralPosts.legacy_id, :content_type => "application/json"
       #@response = RestClient.get @url
     rescue => e
       raise Exception.new(e.message+" "+@url)
