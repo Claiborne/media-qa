@@ -5,6 +5,9 @@ require 'json'
 require 'configuration'
 require 'rubygems'
 require 'oauth'
+require 'topaz_token'
+
+include TopazToken
 
 describe "people" do
 status_activity_id = ""
