@@ -302,3 +302,27 @@ RSpec::Core::RakeTask.new('topaz_registration') do |t|
   t.rspec_opts = ["-Ilib", "--format documentation","--color"]
   t.pattern = 'spec/topaz/topaz_registration.rb'
 end
+
+desc "Run Social Registration test"
+RSpec::Core::RakeTask.new('registration') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/social_api/registration.rb'
+end
+
+desc "Run Social follow test"
+RSpec::Core::RakeTask.new('followuser1') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/social_api/followuser1.rb'
+end
+
+desc "Run Social follow test"
+RSpec::Core::RakeTask.new('allowFriendsOnly1') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/social_api/allowFriendsOnly1.rb'
+end
+
+desc "Run ratings post"
+RSpec::Core::RakeTask.new('ratings') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/rating/rating_post.rb'
+end

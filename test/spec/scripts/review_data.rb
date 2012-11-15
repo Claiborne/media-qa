@@ -3,6 +3,8 @@ require 'nokogiri'
 require 'configuration'
 require 'rest_client'
 require 'json'
+require 'oci8'
+require 'dbi'
 
 def game_review_articles
   {"matchRule"=>"matchAll",
@@ -180,6 +182,8 @@ data['data'].each do |article|
             #puts "FAILURE:"
             puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
           end
+       conn = OCI8.new ('publish','saturn1','nibdb4.las1.colo.ignops.com:1521/nibdb4')
+       puts conn
         end
       end
     end #end objectRelations iteration
@@ -187,5 +191,7 @@ data['data'].each do |article|
 
 end #end article iteration
 
+
+# Check for DB queries
 
 

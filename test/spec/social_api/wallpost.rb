@@ -24,18 +24,19 @@ wallpost_type = "WALL_POST"
 
 it "should post the wallpost" do
 jdata = JSON.generate({"body"=>"test","appId"=>0,
-"activityObjects"=>[
-"objectTitle"=>"posting wallpost from ruby script",
-"type"=>"WALL_POST"],
-"title"=>"posting wallpost from ruby script",
-"actorType"=>"PERSON",
-"verb"=>"POST",
-"actorId"=>"959653",
+        "activityObjects"=>[{
+                    "objectTitle"=>"posting wallpost from ruby script",
+                    "type"=>"WALL_POST"}],
+        "title"=>"posting wallpost from ruby script",
+        "actorType"=>"PERSON",
+        "verb"=>"POST",
+        "actorId"=>"959653",
 "targets"=>[{"type"=>"PERSON","objectId"=>"1938442"}]})
 response = RestClient.post "http://#{@config.options['baseurl']}/v1.0/social/rest/activities/959653/@self?st=959653:959653:0:ign.com:my.ign.com:0:0",jdata, {:content_type => 'application/json'}
 wallpost_activity_id= JSON.parse(response.body)["entry"]
 puts $wallpost_activity_id
  end
+
 
   it "should return valid people @self" do
    response = RestClient.get "http://#{@config.options['baseurl']}/v1.0/social/rest/people/nickname.badgeTester/@self"
