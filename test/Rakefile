@@ -68,6 +68,12 @@ RSpec::Core::RakeTask.new('v3images') do |t|
   t.pattern = 'spec/v3/images/*.rb'
 end
 
+desc "Run v3 search tests"
+RSpec::Core::RakeTask.new('v3search') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/search/*.rb'
+end
+
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"
