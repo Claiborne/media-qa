@@ -13,6 +13,9 @@ include Assert
 # '+' vs '%20'
 # Filter By Type
 # Filter By Invalid Type
+# Pagination
+# Return JSONP
+# Return JavaScript
 
 # No Query Param --/search/
 %w(search).each do |q|
@@ -165,6 +168,16 @@ describe "V3 Search API -- Smoke Query '#{q}'" do
     types.include?('article').should be_true
     types.include?('video').should be_true
     types.include?('object').should be_true
+    types.include?('wiki').should be_true
+  end
+
+  it "should sort results by score" do
+    scores = []
+    @data['data'].each do |result|
+      scores << result['score']
+    end
+    scores.length.should > 1
+    scores.should == scores.sort {|x,y| y <=> x }
   end
 
 end end
@@ -286,3 +299,165 @@ describe "V3 Search API -- Filter By Type invalid" do
   end
 
 end
+
+# Pagination
+describe "V3 Search API -- Pagination" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = Configuration.new
+    @count = 200
+    @url = "http://#{@config.options['baseurl']}/search?q=halo&count=21"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse @response.body
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return a 200 response code" do
+    check_200(@response)
+  end
+
+  it "should paginate correctly" do
+    data = JSON.parse(RestClient.get("http://#{@config.options['baseurl']}/search?q=halo&startIndex=20").body)
+    data['data'][0].should == @data['data'][20]
+
+  end
+
+end
+
+# Return JSONP
+describe "V3 Search API -- Return JSONP" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = Configuration.new
+    @count = 200
+    @url = "http://#{@config.options['baseurl']}/search?q=halo&format=js&callback=onResultsLoaded"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return a 200 response code" do
+    check_200(@response)
+  end
+
+  it "should return JSONP" do
+    @response.body.match(/^onResultsLoaded\({"/).should be_true
+    @response.body.match(/}\);$/).should be_true
+  end
+
+end
+
+# Return Javascript
+describe "V3 Search API -- Return Javascript" do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = Configuration.new
+    @count = 200
+    @url = "http://#{@config.options['baseurl']}/search?q=halo&format=js&variable=results"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return a 200 response code" do
+    check_200(@response)
+  end
+
+  it "should return Javascript" do
+    @response.body.match(/^var results = {"/).should be_true
+    @response.body.match(/}]};$/).should be_true
+  end
+
+end
+
+
+=begin
+describe "V3 Search API -- TEST", :test => true do
+
+  before(:all) do
+    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = Configuration.new
+    @count = 200
+    @url = "http://#{@config.options['baseurl']}/search?q=halo&explain=true"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse @response.body
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return a 200 response code" do
+    check_200(@response)
+  end
+
+  it "should return JSONP format" do
+    @data['data'].each do |r|
+      if r['type'] == 'video'
+        puts "Score #{r['score']}"
+        puts "Explanation #{r['explanation']['value']}"
+        puts "Max Of #{r['explanation']['details'][0]['value']}"
+        puts "fieldWeight #{r['explanation']['details'][0]['details'][0]['value']}"
+
+        puts "weight(secondary) #{r['explanation']['details'][0]['details'][1]['value']}"
+        puts "queryWeight #{r['explanation']['details'][0]['details'][1]['details'][0]['value']}"
+        puts "boost #{r['explanation']['details'][0]['details'][1]['details'][0]['details'][0]['value']}"
+        puts "idf #{r['explanation']['details'][0]['details'][1]['details'][0]['details'][1]['value']}"
+        puts "idf #{r['explanation']['details'][0]['details'][1]['details'][0]['details'][1]['description']}"
+        puts "queryNorm #{r['explanation']['details'][0]['details'][1]['details'][0]['details'][2]['value']}"
+        puts "queryNorm #{r['explanation']['details'][0]['details'][1]['details'][0]['details'][2]['description']}"
+
+        puts "fieldWeight #{r['explanation']['details'][0]['details'][1]['details'][1]['value']}"
+        puts "tf #{r['explanation']['details'][0]['details'][1]['details'][1]['details'][0]['value']}"
+        puts "idf #{r['explanation']['details'][0]['details'][1]['details'][1]['details'][1]['value']}"
+        puts "idf #{r['explanation']['details'][0]['details'][1]['details'][1]['details'][1]['description']}"
+        puts "fieldNorm #{r['explanation']['details'][0]['details'][1]['details'][1]['details'][2]['value']}"
+        break
+      end
+    end
+  end
+
+end
+=end
