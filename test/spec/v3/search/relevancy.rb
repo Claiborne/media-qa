@@ -9,7 +9,7 @@ include Assert
 
 ['halo 4','halo'].each do |q|
 %w(object article video wiki).each do |type|
-describe "V3 Search API -- Relevancy for #{q.upcase}", :test => true do
+describe "V3 Search API -- Relevancy for #{q.upcase}", :results => true do
 
   def obj(ob)
     case ob
