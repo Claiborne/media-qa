@@ -147,28 +147,25 @@ describe "V3 Search API -- Smoke Query '#{q}'" do
     @data['isMore'].should be_true
   end
 
-  it "should return a total value of at least 120,000 unless query is just halo" do
-    if q == 'halo'
-      @data['total'].should > 20000
-    else
-      @data['total'].should > 119999
+  it "should return a total value of at least 20,000 unless query is just halo" do
+    @data['total'].should > 20000
+  end
+
+  it "should return at least one video and object in the first 10 results" do
+    types = []
+    10.times do |i|
+      types << @data['data'][i]['type']
     end
+    types.include?('video').should be_true
+    types.include?('object').should be_true
   end
 
-  it "should return a maxScore between 5 and 7" do
-    (5 < @data['maxScore']).should be_true
-    (7 >  @data['maxScore']).should be_true
-  end
-
-  it "should return at least one article, video and object in the first 20 results" do
+  it "should return at least one article in the first 20 results" do
     types = []
     20.times do |i|
       types << @data['data'][i]['type']
     end
     types.include?('article').should be_true
-    types.include?('video').should be_true
-    types.include?('object').should be_true
-    types.include?('wiki').should be_true
   end
 
   it "should sort results by score" do
@@ -329,9 +326,11 @@ describe "V3 Search API -- Pagination" do
   end
 
   it "should paginate correctly" do
-    data = JSON.parse(RestClient.get("http://#{@config.options['baseurl']}/search?q=halo&startIndex=20").body)
-    data['data'][0].should == @data['data'][20]
-
+    8.times do
+      data = JSON.parse(RestClient.get("http://#{@config.options['baseurl']}/search?q=halo&startIndex=20").body)
+      data['data'][0].first.should == @data['data'][20].first
+      sleep 1
+    end
   end
 
 end
