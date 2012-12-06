@@ -518,9 +518,9 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.video_series}" do
     check_indices(@data, 6)
   end
 
-  it "should return at least 30 videos" do
-    @data['data'].count.should > 29
-    @data['count'].should > 29
+  it "should return at least 25 videos" do
+    @data['data'].count.should > 24
+    @data['count'].should > 24
   end
 
   it "should return only published videos" do
