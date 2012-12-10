@@ -11,10 +11,10 @@ include FeChecker
 include TopGames
 
 def platform_list; ['all','xbox-360','ps3','pc','wii-u','3ds','vita','iphone']; end
-def genre_list; ['all','action','adventure','fighting','music','rpg']; end
+def genre_list; ['all','action','adventure','fighting','rpg']; end
 
 #def platform_list; ['all','xbox-360']; end
-#def genre_list; ['all']; end
+#def genre_list; ['all','action']; end
 
 def common_assertions
   
