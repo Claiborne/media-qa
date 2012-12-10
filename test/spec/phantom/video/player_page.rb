@@ -44,9 +44,9 @@ class VideoPlayerPageHelper
       end
 
       if video_long_title == false
-        api_titles << (object_name+video_title).downcase
+        api_titles << (object_name+video_title).downcase.gsub(/\s{2,}/, ' ')
       else
-        api_titles << video_long_title.downcase.strip
+        api_titles << video_long_title.downcase.strip.gsub(/\s{2,}/, ' ')
       end
     end
     api_titles
@@ -154,12 +154,6 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     duration.text.match(/[0-9]{1,2}:[0-9]{2}/).should be_true
   end
 
-  it "should display the date" do
-    date = @selenium.find_element(:css => "div.video_details div.video_title div.sub-details")
-    date.displayed?.should be_true
-    Time.parse(date.text).should == Time.parse(@video_data['metadata']['url'].match(/\d{4}\/\d{2}\/\d{2}/).to_s)
-  end
-
   it "should display include the medrec elements" do
     @selenium.find_element(:css => "span[id='300x250slot'] form").should be_true
     @selenium.find_element(:css => "span[id='300x250slot'] span").should be_true
@@ -178,7 +172,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     end
 
     it "should correctly display the navigation text" do
-      nav_text = ['RELATED','IGN SHOWS', 'REVIEWS', 'TRAILERS']
+      nav_text = ['MUST WATCH', 'RELATED','IGN SHOWS', 'REVIEWS', 'TRAILERS']
       items = @selenium.find_elements(:css => "div.video_playlist_selector a.video_playlist_button span.item")
       items.count.should.should == 5
       items.each_with_index do |val, index|
@@ -197,23 +191,9 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       rest_client_not_301_home_open subscribe_page
     end
 
-
     it "should be populated with at least 10 list item links" do
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
-
-    it "should highlight Related videos in the nav by default" do
-      selected = @selenium.find_element(:css => "div.video_playlist_selector span.item-container")
-      selected.attribute('class').to_s.match(/container-selected/).should be_true
-      selected.text.should == 'RELATED'
-    end
-
-    it "should be populated with at least 10 list item links" do
-      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
-    end
-
-=begin
-    ############ WHEN MUST WATCH IS FIRST ############
 
     it "should highlight Must Watch videos in the nav by default" do
       selected = @selenium.find_element(:css => "div.video_playlist_selector span.item-container")
@@ -239,24 +219,84 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
     end
 
-    ############ WHEN MUST WATCH IS FIRST AND NEED TO VERIFY AFTER CLICKING ############
-
-    it "should highlight Must Watch videos when clicked" do
-      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='taboola']").click
+    it "should highlight Related videos when clicked" do
+      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='related']").click
       sleep 1
-      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(2) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
     end
 
-    it "should be populated with at least 10 list item links" do
-      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
-    end
+    it "should display Related Videos when clicked" do
+      # GET RELATED VIDEOS
+      related_videos_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/related/#{@video_data['videoId']}"
+      related_videos = JSON.parse(related_videos_response.body)
 
-    it "should display Must Watch videos by default" do
-      @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
-      @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
-        a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
-        a.text.delete('^a-zA-Z').length.should > 0
+      # IF RELATED VIDEOS NOT ENOUGH, GET OTHER VIDEOS TO FILL
+      fe_count = @selenium.find_elements(:css => "ul#videos-list li").count
+      if related_videos['data'].count < fe_count
+        body = {
+            :rules=>[
+                {
+                    :field=>"category",
+                    :condition=>"is",
+                    :value=>"ign_all"
+                }
+            ],
+            :matchRule=>"matchAll",
+            :prime=>false,
+            :startIndex=>0,
+            :count=>(fe_count - related_videos['data'].count),
+            :networks=>"ign",
+            :regions=>["US"]
+        }.to_json
+        generic_videos_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/search?q=#{body}".gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+        generic_videos = JSON.parse(generic_videos_response.body)
       end
+
+      ## COMPARE TITLES ##
+
+      # STORE TITLES FROM API
+      if related_videos['data'].count < fe_count
+        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)+VideoPlayerPageHelper.get_api_titles(generic_videos)
+      else
+        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
+      end
+
+      # STORE TITLES FROM FE
+      fe_titles = []
+      @selenium.find_elements(:css => "ul#videos-list li").each do |t|
+        fe_titles << t.text.downcase.strip.gsub(/\s{2,}/, ' ')
+      end
+
+      # COMPARE API TITLES TO FE TITLES
+      api_titles.should == fe_titles
+      (api_titles - fe_titles).length.should < 2
+      api_titles.length.should > 9
+      fe_titles.length.should > 9
+
+      ## COMPARE LINK ##
+
+      # STORE SLUGS FROM API
+      api_slugs = []
+      related_videos['data'].each do |v|
+        api_slugs << v['metadata']['slug']
+      end
+      if related_videos['data'].count < fe_count
+        generic_videos['data'].each do |v|
+          api_slugs << v['metadata']['slug']
+        end
+      end
+
+      # STORE SLUGS FROM FE
+      fe_slugs = []
+      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |v|
+        fe_slugs << v.attribute('href').to_s.match(/[^\/]{2,}$/).to_s
+      end
+
+      # COMPARE API SLUGS TO FE SLUGS
+      (api_slugs - fe_slugs).length.should < 2
+      api_slugs.length.should > 9
+      fe_slugs.length.should > 9
+
     end
 
     it "should only contain links that 200", :spam => true do
@@ -265,33 +305,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
     end
 
-    ############ WHEN MUST WATCH IS LAST ############
-
-    it "should highlight Must Watch videos when clicked" do
-      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='taboola']").click
-      sleep 1
-      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(5) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
-    end
-
-    it "should be populated with at least 10 list item links" do
-      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
-    end
-
-    it "should display Must Watch videos by default" do
-      @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
-      @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
-        a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
-        a.text.delete('^a-zA-Z').length.should > 0
-      end
-    end
-
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
-      end
-    end
-=end
-
+=begin
     it "should display Related videos by default" do
 
       # GET RELATED VIDEOS
@@ -332,7 +346,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       # STORE TITLES FROM FE
       fe_titles = []
       @selenium.find_elements(:css => "ul#videos-list li").each do |t|
-        fe_titles << t.text.downcase.strip
+        fe_titles << t.text.downcase.strip.gsub(/\s{2,}/, ' ')
       end
 
       # COMPARE API TITLES TO FE TITLES
@@ -371,11 +385,12 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
         rest_client_not_301_home_open link.attribute('href').to_s
       end
     end
+=end
 
     it "should highlight IGN Shows when clicked" do
       @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='shows']").click
       sleep 1
-      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(2) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(3) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
     end
 
     it "should be populated with at least 10 list item links" do
@@ -424,9 +439,9 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
         end
 
         if video_long_title == false
-          api_titles << (object_name+video_title).downcase
+          api_titles << (object_name+video_title).downcase.gsub(/\s{2,}/, ' ')
         else
-          api_titles << video_long_title.downcase
+          api_titles << video_long_title.downcase.gsub(/\s{2,}/, ' ')
         end
         api_slugs << shows['data'][0]['metadata']['slug']
 
@@ -437,7 +452,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       # STORE TITLES FROM FE
       fe_titles = []
       @selenium.find_elements(:css => "ul#videos-list li").each do |t|
-        fe_titles << t.text.downcase.strip
+        fe_titles << t.text.downcase.strip.gsub(/\s{2,}/, ' ')
       end
 
       # COMPARE API TITLES TO FE TITLES
@@ -470,7 +485,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     it "should highlight Reviews when clicked" do
       @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='reviews']").click
       sleep 1
-      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(3) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(4) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
     end
 
     it "should be populated with at least 10 list item links" do
@@ -484,7 +499,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
               {
                   :field=>"metadata.classification",
                   :condition=>"is",
-                  :value=>"review"
+                  :value=>"Review"
               }
           ],
           :matchRule=>"matchAll",
@@ -497,7 +512,6 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       search_url = "http://#{@data_config.options['baseurl']}/v3/videos/search?q=#{search_body}".gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
       reviews_response = RestClient.get search_url
       reviews = JSON.parse(reviews_response.body)
-
           ## COMPARE TITLES ##
 
       # STORE TITLES FROM API
@@ -506,7 +520,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       # STORE TITLES FROM FE
       fe_titles = []
       @selenium.find_elements(:css => "ul#videos-list li").each do |t|
-        fe_titles << t.text.downcase.strip
+        fe_titles << t.text.downcase.strip.gsub(/\s{2,}/, ' ')
       end
 
       # COMPARE API TITLES TO FE TITLES
@@ -544,7 +558,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     it "should highlight Trailers when clicked" do
       @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='trailers']").click
       sleep 1
-      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(4) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
+      @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button:nth-child(5) span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
     end
 
     it "should be populated with at least 10 list item links" do
@@ -558,7 +572,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
               {
                   :field=>"metadata.classification",
                   :condition=>"is",
-                  :value=>"trailer"
+                  :value=>"Trailer"
               }
           ],
           :matchRule=>"matchAll",
@@ -580,7 +594,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       # STORE TITLES FROM FE
       fe_titles = []
       @selenium.find_elements(:css => "ul#videos-list li").each do |t|
-        fe_titles << t.text.downcase.strip
+        fe_titles << t.text.downcase.strip.gsub(/\s{2,}/, ' ')
       end
 
       # COMPARE API TITLES TO FE TITLES
@@ -614,8 +628,12 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
     end
 
-    it "should highlight Related videos when clicked" do
-      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='related']").click
+    it "should be populated with at least 10 list item links" do
+      @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
+    end
+
+    it "should highlight Must Watch videos when clicked" do
+      @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='taboola']").click
       sleep 1
       @selenium.find_element(:css => "div.video_playlist_selector a.video_playlist_button span.item-container").attribute('class').to_s.match(/container-selected/).should be_true
     end
@@ -624,77 +642,12 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
-    it "should display Related Videos when clicked" do
-      # GET RELATED VIDEOS
-      related_videos_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/related/#{@video_data['videoId']}"
-      related_videos = JSON.parse(related_videos_response.body)
-
-      # IF RELATED VIDEOS NOT ENOUGH, GET OTHER VIDEOS TO FILL
-      fe_count = @selenium.find_elements(:css => "ul#videos-list li").count
-      if related_videos['data'].count < fe_count
-        body = {
-            :rules=>[
-                {
-                    :field=>"category",
-                    :condition=>"is",
-                    :value=>"ign_all"
-                }
-            ],
-            :matchRule=>"matchAll",
-            :prime=>false,
-            :startIndex=>0,
-            :count=>(fe_count - related_videos['data'].count),
-            :networks=>"ign",
-            :regions=>["US"]
-        }.to_json
-        generic_videos_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/search?q=#{body}".gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
-        generic_videos = JSON.parse(generic_videos_response.body)
+    it "should display Must Watch videos by default" do
+      @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
+      @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
+        a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
+        a.text.delete('^a-zA-Z').length.should > 0
       end
-
-      ## COMPARE TITLES ##
-
-      # STORE TITLES FROM API
-      if related_videos['data'].count < fe_count
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)+VideoPlayerPageHelper.get_api_titles(generic_videos)
-      else
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
-      end
-
-      # STORE TITLES FROM FE
-      fe_titles = []
-      @selenium.find_elements(:css => "ul#videos-list li").each do |t|
-        fe_titles << t.text.downcase.strip
-      end
-
-      # COMPARE API TITLES TO FE TITLES
-      (api_titles - fe_titles).length.should < 2
-      api_titles.length.should > 9
-      fe_titles.length.should > 9
-
-      ## COMPARE LINK ##
-
-      # STORE SLUGS FROM API
-      api_slugs = []
-      related_videos['data'].each do |v|
-        api_slugs << v['metadata']['slug']
-      end
-      if related_videos['data'].count < fe_count
-        generic_videos['data'].each do |v|
-          api_slugs << v['metadata']['slug']
-        end
-      end
-
-      # STORE SLUGS FROM FE
-      fe_slugs = []
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |v|
-        fe_slugs << v.attribute('href').to_s.match(/[^\/]{2,}$/).to_s
-      end
-
-      # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
-      api_slugs.length.should > 9
-      fe_slugs.length.should > 9
-
     end
 
     it "should only contain links that 200", :spam => true do
