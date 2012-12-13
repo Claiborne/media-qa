@@ -48,7 +48,7 @@ describe "V3 Search API -- No Query Param '#{q}'" do
   before(:all) do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
     @config = Configuration.new
-    @url = "http://#{@config.options['baseurl']}/#{q}"
+    @url = "http://#{@config.options['baseurl']}/#{q}&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -106,7 +106,7 @@ describe "V3 Search API -- Smoke Query '#{q}'" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
     @config = Configuration.new
     @count = 200
-    @url = "http://#{@config.options['baseurl']}/search?q=#{q}&count=#@count&highlight=true".gsub(" ","+")
+    @url = "http://#{@config.options['baseurl']}/search?q=#{q}&count=#@count&highlight=true&fresh=true".gsub(" ","+")
     begin
       @response = RestClient.get @url
     rescue => e
@@ -186,7 +186,7 @@ describe "V3 Search API -- '+' vs '%20'" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
     @config = Configuration.new
     @count = 200
-    @url = "http://#{@config.options['baseurl']}/search?q=halo+2"
+    @url = "http://#{@config.options['baseurl']}/search?q=halo+2&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -208,7 +208,7 @@ describe "V3 Search API -- '+' vs '%20'" do
   end
 
   it "should return the same results" do
-    url = "http://#{@config.options['baseurl']}/search?q=halo%202"
+    url = "http://#{@config.options['baseurl']}/search?q=halo%202&fresh=true"
     begin
       response = RestClient.get url
     rescue => e
@@ -228,7 +228,7 @@ describe "V3 Search API -- Filter By Type #{type}" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
     @config = Configuration.new
     @count = 200
-    @url = "http://#{@config.options['baseurl']}/search?q=halo&type=#{type}&count=200"
+    @url = "http://#{@config.options['baseurl']}/search?q=halo&type=#{type}&count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -269,7 +269,7 @@ describe "V3 Search API -- Filter By Type invalid" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
     @config = Configuration.new
     @count = 200
-    @url = "http://#{@config.options['baseurl']}/search?q=halo&type=invalid&count=200"
+    @url = "http://#{@config.options['baseurl']}/search?q=halo&type=invalid&count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -304,7 +304,7 @@ describe "V3 Search API -- Pagination" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
     @config = Configuration.new
     @count = 200
-    @url = "http://#{@config.options['baseurl']}/search?q=halo&count=21"
+    @url = "http://#{@config.options['baseurl']}/search?q=halo&count=21&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -327,7 +327,7 @@ describe "V3 Search API -- Pagination" do
 
   it "should paginate correctly" do
     8.times do
-      data = JSON.parse(RestClient.get("http://#{@config.options['baseurl']}/search?q=halo&startIndex=20").body)
+      data = JSON.parse(RestClient.get("http://#{@config.options['baseurl']}/search?q=halo&startIndex=20&fresh=true").body)
       data['data'][0].first.should == @data['data'][20].first
       sleep 1
     end
@@ -342,7 +342,7 @@ describe "V3 Search API -- Return JSONP" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
     @config = Configuration.new
     @count = 200
-    @url = "http://#{@config.options['baseurl']}/search?q=halo&format=js&callback=onResultsLoaded"
+    @url = "http://#{@config.options['baseurl']}/search?q=halo&format=js&callback=onResultsLoaded&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -376,7 +376,7 @@ describe "V3 Search API -- Return Javascript" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
     @config = Configuration.new
     @count = 200
-    @url = "http://#{@config.options['baseurl']}/search?q=halo&format=js&variable=results"
+    @url = "http://#{@config.options['baseurl']}/search?q=halo&format=js&variable=results&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -403,7 +403,55 @@ describe "V3 Search API -- Return Javascript" do
 
 end
 
+=begin
+# Video Type Smoke
+['halo','walking dead','borderlands 2','batman','skyrim','the last airbender','lord of the rings'].each do |q|
+  describe "V3 Search API -- Smoke Query '#{q}'", :video => true do
 
+    @count = 200
+
+    before(:all) do
+      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+      @config = Configuration.new
+      @count = 200
+      @url = "http://#{@config.options['baseurl']}/search?q=#{q}&count=#@count&type=video&fresh=true&network=ign".gsub(" ","+")
+      begin
+        @response = RestClient.get @url
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse @response.body
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return a 200 response code" do
+      check_200(@response)
+    end
+
+    it "should return 200 results" do
+      @data['data'].count.should == 200
+    end
+
+    it "should only return video results" do
+      @data['data'].each do |v|
+        v['type'].should == 'video'
+      end
+    end
+
+    it "should not be missing videos" do
+      puts q+" "+@data['total'].to_s
+      puts "maxScore "+@data['maxScore'].to_s
+    end
+
+end; end
+=end
 =begin
 describe "V3 Search API -- TEST", :test => true do
 
