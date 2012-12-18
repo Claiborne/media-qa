@@ -109,19 +109,16 @@ end
               game_data['network']['ign']['review']['score']
             rescue
               wordpress_review_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              puts object
               next
             end
             begin
               game_data['legacyData']['reviewUrl']
             rescue
               wordpress_review_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              puts object
               next
             end
             if (game_data['network']['ign']['review']['score'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/blogs/) || game_data['legacyData']['reviewUrl'].to_s.length < 1 || game_data['network']['ign']['review']['score'] == nil || game_data['legacyData']['reviewUrl'] == nil || game_data['legacyData']['reviewUrl'].to_s.match(/\/preview/))
               wordpress_review_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              puts object
             else
               puts "OK----->#{game_data['legacyData']['reviewUrl']}"
             end
@@ -143,19 +140,16 @@ end
           game_data['network']['ign']['review']['score']
         rescue
           wordpress_review_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-          puts object
           next
         end
         begin
           game_data['legacyData']['reviewUrl']
         rescue
           wordpress_review_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-          puts object
           next
         end
         if (game_data['network']['ign']['review']['score'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/blogs/) || game_data['legacyData']['reviewUrl'].to_s.length < 1 || game_data['network']['ign']['review']['score'] == nil || game_data['legacyData']['reviewUrl'] == nil || game_data['legacyData']['reviewUrl'].to_s.match(/\/preview/))
           wordpress_review_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-          puts object
         else
           puts "OK----->#{game_data['legacyData']['reviewUrl']}"
         end
@@ -209,12 +203,10 @@ end
               game_data['legacyData']['previewUrl']
             rescue
               wordpress_preview_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              puts object
               next
             end
             if (game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1)
               wordpress_preview_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-              puts object
             else
               puts "OK----->#{game_data['legacyData']['previewUrl']}"
           end
@@ -233,12 +225,10 @@ end
           game_data['legacyData']['previewUrl']
         rescue
           wordpress_preview_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-          puts object
           next
         end
         if (game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1)
           wordpress_preview_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-          puts object
         else
           puts "OK----->#{game_data['legacyData']['previewUrl']}"
         end
