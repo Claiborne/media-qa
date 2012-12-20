@@ -4,7 +4,7 @@ require 'configuration'
 require 'rest-client'
 require 'open_page'
 require 'json'
-require 'Time'
+require 'time'
 require 'open_page'
 
 include OpenPage
