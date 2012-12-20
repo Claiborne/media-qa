@@ -46,7 +46,7 @@ class ArticlesFe
     }
     ],
         "startIndex"=>0,
-        "count"=>3,
+        "count"=>20,
         "networks"=>"ign",
         "states"=>"published",
         "fields"=>["metadata.slug"]
@@ -57,8 +57,13 @@ class ArticlesFe
     url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     res = RestClient.get(url)
     articles = JSON.parse(res.body)
+    article_count = 0
     articles['data'].each do |article|
-      articles_pages << article['metadata']['slug']
+      if article['content'].to_s.delete('^a-zA-Z').length > 0
+        articles_pages << article['metadata']['slug']
+        article_count += 1
+      end
+      break if article_count == 3
     end
     articles_pages
   end
