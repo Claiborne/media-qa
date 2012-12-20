@@ -113,9 +113,7 @@ describe "Oyster Hubs -- #{hub}" do
   end
   
   if hub == "/" # if hub is the homepage
-    context "Discover More Widget" do
-      widget_discover_more  
-    end  
+
   end
 
 end 

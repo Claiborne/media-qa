@@ -54,12 +54,6 @@ module TopGames
         slot.text.delete("^0-9").length.should > 0
       end
     end
-
-    it "should link to an object page or review article when a game's title is clicked" do
-      return_top_games_widget(@doc, type).css('div.column-game a.game-title').each do |slot|
-        (slot.attribute('href').to_s.match(/.com\/games/)  || slot.attribute('href').to_s.match(/review/)).should be_true
-      end
-    end
     
   end #end module
   
