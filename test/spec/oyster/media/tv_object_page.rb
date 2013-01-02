@@ -1,5 +1,5 @@
 require 'rspec'
-require 'configuration'
+require 'pathconfig'
 require 'nokogiri'
 require 'rest_client'
 require 'open_page'
@@ -16,8 +16,8 @@ include FeChecker
 describe "Oyster Game Object Pages - #{domain_locale}.ign.com/tv/#{url_slug}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
     @url = "http://#{@base_url}/tv/#{url_slug}"
     @cookie =  get_international_cookie(domain_locale)

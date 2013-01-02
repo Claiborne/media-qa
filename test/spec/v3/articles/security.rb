@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -29,8 +29,8 @@ include TopazToken
 describe "V3 Article API -- GET Unpublished Articles Using /state/#{state} Endpoint", :test => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     TopazToken.set_token('articles')
     @url = "http://#{@config.options['baseurl']}/v3/articles/state/#{state}"
     TopazToken.set_token('videos')
@@ -62,8 +62,8 @@ end end
 describe "V3 Article API -- GET Unpublished Articles Using ?metadata.state=#{state} Endpoint", :test => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     TopazToken.set_token('articles')
     @url = "http://#{@config.options['baseurl']}/v3/articles?metadata.state=#{state}"
     TopazToken.set_token('videos')
@@ -95,8 +95,8 @@ end end
 describe "V3 Article API -- GET Unpublished Articles Using ?metadata.state=#{state} Endpoint", :test => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     TopazToken.set_token('articles')
     @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleAPIHelper.get_articles_by_state(state).to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }

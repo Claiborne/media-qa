@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -242,8 +242,8 @@ end
 describe "V3 Articles API -- General Post Search for published articles sending #{published_articles}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/search"
     begin 
        @response = RestClient.post @url, published_articles, :content_type => "application/json"
@@ -321,8 +321,8 @@ end
 describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/search"
     begin 
        @response = RestClient.post @url, search, :content_type => "application/json"
@@ -415,8 +415,8 @@ end
 describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/search"
     begin 
        @response = RestClient.post @url, blogs, :content_type => "application/json"
@@ -459,8 +459,8 @@ end
 describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/search"
     begin 
        @response = RestClient.post @url, cheats, :content_type => "application/json"
@@ -497,8 +497,8 @@ end
 describe "V3 Articles API -- General Post Search for Skyrim Cheats sending #{skyrim_cheats}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/search"
     begin 
        @response = RestClient.post @url, skyrim_cheats, :content_type => "application/json"

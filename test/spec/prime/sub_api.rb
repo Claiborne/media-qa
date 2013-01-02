@@ -4,8 +4,8 @@ describe "sub_api" do
   include WebService
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/prime/prime.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/prime/prime.yml"
+    @config = PathConfig.new
     
     @ads_are_not_disabled  = '{"AdsAreDisabled"=>false}'
     @ads_are_disabled      = '{"AdsAreDisabled"=>true}'

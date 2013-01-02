@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 
 describe "objects" do
 
@@ -10,8 +10,8 @@ describe "objects" do
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v1.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v1.yml"
+    @config = PathConfig.new
   end
 
   after(:each) do

@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -24,8 +24,8 @@ include Assert
 describe "V3 Object API -- Releases Query Tests -- /releases?count=35&startIndex=35&metadata.state=published&metadata.region=UK" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/releases?count=35&startIndex=35&metadata.state=published&metadata.region=UK"
     begin 
       @response = RestClient.get @url
@@ -118,8 +118,8 @@ end
 describe "V3 Object API -- Releases Sort Order Tests -- /releases?count=200&startIndex=#{start_index}&metadata.state=published" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/releases?count=200&startIndex=#{start_index}&metadata.state=published"
     begin
       @response = RestClient.get @url
@@ -185,8 +185,8 @@ end
   describe "V3 Object API -- Releases Sort Order Tests -- /releases?count=200&startIndex=#{start_index}&metadata.state=published&sortBy=metadata.name&sortOrder=#{order}" do
 
     before(:all) do
-      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://#{@config.options['baseurl']}/releases?count=200&startIndex=#{start_index}&metadata.state=published&sortBy=metadata.name&sortOrder=#{order}"
       begin
         @response = RestClient.get @url
@@ -272,8 +272,8 @@ end
 describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/#{id}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     TopazToken.set_token('objects')
     @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}"
     begin
@@ -308,8 +308,8 @@ end
 describe "V3 Object API -- GET For Unknown Objects -- /objects/legacyId/_ID_" do  # TODO This may be an incorrect test case (checking all /objects/legacyId req OAuth)
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     TopazToken.set_token('objects')
     @url = "http://#{@config.options['baseurl']}/#{type}?startIndex=#{Random.rand(65)}"
     @object_url = "http://#{@config.options['baseurl']}/objects/legacyId/"
@@ -355,8 +355,8 @@ end
 describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/#{id}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}"
   end
 

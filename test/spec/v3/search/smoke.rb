@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -22,8 +22,8 @@ include Assert
 describe "V3 Search API -- No Query Param '#{q}'" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/#{q}"
   end
 
@@ -46,8 +46,8 @@ end end
 describe "V3 Search API -- No Query Param '#{q}'" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/#{q}&fresh=true"
     begin
       @response = RestClient.get @url
@@ -103,8 +103,8 @@ describe "V3 Search API -- Smoke Query '#{q}'" do
   @count = 200
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @count = 200
     @url = "http://#{@config.options['baseurl']}/search?q=#{q}&count=#@count&highlight=true&fresh=true".gsub(" ","+")
     begin
@@ -183,8 +183,8 @@ end end
 describe "V3 Search API -- '+' vs '%20'" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @count = 200
     @url = "http://#{@config.options['baseurl']}/search?q=halo+2&fresh=true"
     begin
@@ -225,8 +225,8 @@ end
 describe "V3 Search API -- Filter By Type #{type}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @count = 200
     @url = "http://#{@config.options['baseurl']}/search?q=halo&type=#{type}&count=200&fresh=true"
     begin
@@ -266,8 +266,8 @@ end end
 describe "V3 Search API -- Filter By Type invalid" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @count = 200
     @url = "http://#{@config.options['baseurl']}/search?q=halo&type=invalid&count=200&fresh=true"
     begin
@@ -301,8 +301,8 @@ end
 describe "V3 Search API -- Pagination" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @count = 200
     @url = "http://#{@config.options['baseurl']}/search?q=halo&count=21&fresh=true"
     begin
@@ -339,8 +339,8 @@ end
 describe "V3 Search API -- Return JSONP" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @count = 200
     @url = "http://#{@config.options['baseurl']}/search?q=halo&format=js&callback=onResultsLoaded&fresh=true"
     begin
@@ -373,8 +373,8 @@ end
 describe "V3 Search API -- Return Javascript" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @count = 200
     @url = "http://#{@config.options['baseurl']}/search?q=halo&format=js&variable=results&fresh=true"
     begin
@@ -411,8 +411,8 @@ end
     @count = 200
 
     before(:all) do
-      Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-      @config = Configuration.new
+      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+      @config = PathConfig.new
       @count = 200
       @url = "http://#{@config.options['baseurl']}/search?q=#{q}&count=#@count&type=video&fresh=true&network=ign".gsub(" ","+")
       begin
@@ -456,8 +456,8 @@ end; end
 describe "V3 Search API -- TEST", :test => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @count = 200
     @url = "http://#{@config.options['baseurl']}/search?q=halo&explain=true"
     begin

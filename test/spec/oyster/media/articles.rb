@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 require 'rspec'
-require 'configuration'
+require 'pathconfig'
 require 'nokogiri'
 require 'rest_client'
 require 'json'
@@ -74,8 +74,8 @@ ArticlesFe.new.article_pages.each do |article_slug|
 describe "Article Page -- #{domain_locale} #{article_slug}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
     @url = @base_url+"/articles/2012/01/01/#{article_slug}"
     @pref_cookie =  get_international_cookie(domain_locale)
@@ -151,8 +151,8 @@ end end end
 describe "New Review Article Page -- #{domain_locale} #{review}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
     @url = "#@base_url#{review}"
     @cookie =  get_international_cookie(domain_locale)
@@ -373,8 +373,8 @@ end end end
 describe "New Review Article Page -- #{domain_locale} #{review}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
     @url = "#@base_url#{review}"
     @cookie =  get_international_cookie(domain_locale)
@@ -571,8 +571,8 @@ end end end
 describe "New Review Article Page -- #{domain_locale} #{review}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
     @url = "#@base_url#{review}"
     @cookie =  get_international_cookie(domain_locale)
@@ -741,8 +741,8 @@ end end end
 describe "New Review Article Page -- #{domain_locale} #{review}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
     @url = "#@base_url#{review}"
     @cookie =  get_international_cookie(domain_locale)

@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -40,8 +40,8 @@ end
 describe "V3 Object API -- Post Search for Published 360 Releases: #{V3ObjectGeneralPostSearch.release_search_smoke}", :error => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/releases/search"
   end
 

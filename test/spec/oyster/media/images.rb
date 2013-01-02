@@ -1,6 +1,6 @@
 require 'rspec'
 require 'selenium-webdriver'
-require 'configuration'
+require 'pathconfig'
 require 'rest-client'
 require 'open_page'
 
@@ -12,8 +12,8 @@ include OpenPage
 describe "Images Gallery Page -- #{locale} /images/games/far-cry-3-xbox-360-53491", :selenium => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     
     BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
     @browser_config = BrowserConfig.new

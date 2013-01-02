@@ -1,5 +1,5 @@
 require 'rspec'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'

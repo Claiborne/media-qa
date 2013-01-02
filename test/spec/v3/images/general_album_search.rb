@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'time'
@@ -67,8 +67,8 @@ end
 describe "V3 Image API -- GET Album Search Using #{GeneralAlbumSearch.networks}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.networks
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
@@ -128,8 +128,8 @@ end
 describe "V3 Image API -- GET Album Search Using #{GeneralAlbumSearch.locale}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.locale
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
@@ -190,8 +190,8 @@ end
 describe "V3 Image API -- GET Album Search Using #{GeneralAlbumSearch.tags_contains_all}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.tags_contains_all
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
@@ -257,8 +257,8 @@ end
 describe "V3 Image API -- GET Albums Search Using #{GeneralAlbumSearch.range_and_sort_order(order)}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.range_and_sort_order(order)
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin

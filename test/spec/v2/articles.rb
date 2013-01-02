@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'time'
@@ -11,8 +11,8 @@ include Assert
 describe "Articles - v2/articles" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = PathConfig.new
   end
 
   before(:each) do
@@ -190,8 +190,8 @@ end
 describe "v2 Article Page -> Article Service Call" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&slug=report-iphone-5-coming-to-sprint"
     puts @url
     begin 

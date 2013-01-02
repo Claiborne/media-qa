@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -39,20 +39,20 @@ describe "V3 Search API -- Relevancy for #{q.upcase}" do
   end
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/search?q=#{q}&type=#{type}&count=20".gsub(' ','+')
 
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @object_url = "http://#{@config.options['baseurl']}/"
 
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @article_url = "http://#{@config.options['baseurl']}/v3/articles/"
 
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    @config = PathConfig.new
     @video_url = "http://#{@config.options['baseurl']}/v3/videos/"
 
     begin

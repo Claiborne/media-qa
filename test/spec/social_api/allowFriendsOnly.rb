@@ -1,7 +1,7 @@
 require 'rspec'
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 require 'rubygems'
 require 'topaz_token'
 
@@ -36,8 +36,8 @@ describe "FriendsOnly" do
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
+    @config = PathConfig.new
     @id = "#{Random.rand(60000000-900000000)}"
     @joined = "#{@nickname} joined the community"
     TopazToken.set_token('social')

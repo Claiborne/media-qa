@@ -1,5 +1,5 @@
 require 'rspec'
-require 'configuration'
+require 'pathconfig'
 require 'nokogiri'
 require 'rest_client'
 require 'open_page'
@@ -43,8 +43,8 @@ include TechNav
 describe "Oyster Hubs -- #{hub}" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}#{hub}" 
     @doc = nokogiri_not_301_open(@page)
   end
@@ -128,8 +128,8 @@ end
 describe "Oyster Hubs -- #{hub}" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}#{hub}" 
     @doc = nokogiri_not_301_open(@page)
   end
@@ -188,8 +188,8 @@ end #end hub iteration
 describe "Oyster Hubs -- /tech" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/tech"
     @doc = nokogiri_not_301_open(@page)
   end

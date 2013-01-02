@@ -1,6 +1,6 @@
 require 'yaml'
 
-class Configuration
+class PathConfig
   attr_accessor :options
 
   def self.config_path=(path)

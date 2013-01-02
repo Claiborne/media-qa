@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -19,8 +19,8 @@ end
 describe "Affinity API -- do=recommend&id=#{game_id}&count=#{count}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/affinity_api.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/affinity_api.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}?do=recommend&id=#{game_id}&count=#{count}"
     begin
       @response = RestClient.get @url

@@ -1,12 +1,12 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 
@@ -44,8 +44,8 @@ queries_that_400.each do |q|
 describe "Affinity API -- #{q}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/affinity_api.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/affinity_api.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}#{q}"
     begin
       @response = RestClient.get @url

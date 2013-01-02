@@ -1,11 +1,11 @@
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 require 'rubygems'
 
 module WebService
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/prime/prime.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/prime/prime.yml"
+    @config = PathConfig.new
     
     def disable_ads_for_user(user_id)
       response = RestClient.get "http://#{@config.options['api_baseurl']}/1.0/FeatureCheckService.svc/web/ToggleAdsForUser/JSON/#{user_id}/true", {:content_type => 'application/json'}

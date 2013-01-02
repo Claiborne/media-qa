@@ -1,5 +1,5 @@
 require 'rspec'
 require 'selenium/client'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'page'

@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -17,8 +17,8 @@ include Assert
 describe "V3 Articles API -- General Smoke Tests -- v3/articles#{call}", :smoke => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles#{call}"
     begin 
       @response = RestClient.get @url
@@ -235,8 +235,8 @@ end
 describe "V3 Articles API -- Get Article By #{k} -- #{v}", :smoke => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles#{v}"
     begin 
       @response = RestClient.get @url

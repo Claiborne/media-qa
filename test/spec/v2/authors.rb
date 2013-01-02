@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 
 describe "Authors - /v2/authors" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = PathConfig.new
   end
 
   before(:each) do

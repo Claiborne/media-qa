@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'time'
@@ -33,8 +33,8 @@ end
 describe "V3 Video API -- Search/POST Smoke Tests -- POST /v3/videos/search -- Body = #{VideoGeneralPosts.legacy_id} " do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/videos/search"
     begin
      @response = RestClient.post @url, VideoGeneralPosts.legacy_id, :content_type => "application/json"

@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'time'
@@ -100,8 +100,8 @@ end
 describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.networks}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.networks
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
@@ -156,8 +156,8 @@ end
 describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.legacy_id_and_tags}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.legacy_id_and_tags
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
@@ -222,8 +222,8 @@ end
 describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.tags_contains_all}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.tags_contains_all
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
@@ -284,8 +284,8 @@ end
 describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.range_and_sort_order(order)}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.range_and_sort_order(order)
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
@@ -362,8 +362,8 @@ end end
 describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.match_any}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.match_any
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
@@ -426,8 +426,8 @@ end
 describe "V3 Image API -- GET Image Search _Without Auth_ Using #{GeneralImageSearch.draft}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.draft
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
   end

@@ -1,6 +1,6 @@
 require 'rspec'
 require 'selenium-webdriver'
-require 'configuration'
+require 'pathconfig'
 require 'rest-client'
 require 'open_page'
 require 'json'
@@ -14,8 +14,8 @@ class VideoPlayerPageHelper
 
     count = 1
 
-    DataConfiguration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    data_config = DataConfiguration.new
+    DataPathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    data_config = DataPathConfig.new
 
     list_of_date_and_slugs = []
     latest_vids_response = RestClient.get "http://#{data_config.options['baseurl']}/v3/videos?count=#{count}&sortBy=metadata.publishDate&sortOrder=desc&metadata.networks=ign"
@@ -85,12 +85,12 @@ VideoPlayerPageHelper.get_latest_videos.each do |video_page|
 describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/phantom.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/phantom.yml"
+    @config = PathConfig.new
     BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
     @browser_config = BrowserConfig.new
-    DataConfiguration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    @data_config = DataConfiguration.new
+    DataPathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    @data_config = DataPathConfig.new
 
     @page = "http://#{@config.options['baseurl']}#{video_page}".gsub('//www',"//#{locale}")
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym

@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -76,8 +76,8 @@ end
 describe "V3 Object API -- Create Draft Release", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.post @url, create_release_draft(UpdateReleaseHelperVars.return_number), :content_type => "application/json"
@@ -118,8 +118,8 @@ describe "V3 Object API -- Check Draft Release", :stg => true do
 
   before(:all) do
     sleep 1
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.get @url
@@ -172,8 +172,8 @@ end
 describe "V3 Object API -- Update Draft Release", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_release_draft, :content_type => "application/json"
@@ -207,8 +207,8 @@ describe "V3 Object API -- Check Updated Draft Release", :stg => true do
 
   before(:all) do
     sleep 1
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.get @url
@@ -265,8 +265,8 @@ end
 describe "V3 Object API -- Update Draft Release To Published", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.put @url, {:metadata=>{:state=>"published"}}.to_json, :content_type => "application/json"
@@ -300,8 +300,8 @@ describe "V3 Object API -- Check Updated Published Release", :stg => true do
 
   before(:all) do
     sleep 1
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
@@ -358,8 +358,8 @@ end
 describe "V3 Object API -- Update Published", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     @response = RestClient.put @url, update_release_published(
         JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/slug/mass-effect-3").body)['gameId'].to_s,
@@ -401,8 +401,8 @@ describe "V3 Object API -- Check Updated Published", :stg => true do
 
   before(:all) do
     sleep 1
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
@@ -857,8 +857,8 @@ end
 describe "V3 Object API -- Update Published with Review Score", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_with_review_score, :content_type => "application/json"
@@ -892,8 +892,8 @@ describe "V3 Object API -- Check Updated Published with Review Score", :stg => t
 
   before(:all) do
     sleep 1
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
@@ -1210,8 +1210,8 @@ end
 describe "V3 Object API -- Change Objects", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.put @url, update_objects(
@@ -1251,8 +1251,8 @@ describe "V3 Object API -- Check Nested Object Changes", :stg => true do
 
   before(:all) do
     sleep 1
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}"
     begin
       @response = RestClient.get @url
@@ -1409,8 +1409,8 @@ end
 describe "V3 Object API -- Clean up / Delete", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateReleaseHelperVars.return_release_id}?oauth_token=#{UpdateReleaseHelperVars.return_token}"
     begin
       @response = RestClient.delete @url
