@@ -14,8 +14,8 @@ class VideoPlayerPageHelper
 
     count = 1
 
-    DataPathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    data_config = DataPathConfig.new
+    DataConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    data_config = DataConfig.new
 
     list_of_date_and_slugs = []
     latest_vids_response = RestClient.get "http://#{data_config.options['baseurl']}/v3/videos?count=#{count}&sortBy=metadata.publishDate&sortOrder=desc&metadata.networks=ign"
@@ -89,8 +89,8 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     @config = PathConfig.new
     BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
     @browser_config = BrowserConfig.new
-    DataPathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    @data_config = DataPathConfig.new
+    DataConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    @data_config = DataConfig.new
 
     @page = "http://#{@config.options['baseurl']}#{video_page}".gsub('//www',"//#{locale}")
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
