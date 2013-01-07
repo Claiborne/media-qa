@@ -39,7 +39,6 @@ describe "FriendsOnly" do
     Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
     @config = Configuration.new
     @id = "#{Random.rand(60000000-900000000)}"
-    @nickname = "socialtestt3_#{Random.rand(200-9999)}"
     @joined = "#{@nickname} joined the community"
     TopazToken.set_token('social')
 
@@ -51,18 +50,19 @@ describe "FriendsOnly" do
 
   it "should register a new user" do
     @time_stamp = Time.now.to_s
-    testEmail = "topaztulasi6_#{Random.rand(100-9999)}@ign.com"
+    nickname = "socialtesti3_#{Random.rand(200-9999)}"
+    testEmail = "topaztulasi56_#{Random.rand(100-9999)}@ign.com"
     @key1 = "102353737#{Random.rand(10-1000)}"
-    jdata = JSON.generate({"email"=> testEmail,"nickname"=>"#{@nickname}","accounts"=>[{"id"=> @id.to_i, "accountType"=>"topaz","key1"=> "#{@key1}","key2"=>"local"}]})
+    jdata = JSON.generate({"email"=> testEmail,"nickname"=>"#{nickname}","accounts"=>[{"id"=> @id.to_i, "accountType"=>"topaz","key1"=> "#{@key1}","key2"=>"local"}]})
     puts jdata
     response = RestClient.post "http://#{@config.options['baseurl']}/v1.0/social/rest/reg",jdata, {:content_type => 'application/json'}
     puts response.body
-    person_id = JSON.parse(response.body)["entry"][0]
+    person_id= JSON.parse(response.body)["entry"][0]
   end
 
   it "should register in Topaz to get topaz Id", :test => true do
     @profileId = "#{Random.rand(3000-40000000)}"
-    #testEmail = "topaztulasi5_#{Random.rand(100-9999)}@ign.com"
+    testEmail = "topaztulasi5_#{Random.rand(100-9999)}@ign.com"
     jdata = JSON.generate({"profileId" => person_id, "email" => testEmail, "provider" => "local", "password" => "test234"})
     puts jdata
     response = RestClient.post "http://secure-stg.ign.com/v3/authentication/user/register?oauth_token=#{TopazToken.return_token}", jdata, {:content_type => 'application/json'}
@@ -352,4 +352,3 @@ describe "FriendsOnly" do
     puts "Verified that the wallpost is deleted from actor"
   end
 end
-

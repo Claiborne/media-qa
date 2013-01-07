@@ -98,4 +98,3 @@ it "should check that the wallpost is deleted from target" do
   puts "Verified that the wallpost is deleted from target"
 end
 end
-

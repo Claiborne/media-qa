@@ -309,9 +309,9 @@ it " should valid the gamercard entry in activities@self" do
   puts "http://#{@config.options['baseurl']}/v1.0/social/rest/activities/#{person_id.to_s}/@self"
   response = RestClient.get "http://#{@config.options['baseurl']}/v1.0/social/rest/activities/#{person_id.to_s}/@self"
   data = JSON.parse(response.body)
-  accounts_id.should eql(data["entry"][1]["activityObjects"][0]["objectTitle"])
-  gamerCard_type.should eql(data["entry"][1]["activityObjects"][0]["type"])
+  puts data
+  accounts_id.should eql(data["entry"][1]["activityObjects"]["objectTitle"])
+  gamerCard_type.should eql(data["entry"][1]["activityObjects"]["type"])
 end
 end
-
 
