@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + "/../../spec_helper"
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 require 'rubygems'
 
 
@@ -12,8 +12,8 @@ describe "user management" do
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/topaz_api.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/topaz_api.yml"
+    @config = PathConfig.new
     now = Time.now
     
     @time_stamp = "#{now.strftime("%Y%m%d%H%M%S")}_#{(rand(100)+1)*9999}"

@@ -2,7 +2,7 @@
 require 'rspec'
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 require 'rubygems'
 require 'topaz_token'
 
@@ -11,8 +11,8 @@ include TopazToken
 describe "rating_post" do
 
 before(:all) do
-  Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
-  @config = Configuration.new
+  PathConfig.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
+  @config = PathConfig.new
   TopazToken.set_token('social')
 end
 

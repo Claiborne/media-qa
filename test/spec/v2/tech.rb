@@ -1,7 +1,7 @@
 require 'rspec'
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 require 'time'
 require 'assert'
 require 'tech_nav'
@@ -12,8 +12,8 @@ include TechNav
 describe "Tech Homepage -> Blogroll-Widget Service Call" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&category_locales=us&page=1&per_page=10&categories=tech&sort=publish_date&order=desc"
     puts @url
     begin 
@@ -144,8 +144,8 @@ describe "Tech Topic-Pages -> Blogroll-Widget Service Call", :prd => true do
   context "Tech #{topic} Topic Page" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&page=1&per_page=20&tags=tech,#{topic}&all_tags=true&sort=publish_date&order=desc"
     puts @url
     begin 
@@ -286,8 +286,8 @@ describe "Tech Topic-Page -> Discover-More-Widget Service Call" do
     context "When Tag is #{topic}" do
       
       before(:all) do
-        Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-        @config = Configuration.new
+        PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+        @config = PathConfig.new
         @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&per_page=2&categories=tech&tags=#{topic}"
         puts @url
         begin 
@@ -363,8 +363,8 @@ end #end describe
 describe "Tech Homepage -> Video-Playlist-Interrupt Service Call" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}"+"/v2/playlists/ign-tech.json?"
     puts @url
     begin 
@@ -422,8 +422,8 @@ end
 describe "Tech Homepage -> Popular-Articles-Interrupt Service Call" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}"+"/v2/articles.json?post_type=article&sort=popularity&categories=tech&per_page=6"
     puts @url
     begin 

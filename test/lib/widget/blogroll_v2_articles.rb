@@ -101,8 +101,8 @@ module Blogrollv2Articles
     end
 
     it "should display the same articles as the api returns" do
-      Configuration.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
-      config = Configuration.new
+      PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v2.yml"
+      config = PathConfig.new
     
       data = JSON.parse((rest_client_open("http://#{config.options['baseurl']}#{call}")).body)
       api_titles = []

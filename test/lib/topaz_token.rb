@@ -19,8 +19,8 @@ require 'rest_client'
     client_id = '4e972e6be4b0a23ca6e1f2e6'
     client_secret = 'abc123'
 
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/topaz_api.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/topaz_api.yml"
+    @config = PathConfig.new
 
     begin
       RestClient.get "http://#{@config.options['baseurl']}/v3/authorization/oauth/valid?access_token=#{@token}&scope=#{scope}"

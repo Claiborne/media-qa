@@ -2,7 +2,7 @@
 require 'rspec'
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 require 'rubygems'
 require 'oauth'
 require 'topaz_token'
@@ -17,8 +17,8 @@ $status_update = "testing status with script1"
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
+    @config = PathConfig.new
     
  end
 

@@ -1,5 +1,5 @@
 require 'rspec'
-require 'configuration'
+require 'pathconfig'
 require 'nokogiri'
 require 'rest_client'
 require 'open_page'
@@ -11,14 +11,14 @@ include FeChecker
 
 #darksiders-ii/xbox-360-14336768 heavenly-sword/ps3-700186 littlebigplanet/vita-98907 nhl-13/xbox-360-128182 metal-gear-solid-844505/gbc-13458 call-of-duty-black-ops-ii/pc-126314 professional-fishermans-tour-big-bass-open/3ds-87854
 
-%w(halo-4/xbox-360-110563).each do |url_slug|
+%w(halo-4/xbox-360-110563 the-last-of-us/ps3-123980).each do |url_slug|
 %w(www uk au).each do |domain_locale|
 
 describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @base_url = @config.options['baseurl'].gsub(/www./,"#{domain_locale}.")
     @url = "http://#{@base_url}/games/#{url_slug}"
     @cookie =  get_international_cookie(domain_locale)
@@ -89,7 +89,14 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
     end
 
     it "should display the same platform the object API returns" do
-      @doc.css('div.contentPlatformsText').text.should == @data['hardware']['platform']['metadata']['name']
+      case @data['hardware']['platform']['metadata']['name']
+      when 'PlayStation 3'
+        @doc.css('div.contentPlatformsText').text.match(/Xbox 360/)
+      when 'Xbox 360'
+        @doc.css('div.contentPlatformsText').text.match(/PS3/)
+      else
+        @doc.css('div.contentPlatformsText').text.delete('^a-zA-Z')
+      end
     end
 
     it "should display the same release data the object API returns" do

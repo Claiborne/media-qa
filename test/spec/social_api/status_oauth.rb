@@ -2,7 +2,7 @@
 require 'rspec'
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 require 'rubygems'
 require 'rubygems'
 require 'oauth'
@@ -17,8 +17,8 @@ id ="1557918"
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
+    @config = PathConfig.new
     IGNSOCIAL_OAUTH_CONSUMER_KEY ="ign.com"
       IGNSOCIAL_OAUTH_SECRET = "ba+e0bkSJJc5tu17LTtftlaUEv5VMX0F1Wzj7jjZ5N0="
       #do the 2 legged oauth here

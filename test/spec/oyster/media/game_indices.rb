@@ -1,5 +1,5 @@
 require 'rspec'
-require 'configuration'
+require 'pathconfig'
 require 'nokogiri'
 require 'rest_client'
 require 'open_page'
@@ -11,10 +11,10 @@ include FeChecker
 include TopGames
 
 def platform_list; ['all','xbox-360','ps3','pc','wii-u','3ds','vita','iphone']; end
-def genre_list; ['all','action','adventure','fighting','music','rpg']; end
+def genre_list; ['all','action','adventure','fighting','rpg']; end
 
 #def platform_list; ['all','xbox-360']; end
-#def genre_list; ['all']; end
+#def genre_list; ['all','action']; end
 
 def common_assertions
   
@@ -102,8 +102,8 @@ end
 describe "Game Indices -- /games/reviews" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/reviews"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -128,8 +128,8 @@ platform_list.each do |platform|
 describe "Game Indices -- /games/reviews/#{platform}" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/reviews/#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -180,8 +180,8 @@ genre_list.each do |genre|
 describe "Game Indices -- /games/reviews/#{platform}?genre=#{genre}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/reviews/#{platform}?genre=#{genre}"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -207,8 +207,8 @@ end
 describe "Game Indices -- /games/editors-choice" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/editors-choice"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -233,8 +233,8 @@ platform_list.each do |platform|
 describe "Game Indices -- /games/editors-choice/#{platform}" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/editors-choice/#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -261,8 +261,8 @@ genre_list.each do |genre|
 describe "Game Indices -- /games/editors-choice/#{platform}?genre=#{genre}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/editors-choice/#{platform}?genre=#{genre}"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -288,8 +288,8 @@ end
 describe "Game Indices -- /games/upcoming" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/upcoming"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -312,8 +312,8 @@ platform_list.each do |platform|
 describe "Game Indices -- /games/upcoming/#{platform}" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/upcoming/#{platform}"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -338,8 +338,8 @@ genre_list.each do |genre|
 describe "Game Indices -- /games/upcoming/#{platform}?genre=#{genre}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/upcoming/#{platform}?genre=#{genre}"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -363,8 +363,8 @@ end
 describe "Game Indices -- /games/upcoming?filter=latest" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/upcoming?filter=latest"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -387,8 +387,8 @@ platform_list.each do |platform|
 describe "Game Indices -- /games/upcoming/#{platform}?filter=latest" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/upcoming/#{platform}?filter=latest"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -413,8 +413,8 @@ genre_list.each do |genre|
 describe "Game Indices -- /games/upcoming/#{platform}?genre=#{genre}&filter=latest" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games/upcoming/#{platform}?genre=#{genre}&filter=latest"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -438,8 +438,8 @@ end
 describe "Game Indices -- /games" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/games"
     @doc = nokogiri_not_301_open(@page)
   end

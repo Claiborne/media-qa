@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'time'
@@ -19,8 +19,8 @@ include Assert
 describe "V3 Video API -- General Smoke Tests -- #{call}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
     begin 
       @response = RestClient.get @url
@@ -145,8 +145,8 @@ end
 describe "V3 Video API -- Playlists Smoke Tests -- /v3/playlists" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/playlists"
     begin 
       @response = RestClient.get @url

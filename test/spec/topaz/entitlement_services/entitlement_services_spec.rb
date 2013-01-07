@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + "/../../spec_helper"
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 require 'mongo'
 require 'pp'
 
@@ -15,8 +15,8 @@ describe "Entitlement Services" do
 
   before(:each) do
     RestClient.log = '/tmp/myrestcalls.log'
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/entitlement_services.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/entitlement_services.yml"
+    @config = PathConfig.new
 
     @conn = Mongo::Connection.new
     #@db = @conn.db('entitlements')

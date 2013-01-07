@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -54,8 +54,8 @@ end
 describe "V3 Object API -- Create Minimum Role", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateRoleMetadata.return_token}"
     begin
       @response = RestClient.post @url, create_role_min, :content_type => "application/json"
@@ -97,8 +97,8 @@ end
 describe "V3 Object API -- Check Minimum Role", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}?oauth_token=#{CreateRoleMetadata.return_token}"
     begin
       @response = RestClient.get @url
@@ -156,8 +156,8 @@ end
 describe "V3 Object API -- Update To Add All Objects To Role", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}?oauth_token=#{CreateRoleMetadata.return_token}"
 
     @response = RestClient.put @url, update_role_with_objects(
@@ -203,8 +203,8 @@ end
 describe "V3 Object API -- Check Minimum Role", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}?oauth_token=#{CreateRoleMetadata.return_token}"
     begin
       @response = RestClient.get @url
@@ -316,8 +316,8 @@ end
 describe "V3 Object API -- Clean up / Delete", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{CreateRoleMetadata.return_role_id}?oauth_token=#{CreateRoleMetadata.return_token}"
     begin
       @response = RestClient.delete @url

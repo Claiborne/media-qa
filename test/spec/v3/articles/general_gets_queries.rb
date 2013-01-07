@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -152,8 +152,8 @@ end#end def
 describe "V3 Articles API -- Get Published Article Type: #{call} -- v3/articles/type/#{call}?metadata.state=published", :smoke => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/type/#{call}?metadata.state=published"
     begin 
       @response = RestClient.get @url

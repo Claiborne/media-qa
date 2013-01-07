@@ -1,5 +1,5 @@
 require 'rspec'
-require 'configuration'
+require 'pathconfig'
 require 'nokogiri'
 require 'tech_nav'
 require 'rest_client'
@@ -33,8 +33,8 @@ include WikiUpdates
 describe "Tech #{topic} Topic Page" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/tech/#{topic}"
     puts @page
     @doc = nokogiri_not_301_open(@page)

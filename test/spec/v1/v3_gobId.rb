@@ -3,7 +3,7 @@
 require File.dirname(__FILE__) + "/../spec_helper"
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 
 describe "v3gobIds" do
 
@@ -15,8 +15,8 @@ before(:all) do
   end
 
   before(:each) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/v3_gobId.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/v3_gobId.yml"
+    @config = PathConfig.new
   end
 
   after(:each) do

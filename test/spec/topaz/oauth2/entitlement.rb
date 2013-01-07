@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + "/../../spec_helper"
 require 'rest_client'
 require 'json'
-require 'configuration'
+require 'pathconfig'
 require 'mongo'
 require 'pp'
 
@@ -12,8 +12,8 @@ describe "oauth2 entitlement" do
 
   before(:each) do
     RestClient.log = '/tmp/myrestcalls.log' 
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oauth2.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oauth2.yml"
+    @config = PathConfig.new
     
     @conn = Mongo::Connection.new
     @db = @conn.db('oauth')

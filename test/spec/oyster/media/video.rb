@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'open_page'
 require 'fe_checker'
@@ -53,8 +53,8 @@ end
 describe "Video Hub -- /videos" do
 
   before(:all) do    
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}/videos"
     @doc = nokogiri_not_301_open(@page)
   end
@@ -111,8 +111,8 @@ end
 describe "Video Hub Ajax Calls -- #{blogroll_call}" do
   
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = "http://#{@config.options['baseurl']}#{blogroll_call}"
     @doc = nokogiri_not_301_open(@page)
    end
@@ -147,8 +147,8 @@ describe "Video Hub Ajax Calls -- #{blogroll_call}" do
 end# end describe
 end# end ajax iteration
 
-Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-setup_config = Configuration.new
+PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+setup_config = PathConfig.new
 video_page = nokogiri_open("http://#{setup_config.options['baseurl']}/videos")
 @video_player_page = []
 video_page.css('ul#video-hub div.grid_8 a').each do |v|
@@ -160,8 +160,8 @@ end
 describe "Video Player Page -- #{video_player_page}" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
     @page = video_player_page.to_s
     @doc = nokogiri_not_301_open(@page)
   end

@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'topaz_token'
@@ -25,8 +25,8 @@ include TopazToken
 describe "V3 Object API -- GET #{obj} with metadata.state=#{state} WITHOUT OAuth", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/#{obj}?metadata.state=#{state}&count=200"
   end
 
@@ -54,8 +54,8 @@ end end end
 describe "V3 Object API -- GET #{obj} with ?metadata.state=#{state}&count=200&startIndex=#{start} WITHOUT OAuth", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/#{obj}?metadata.state=#{state}&count=200&startIndex=#{start}"
 
     begin
@@ -99,8 +99,8 @@ end end end end
 describe "V3 Object API -- GET Specific Draft & Deleted Object WITHOUT & WITHOUT OAuth", :stg => true do
 
 before(:all) do
-  Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-  @config = Configuration.new
+  PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+  @config = PathConfig.new
   TopazToken.set_token('objects')
   @base_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/"
   @object_array = []

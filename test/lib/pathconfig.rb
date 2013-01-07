@@ -1,6 +1,6 @@
 require 'yaml'
 
-class Configuration
+class PathConfig
   attr_accessor :options
 
   def self.config_path=(path)
@@ -33,7 +33,7 @@ class BrowserConfig
   end
 end
 
-class DataConfiguration
+class DataConfig
   attr_accessor :options
 
   def self.config_path=(path)

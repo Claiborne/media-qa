@@ -5,8 +5,8 @@ require 'prime'
 describe "prime" do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../config/prime/prime.yml"
-    @config = Configuration.new  
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/prime/prime.yml"
+    @config = PathConfig.new
   end
   
   before(:each) do

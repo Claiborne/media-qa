@@ -1,8 +1,8 @@
 module ObjectApiHelper
   
   def get_game_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/games/slug/#{slug}"
     begin 
        response = RestClient.get url
@@ -14,8 +14,8 @@ module ObjectApiHelper
   end #end def
   
   def get_company_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/companies/slug/#{slug}"
     begin 
        response = RestClient.get url
@@ -27,8 +27,8 @@ module ObjectApiHelper
   end #end def
   
   def get_feature_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/features/slug/#{slug}"
     begin 
        response = RestClient.get url
@@ -40,8 +40,8 @@ module ObjectApiHelper
   end #end def
   
   def get_genre_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/genres/slug/#{slug}"
     begin 
        response = RestClient.get url
@@ -53,8 +53,8 @@ module ObjectApiHelper
   end #end def
   
   def get_hardware_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/hardware/slug/#{slug}"
     begin 
        response = RestClient.get url
@@ -66,8 +66,8 @@ module ObjectApiHelper
   end #end def
   
   def get_release_ids_by_legacy_id(legacy_id)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/releases/legacyId/#{legacy_id}"
     begin 
        response = RestClient.get url
@@ -83,8 +83,8 @@ module ObjectApiHelper
   end #end def
   
   def get_me3_uk_id
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/releases/legacyId/110694"
     begin
        response = RestClient.get url
@@ -98,8 +98,8 @@ module ObjectApiHelper
   end #end def
 
   def get_movie_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/movies/slug/#{slug}"
     response = RestClient.get url
     data = JSON.parse(response.body)
@@ -107,8 +107,8 @@ module ObjectApiHelper
   end #end def
 
   def get_movie_legacy_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/movies/slug/#{slug}"
     response = RestClient.get url
     data = JSON.parse(response.body)
@@ -116,8 +116,8 @@ module ObjectApiHelper
   end #end def
 
   def get_book_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/books/slug/#{slug}"
     response = RestClient.get url
     data = JSON.parse(response.body)
@@ -125,8 +125,8 @@ module ObjectApiHelper
   end #end def
 
   def get_volume_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/volumes/slug/#{slug}"
     response = RestClient.get url
     data = JSON.parse(response.body)
@@ -134,8 +134,8 @@ module ObjectApiHelper
   end #end def
 
   def get_person_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/people/slug/#{slug}"
     begin
       response = RestClient.get url
@@ -147,8 +147,8 @@ module ObjectApiHelper
   end #end def
 
   def get_character_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/characters/slug/#{slug}"
     begin
       response = RestClient.get url
@@ -160,8 +160,8 @@ module ObjectApiHelper
   end #end def
 
   def get_role_id(legacy_id)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/roles/legacyId/#{legacy_id}"
     begin
       response = RestClient.get url
@@ -178,8 +178,8 @@ module ObjectApiHelper
 
   def get_roletype_id(slug)
 
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/roleTypes/slug/#{slug}"
     begin
       response = RestClient.get url
@@ -191,8 +191,8 @@ module ObjectApiHelper
   end #end def
 
   def get_show_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/shows/slug/#{slug}"
     begin
       response = RestClient.get url
@@ -204,8 +204,8 @@ module ObjectApiHelper
   end #end def
 
   def get_season_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/seasons/slug/#{slug}"
     begin
       response = RestClient.get url
@@ -217,8 +217,8 @@ module ObjectApiHelper
   end #end def
 
   def get_episode_id(slug)
-    Configuration.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
-    config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+    config = PathConfig.new
     url = "http://#{config.options['baseurl']}/episodes/slug/#{slug}"
     begin
       response = RestClient.get url

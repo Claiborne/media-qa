@@ -2,7 +2,7 @@ require 'rest_client'
 require 'json'
 require 'rspec'
 require 'selenium-webdriver'
-require 'configuration'
+require 'pathconfig'
 require 'rest-client'
 require 'open_page'
 

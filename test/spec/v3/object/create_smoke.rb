@@ -1,6 +1,6 @@
 require 'rspec'
 require 'nokogiri'
-require 'configuration'
+require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
@@ -88,15 +88,15 @@ end
 describe "V3 Object API -- Create Release Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('release'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('release'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -108,8 +108,8 @@ end
 describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_release, :content_type => "application/json"
@@ -177,15 +177,15 @@ end
 describe "V3 Object API -- Create Game Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('game'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('game'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -197,8 +197,8 @@ end
 describe "V3 Object API -- Create Game Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_game, :content_type => "application/json"
@@ -251,29 +251,29 @@ end
 describe "V3 Object API -- Create Company Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('company'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('company'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('company'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('company'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -285,8 +285,8 @@ end
 describe "V3 Object API -- Create Company Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('company'), :content_type => "application/json"
@@ -339,29 +339,29 @@ end
 describe "V3 Object API -- Create Feature Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('feature'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('feature'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('feature'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('feature'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -373,8 +373,8 @@ end
 describe "V3 Object API -- Create Feature Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('feature'), :content_type => "application/json"
@@ -427,29 +427,29 @@ end
 describe "V3 Object API -- Create Genre Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('genre'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('genre'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('genre'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('genre'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -461,8 +461,8 @@ end
 describe "V3 Object API -- Create Genre Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('genre'), :content_type => "application/json"
@@ -515,29 +515,29 @@ end
 describe "V3 Object API -- Create Hardware Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('hardware'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('hardware'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('hardware'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('hardware'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -549,8 +549,8 @@ end
 describe "V3 Object API -- Create Hardware Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('hardware'), :content_type => "application/json"
@@ -603,29 +603,29 @@ end
 describe "V3 Object API -- Create Market Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('market'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('market'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('market'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
-     Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-      @config = Configuration.new
+     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+      @config = PathConfig.new
       @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('market'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -637,8 +637,8 @@ end
 describe "V3 Object API -- Create Market Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('market'), :content_type => "application/json"
@@ -691,29 +691,29 @@ end
 describe "V3 Object API -- Create Movie Negative Smoke", :stg => true do
 =begin
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('movie'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('movie'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 =end
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('movie'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('movie'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -725,8 +725,8 @@ end
 describe "V3 Object API -- Create Movie Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('movie'), :content_type => "application/json"
@@ -800,15 +800,15 @@ end
 describe "V3 Object API -- Create Book Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('book'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('book'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -820,8 +820,8 @@ end
 describe "V3 Object API -- Create Book Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('book'), :content_type => "application/json"
@@ -895,29 +895,29 @@ end
 describe "V3 Object API -- Create Volume Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('volume'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('volume'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('volume'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('volume'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -929,8 +929,8 @@ end
 describe "V3 Object API -- Create Volume Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('volume'), :content_type => "application/json"
@@ -1019,29 +1019,29 @@ end
 describe "V3 Object API -- Create Role Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('role'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('role'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('role'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('role'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -1053,8 +1053,8 @@ end
 describe "V3 Object API -- Create Role Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_role('role'), :content_type => "application/json"
@@ -1107,29 +1107,29 @@ end
 describe "V3 Object API -- Create Person Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('people'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('people'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('people'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('people'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -1141,8 +1141,8 @@ end
 describe "V3 Object API -- Create Person Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('people'), :content_type => "application/json"
@@ -1197,29 +1197,29 @@ end
 describe "V3 Object API -- Create RoleType Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -1231,8 +1231,8 @@ end
 describe "V3 Object API -- Create RoleType Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('roletype'), :content_type => "application/json"
@@ -1285,29 +1285,29 @@ end
 describe "V3 Object API -- Create Character Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('character'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('character'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('character'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('character'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -1319,8 +1319,8 @@ end
 describe "V3 Object API -- Create Character Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('character'), :content_type => "application/json"
@@ -1375,29 +1375,29 @@ end
 describe "V3 Object API -- Create Show Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('show'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('show'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.name is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('show'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('show'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -1409,8 +1409,8 @@ end
 describe "V3 Object API -- Create Show Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('show'), :content_type => "application/json"
@@ -1465,15 +1465,15 @@ end
 describe "V3 Object API -- Create Season Negative Smoke", :stg => true do
 
   it "should return a 400 when length of metadata.slug is zero" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('season'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('season'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
@@ -1484,8 +1484,8 @@ end
 describe "V3 Object API -- Create Season Positive Smoke", :stg => true do
 
   before(:all) do
-    Configuration.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
-    @config = Configuration.new
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+    @config = PathConfig.new
     @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_game, :content_type => "application/json"
