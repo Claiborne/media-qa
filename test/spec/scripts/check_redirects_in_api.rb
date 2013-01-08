@@ -46,7 +46,7 @@ describe 'Test Redirects in Redirect API' do
           puts "Got :"+data[0]['to'].to_s+"|END"
         end
       end
-      puts "INDEX #{index}" if index % 500 == 1
+      puts "INDEX #{index}" if index % 1000 == 1 # Puts the index every 500 checks
     end
   end
 
