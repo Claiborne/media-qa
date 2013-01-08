@@ -2,7 +2,7 @@
 require 'rspec'
 require 'rest_client'
 require 'json'
-require 'pathconfig'
+require 'configuration'
 require 'rubygems'
 require 'oauth'
 
@@ -16,8 +16,8 @@ blog_type = "BLOG_ENTRY"
   end
 
   before(:each) do
-    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
-    @config = PathConfig.new
+    Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
+    @config = Configuration.new
     
  end
 
@@ -102,5 +102,4 @@ sleep(5)
  end
  
  end 
-
 

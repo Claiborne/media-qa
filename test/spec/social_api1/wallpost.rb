@@ -2,7 +2,7 @@
 require 'rspec'
 require 'rest_client'
 require 'json'
-require 'pathconfig'
+require 'configuration'
 require 'rubygems'
 
 describe "wallpost" do
@@ -14,8 +14,8 @@ wallpost_type = "WALL_POST"
   end
 
   before(:each) do
-    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
-    @config = PathConfig.new
+    Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
+    @config = Configuration.new
   end
 
   after(:each) do
@@ -98,4 +98,3 @@ it "should check that the wallpost is deleted from target" do
   puts "Verified that the wallpost is deleted from target"
 end
 end
-

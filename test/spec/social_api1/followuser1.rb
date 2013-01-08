@@ -2,7 +2,7 @@
 require 'rspec'
 require 'rest_client'
 require 'json'
-require 'pathconfig'
+require 'configuration'
 require 'rubygems'
 require 'topaz_token'
 
@@ -29,14 +29,14 @@ gamerCard_type = "GAMER_CARD"
 topaz_id = 0
 testEmail =""
 
+
 before(:all) do
-  PathConfig.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
-  @config = PathConfig.new
+  Configuration.config_path = File.dirname(__FILE__) + "/../../config/social.yml"
+  @config = Configuration.new
   @id = "#{Random.rand(60000000-900000000)}"
   @nickname = "socialtestt2_#{Random.rand(200-9999)}"
   @joined = "#{@nickname} joined the community"
   TopazToken.set_token('social')
-
 
 end
 
@@ -309,9 +309,9 @@ it " should valid the gamercard entry in activities@self" do
   puts "http://#{@config.options['baseurl']}/v1.0/social/rest/activities/#{person_id.to_s}/@self"
   response = RestClient.get "http://#{@config.options['baseurl']}/v1.0/social/rest/activities/#{person_id.to_s}/@self"
   data = JSON.parse(response.body)
-  accounts_id.should eql(data["entry"][1]["activityObjects"][0]["objectTitle"])
-  gamerCard_type.should eql(data["entry"][1]["activityObjects"][0]["type"])
+  puts data
+  accounts_id.should eql(data["entry"][1]["activityObjects"]["objectTitle"])
+  gamerCard_type.should eql(data["entry"][1]["activityObjects"]["type"])
 end
 end
-
 

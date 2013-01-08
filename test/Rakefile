@@ -324,7 +324,7 @@ end
 desc "Run Social follow test"
 RSpec::Core::RakeTask.new('followuser1') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
-  t.pattern = 'spec/social_api/followuser1.rb'
+  t.pattern = 'spec/social_api1/followuser1.rb'
 end
 
 desc "Run Social follow test"

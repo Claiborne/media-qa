@@ -24,7 +24,7 @@ after(:each) do
 end
 
 it "should do new rating posting for every personId for each objectId" do
-  @i = 1
+  @i = 22 
   puts "xyx"
   @jdata = ""
   puts #{TopazToken.return_token}
