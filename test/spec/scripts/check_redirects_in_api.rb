@@ -140,6 +140,7 @@ describe 'Test Redirects in Redirect API' do
 
   it 'should redirect' do
     list.each_with_index do |l, index|
+      puts "."
       sleep 0.08 # ~ 700 RPM
       if index.even?
         data = JSON.parse (RestClient.get "http://apis.lan.ign.com/redirect/v3/redirects?from=#{l}").body
@@ -154,15 +155,17 @@ describe 'Test Redirects in Redirect API' do
         end
         begin
           data[0]['from'].should == l
-          list[index+1].to_s.match(data[0]['to']).should be_true
+          list[index+1].match(data[0]['to']).should be_true
         rescue => e
+          next if list[index+1] == data[0]['to']
           puts ""
           puts e.message
           puts l.to_s
-          puts list[index+1].to_s
-          puts "Data: #{data}"
+          puts "Expected: "+list[index+1].to_s+"|END"
+          puts "Got :"+data[0]['to'].to_s+"|END"
         end
       end
+      puts "INDEX #{index}" if index % 500 == 1
     end
   end
 
