@@ -127,10 +127,20 @@ http://www.ign.com/games/wwe-smackdown-vs-raw-2008/ps3-844743
 http://ps3.ign.com/launch/wwe-smackdown-vs-raw-2009.html
 http://www.ign.com/games/wwe-smackdown-vs-raw-2009/ps3-14242649)
 
+# Or use this list
+
+list = []
+file = File.new("/Users/wclaiborne/Desktop/all_formatted1.txt", "r")
+while (line = file.gets)
+  list << line.chomp.to_s
+end
+file.close
+
 describe 'Test Redirects in Redirect API' do
 
   it 'should redirect' do
     list.each_with_index do |l, index|
+      sleep 0.08 # ~ 700 RPM
       if index.even?
         data = JSON.parse (RestClient.get "http://apis.lan.ign.com/redirect/v3/redirects?from=#{l}").body
         begin
@@ -144,7 +154,7 @@ describe 'Test Redirects in Redirect API' do
         end
         begin
           data[0]['from'].should == l
-          data[0]['to'].should == list[index+1]
+          list[index+1].to_s.match(data[0]['to']).should be_true
         rescue => e
           puts ""
           puts e.message
