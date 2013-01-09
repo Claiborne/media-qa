@@ -11,9 +11,10 @@ http://tv.ign.com/launch/lost.html)
 # Or use this list
 
 list = []
-file = File.new("/Users/wclaiborne/Desktop/all_formatted1.txt", "r")
+file = File.new("/Users/wclaiborne/Desktop/stuff.txt", "r")
 while (line = file.gets)
-  list << line.chomp.to_s
+  list << line
+  puts line
 end
 file.close
 
@@ -28,7 +29,7 @@ describe 'Test Redirects in Redirect API' do
         begin
           data = JSON.parse (RestClient.get "http://apis.lan.ign.com/redirect/v3/redirects?from=#{l}").body
         rescue
-          puts ">>>"+l.to_s
+          puts ">>>"+l.to_s+"||END"
           next
         end
         begin
