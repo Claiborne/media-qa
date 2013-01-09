@@ -453,7 +453,7 @@ end
 end; end
 =end
 =begin
-describe "V3 Search API -- TEST", :test => true do
+describe "V3 Search API -- TEST" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"

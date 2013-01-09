@@ -26,7 +26,7 @@ include TopazToken
 # GET (UNPUBLISHED) ARTICLES USING STATE/STATE
 
 %w(draft abc).each do |state|
-describe "V3 Article API -- GET Unpublished Articles Using /state/#{state} Endpoint", :test => true do
+describe "V3 Article API -- GET Unpublished Articles Using /state/#{state} Endpoint" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -59,7 +59,7 @@ end end
 # GET ARTICLES USING ?METADATA.STATE
 
 %w(draft abc).each do |state|
-describe "V3 Article API -- GET Unpublished Articles Using ?metadata.state=#{state} Endpoint", :test => true do
+describe "V3 Article API -- GET Unpublished Articles Using ?metadata.state=#{state} Endpoint" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -92,7 +92,7 @@ end end
 # POST SEARCH ARTICLES USING STATE
 
 %w(draft abc).each do |state|
-describe "V3 Article API -- GET Unpublished Articles Using ?metadata.state=#{state} Endpoint", :test => true do
+describe "V3 Article API -- GET Unpublished Articles Using ?metadata.state=#{state} Endpoint" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
