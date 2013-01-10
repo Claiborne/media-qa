@@ -321,6 +321,12 @@ RSpec::Core::RakeTask.new('registration') do |t|
   t.pattern = 'spec/social_api/registration.rb'
 end
 
+desc "Run Social Newuser test"
+RSpec::Core::RakeTask.new('NewUser') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/social_api/NewUser.rb'
+end
+
 desc "Run Social follow test"
 RSpec::Core::RakeTask.new('followuser1') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
@@ -337,4 +343,10 @@ desc "Run ratings post"
 RSpec::Core::RakeTask.new('ratings') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/rating/rating_post.rb'
+end
+
+desc "Run Social test test"
+RSpec::Core::RakeTask.new('test_person') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/social_api/test_person.rb'
 end

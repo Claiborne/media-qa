@@ -3,7 +3,7 @@ require 'rspec'
 require 'rest_client'
 require 'json'
 require 'pathconfig'
-require 'rubygems'
+#require 'rubygems'
 require 'topaz_token'
 
 
@@ -61,7 +61,6 @@ end
 
 it "should register in Topaz to get topaz Id", :test => true do
   @profileId = "#{Random.rand(3000-40000000)}"
-  #testEmail = "topaztulasi5_#{Random.rand(100-9999)}@ign.com"
   jdata = JSON.generate({"profileId" => person_id, "email" => testEmail, "provider" => "local", "password" => "test234"})
   puts jdata
   response = RestClient.post "http://secure-stg.ign.com/v3/authentication/user/register?oauth_token=#{TopazToken.return_token}", jdata, {:content_type => 'application/json'}
