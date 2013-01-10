@@ -3,7 +3,7 @@ require 'rspec'
 require 'rest_client'
 require 'json'
 require 'pathconfig'
-require 'rubygems'
+#require 'rubygems'
 require 'topaz_token'
 
 
@@ -63,7 +63,6 @@ describe "core features" do
 
   it "should register in Topaz to get topaz Id", :test => true do
     @profileId = "#{Random.rand(3000-40000000)}"
-    testEmail = "topaztulasi5_#{Random.rand(100-9999)}@ign.com"
     jdata = JSON.generate({"profileId" => person_id, "email" => testEmail, "provider" => "local", "password" => "test234"})
     puts jdata
     response = RestClient.post "http://secure-stg.ign.com/v3/authentication/user/register?oauth_token=#{TopazToken.return_token}", jdata, {:content_type => 'application/json'}
@@ -97,7 +96,9 @@ end
 it "should match the personId from new registration" do
   response = RestClient.get "http://#{@config.options['baseurl']}/v1.0/social/rest/people/nickname.#{@nickname}/@self"
   data = JSON.parse(response.body)
-  person_id[0].to_s().should eql(data["entry"][0]["id"].to_s())
+  puts response.body
+  person_id[0].should eql(data["entry"][0]["id"])
+  puts data["entry"][0]["id"]
 end
 
 it "should match the new level acheived" do

@@ -3,8 +3,6 @@ require 'rspec'
 require 'rest_client'
 require 'json'
 require 'pathconfig'
-require 'rubygems'
-require 'rubygems'
 require 'oauth'
 
 describe "status_oauth" do
