@@ -3,7 +3,7 @@ require 'rspec'
 require 'rest_client'
 require 'json'
 require 'pathconfig'
-require 'rubygems'
+#require 'rubygems'
 
 describe "wallpost" do
 wallpost_activity_id = ""
