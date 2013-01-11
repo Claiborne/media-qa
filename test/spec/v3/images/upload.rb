@@ -7,7 +7,7 @@ require 'topaz_token'
 
 include TopazToken
 include Assert
-
+=begin
 ################################################################################
 
 describe "V3 Image API -- Should Upload An Image", :upload => true do
@@ -37,3 +37,4 @@ describe "V3 Image API -- Should Upload An Image", :upload => true do
     }
   end
 end
+=end

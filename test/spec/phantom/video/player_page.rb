@@ -642,7 +642,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
-    it "should display Must Watch videos by default" do
+    it "should display Must Watch videos when clicked" do
       @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
       @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
         a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
@@ -768,8 +768,8 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     end
 
     it "should display the Twitter button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet This'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet This'] span").displayed?.should be_true
+      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet'] span").count.should == 2
+      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet'] span").displayed?.should be_true
     end
 
     it "should display the Reddit button once" do
