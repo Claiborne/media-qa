@@ -1,7 +1,5 @@
 module VideoPlayerPageHelper
-  def get_latest_videos
-
-    count = 2
+  def get_latest_videos(count)
 
     DataConfig.config_path = File.dirname(__FILE__) + "/../config/v3_video.yml"
     data_config = DataConfig.new

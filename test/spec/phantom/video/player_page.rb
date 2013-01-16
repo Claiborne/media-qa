@@ -11,10 +11,11 @@ require 'widget-plus/related_videos.rb'; include RelatedVideos
 require 'widget-plus/add_this.rb'; include AddThis
 require 'widget-plus/disqus.rb'; include Disqus
 require 'widget-plus/object_details.rb'; include ObjectDetails
+require 'widget-plus/global_header_nav.rb'; include GlobalHeaderNav
 require 'widget-plus/global_footer.rb'; include GlobalFooter
 
 %w(www uk au).each do |locale|
-get_latest_videos.each do |video_page|
+get_latest_videos(2).each do |video_page|
 describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
   before(:all) do
@@ -32,12 +33,14 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     data_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/slug/#{video_page.match(/[^\/]{2,}$/)}"
     @video_data = JSON.parse(data_response.body)
 
-    if locale == 'uk'
-      @selenium.get "http://uk.ign.com/?setccpref=UK"
+    case locale
+      when 'uk'
+        @selenium.get "http://uk.ign.com/?setccpref=UK"
+      when 'au'
+        @selenium.get "http://uk.ign.com/?setccpref=AU"
+      else
     end
-    if locale == 'au'
-      @selenium.get "http://uk.ign.com/?setccpref=AU"
-    end
+
   end
 
   after(:all) do
@@ -58,12 +61,8 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     @selenium.current_url.should == @page
   end
 
-  it "should display the global header and nav once" do
-    @selenium.find_elements(:css => "div#ignHeader div#ignHeader-userBar").count.should == 1
-    @selenium.find_element(:css => "div#ignHeader div#ignHeader-userBar").displayed?.should be_true
-
-    @selenium.find_elements(:css => "div#ignHeader div#ignHeader-navigation").count.should == 1
-    @selenium.find_element(:css => "div#ignHeader div#ignHeader-navigation").displayed?.should be_true
+  context "Global Header and Nav Widget" do
+    check_global_header_nav
   end
 
   it "should display the IGN video player once" do
