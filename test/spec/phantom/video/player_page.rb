@@ -5,13 +5,13 @@ require 'rest-client'
 require 'open_page'
 require 'json'
 require 'time'
-require 'open_page'
-require 'video_player_page_helper'
-
-include OpenPage
-include VideoPlayerPageHelper
-
-######################################################################
+require 'open_page'; include OpenPage
+require 'video_player_page_helper'; include VideoPlayerPageHelper
+require 'widget-plus/related_videos.rb'; include RelatedVideos
+require 'widget-plus/add_this.rb'; include AddThis
+require 'widget-plus/disqus.rb'; include Disqus
+require 'widget-plus/object_details.rb'; include ObjectDetails
+require 'widget-plus/global_footer.rb'; include GlobalFooter
 
 %w(www uk au).each do |locale|
 get_latest_videos.each do |video_page|
@@ -377,7 +377,6 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
           api_titles << video_long_title.downcase.gsub(/\s{2,}/, ' ')
         end
         api_slugs << shows['data'][0]['metadata']['slug']
-
       end
 
           ## COMPARE TITLES ##
@@ -588,7 +587,6 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
         rest_client_not_301_home_open link.attribute('href').to_s
       end
     end
-
   end
 
   context "Video Details (Below Fold)" do
@@ -627,147 +625,30 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
         description = @video_data['metadata']['description'].strip
       end
 
-      desc = @selenium.find_element(:css => "div#object-details span.page-object-description").text.strip.chomp
-      desc.should == description
+      desc = @selenium.find_element(:css => "div#object-details span.page-object-description").text.strip.chomp.gsub(/\s+/,' ')
+      desc.should == description.strip.chomp.gsub(/\s+/,' ')
 
     end
-
   end
 
-  context "Related Videos Right Rail" do
-
-    it "should display once" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list").count.should == 1
-      @selenium.find_element(:css => "div.column-supplement ul.must-watch-list").displayed?.should be_true
-    end
-
-    it "should display the header" do
-      @selenium.find_element(:css => "div.column-supplement div.must-watch-header").text.should == 'RELATED VIDEOS'
-    end
-
-    it "should display eight videos" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li").count.should == 8
-    end
-
-    it "should have a link to for each thumb and title" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-thumb a img").count.should == 8
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details a").count.should == 8
-    end
-
-    it "should display a title for all videos" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details a").count.should == 8
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details a").each do |vid|
-        vid.text.strip.delete('^a-zA-Z').length.should > 0
-      end
-    end
-
-    it "should display a timestamp for all videos" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details div.date-time").count.should == 8
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details div.date-time").each do |vid|
-        vid.text.strip.delete('^a-zA-Z').length.should > 0
-      end
-    end
-
-    it "should only contain links that return 200", :spam => true do
-      related_vids_links =  @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list a")
-      related_vids_links.length.should > 8
-      related_vids_links.each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
-      end
-    end
-
+  context "Related Videos Widget (Right Rail)" do
+    check_related_videos
   end
 
   context "Disqus Widget" do
-
-    it "should display once" do
-      @selenium.find_elements(:css => "div#disqus_thread").count.should == 1
-      @selenium.find_elements(:css => "div#disqus_thread iframe").count.should == 4
-      @selenium.find_element(:css => "div#disqus_thread iframe").displayed?.should be_true
-    end
-
+    check_disqus
   end
 
   context "Add This Widget" do
-
-    it "should be on the page once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style']").count.should == 1
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style']").displayed?.should be_true
-    end
-
-    it "should display the Facebook button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Facebook'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Facebook'] span").displayed?.should be_true
-    end
-
-    it "should display the Twitter button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet'] span").displayed?.should be_true
-    end
-
-    it "should display the Reddit button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Reddit'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Reddit'] span").displayed?.should be_true
-    end
-
-    it "should display the Tumblr button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tumblr'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tumblr'] span").displayed?.should be_true
-    end
-
-    it "should display the Google+ button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Google+'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Google+'] span").displayed?.should be_true
-    end
-
-    it "should display the More+ button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a.addthis_button").count.should == 1
-      more = @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a.addthis_button")
-      more.attribute('href').to_s.should == "http://www.addthis.com/bookmark.php"
-      more.displayed?.should be_true
-      more.text.should == 'MORE +'
-    end
-
+    check_add_this
   end
 
   context "Object Details Widget" do
-
-    it "should display the object details widget if applicable" do
-      if @video_data['objectRelations'].length > 0
-        @selenium.find_elements(:css => "div.column-supplement div.objectDetails div.objectDetails-header").count.should == 1
-        @selenium.find_element(:css => "div.column-supplement div.objectDetails-header").text.should == 'DETAILS'
-      end
-    end
-
-    it "should display the object title if applicable" do
-      if @video_data['objectRelations'].length > 0
-        @selenium.find_elements(:css => "div.column-supplement div.objectDetails-objectName a").count.should == 1
-        @selenium.find_element(:css => "div.column-supplement div.objectDetails-objectName a").text.strip.delete('^a-zA-Z0-9').length.should > 0
-      end
-    end
-
-    it "should only contain links that return 200", :spam => true do
-      if @video_data['objectRelations'].length > 0
-        obj_details_links =  @selenium.find_elements(:css => "div.column-supplement div.objectDetails a")
-        obj_details_links.length.should > 0
-        obj_details_links.each do |link|
-          rest_client_not_301_home_open link.attribute('href').to_s
-        end
-      end
-    end
-
+    check_object_details
   end
 
-  context "Global Footer" do
-
-    it "should display once" do
-      @selenium.find_elements(:css => "div#ignFooter-container div.ignFooter-topRow").count.should == 1
-      @selenium.find_element(:css => "div#ignFooter-container div.ignFooter-topRow").displayed?.should be_true
-
-      @selenium.find_elements(:css => "div#ignFooter-container div.ignFooter-bottomRow").count.should == 1
-      @selenium.find_element(:css => "div#ignFooter-container div.ignFooter-bottomRow").displayed?.should be_true
-    end
-
+  context "Global Footer Widget" do
+    check_global_footer
   end
 
 end end end
