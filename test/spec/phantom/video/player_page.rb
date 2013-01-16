@@ -55,7 +55,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
   end
 
-  it "should open #{video_page} on #{ENV['env']}" do
+  it "should open #{video_page} in #{ENV['env']}" do
     @selenium.get @page
     sleep 5
     @selenium.current_url.should == @page
