@@ -6,82 +6,15 @@ require 'open_page'
 require 'json'
 require 'time'
 require 'open_page'
+require 'video_player_page_helper'
 
 include OpenPage
-
-class VideoPlayerPageHelper
-  def self.get_latest_videos
-
-    count = 1
-
-    DataConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    data_config = DataConfig.new
-
-    list_of_date_and_slugs = []
-    latest_vids_response = RestClient.get "http://#{data_config.options['baseurl']}/v3/videos?count=#{count}&sortBy=metadata.publishDate&sortOrder=desc&metadata.networks=ign"
-    latest_vids = JSON.parse(latest_vids_response.body)
-    latest_vids['data'].each do |v|
-      list_of_date_and_slugs << v['metadata']['url'].match(/\/videos\/\d{4}\/\d{2}\/\d{2}\/[^?]{1,}/).to_s
-    end
-    list_of_date_and_slugs
-  end
-
-  def self.get_api_titles(d)
-    api_titles = []
-    d['data'].each do |v|
-      video_long_title = false
-      begin
-        video_long_title = v['metadata']['longTitle']
-        if video_long_title.nil?; throw Exception.new end
-      rescue
-        video_long_title = false
-        video_title = v['metadata']['title'].strip
-        begin
-          object_name =  v['objectRelations'][0]['objectName'].strip+" - "
-        rescue
-          object_name = ""
-        end
-      end
-
-      if video_long_title == false
-        api_titles << (object_name+video_title).downcase.gsub(/\s{2,}/, ' ')
-      else
-        api_titles << video_long_title.downcase.strip.gsub(/\s{2,}/, ' ')
-      end
-    end
-    api_titles
-  end
-
-  def self.get_api_title(d)
-    api_title = ''
-    video_long_title = false
-    begin
-      video_long_title = d['metadata']['longTitle']
-      if video_long_title.nil?; throw Exception.new end
-    rescue
-      video_long_title = false
-      video_title = d['metadata']['title'].strip
-      begin
-        object_name =  d['objectRelations'][0]['objectName'].strip+" - "
-      rescue
-        object_name = ""
-      end
-    end
-
-    if video_long_title == false
-      api_title << (object_name+video_title).downcase
-    else
-      api_title << video_long_title.downcase.strip
-    end
-    api_title
-  end
-
-end
+include VideoPlayerPageHelper
 
 ######################################################################
 
 %w(www uk au).each do |locale|
-VideoPlayerPageHelper.get_latest_videos.each do |video_page|
+get_latest_videos.each do |video_page|
 describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
   before(:all) do
@@ -145,7 +78,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
     all.displayed?.should be_true
 
-    all.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.downcase.should == VideoPlayerPageHelper.get_api_title(@video_data)
+    all.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.downcase.should == get_api_title(@video_data)
   end
 
   it "should display the duration" do
@@ -256,9 +189,9 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
       # STORE TITLES FROM API
       if related_videos['data'].count < fe_count
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)+VideoPlayerPageHelper.get_api_titles(generic_videos)
+        api_titles = get_api_titles(related_videos)+get_api_titles(generic_videos)
       else
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
+        api_titles = get_api_titles(related_videos)
       end
 
       # STORE TITLES FROM FE
@@ -269,7 +202,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
       # COMPARE API TITLES TO FE TITLES
       api_titles.should == fe_titles
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -293,7 +226,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
 
@@ -338,9 +271,9 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
       # STORE TITLES FROM API
       if related_videos['data'].count < fe_count
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)+VideoPlayerPageHelper.get_api_titles(generic_videos)
+        api_titles = get_api_titles(related_videos)+get_api_titles(generic_videos)
       else
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
+        api_titles = get_api_titles(related_videos)
       end
 
       # STORE TITLES FROM FE
@@ -350,7 +283,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -374,7 +307,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
 
@@ -456,7 +389,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -469,7 +402,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
 
@@ -515,7 +448,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
           ## COMPARE TITLES ##
 
       # STORE TITLES FROM API
-      api_titles = VideoPlayerPageHelper.get_api_titles(reviews)
+      api_titles = get_api_titles(reviews)
 
       # STORE TITLES FROM FE
       fe_titles = []
@@ -524,7 +457,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -543,7 +476,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
 
@@ -589,7 +522,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
           ## COMPARE TITLES ##
 
       # STORE TITLES FROM API
-      api_titles = VideoPlayerPageHelper.get_api_titles(trailers)
+      api_titles = get_api_titles(trailers)
 
       # STORE TITLES FROM FE
       fe_titles = []
@@ -598,7 +531,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -617,7 +550,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
     end
@@ -667,7 +600,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
     it "should display the correct video title" do
       title = @selenium.find_element(:css => "div#object-details div.page-object-title").text.downcase
-      title.chomp.strip.should == VideoPlayerPageHelper.get_api_title(@video_data)
+      title.chomp.strip.should == get_api_title(@video_data)
     end
 
     it "should display the video date once" do
