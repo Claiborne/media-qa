@@ -10,7 +10,7 @@ require 'widget-plus/global_footer.rb'; include GlobalFooter
 
 %w(www uk au).each do |locale|
 ['halo 4', 'game of thrones'].each do |query|
-describe "Search Page -- #{locale}", :selenium => true do
+describe "Search Page -- #{locale.upcase}", :selenium => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/phantom.yml"

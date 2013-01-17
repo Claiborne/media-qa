@@ -16,7 +16,7 @@ require 'widget-plus/global_footer.rb'; include GlobalFooter
 
 %w(www uk au).each do |locale|
 get_latest_videos(2).each do |video_page|
-describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
+describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/phantom.yml"
