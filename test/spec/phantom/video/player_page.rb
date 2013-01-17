@@ -37,7 +37,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       when 'uk'
         @selenium.get "http://uk.ign.com/?setccpref=UK"
       when 'au'
-        @selenium.get "http://uk.ign.com/?setccpref=AU"
+        @selenium.get "http://au.ign.com/?setccpref=AU"
       else
     end
 
