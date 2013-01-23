@@ -177,13 +177,13 @@ end
 desc "Run Video frontend tests"
 RSpec::Core::RakeTask.new('videoplayerpage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
-  t.pattern = 'spec/phantom/video/player_page.rb'
+  t.pattern = 'spec/phantom/player_page.rb'
 end
 
 desc "Run Search frontend tests"
 RSpec::Core::RakeTask.new('searchpage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
-  t.pattern = 'spec/phantom/video/search_page.rb'
+  t.pattern = 'spec/phantom/search_page.rb'
 end
 
 ############# SERVICES #############
