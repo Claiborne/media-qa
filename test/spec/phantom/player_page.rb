@@ -19,11 +19,11 @@ get_latest_videos(2).each do |video_page|
 describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => true do
 
   before(:all) do
-    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/phantom.yml"
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/phantom.yml"
     @config = PathConfig.new
-    BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
+    BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../config/browser.yml"
     @browser_config = BrowserConfig.new
-    DataConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    DataConfig.config_path = File.dirname(__FILE__) + "/../../config/v3_video.yml"
     @data_config = DataConfig.new
 
     @page = "http://#{@config.options['baseurl']}#{video_page}".gsub('//www',"//#{locale}")
