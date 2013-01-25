@@ -17,19 +17,11 @@ describe "Search Page -- #{locale.upcase}", :selenium => true do
     @config = PathConfig.new
     BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../config/browser.yml"
     @browser_config = BrowserConfig.new
-    puts "1"
     @page = "http://#{@config.options['baseurl']}/search?q=#{query}&special=noads".gsub('//www',"//#{locale}")
-    puts '2'
+
     puts @browser_config.options['browser'].to_s
-    begin
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-    rescue => e
-      puts e.message
-      puts e
-    end
-    puts '3'
     @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-    puts '4'
 
     case locale
       when 'uk'
