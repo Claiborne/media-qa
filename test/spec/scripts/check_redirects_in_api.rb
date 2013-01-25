@@ -11,7 +11,7 @@ http://tv.ign.com/launch/lost.html)
 # Or use this list
 
 list = []
-file = File.new("/Users/wclaiborne/Desktop/all_formatted2.txt", "r")
+file = File.new("/Users/wclaiborne/Desktop/psp2.txt", "r")
 while (line = file.gets)
   list << line
 end
@@ -42,7 +42,7 @@ describe 'Test Redirects in Redirect API' do
           next
         end
         begin
-          list[index+1].should == data[0]['to']
+          list[index+1].chomp.should == data[0]['to'].chomp
         rescue
           puts "NO MATCH "+l
           fails << l
