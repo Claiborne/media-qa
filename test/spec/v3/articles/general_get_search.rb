@@ -131,6 +131,35 @@ def tech
 }.to_json
 end
 
+def blogroll(category)
+{
+  "matchRule"=>"matchAll",
+  "count"=>10,
+  "startIndex"=>0,
+  "networks"=>"ign",
+  "states"=>"published",
+  "rules"=>[
+  {
+    "field"=>"metadata.articleType",
+    "condition"=>"is",
+    "value"=>"article"
+  },
+  {
+    "field"=>"categories.slug",
+    "condition"=>"contains",
+    "value"=>category
+  },
+  {
+    "field"=>"categoryLocales",
+    "condition"=>"contains",
+    "value"=>"us"
+  }
+  ],
+  "sortBy"=>"metadata.publishDate",
+  "sortOrder"=>"desc"
+}.to_json
+end
+
 def common_assertions
   
   it "should return a hash with five indices" do
@@ -323,13 +352,13 @@ describe "V3 Articles API -- General Get Search for published articles sending #
       article['metadata']['articleType'].should == 'article'
     end
   end
-=begin
-  it "should return the first article with a publish date no more than an hour old" do
+
+  it "should return the first article with a publish date no more than 6 days old", :prd => true  do
      time_now = Time.new
      time_last_published = Time.parse(@data['data'][0]['metadata']['publishDate'])
-     (time_now - time_last_published).should < 3601
+     (time_now - time_last_published).should < 3600*24*6
   end
-=end  
+
 end
 
 ###############################################################
@@ -667,3 +696,42 @@ describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{skyr
   
 end
 
+###############################################################
+
+%w(xbox-360 ps3 wii ps-vita pc ds wireless movies tv comics).each do |category|
+describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{blogroll(category)}", :test => true do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+blogroll(category).to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  common_assertions
+
+  it "should return the 10th article with a publish date no more than 6 days old", :prd => true do
+    time_now = Time.new
+    time_last_published = Time.parse(@data['data'][9]['metadata']['publishDate'])
+    (time_now - time_last_published).should < 3600*24*6
+  end
+
+end end
