@@ -19,7 +19,6 @@ describe "Search Page -- #{locale.upcase}", :selenium => true do
     @browser_config = BrowserConfig.new
     @page = "http://#{@config.options['baseurl']}/search?q=#{query}&special=noads".gsub('//www',"//#{locale}")
 
-    puts @browser_config.options['browser'].to_s
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
     @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
 
