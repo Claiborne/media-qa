@@ -160,7 +160,7 @@ def blogroll(category)
 }.to_json
 end
 
-def common_assertions
+shared_examples "basic article API checks" do
   
   it "should return a hash with five indices" do
     check_indices(@data, 6)
@@ -310,7 +310,7 @@ describe "V3 Articles API -- General Get Search for published articles sending #
 
   end
   
-  common_assertions
+  include_examples "basic article API checks"
 
   # metadata assertions
 
@@ -391,7 +391,7 @@ describe "V3 Articles API -- General Get Search for #{hub} hub using #{search}" 
 
   end
   
-  common_assertions
+  include_examples "basic article API checks"
 
   # metadata assertions
 
@@ -486,7 +486,7 @@ describe "V3 Articles API -- General Get Search for Blogs sending #{blogs}" do
 
   end
 
-  common_assertions
+  include_examples "basic article API checks"
   
   it "should retrun 'articleType' metadata with a value of 'post' for all articles" do
     @data['data'].each do |article|
@@ -531,7 +531,7 @@ describe "V3 Articles API -- General Get Search for Cheats sending #{cheats}" do
 
   end
   
-  common_assertions
+  include_examples "basic article API checks"
   
   it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
     @data['data'].each do |article|
@@ -699,7 +699,7 @@ end
 ###############################################################
 
 %w(xbox-360 ps3 wii ps-vita pc ds wireless movies tv comics).each do |category|
-describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{blogroll(category)}", :test => true do
+describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{blogroll(category)}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -726,7 +726,7 @@ describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll usin
 
   end
 
-  common_assertions
+  include_examples "basic article API checks"
 
   it "should return the 10th article with a publish date no more than 6 days old", :prd => true do
     time_now = Time.new

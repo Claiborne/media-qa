@@ -117,7 +117,7 @@ def tech
 }.to_json
 end
 
-def common_assertions
+shared_examples "basic article API checks" do
   
   it "should return a hash with five indices" do
     check_indices(@data, 6)
@@ -265,7 +265,7 @@ describe "V3 Articles API -- General Post Search for published articles sending 
 
   end
   
-  common_assertions
+  include_examples "basic article API checks"
 
   # metadata assertions
 
@@ -344,7 +344,7 @@ describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}"
 
   end
   
-  common_assertions
+  include_examples "basic article API checks"
 
   # metadata assertions
 
@@ -438,7 +438,7 @@ describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}" do
 
   end
 
-  common_assertions
+  include_examples "basic article API checks"
   
   it "should retrun 'articleType' metadata with a value of 'post' for all articles" do
     @data['data'].each do |article|
@@ -482,7 +482,7 @@ describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}" d
 
   end
   
-  common_assertions
+  include_examples "basic article API checks"
   
   it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
     @data['data'].each do |article|
