@@ -158,7 +158,7 @@ class ArticleGetSearchHelper
   }.to_json
   end
 
-  def self.object_relation(id)
+  def self.object_relation_is(id)
   {
     "matchRule"=>"matchAll",
     "sortBy"=>"metadata.publishDate",
@@ -171,6 +171,30 @@ class ArticleGetSearchHelper
     {
       "field"=>"legacyData.objectRelations",
       "condition"=>"is",
+      "value"=>id
+    },
+    {
+      "field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"article"
+    }
+    ]
+  }.to_json
+  end
+
+  def self.object_relation_contains(id)
+  {
+    "matchRule"=>"matchAll",
+    "sortBy"=>"metadata.publishDate",
+    "sortOrder"=>"desc",
+    "count"=>200,
+    "startIndex"=>0,
+    "networks"=>"ign",
+    "states"=>"published",
+    "rules"=>[
+    {
+      "field"=>"legacyData.objectRelations",
+      "condition"=>"contains",
       "value"=>id
     },
     {
@@ -772,12 +796,13 @@ end end
 
 ###############################################################
 
-describe "V3 Articles API -- General Get Search Halo 4 articles using #{ArticleGetSearchHelper.object_relation(110563)}" do
+[110563].each do |id|
+describe "V3 Articles API -- General Get Search Halo 4 articles using #{ArticleGetSearchHelper.object_relation_is(id)}", :test => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.object_relation(110563).to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.object_relation_is(id).to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -809,9 +834,33 @@ describe "V3 Articles API -- General Get Search Halo 4 articles using #{ArticleG
 
   it 'should return only articles with Halo 4 attached' do
     @data['data'].each do |article|
-      article['legacyData']['objectRelations'].should include 110563
+      article['legacyData']['objectRelations'].should include id
     end
   end
 
-end
+  it "should return the same articles when when asking for 'contains' Halo 4" do
+    url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.object_relation_contains(id).to_s
+    url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    data = JSON.parse(response.body)
+
+    is_articles,contains_articles = [], []
+
+    @data['data'].each do |article|
+      is_articles << article['articleId']
+    end
+
+    data['data'].each do |article|
+      contains_articles << article['articleId']
+    end
+
+    is_articles.should == contains_articles
+
+  end
+
+end end
 
