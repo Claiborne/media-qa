@@ -19,145 +19,144 @@ class HelperVars
   def self.set_article_id(id)
     @article_id  = id
   end
-  
-end
 
-def published_articles
-{"matchRule"=>"matchAll",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-     "condition"=>"is",
-     "value"=>"article"}
-     ],
- "sortBy"=>"metadata.publishDate",
- "sortOrder"=>"desc"
-}.to_json
-end
+  def self.published_articles
+  {"matchRule"=>"matchAll",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+       "condition"=>"is",
+       "value"=>"article"}
+       ],
+   "sortBy"=>"metadata.publishDate",
+   "sortOrder"=>"desc"
+  }.to_json
+  end
 
-def blogs
-{"matchRule"=>"matchAll",
- "sortBy"=>"metadata.publishDate",
- "sortOrder"=>"desc",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-    "condition"=>"is",
-    "value"=>"post"},
-   {"field"=>"system.spam",
-    "condition"=>"isNot",
-    "value"=>1}
-   ]
-}.to_json
-end
+  def self.blogs
+  {"matchRule"=>"matchAll",
+   "sortBy"=>"metadata.publishDate",
+   "sortOrder"=>"desc",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"post"},
+     {"field"=>"system.spam",
+      "condition"=>"isNot",
+      "value"=>1}
+     ]
+  }.to_json
+  end
 
-def cheats
-{"matchRule"=>"matchAll",
- "sortBy"=>"metadata.publishDate",
- "sortOrder"=>"desc",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-    "condition"=>"is",
-    "value"=>"cheat"},
-   ]
-}.to_json
-end
+  def self.cheats
+  {"matchRule"=>"matchAll",
+   "sortBy"=>"metadata.publishDate",
+   "sortOrder"=>"desc",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"cheat"},
+     ]
+  }.to_json
+  end
 
-def skyrim_cheats
-{"matchRule"=>"matchAll",
- "count"=>100,
- "rules"=>[
-   {"field"=>"metadata.articleType",
-    "condition"=>"is",
-    "value"=>"cheat"},
-   {"field"=>"legacyData.objectRelations",
-     "condition"=>"is",
-     "value"=>"14267318"}
-  ]
-}.to_json
-end
+  def self.skyrim_cheats
+  {"matchRule"=>"matchAll",
+   "count"=>100,
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"cheat"},
+     {"field"=>"legacyData.objectRelations",
+       "condition"=>"is",
+       "value"=>"14267318"}
+    ]
+  }.to_json
+  end
 
-def wii
-{"matchRule"=>"matchAll",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-     "condition"=>"is",
-     "value"=>"article"},
-   {"field"=>"categories.slug",
-    "condition"=>"contains",
-    "value"=>"wii"},
-   {"field"=>"categoryLocales",
-    "condition"=>"contains",
-    "value"=>"us"}
+  def self.wii
+  {"matchRule"=>"matchAll",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+       "condition"=>"is",
+       "value"=>"article"},
+     {"field"=>"categories.slug",
+      "condition"=>"contains",
+      "value"=>"wii"},
+     {"field"=>"categoryLocales",
+      "condition"=>"contains",
+      "value"=>"us"}
+      ],
+    "sortBy"=>"metadata.publishDate",
+    "sortOrder"=>"desc"
+  }.to_json
+  end
+
+  def self.tech
+  {"matchRule"=>"matchAll",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+       "condition"=>"is",
+       "value"=>"article"},
+     {"field"=>"categories.slug",
+       "condition"=>"contains",
+       "value"=>"tech"},
+     {"field"=>"categoryLocales",
+       "condition"=>"contains",
+       "value"=>"us"}
+       ],
+   "sortBy"=>"metadata.publishDate",
+   "sortOrder"=>"desc"
+  }.to_json
+  end
+
+  def self.blogroll(category)
+  {
+    "matchRule"=>"matchAll",
+    "count"=>10,
+    "startIndex"=>0,
+    "networks"=>"ign",
+    "states"=>"published",
+    "rules"=>[
+    {
+      "field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"article"
+    },
+    {
+      "field"=>"categories.slug",
+      "condition"=>"contains",
+      "value"=>category
+    },
+    {
+      "field"=>"categoryLocales",
+      "condition"=>"contains",
+      "value"=>"us"
+    }
     ],
-  "sortBy"=>"metadata.publishDate",
-  "sortOrder"=>"desc"
-}.to_json  
-end
-
-def tech
-{"matchRule"=>"matchAll",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-     "condition"=>"is",
-     "value"=>"article"},
-   {"field"=>"categories.slug",
-     "condition"=>"contains",
-     "value"=>"tech"},
-   {"field"=>"categoryLocales",
-     "condition"=>"contains",
-     "value"=>"us"}
-     ],
- "sortBy"=>"metadata.publishDate",
- "sortOrder"=>"desc"
-}.to_json
-end
-
-def blogroll(category)
-{
-  "matchRule"=>"matchAll",
-  "count"=>10,
-  "startIndex"=>0,
-  "networks"=>"ign",
-  "states"=>"published",
-  "rules"=>[
-  {
-    "field"=>"metadata.articleType",
-    "condition"=>"is",
-    "value"=>"article"
-  },
-  {
-    "field"=>"categories.slug",
-    "condition"=>"contains",
-    "value"=>category
-  },
-  {
-    "field"=>"categoryLocales",
-    "condition"=>"contains",
-    "value"=>"us"
-  }
-  ],
-  "sortBy"=>"metadata.publishDate",
-  "sortOrder"=>"desc"
-}.to_json
+    "sortBy"=>"metadata.publishDate",
+    "sortOrder"=>"desc"
+  }.to_json
+  end
 end
 
 shared_examples "basic article API checks" do
@@ -282,12 +281,12 @@ end
 
 ########################## BEGIN SPEC ########################## 
 
-describe "V3 Articles API -- General Get Search for published articles sending #{published_articles}" do
+describe "V3 Articles API -- General Get Search for published articles sending #{HelperVars.published_articles}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+published_articles.to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.published_articles.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -363,7 +362,7 @@ end
 
 ###############################################################
 
-{'wii'=>wii,'tech'=>tech}.each_pair do |hub, search|
+{'wii'=>HelperVars.wii,'tech'=>HelperVars.tech}.each_pair do |hub, search|
 describe "V3 Articles API -- General Get Search for #{hub} hub using #{search}" do
 
   before(:all) do
@@ -459,12 +458,12 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Get Search for Blogs sending #{blogs}" do
+describe "V3 Articles API -- General Get Search for Blogs sending #{HelperVars.blogs}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+blogs.to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.blogs.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -504,12 +503,12 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Get Search for Cheats sending #{cheats}" do
+describe "V3 Articles API -- General Get Search for Cheats sending #{HelperVars.cheats}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+cheats.to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.cheats.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -543,12 +542,12 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{skyrim_cheats}" do
+describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{HelperVars.skyrim_cheats}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+skyrim_cheats.to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.skyrim_cheats.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -699,12 +698,12 @@ end
 ###############################################################
 
 %w(xbox-360 ps3 wii ps-vita pc ds wireless movies tv comics).each do |category|
-describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{blogroll(category)}" do
+describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{HelperVars.blogroll(category)}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+blogroll(category).to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.blogroll(category).to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
