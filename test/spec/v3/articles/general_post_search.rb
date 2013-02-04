@@ -8,113 +8,116 @@ require 'time'
 
 include Assert
 
-def published_articles
-{"matchRule"=>"matchAll",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-     "condition"=>"is",
-     "value"=>"article"}
-     ],
- "sortBy"=>"metadata.publishDate",
- "sortOrder"=>"desc"
-}.to_json
-end
+class ArticlePostSearchHelper
 
-def blogs
-{"matchRule"=>"matchAll",
- "sortBy"=>"metadata.publishDate",
- "sortOrder"=>"desc",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-    "condition"=>"is",
-    "value"=>"post"},
-   {"field"=>"system.spam",
-    "condition"=>"isNot",
-    "value"=>1}
-   ]
-}.to_json
-end
+  def self.published_articles
+  {"matchRule"=>"matchAll",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+       "condition"=>"is",
+       "value"=>"article"}
+       ],
+   "sortBy"=>"metadata.publishDate",
+   "sortOrder"=>"desc"
+  }.to_json
+  end
 
-def cheats
-{"matchRule"=>"matchAll",
- "sortBy"=>"metadata.publishDate",
- "sortOrder"=>"desc",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-    "condition"=>"is",
-    "value"=>"cheat"},
-   ]
-}.to_json
-end
+  def self.blogs
+  {"matchRule"=>"matchAll",
+   "sortBy"=>"metadata.publishDate",
+   "sortOrder"=>"desc",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"post"},
+     {"field"=>"system.spam",
+      "condition"=>"isNot",
+      "value"=>1}
+     ]
+  }.to_json
+  end
 
-def skyrim_cheats
-{"matchRule"=>"matchAll",
- "count"=>100,
- "rules"=>[
-   {"field"=>"metadata.articleType",
-    "condition"=>"is",
-    "value"=>"cheat"},
-   {"field"=>"legacyData.objectRelations",
-     "condition"=>"is",
-     "value"=>"14267318"}
-  ]
-}.to_json
-end
+  def self.cheats
+  {"matchRule"=>"matchAll",
+   "sortBy"=>"metadata.publishDate",
+   "sortOrder"=>"desc",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"cheat"},
+     ]
+  }.to_json
+  end
 
-def wii
-{"matchRule"=>"matchAll",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-     "condition"=>"is",
-     "value"=>"article"},
-   {"field"=>"categories.slug",
-    "condition"=>"contains",
-    "value"=>"wii"},
-   {"field"=>"categoryLocales",
-    "condition"=>"contains",
-    "value"=>"us"}
-    ],
-  "sortBy"=>"metadata.publishDate",
-  "sortOrder"=>"desc"
-}.to_json  
-end
+  def self.skyrim_cheats
+  {"matchRule"=>"matchAll",
+   "count"=>100,
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"cheat"},
+     {"field"=>"legacyData.objectRelations",
+       "condition"=>"is",
+       "value"=>"14267318"}
+    ]
+  }.to_json
+  end
 
-def tech
-{"matchRule"=>"matchAll",
- "count"=>10,
- "startIndex"=>0,
- "networks"=>"ign",
- "states"=>"published",
- "rules"=>[
-   {"field"=>"metadata.articleType",
-     "condition"=>"is",
-     "value"=>"article"},
-   {"field"=>"categories.slug",
-     "condition"=>"contains",
-     "value"=>"tech"},
-   {"field"=>"categoryLocales",
-     "condition"=>"contains",
-     "value"=>"us"}
-     ],
- "sortBy"=>"metadata.publishDate",
- "sortOrder"=>"desc"
-}.to_json
+  def self.wii
+  {"matchRule"=>"matchAll",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+       "condition"=>"is",
+       "value"=>"article"},
+     {"field"=>"categories.slug",
+      "condition"=>"contains",
+      "value"=>"wii"},
+     {"field"=>"categoryLocales",
+      "condition"=>"contains",
+      "value"=>"us"}
+      ],
+    "sortBy"=>"metadata.publishDate",
+    "sortOrder"=>"desc"
+  }.to_json
+  end
+
+  def self.tech
+  {"matchRule"=>"matchAll",
+   "count"=>10,
+   "startIndex"=>0,
+   "networks"=>"ign",
+   "states"=>"published",
+   "rules"=>[
+     {"field"=>"metadata.articleType",
+       "condition"=>"is",
+       "value"=>"article"},
+     {"field"=>"categories.slug",
+       "condition"=>"contains",
+       "value"=>"tech"},
+     {"field"=>"categoryLocales",
+       "condition"=>"contains",
+       "value"=>"us"}
+       ],
+   "sortBy"=>"metadata.publishDate",
+   "sortOrder"=>"desc"
+  }.to_json
+  end
 end
 
 shared_examples "basic article API checks" do
@@ -239,14 +242,14 @@ end
 
 ########################## BEGIN SPEC ########################## 
 
-describe "V3 Articles API -- General Post Search for published articles sending #{published_articles}" do
+describe "V3 Articles API -- General Post Search for published articles sending #{ArticlePostSearchHelper.published_articles}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/search"
     begin 
-       @response = RestClient.post @url, published_articles, :content_type => "application/json"
+       @response = RestClient.post @url, ArticlePostSearchHelper.published_articles, :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -317,7 +320,7 @@ end
 
 ###############################################################
 
-{'wii'=>wii,'tech'=>tech}.each_pair do |hub, search|
+{'wii'=>ArticlePostSearchHelper.wii,'tech'=>ArticlePostSearchHelper.tech}.each_pair do |hub, search|
 describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}" do
 
   before(:all) do
@@ -412,14 +415,14 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Blogs sending #{blogs}" do
+describe "V3 Articles API -- General Post Search for Blogs sending #{ArticlePostSearchHelper.blogs}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/search"
     begin 
-       @response = RestClient.post @url, blogs, :content_type => "application/json"
+       @response = RestClient.post @url, ArticlePostSearchHelper.blogs, :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -456,14 +459,14 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Cheats sending #{cheats}" do
+describe "V3 Articles API -- General Post Search for Cheats sending #{ArticlePostSearchHelper.cheats}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/search"
     begin 
-       @response = RestClient.post @url, cheats, :content_type => "application/json"
+       @response = RestClient.post @url, ArticlePostSearchHelper.cheats, :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -494,14 +497,14 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Post Search for Skyrim Cheats sending #{skyrim_cheats}" do
+describe "V3 Articles API -- General Post Search for Skyrim Cheats sending #{ArticlePostSearchHelper.skyrim_cheats}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
     @url = "http://#{@config.options['baseurl']}/v3/articles/search"
     begin 
-       @response = RestClient.post @url, skyrim_cheats, :content_type => "application/json"
+       @response = RestClient.post @url, ArticlePostSearchHelper.skyrim_cheats, :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end

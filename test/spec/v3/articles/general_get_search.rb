@@ -159,7 +159,7 @@ class HelperVars
   end
 end
 
-shared_examples "basic article API checks" do
+shared_examples "basic article API checks for get search" do
   
   it "should return a hash with five indices" do
     check_indices(@data, 6)
@@ -309,7 +309,7 @@ describe "V3 Articles API -- General Get Search for published articles sending #
 
   end
   
-  include_examples "basic article API checks"
+  include_examples "basic article API checks for get search"
 
   # metadata assertions
 
@@ -390,7 +390,7 @@ describe "V3 Articles API -- General Get Search for #{hub} hub using #{search}" 
 
   end
   
-  include_examples "basic article API checks"
+  include_examples "basic article API checks for get search"
 
   # metadata assertions
 
@@ -485,7 +485,7 @@ describe "V3 Articles API -- General Get Search for Blogs sending #{HelperVars.b
 
   end
 
-  include_examples "basic article API checks"
+  include_examples "basic article API checks for get search"
   
   it "should retrun 'articleType' metadata with a value of 'post' for all articles" do
     @data['data'].each do |article|
@@ -530,7 +530,7 @@ describe "V3 Articles API -- General Get Search for Cheats sending #{HelperVars.
 
   end
   
-  include_examples "basic article API checks"
+  include_examples "basic article API checks for get search"
   
   it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
     @data['data'].each do |article|
@@ -725,7 +725,7 @@ describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll usin
 
   end
 
-  include_examples "basic article API checks"
+  include_examples "basic article API checks for get search"
 
   it "should return the 10th article with a publish date no more than 6 days old", :prd => true do
     time_now = Time.new
