@@ -347,7 +347,7 @@ describe "V3 Articles API -- General Get Search for published articles sending #
     end# end if/else
   end# end iteration
   
-  it "should retrun 'articleType' metadata with a value of 'article' for all articles" do
+  it "should return 'articleType' metadata with a value of 'article' for all articles" do
     @data['data'].each do |article|
       article['metadata']['articleType'].should == 'article'
     end
@@ -682,7 +682,7 @@ describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{Arti
     end
   end#end iteration
   
-  it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
+  it "should return 'articleType' metadata with a value of 'cheat' for all articles" do
     @data['data'].each do |article|
       article['metadata']['articleType'].should == 'cheat'
     end
