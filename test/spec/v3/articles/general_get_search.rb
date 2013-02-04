@@ -8,7 +8,7 @@ require 'time'
 
 include Assert
 
-class HelperVars
+class ArticleGetSearchHelper
   
   @article_id = ""
 
@@ -281,12 +281,12 @@ end
 
 ########################## BEGIN SPEC ########################## 
 
-describe "V3 Articles API -- General Get Search for published articles sending #{HelperVars.published_articles}" do
+describe "V3 Articles API -- General Get Search for published articles sending #{ArticleGetSearchHelper.published_articles}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.published_articles.to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.published_articles.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -362,7 +362,7 @@ end
 
 ###############################################################
 
-{'wii'=>HelperVars.wii,'tech'=>HelperVars.tech}.each_pair do |hub, search|
+{'wii'=>ArticleGetSearchHelper.wii,'tech'=>ArticleGetSearchHelper.tech}.each_pair do |hub, search|
 describe "V3 Articles API -- General Get Search for #{hub} hub using #{search}" do
 
   before(:all) do
@@ -458,12 +458,12 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Get Search for Blogs sending #{HelperVars.blogs}" do
+describe "V3 Articles API -- General Get Search for Blogs sending #{ArticleGetSearchHelper.blogs}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.blogs.to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.blogs.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -503,12 +503,12 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Get Search for Cheats sending #{HelperVars.cheats}" do
+describe "V3 Articles API -- General Get Search for Cheats sending #{ArticleGetSearchHelper.cheats}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.cheats.to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.cheats.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -542,12 +542,12 @@ end
 
 ###############################################################
 
-describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{HelperVars.skyrim_cheats}" do
+describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{ArticleGetSearchHelper.skyrim_cheats}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.skyrim_cheats.to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.skyrim_cheats.to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -698,12 +698,12 @@ end
 ###############################################################
 
 %w(xbox-360 ps3 wii ps-vita pc ds wireless movies tv comics).each do |category|
-describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{HelperVars.blogroll(category)}" do
+describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{ArticleGetSearchHelper.blogroll(category)}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVars.blogroll(category).to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.blogroll(category).to_s
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
