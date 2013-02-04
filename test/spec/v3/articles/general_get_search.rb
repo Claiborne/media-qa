@@ -533,7 +533,7 @@ describe "V3 Articles API -- General Get Search for Cheats sending #{ArticleGetS
   
   include_examples "basic article API checks for get search", 10
   
-  it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
+  it "should return 'articleType' metadata with a value of 'cheat' for all articles" do
     @data['data'].each do |article|
       article['metadata']['articleType'].should == 'cheat'
     end
@@ -699,7 +699,7 @@ end
 ###############################################################
 
 %w(xbox-360 ps3 wii ps-vita pc ds wireless movies tv comics).each do |category|
-describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{ArticleGetSearchHelper.blogroll(category)}", :test => true do
+describe "V3 Articles API -- General Get Search for the #{category} blogroll using #{ArticleGetSearchHelper.blogroll(category)}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -727,6 +727,16 @@ describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll usin
   end
 
   include_examples "basic article API checks for get search", 100
+
+  it "should return only articles categorized as '#{category}'" do
+    @data['data'].each do |article|
+      category_slug = []
+      article['categories'].each do |cat|
+        category_slug << cat['slug']
+      end
+      category_slug.should include category
+    end
+  end
 
   it "should return the 10th article with a publish date no more than 6 days old", :prd => true do
     time_now = Time.new
