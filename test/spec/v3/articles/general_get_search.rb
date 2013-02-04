@@ -17,7 +17,7 @@ class ArticleGetSearchHelper
   end
   
   def self.set_article_id(id)
-    @article_id  = id
+    @article_id = id
   end
 
   def self.published_articles
@@ -132,7 +132,7 @@ class ArticleGetSearchHelper
   def self.blogroll(category)
   {
     "matchRule"=>"matchAll",
-    "count"=>10,
+    "count"=>100,
     "startIndex"=>0,
     "networks"=>"ign",
     "states"=>"published",
@@ -159,7 +159,8 @@ class ArticleGetSearchHelper
   end
 end
 
-shared_examples "basic article API checks for get search" do
+
+shared_examples "basic article API checks for get search" do |count|
   
   it "should return a hash with five indices" do
     check_indices(@data, 6)
@@ -171,8 +172,8 @@ shared_examples "basic article API checks for get search" do
     @data['count'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
 
-  it "should return 'count' data with a value of 20" do
-    @data['count'].should == 10
+  it "should return 'count' data with a value of #{count}" do
+    @data['count'].should == count
   end
 
   it "should return 'startIndex' data with a non-nil, non-blank value" do
@@ -191,8 +192,8 @@ shared_examples "basic article API checks for get search" do
     @data['endIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
 
-  it "should return 'endIndex' data with a value of 19" do
-    @data['endIndex'].should == 9
+  it "should return 'endIndex' data with a value of #{count-1}" do
+    @data['endIndex'].should == count-1
   end
 
   it "should return 'isMore' data with a non-nil, non-blank value" do
@@ -221,8 +222,8 @@ shared_examples "basic article API checks for get search" do
     @data['data'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
 
-  it "should return 'data' with an array length of 20" do
-    @data['data'].length.should == 10
+  it "should return 'data' with an array length of #{count}" do
+    @data['data'].length.should == count
   end
   
   it "should return 'networks' metadata with a value that includes 'ign' for all articles" do
@@ -309,7 +310,7 @@ describe "V3 Articles API -- General Get Search for published articles sending #
 
   end
   
-  include_examples "basic article API checks for get search"
+  include_examples "basic article API checks for get search", 10
 
   # metadata assertions
 
@@ -390,7 +391,7 @@ describe "V3 Articles API -- General Get Search for #{hub} hub using #{search}" 
 
   end
   
-  include_examples "basic article API checks for get search"
+  include_examples "basic article API checks for get search", 10
 
   # metadata assertions
 
@@ -485,7 +486,7 @@ describe "V3 Articles API -- General Get Search for Blogs sending #{ArticleGetSe
 
   end
 
-  include_examples "basic article API checks for get search"
+  include_examples "basic article API checks for get search", 10
   
   it "should retrun 'articleType' metadata with a value of 'post' for all articles" do
     @data['data'].each do |article|
@@ -530,7 +531,7 @@ describe "V3 Articles API -- General Get Search for Cheats sending #{ArticleGetS
 
   end
   
-  include_examples "basic article API checks for get search"
+  include_examples "basic article API checks for get search", 10
   
   it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
     @data['data'].each do |article|
@@ -568,7 +569,7 @@ describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{Arti
   after(:all) do
 
   end
-  
+
   it "should return a hash with five indices" do
     check_indices(@data, 6)
   end
@@ -628,19 +629,19 @@ describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{Arti
   it "should return 'data' with an array length of 20" do
     @data['data'].length.should > 46
   end
-  
+
   it "should return 'networks' metadata with a value that includes 'ign' for all articles" do
     @data['data'].each do |article|
       article['metadata']['networks'].include?('ign').should be_true
     end
   end
-  
+
   it "should return 'state' metadata with a value of 'published' for all articles" do
     @data['data'].each do |article|
       article['metadata']['state'].should == 'published'
     end
   end
-  
+
   it "should return articles in descending 'publishDate' order" do
     pub_date_array = []
     @data['data'].each do |article|
@@ -649,7 +650,7 @@ describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{Arti
     end
     pub_date_array.should == (pub_date_array.sort {|x,y| y <=> x })
   end
-  
+
   it "should return non-nil, non-blank 'articleId' data for all articles" do
     @data['data'].each do |article|
       article['articleId'].should_not be_nil
@@ -662,23 +663,23 @@ describe "V3 Articles API -- General Get Search for Skyrim Cheats sending #{Arti
       article['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
     end
   end
-  
+
   [ "articleId",
     "metadata",
     "system",
-    "tags", 
+    "tags",
     "refs",
     "authors",
     "categoryLocales",
     "categories",
-    "content"].each do |k| 
+    "content"].each do |k|
     it "should return non-nil '#{k}' data for all articles" do
       @data['data'].each do |article|
         article.has_key?(k).should be_true
         article.should_not be_nil
         article.to_s.length.should > 0
       end
-    end    
+    end
   end#end iteration
   
   it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
@@ -698,7 +699,7 @@ end
 ###############################################################
 
 %w(xbox-360 ps3 wii ps-vita pc ds wireless movies tv comics).each do |category|
-describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{ArticleGetSearchHelper.blogroll(category)}" do
+describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll using #{ArticleGetSearchHelper.blogroll(category)}", :test => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -725,7 +726,7 @@ describe "V3 Articles API -- Gernal Get Search for the #{category} blogroll usin
 
   end
 
-  include_examples "basic article API checks for get search"
+  include_examples "basic article API checks for get search", 100
 
   it "should return the 10th article with a publish date no more than 6 days old", :prd => true do
     time_now = Time.new
