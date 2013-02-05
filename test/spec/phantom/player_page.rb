@@ -7,12 +7,12 @@ require 'json'
 require 'time'
 require 'open_page'; include OpenPage
 require 'video_player_page_helper'; include VideoPlayerPageHelper
-require 'widget-plus/related_videos.rb'; include RelatedVideos
-require 'widget-plus/add_this.rb'; include AddThis
-require 'widget-plus/disqus.rb'; include Disqus
-require 'widget-plus/object_details.rb'; include ObjectDetails
-require 'widget-plus/global_header_nav.rb'; include GlobalHeaderNav
-require 'widget-plus/global_footer.rb'; include GlobalFooter
+require 'widget-plus/related_videos'; include RelatedVideos
+require 'widget-plus/add_this'; include AddThis
+require 'widget-plus/disqus'; include Disqus
+require 'widget-plus/object_details'; include ObjectDetails
+require 'widget-plus/global_header_nav'; include GlobalHeaderNav
+require 'widget-plus/global_footer'; include GlobalFooter
 
 %w(www uk au).each do |locale|
 get_latest_videos(2).each do |video_page|
