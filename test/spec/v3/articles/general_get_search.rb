@@ -183,7 +183,7 @@ class ArticleGetSearchHelper
   }.to_json
   end
 
-  def self.object_relation_contains(id)
+  def self.object_relation_contains(id, verb)
   {
     "matchRule"=>"matchAll",
     "sortBy"=>"metadata.publishDate",
@@ -195,8 +195,32 @@ class ArticleGetSearchHelper
     "rules"=>[
     {
       "field"=>"legacyData.objectRelations",
-      "condition"=>"contains",
+      "condition"=>verb, # pass in contains and containsOne
       "value"=>id
+    },
+    {
+      "field"=>"metadata.articleType",
+      "condition"=>"is",
+      "value"=>"article"
+    }
+    ]
+  }.to_json
+  end
+
+  def self.contains(verb)
+  {
+    "matchRule"=>"matchAll",
+    "sortBy"=>"metadata.publishDate",
+    "sortOrder"=>"desc",
+    "count"=>200,
+    "startIndex"=>0,
+    "networks"=>"ign",
+    "states"=>"published",
+    "rules"=>[
+    {
+      "field"=>"tags",
+      "condition"=>verb, #pass containsAll and containsNone
+      "value"=>"ps3, xbox-360"
     },
     {
       "field"=>"metadata.articleType",
@@ -676,8 +700,9 @@ end end
 
 ###############################################################
 
+%w(contains containsAll).each do |rule|
 [110563].each do |id|
-describe "V3 Articles API -- General Get Search Halo 4 articles using #{ArticleGetSearchHelper.object_relation_is(id)}", :test => true do
+describe "V3 Articles API -- General Get Search Halo 4 articles using #{ArticleGetSearchHelper.object_relation_is(id)}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -719,7 +744,7 @@ describe "V3 Articles API -- General Get Search Halo 4 articles using #{ArticleG
   end
 
   it "should return the same articles when when asking for 'contains' Halo 4" do
-    url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.object_relation_contains(id).to_s
+    url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.object_relation_contains(id,rule).to_s
     url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       response = RestClient.get @url
@@ -742,5 +767,82 @@ describe "V3 Articles API -- General Get Search Halo 4 articles using #{ArticleG
 
   end
 
-end end
+end end end
 
+###############################################################
+
+describe "V3 Articles API -- General Get Search with 'containsAll' using #{ArticleGetSearchHelper.contains('containsAll')}", :test => true do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.contains('containsAll').to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  context 'Basic Checks', :prd => true do
+    include_examples "basic article API checks", 200
+  end
+
+  it 'should return at least 10 articles', :stg => true do
+    @data['data'].count.should > 9
+  end
+
+end
+
+###############################################################
+
+describe "V3 Articles API -- General Get Search with 'containsNone' using #{ArticleGetSearchHelper.contains('containsNone')}", :test => true do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.contains('containsNone').to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  context 'Basic Checks', :prd => true do
+    include_examples "basic article API checks", 200
+  end
+
+  it 'should return at least 150 articles', :stg => true do
+    @data['data'].count.should > 149
+  end
+
+end
