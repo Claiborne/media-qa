@@ -1,8 +1,8 @@
 development:
-  baseurl:
+  baseurl: apis.ign.com/search/v3
 
 staging:
-  baseurl:
+  baseurl: apis.ign.com/search/v3
 
 production:
   baseurl: apis.ign.com/search/v3
