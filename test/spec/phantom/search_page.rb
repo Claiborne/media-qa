@@ -2,7 +2,6 @@ require 'rspec'
 require 'selenium-webdriver'
 require 'pathconfig'
 require 'rest-client'
-require 'open_page'
 require 'json'
 require 'open_page'; include OpenPage
 require 'widget-plus/global_header_nav.rb'; include GlobalHeaderNav

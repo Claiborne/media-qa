@@ -2,7 +2,6 @@ require 'rspec'
 require 'selenium-webdriver'
 require 'pathconfig'
 require 'rest-client'
-require 'open_page'
 require 'json'
 require 'time'
 require 'open_page'; include OpenPage
