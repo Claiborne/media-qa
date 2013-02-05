@@ -30,7 +30,7 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
     end
 
     # Search using global header
-    @selenium.get "http://#{@config.options['baseurl']}"+"?special=noads"
+    @selenium.get "http://#{@config.options['baseurl']}"+"/search?special=noads"
     search_box = @selenium.find_element :css => 'input#ignHeader-search'
     search_box.send_keys(query)
     search_box.submit
