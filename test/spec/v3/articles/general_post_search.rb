@@ -120,8 +120,8 @@ class ArticlePostSearchHelper
   end
 end
 
-shared_examples "basic article API checks" do
-  
+shared_examples "basic article API checks" do |count|
+
   it "should return a hash with five indices" do
     check_indices(@data, 6)
   end
@@ -132,8 +132,8 @@ shared_examples "basic article API checks" do
     @data['count'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
 
-  it "should return 'count' data with a value of 20" do
-    @data['count'].should == 10
+  it "should return 'count' data with a value of #{count}" do
+    @data['count'].should == count
   end
 
   it "should return 'startIndex' data with a non-nil, non-blank value" do
@@ -152,8 +152,8 @@ shared_examples "basic article API checks" do
     @data['endIndex'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
 
-  it "should return 'endIndex' data with a value of 19" do
-    @data['endIndex'].should == 9
+  it "should return 'endIndex' data with a value of #{count-1}" do
+    @data['endIndex'].should == count-1
   end
 
   it "should return 'isMore' data with a non-nil, non-blank value" do
@@ -182,22 +182,22 @@ shared_examples "basic article API checks" do
     @data['data'].to_s.delete("^a-zA-Z0-9").length.should > 0
   end
 
-  it "should return 'data' with an array length of 20" do
-    @data['data'].length.should == 10
+  it "should return 'data' with an array length of #{count}" do
+    @data['data'].length.should == count
   end
-  
+
   it "should return 'networks' metadata with a value that includes 'ign' for all articles" do
     @data['data'].each do |article|
       article['metadata']['networks'].include?('ign').should be_true
     end
   end
-  
+
   it "should return 'state' metadata with a value of 'published' for all articles" do
     @data['data'].each do |article|
       article['metadata']['state'].should == 'published'
     end
   end
-  
+
   it "should return articles in descending 'publishDate' order" do
     pub_date_array = []
     @data['data'].each do |article|
@@ -206,7 +206,7 @@ shared_examples "basic article API checks" do
     end
     pub_date_array.should == (pub_date_array.sort {|x,y| y <=> x })
   end
-  
+
   it "should return non-nil, non-blank 'articleId' data for all articles" do
     @data['data'].each do |article|
       article['articleId'].should_not be_nil
@@ -219,23 +219,23 @@ shared_examples "basic article API checks" do
       article['articleId'].match(/^[0-9a-f]{24,32}$/).should be_true
     end
   end
-  
+
   [ "articleId",
     "metadata",
     "system",
-    "tags", 
+    "tags",
     "refs",
     "authors",
     "categoryLocales",
     "categories",
-    "content"].each do |k| 
+    "content"].each do |k|
     it "should return non-nil '#{k}' data for all articles" do
       @data['data'].each do |article|
         article.has_key?(k).should be_true
         article.should_not be_nil
         article.to_s.length.should > 0
       end
-    end    
+    end
   end#end iteration
 
 end
@@ -268,7 +268,7 @@ describe "V3 Articles API -- General Post Search for published articles sending 
 
   end
   
-  include_examples "basic article API checks"
+  include_examples "basic article API checks", 10
 
   # metadata assertions
 
@@ -347,7 +347,7 @@ describe "V3 Articles API -- General Post Search for #{hub} hub using #{search}"
 
   end
   
-  include_examples "basic article API checks"
+  include_examples "basic article API checks", 10
 
   # metadata assertions
 
@@ -441,7 +441,7 @@ describe "V3 Articles API -- General Post Search for Blogs sending #{ArticlePost
 
   end
 
-  include_examples "basic article API checks"
+  include_examples "basic article API checks", 10
   
   it "should retrun 'articleType' metadata with a value of 'post' for all articles" do
     @data['data'].each do |article|
@@ -485,7 +485,7 @@ describe "V3 Articles API -- General Post Search for Cheats sending #{ArticlePos
 
   end
   
-  include_examples "basic article API checks"
+  include_examples "basic article API checks", 10
   
   it "should retrun 'articleType' metadata with a value of 'cheat' for all articles" do
     @data['data'].each do |article|

@@ -208,7 +208,7 @@ class ArticleGetSearchHelper
 end
 
 
-shared_examples "basic article API checks for get search" do |count|
+shared_examples "basic article API checks" do |count|
   
   it "should return a hash with five indices" do
     check_indices(@data, 6)
@@ -358,7 +358,7 @@ describe "V3 Articles API -- General Get Search for published articles sending #
 
   end
   
-  include_examples "basic article API checks for get search", 10
+  include_examples "basic article API checks", 10
 
   # metadata assertions
 
@@ -439,7 +439,7 @@ describe "V3 Articles API -- General Get Search for #{hub} hub using #{search}" 
 
   end
   
-  include_examples "basic article API checks for get search", 10
+  include_examples "basic article API checks", 10
 
   # metadata assertions
 
@@ -534,7 +534,7 @@ describe "V3 Articles API -- General Get Search for Blogs sending #{ArticleGetSe
 
   end
 
-  include_examples "basic article API checks for get search", 10
+  include_examples "basic article API checks", 10
   
   it "should retrun 'articleType' metadata with a value of 'post' for all articles" do
     @data['data'].each do |article|
@@ -579,7 +579,7 @@ describe "V3 Articles API -- General Get Search for Cheats sending #{ArticleGetS
 
   end
   
-  include_examples "basic article API checks for get search", 10
+  include_examples "basic article API checks", 10
   
   it "should return 'articleType' metadata with a value of 'cheat' for all articles" do
     @data['data'].each do |article|
@@ -774,7 +774,7 @@ describe "V3 Articles API -- General Get Search for the #{category} blogroll usi
 
   end
 
-  include_examples "basic article API checks for get search", 100
+  include_examples "basic article API checks", 100
 
   it "should return only articles categorized as '#{category}'" do
     @data['data'].each do |article|
