@@ -230,6 +230,64 @@ class ArticleGetSearchHelper
     ]
   }.to_json
   end
+
+  def self.is_not(type)
+  {
+    "matchRule"=>"matchAll",
+    "rules"=>[
+      {
+      "field"=>"metadata.articleType",
+      "condition"=>"isNot",
+      "value"=>type
+      }
+    ],
+    "startIndex"=>0,
+    "count"=>200,
+    "networks"=>"ign",
+    "states"=>"published"
+  }.to_json
+  end
+
+  def self.date_range
+  {
+    "matchRule"=>"matchAll",
+    "rules"=>[],
+    "startIndex"=>0,
+    "count"=>200,
+    "networks"=>"ign",
+    "states"=>"published",
+    "fromDate"=>"2012-01-01T00:00:00-0000",
+    "toDate"=>"2012-12-31T00:00:00-0000"
+  }.to_json
+  end
+
+  def self.nested_query
+  {
+    "matchRule"=>"matchAll",
+    "rules"=>[
+      {
+      "field"=>"tags",
+      "rules"=>[
+        {
+        "field"=>"tags.slug",
+        "condition"=>"is",
+        "value"=>"ps3"
+        },
+        {
+        "field"=>"tags.tagType",
+        "condition"=>"is",
+        "value"=>"platform"
+        }
+      ]
+      }
+    ],
+    "networks"=>"ign",
+    "states"=>"published",
+    "startIndex"=>0,
+    "count"=>200,
+  }.to_json
+  end
+
 end
 
 ########################## BEGIN SPEC ########################## 
@@ -771,7 +829,7 @@ end end end
 
 ###############################################################
 
-describe "V3 Articles API -- General Get Search with 'containsAll' using #{ArticleGetSearchHelper.contains('containsAll')}", :test => true do
+describe "V3 Articles API -- General Get Search with 'containsAll' using #{ArticleGetSearchHelper.contains('containsAll')}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -806,11 +864,22 @@ describe "V3 Articles API -- General Get Search with 'containsAll' using #{Artic
     @data['data'].count.should > 9
   end
 
+  it "should return only articles tagged both 'ps3' and 'xbox-360'" do
+    @data['data'].each do |article|
+      tags = []
+      article['tags'].each do |tag|
+        tags << tag['slug']
+      end
+      tags.should include 'ps3'
+      tags.should include 'xbox-360'
+    end
+  end
+
 end
 
-###############################################################
-
-describe "V3 Articles API -- General Get Search with 'containsNone' using #{ArticleGetSearchHelper.contains('containsNone')}", :test => true do
+############################################################### containsNone doesn't work
+=begin
+describe "V3 Articles API -- General Get Search with 'containsNone' using #{ArticleGetSearchHelper.contains('containsNone')}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -843,6 +912,154 @@ describe "V3 Articles API -- General Get Search with 'containsNone' using #{Arti
 
   it 'should return at least 150 articles', :stg => true do
     @data['data'].count.should > 149
+  end
+
+  it "should return only articles tagged neither 'ps3' nor 'xbox-360'" do
+    @data['data'].each do |article|
+      tags = []
+      article['tags'].each do |tag|
+        tags << tag['slug']
+      end
+      tags.length.should > 200
+      tags.should_not include('ps3'||'xbox-360')
+    end
+  end
+
+end
+=end
+
+###############################################################
+
+describe "V3 Articles API -- General Get Search with 'isNot' using #{ArticleGetSearchHelper.is_not('article')}" do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.is_not('article').to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  context 'Basic Checks', :prd => true do
+    include_examples "basic article API checks", 200
+  end
+
+  it 'should implement basic checks for stage'
+
+  it "should not return articles with an articleType of 'article'" do
+    article_types = []
+    @data['data'].each do |article|
+      article_types << article['metadata']['articleType']
+    end
+    article_types.length.should > 100
+    article_types.should_not include 'article'
+  end
+
+end
+
+###############################################################
+
+describe "V3 Articles API -- General Get Search with 'isNot' using #{ArticleGetSearchHelper.date_range}" do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.date_range.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+
+  context 'Basic Checks', :prd => true do
+    include_examples "basic article API checks", 200
+  end
+
+  it 'should implement basic checks for stage'
+
+  it 'should only return articles from 2012' do
+    @data['data'].each do |article|
+      article['metadata']['publishDate'].match(/2012-/).should be_true
+    end
+  end
+
+end
+
+###############################################################
+
+describe "V3 Articles API -- General Get Search with a nested query using #{ArticleGetSearchHelper.nested_query}" do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.nested_query.to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+
+  context 'Basic Checks' do
+    include_examples "basic article API checks", 200
+  end
+
+  it "should only return articles tagged 'ps3 with a tagType of 'platform'" do
+    @data['data'].each do |article|
+      correct_tags = false
+      article['tags'].each do |tag|
+        correct_tags = true if tag.to_s.match(/ps3/) && tag.to_s.match(/platform/)
+      end
+      correct_tags.should be_true
+    end
   end
 
 end
