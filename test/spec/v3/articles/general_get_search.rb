@@ -877,8 +877,8 @@ describe "V3 Articles API -- General Get Search with 'containsAll' using #{Artic
 
 end
 
-############################################################### containsNone doesn't work
-=begin
+###############################################################
+
 describe "V3 Articles API -- General Get Search with 'containsNone' using #{ArticleGetSearchHelper.contains('containsNone')}" do
 
   before(:all) do
@@ -906,27 +906,24 @@ describe "V3 Articles API -- General Get Search with 'containsNone' using #{Arti
 
   end
 
-  context 'Basic Checks', :prd => true do
+  context 'Basic Checks' do
     include_examples "basic article API checks", 200
   end
 
-  it 'should return at least 150 articles', :stg => true do
-    @data['data'].count.should > 149
-  end
-
   it "should return only articles tagged neither 'ps3' nor 'xbox-360'" do
+    total_tags = []
     @data['data'].each do |article|
       tags = []
       article['tags'].each do |tag|
         tags << tag['slug']
+        total_tags << tag['slug']
       end
-      tags.length.should > 200
       tags.should_not include('ps3'||'xbox-360')
     end
+    total_tags.length.should > 250
   end
 
 end
-=end
 
 ###############################################################
 
