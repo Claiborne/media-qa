@@ -6,6 +6,7 @@ require 'json'
 require 'open_page'; include OpenPage
 require 'widget-plus/global_header_nav.rb'; include GlobalHeaderNav
 require 'widget-plus/global_footer.rb'; include GlobalFooter
+require 'phantom_helpers/search_page_shared'
 
 %w(www uk au).each do |locale|
 ['halo 4', 'game of thrones'].each do |query|
@@ -174,6 +175,8 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
 
   context "Search Menu Bar (Functional)" do
 
+    include_examples "search item link checker" if locale == 'www'
+
     it "should return only game results when filtered by games" do
       current_titles = @selenium.find_elements(:css => 'div#search-list div.search-item div.search-item-title')
       @selenium.find_element(:css => "div.search-menu-bar div[data-objecttype='game']").click
@@ -182,6 +185,8 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
         a.attribute('href').to_s.match(/\.com\/games\/./).should be_true
       end
     end
+
+    include_examples "search item link checker" if locale == 'www'
 
     it "should return only tv show and movie results when filtered by tv/movies" do
       current_titles = @selenium.find_elements(:css => 'div#search-list div.search-item div.search-item-title')
@@ -194,6 +199,8 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
       end
     end
 
+    include_examples "search item link checker" if locale == 'www'
+
     it "should return only video results when filtered by videos" do
       current_titles = @selenium.find_elements(:css => 'div#search-list div.search-item div.search-item-title')
       @selenium.find_element(:css => "div.search-menu-bar div[data-filter='videos']").click
@@ -202,6 +209,8 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
         a.attribute('href').to_s.match(/\.com\/videos\/./).should be_true
       end
     end
+
+    include_examples "search item link checker" if locale == 'www'
 
     it "should return only article results when filtered by articles" do
       current_titles = @selenium.find_elements(:css => 'div#search-list div.search-item div.search-item-title')
@@ -214,6 +223,8 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
       end
     end
 
+    include_examples "search item link checker" if locale == 'www'
+
     it "should return only wiki results when filtered by wikis" do
       current_titles = @selenium.find_elements(:css => 'div#search-list div.search-item div.search-item-title')
       @selenium.find_element(:css => "div.search-menu-bar div[data-filter='wiki']").click
@@ -222,6 +233,8 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
         a.attribute('href').to_s.match(/\.com\/wikis\/./).should be_true
       end
     end
+
+    include_examples "search item link checker" if locale == 'www'
 
   end
 
