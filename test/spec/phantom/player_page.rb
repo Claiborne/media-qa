@@ -144,9 +144,11 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
       end
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 
@@ -230,9 +232,11 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
 
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 
@@ -310,10 +314,11 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
       fe_slugs.length.should > 9
 
     end
-
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 =end
@@ -405,12 +410,13 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
 
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
-
 
     it "should highlight Reviews when clicked" do
       @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='reviews']").click
@@ -479,9 +485,11 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
 
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 
@@ -552,9 +560,11 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
       fe_slugs.length.should > 9
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 
@@ -580,9 +590,11 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
       end
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
   end
