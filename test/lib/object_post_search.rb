@@ -19,11 +19,17 @@ module ObjectPostSearch
     @savedObjectIds
   end
 
+  def self.blank_saved_ids
+    @savedObjectIds = []
+  end
+
   def create_valid_release_published
+    r = Random.rand(1000000)
     {
-        "metadata" => {
-            "name" => "Media QA Test Release or Obj #{Random.rand(1000000)}",
-            "state" => "published"
+        :metadata => {
+            :name => "Media QA Test Release or Obj #{r}",
+            :slug => "media-qa-test-release-or-obj-#{r}",
+            :state => "published"
         }
     }.to_json
   end
@@ -38,10 +44,12 @@ module ObjectPostSearch
   end
 
   def create_valid_release_w_review
+    r = Random.rand(1000000)
     {
       :metadata=>{
-          :name=>"Media QA Test Release or Obj #{Random.rand(1000000)}",
-          :state=>"published"
+          :name => "Media QA Test Release or Obj #{r}",
+          :slug => "media-qa-test-release-or-obj-#{r}",
+          :state => "published"
       },
       :network=>{
         :ign=>{
