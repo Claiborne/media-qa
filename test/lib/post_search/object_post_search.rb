@@ -1,5 +1,30 @@
 module ObjectPostSearch
 
+  @savedObjectId = ''
+
+  def self.set_saved_id(id)
+    @savedObjectId = id
+  end
+
+  #
+
+  def self.get_saved_id
+    @savedObjectId
+  end
+
+  def self.doit
+    puts 'HELLO!'
+  end
+
+  def create_valid_release_published
+    {
+        "metadata" => {
+            "name" => "Media QA Test Release or Obj #{Random.rand(1000000)}",
+            "state" => "published"
+        }
+    }.to_json
+  end
+
   def create_role_min
     {
         "metadata" => {
@@ -672,6 +697,68 @@ module ObjectPostSearch
         "metadata" => {
             "region" => "UK"
         }
+    }.to_json
+  end
+
+  def add_score_to_release
+    {
+      :network=>{
+          :ign=>{
+            :review=>{
+              :score=>8.0,
+            }
+          }
+      }
+    }.to_json
+  end
+
+
+  def add_system_score_to_release
+    {
+      :network=>{
+        :ign=>{
+          :review=>{
+            :system=>"ign-games",
+          }
+        }
+      }
+    }.to_json
+  end
+
+  def add_score_and_system_score_to_release
+    {
+      :network=>{
+        :ign=>{
+          :review=>{
+            :system=>"ign-games",
+            :score=>8.5
+          }
+        }
+      }
+    }.to_json
+  end
+
+  def add_scaled_score # should fail
+    {
+      :network=>{
+        :ign=>{
+          :review=>{
+              :scaledScore=>0.45
+          }
+        }
+      }
+    }.to_json
+  end
+
+  def remove_review_from_release
+    {
+      :network=>{
+        :ign=>{
+          :review=>{
+            :score=>''
+          }
+        }
+    }
     }.to_json
   end
 
