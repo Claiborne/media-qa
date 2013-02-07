@@ -1,19 +1,22 @@
 module ObjectPostSearch
 
   @savedObjectId = ''
+  @savedObjectIds = []
 
   def self.set_saved_id(id)
     @savedObjectId = id
   end
 
-  #
-
   def self.get_saved_id
     @savedObjectId
   end
 
-  def self.doit
-    puts 'HELLO!'
+  def self.append_id(id)
+    @savedObjectIds << id
+  end
+
+  def self.get_ids
+    @savedObjectIds
   end
 
   def create_valid_release_published
@@ -33,6 +36,24 @@ module ObjectPostSearch
         },
     }.to_json
   end
+
+  def create_valid_release_w_review
+    {
+      :metadata=>{
+          :name=>"Media QA Test Release or Obj #{Random.rand(1000000)}",
+          :state=>"published"
+      },
+      :network=>{
+        :ign=>{
+          :review=>{
+            :system=>"ign-games",
+            :score=>8.5
+          }
+        }
+      }
+    }.to_json
+  end
+
 
   def update_role_with_objects(movie_id,character_id,roletype_id,game_id,book_id,person_id)
     {
