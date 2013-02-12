@@ -55,6 +55,12 @@ describe "V3 Object API -- Get Search For ScaledScore I", :test => true do
     end
   end
 
+  it 'should return scaledScore value no more than two decimal places' do
+    @data['data'].each do |r|
+      r['network']['ign']['review']['scaledScore'].to_s.delete('^0-9').length.should < 4
+    end
+  end
+
   it 'should return releases sorted descending by scaledScore' do
     scaled_score = []
     @data['data'].each do |r|
@@ -62,6 +68,7 @@ describe "V3 Object API -- Get Search For ScaledScore I", :test => true do
     end
     scaled_score.should == scaled_score.sort {|x,y| y <=> x }
   end
+
 
 end
 
@@ -111,6 +118,13 @@ describe "V3 Object API -- Get Search For ScaledScore II", :test => true do
       (0.9 >= r['network']['ign']['review']['scaledScore']).should be_true
       (r['network']['ign']['review']['scaledScore'] >= 0.8).should be_true
 
+    end
+  end
+
+  it 'should return scaledScore value no more than two decimal places' do
+    @data['data'].each do |r|
+      r['network']['ign']['review']['scaledScore'].to_s.delete('^0-9').length.should > 0
+      r['network']['ign']['review']['scaledScore'].to_s.delete('^0-9').length.should < 4
     end
   end
 
