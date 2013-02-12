@@ -11,7 +11,7 @@ require 'topaz_token'
 include Assert
 include TopazToken
 
-describe "V3 Object API -- Get Search For ScaledScore I", :test => true do
+describe "V3 Object API -- Get Search For ScaledScore I" do
 
   before(:all) do
     search_body = {:rules=> [{
@@ -72,7 +72,7 @@ describe "V3 Object API -- Get Search For ScaledScore I", :test => true do
 
 end
 
-describe "V3 Object API -- Get Search For ScaledScore II", :test => true do
+describe "V3 Object API -- Get Search For ScaledScore II" do
 
   before(:all) do
     search_body = {:rules=> [{
@@ -141,7 +141,7 @@ end
 ############################### CREATE AND UPDATE FLOWS ###############################
 
 {:Release=>'releases', :Show=>'shows', :Episode=>'episodes', :Volume=>'volumes'}.each do |object_name, object|
-describe "V3 Object API -- Create #{object_name} With Review Data", :test => true, :stg => true do
+describe "V3 Object API -- Create #{object_name} With Review Data", :stg => true do
 
   before(:all) do
     ObjectPostSearch.blank_saved_ids
@@ -188,11 +188,11 @@ end
 
 ############################### NEW FLOW ###############################
 
-describe "V3 Object API -- Create #{object_name} Without Review Data", :test => true, :stg => true do
+describe "V3 Object API -- Create #{object_name} Without Review Data", :stg => true do
   include_examples "V3 Object API -- Create Object Without Review Data", object
 end
 
-describe "V3 Object API -- Add scaledScore data directly", :test => true, :stg => true do
+describe "V3 Object API -- Add scaledScore data directly", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -228,11 +228,11 @@ describe "V3 Object API -- Add scaledScore data directly", :test => true, :stg =
 
 end
 
-describe "V3 Object API -- Update Object With Score And Score System To Get Scaled Score", :test => true, :stg => true do
+describe "V3 Object API -- Update Object With Score And Score System To Get Scaled Score", :stg => true do
   include_examples "V3 Object API -- Update Object With Score And Score System To Get Scaled Score", object
 end
 
-describe "V3 Object API -- Update #{object_name} With Custom Scaled Score", :test => true, :stg => true do
+describe "V3 Object API -- Update #{object_name} With Custom Scaled Score", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -271,7 +271,7 @@ describe "V3 Object API -- Update #{object_name} With Custom Scaled Score", :tes
 
 end
 
-describe "V3 Object API -- Update #{object_name} to Remove Review Score", :test => true, :stg => true do
+describe "V3 Object API -- Update #{object_name} to Remove Review Score", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
@@ -312,15 +312,15 @@ end
 
 ############################### NEW FLOW ###############################
 
-describe "V3 Object API -- Create #{object_name} Without Review Data", :test => true, :stg => true do
+describe "V3 Object API -- Create #{object_name} Without Review Data", :stg => true do
   include_examples "V3 Object API -- Create Object Without Review Data", object
 end
 
-describe "V3 Object API -- Update Object With Score And Score System To Get Scaled Score", :test => true, :stg => true do
+describe "V3 Object API -- Update Object With Score And Score System To Get Scaled Score", :stg => true do
   include_examples "V3 Object API -- Update Object With Score And Score System To Get Scaled Score", object
 end
 
-describe "V3 Object API -- Clean Up", :test => true, :stg => true do
+describe "V3 Object API -- Clean Up", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
