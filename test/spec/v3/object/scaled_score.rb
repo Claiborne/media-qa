@@ -86,7 +86,7 @@ describe "V3 Object API -- Get Search For ScaledScore II", :test => true do
                    :startIndex=>0,
                    :count=>200,
                    :sortBy=>"network.ign.review.scaledScore",
-                   :sortOrder=>"desc",
+                   :sortOrder=>"asc",
     }.to_json
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
