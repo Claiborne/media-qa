@@ -51,7 +51,7 @@ RSpec::Core::RakeTask.new('v3video') do |t|
 end
 
 desc "Run v3 articles tests"
-RSpec::Core::RakeTask.new('v3articles') do |t|
+RSpec::Core::RakeTask.new('v3article') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = 'spec/v3/articles/*.rb'
 end
@@ -63,7 +63,7 @@ RSpec::Core::RakeTask.new('v3object') do |t|
 end
 
 desc "Run v3 image tests"
-RSpec::Core::RakeTask.new('v3images') do |t|
+RSpec::Core::RakeTask.new('v3image') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/v3/images/*.rb'
 end
