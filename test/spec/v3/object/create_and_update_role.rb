@@ -4,7 +4,7 @@ require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'assert'
-require 'post_search/object_post_search'
+require 'object_post_search'
 require 'topaz_token'
 
 include Assert

@@ -2,7 +2,7 @@ development:
   baseurl: media-article-stg-services-01.sfdev.colo.ignops.com:8080/article
 
 staging:
-  baseurl: media-article-stg-services-01.sfdev.colo.ignops.com:8080/article
+  baseurl: apis.stg.ign.com/article
 
 production:
   baseurl: apis.lan.ign.com/article 

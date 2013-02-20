@@ -230,3 +230,88 @@ module ObjectApiHelper
   end #end def
 
 end
+
+shared_examples "V3 Object API -- Create Object Without Review Data" do |object|
+  describe '' do
+
+    before(:all) do
+      PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+      @config = PathConfig.new
+      TopazToken.set_token('objects')
+      @url = "http://apis.stg.ign.com/object/v3/#{object}?oauth_token=#{TopazToken.return_token}"
+      begin
+        @response = RestClient.post @url, create_valid_release_published, :content_type => "application/json"
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+      puts @data
+      ObjectPostSearch.set_saved_id @data["#{object.downcase[0..-2]}Id"]
+      ObjectPostSearch.append_id @data["#{object.downcase[0..-2]}Id"]
+    end
+
+    it "should not return scaledScore data" do
+      begin
+        response = RestClient.get "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      data = JSON.parse(response.body)
+
+      data.to_s.match(/scaledScore/).should be_false
+    end
+
+  end
+end
+
+shared_examples "V3 Object API -- Update Object With Score And Score System To Get Scaled Score" do |object|
+  describe '' do
+
+    before(:all) do
+      PathConfig.config_path = File.dirname(__FILE__) + "/../config/v3_object.yml"
+      @config = PathConfig.new
+      TopazToken.set_token('objects')
+      @url = "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?oauth_token=#{TopazToken.return_token}"
+      begin
+        @response = RestClient.put @url, add_score_and_system_score_to_release, :content_type => "application/json"
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      @data = JSON.parse(@response.body)
+    end
+
+    before(:each) do
+
+    end
+
+    after(:each) do
+
+    end
+
+    it "should return 200" do
+    end
+
+    it "should add a scaledScore of 0.85" do
+      begin
+        response = RestClient.get "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
+      rescue => e
+        raise Exception.new(e.message+" "+@url)
+      end
+      data = JSON.parse(response.body)
+
+      data['network']['ign']['review']['scaledScore'].should == 0.85
+    end
+  end
+end
+

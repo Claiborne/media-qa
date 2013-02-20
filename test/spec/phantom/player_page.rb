@@ -2,94 +2,27 @@ require 'rspec'
 require 'selenium-webdriver'
 require 'pathconfig'
 require 'rest-client'
-require 'open_page'
 require 'json'
 require 'time'
-require 'open_page'
-
-include OpenPage
-
-class VideoPlayerPageHelper
-  def self.get_latest_videos
-
-    count = 1
-
-    DataConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
-    data_config = DataConfig.new
-
-    list_of_date_and_slugs = []
-    latest_vids_response = RestClient.get "http://#{data_config.options['baseurl']}/v3/videos?count=#{count}&sortBy=metadata.publishDate&sortOrder=desc&metadata.networks=ign"
-    latest_vids = JSON.parse(latest_vids_response.body)
-    latest_vids['data'].each do |v|
-      list_of_date_and_slugs << v['metadata']['url'].match(/\/videos\/\d{4}\/\d{2}\/\d{2}\/[^?]{1,}/).to_s
-    end
-    list_of_date_and_slugs
-  end
-
-  def self.get_api_titles(d)
-    api_titles = []
-    d['data'].each do |v|
-      video_long_title = false
-      begin
-        video_long_title = v['metadata']['longTitle']
-        if video_long_title.nil?; throw Exception.new end
-      rescue
-        video_long_title = false
-        video_title = v['metadata']['title'].strip
-        begin
-          object_name =  v['objectRelations'][0]['objectName'].strip+" - "
-        rescue
-          object_name = ""
-        end
-      end
-
-      if video_long_title == false
-        api_titles << (object_name+video_title).downcase.gsub(/\s{2,}/, ' ')
-      else
-        api_titles << video_long_title.downcase.strip.gsub(/\s{2,}/, ' ')
-      end
-    end
-    api_titles
-  end
-
-  def self.get_api_title(d)
-    api_title = ''
-    video_long_title = false
-    begin
-      video_long_title = d['metadata']['longTitle']
-      if video_long_title.nil?; throw Exception.new end
-    rescue
-      video_long_title = false
-      video_title = d['metadata']['title'].strip
-      begin
-        object_name =  d['objectRelations'][0]['objectName'].strip+" - "
-      rescue
-        object_name = ""
-      end
-    end
-
-    if video_long_title == false
-      api_title << (object_name+video_title).downcase
-    else
-      api_title << video_long_title.downcase.strip
-    end
-    api_title
-  end
-
-end
-
-######################################################################
+require 'open_page'; include OpenPage
+require 'video_player_page_helper'; include VideoPlayerPageHelper
+require 'widget-plus/related_videos'; include RelatedVideos
+require 'widget-plus/add_this'; include AddThis
+require 'widget-plus/disqus'; include Disqus
+require 'widget-plus/object_details'; include ObjectDetails
+require 'widget-plus/global_header_nav'; include GlobalHeaderNav
+require 'widget-plus/global_footer'; include GlobalFooter
 
 %w(www uk au).each do |locale|
-VideoPlayerPageHelper.get_latest_videos.each do |video_page|
-describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
+get_latest_videos(2).each do |video_page|
+describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => true do
 
   before(:all) do
-    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/phantom.yml"
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../config/phantom.yml"
     @config = PathConfig.new
-    BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
+    BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../config/browser.yml"
     @browser_config = BrowserConfig.new
-    DataConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    DataConfig.config_path = File.dirname(__FILE__) + "/../../config/v3_video.yml"
     @data_config = DataConfig.new
 
     @page = "http://#{@config.options['baseurl']}#{video_page}".gsub('//www',"//#{locale}")
@@ -99,12 +32,14 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
     data_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/slug/#{video_page.match(/[^\/]{2,}$/)}"
     @video_data = JSON.parse(data_response.body)
 
-    if locale == 'uk'
-      @selenium.get "http://uk.ign.com/?setccpref=UK"
+    case locale
+      when 'uk'
+        @selenium.get "http://uk.ign.com/?setccpref=UK"
+      when 'au'
+        @selenium.get "http://au.ign.com/?setccpref=AU"
+      else
     end
-    if locale == 'au'
-      @selenium.get "http://uk.ign.com/?setccpref=AU"
-    end
+
   end
 
   after(:all) do
@@ -119,18 +54,14 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
   end
 
-  it "should open #{video_page} on #{ENV['env']}" do
+  it "should open #{video_page} in #{ENV['env']}" do
     @selenium.get @page
     sleep 5
     @selenium.current_url.should == @page
   end
 
-  it "should display the global header and nav once" do
-    @selenium.find_elements(:css => "div#ignHeader div#ignHeader-userBar").count.should == 1
-    @selenium.find_element(:css => "div#ignHeader div#ignHeader-userBar").displayed?.should be_true
-
-    @selenium.find_elements(:css => "div#ignHeader div#ignHeader-navigation").count.should == 1
-    @selenium.find_element(:css => "div#ignHeader div#ignHeader-navigation").displayed?.should be_true
+  context "Global Header and Nav Widget" do
+    check_global_header_nav
   end
 
   it "should display the IGN video player once" do
@@ -145,7 +76,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
     all.displayed?.should be_true
 
-    all.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.downcase.should == VideoPlayerPageHelper.get_api_title(@video_data)
+    all.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.downcase.should == get_api_title(@video_data)
   end
 
   it "should display the duration" do
@@ -213,9 +144,11 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 
@@ -256,9 +189,9 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
       # STORE TITLES FROM API
       if related_videos['data'].count < fe_count
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)+VideoPlayerPageHelper.get_api_titles(generic_videos)
+        api_titles = get_api_titles(related_videos)+get_api_titles(generic_videos)
       else
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
+        api_titles = get_api_titles(related_videos)
       end
 
       # STORE TITLES FROM FE
@@ -269,7 +202,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
       # COMPARE API TITLES TO FE TITLES
       api_titles.should == fe_titles
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -293,15 +226,17 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
 
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 
@@ -338,9 +273,9 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
       # STORE TITLES FROM API
       if related_videos['data'].count < fe_count
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)+VideoPlayerPageHelper.get_api_titles(generic_videos)
+        api_titles = get_api_titles(related_videos)+get_api_titles(generic_videos)
       else
-        api_titles = VideoPlayerPageHelper.get_api_titles(related_videos)
+        api_titles = get_api_titles(related_videos)
       end
 
       # STORE TITLES FROM FE
@@ -350,7 +285,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -374,15 +309,16 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
 
     end
-
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 =end
@@ -444,7 +380,6 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
           api_titles << video_long_title.downcase.gsub(/\s{2,}/, ' ')
         end
         api_slugs << shows['data'][0]['metadata']['slug']
-
       end
 
           ## COMPARE TITLES ##
@@ -456,7 +391,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -469,18 +404,19 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
 
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
-
 
     it "should highlight Reviews when clicked" do
       @selenium.find_element(:css => "div.video_playlist_selector span.item-container span[data-type='reviews']").click
@@ -515,7 +451,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
           ## COMPARE TITLES ##
 
       # STORE TITLES FROM API
-      api_titles = VideoPlayerPageHelper.get_api_titles(reviews)
+      api_titles = get_api_titles(reviews)
 
       # STORE TITLES FROM FE
       fe_titles = []
@@ -524,7 +460,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -543,15 +479,17 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
 
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 
@@ -589,7 +527,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
           ## COMPARE TITLES ##
 
       # STORE TITLES FROM API
-      api_titles = VideoPlayerPageHelper.get_api_titles(trailers)
+      api_titles = get_api_titles(trailers)
 
       # STORE TITLES FROM FE
       fe_titles = []
@@ -598,7 +536,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API TITLES TO FE TITLES
-      (api_titles - fe_titles).length.should < 2
+      (api_titles - fe_titles).length.should < 3
       api_titles.length.should > 9
       fe_titles.length.should > 9
 
@@ -617,14 +555,16 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
 
       # COMPARE API SLUGS TO FE SLUGS
-      (api_slugs - fe_slugs).length.should < 2
+      (api_slugs - fe_slugs).length.should < 3
       api_slugs.length.should > 9
       fe_slugs.length.should > 9
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
 
@@ -642,7 +582,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
-    it "should display Must Watch videos by default" do
+    it "should display Must Watch videos when clicked" do
       @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
       @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
         a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
@@ -650,12 +590,13 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
       end
     end
 
-    it "should only contain links that 200", :spam => true do
-      @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
+    if locale == 'www'
+      it "should only contain links that 200", :spam => true do
+        @selenium.find_elements(:css => "div#video_playlist ul#videos-list li a").each do |link|
+          rest_client_not_301_home_open link.attribute('href').to_s
+        end
       end
     end
-
   end
 
   context "Video Details (Below Fold)" do
@@ -667,7 +608,7 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
 
     it "should display the correct video title" do
       title = @selenium.find_element(:css => "div#object-details div.page-object-title").text.downcase
-      title.chomp.strip.should == VideoPlayerPageHelper.get_api_title(@video_data)
+      title.chomp.strip.should == get_api_title(@video_data)
     end
 
     it "should display the video date once" do
@@ -694,147 +635,30 @@ describe "Video Player Page -- #{locale} #{video_page}", :selenium => true do
         description = @video_data['metadata']['description'].strip
       end
 
-      desc = @selenium.find_element(:css => "div#object-details span.page-object-description").text.strip.chomp
-      desc.should == description
+      desc = @selenium.find_element(:css => "div#object-details span.page-object-description").text.strip.chomp.gsub(/\s+/,' ')
+      desc.should == description.strip.chomp.gsub(/\s+/,' ')
 
     end
-
   end
 
-  context "Related Videos Right Rail" do
-
-    it "should display once" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list").count.should == 1
-      @selenium.find_element(:css => "div.column-supplement ul.must-watch-list").displayed?.should be_true
-    end
-
-    it "should display the header" do
-      @selenium.find_element(:css => "div.column-supplement div.must-watch-header").text.should == 'RELATED VIDEOS'
-    end
-
-    it "should display eight videos" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li").count.should == 8
-    end
-
-    it "should have a link to for each thumb and title" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-thumb a img").count.should == 8
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details a").count.should == 8
-    end
-
-    it "should display a title for all videos" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details a").count.should == 8
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details a").each do |vid|
-        vid.text.strip.delete('^a-zA-Z').length.should > 0
-      end
-    end
-
-    it "should display a timestamp for all videos" do
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details div.date-time").count.should == 8
-      @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list li div.must-watch-details div.date-time").each do |vid|
-        vid.text.strip.delete('^a-zA-Z').length.should > 0
-      end
-    end
-
-    it "should only contain links that return 200", :spam => true do
-      related_vids_links =  @selenium.find_elements(:css => "div.column-supplement ul.must-watch-list a")
-      related_vids_links.length.should > 8
-      related_vids_links.each do |link|
-        rest_client_not_301_home_open link.attribute('href').to_s
-      end
-    end
-
+  context "Related Videos Widget (Right Rail)" do
+    check_related_videos
   end
 
   context "Disqus Widget" do
-
-    it "should display once" do
-      @selenium.find_elements(:css => "div#disqus_thread").count.should == 1
-      @selenium.find_elements(:css => "div#disqus_thread iframe").count.should == 4
-      @selenium.find_element(:css => "div#disqus_thread iframe").displayed?.should be_true
-    end
-
+    check_disqus
   end
 
   context "Add This Widget" do
-
-    it "should be on the page once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style']").count.should == 1
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style']").displayed?.should be_true
-    end
-
-    it "should display the Facebook button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Facebook'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Facebook'] span").displayed?.should be_true
-    end
-
-    it "should display the Twitter button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet This'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tweet This'] span").displayed?.should be_true
-    end
-
-    it "should display the Reddit button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Reddit'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Reddit'] span").displayed?.should be_true
-    end
-
-    it "should display the Tumblr button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tumblr'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Tumblr'] span").displayed?.should be_true
-    end
-
-    it "should display the Google+ button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Google+'] span").count.should == 2
-      @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a[title='Google+'] span").displayed?.should be_true
-    end
-
-    it "should display the More+ button once" do
-      @selenium.find_elements(:css => "div[class='addthis_toolbox addthis_default_style'] a.addthis_button").count.should == 1
-      more = @selenium.find_element(:css => "div[class='addthis_toolbox addthis_default_style'] a.addthis_button")
-      more.attribute('href').to_s.should == "http://www.addthis.com/bookmark.php"
-      more.displayed?.should be_true
-      more.text.should == 'MORE +'
-    end
-
+    check_add_this
   end
 
   context "Object Details Widget" do
-
-    it "should display the object details widget if applicable" do
-      if @video_data['objectRelations'].length > 0
-        @selenium.find_elements(:css => "div.column-supplement div.objectDetails div.objectDetails-header").count.should == 1
-        @selenium.find_element(:css => "div.column-supplement div.objectDetails-header").text.should == 'DETAILS'
-      end
-    end
-
-    it "should display the object title if applicable" do
-      if @video_data['objectRelations'].length > 0
-        @selenium.find_elements(:css => "div.column-supplement div.objectDetails-objectName a").count.should == 1
-        @selenium.find_element(:css => "div.column-supplement div.objectDetails-objectName a").text.strip.delete('^a-zA-Z0-9').length.should > 0
-      end
-    end
-
-    it "should only contain links that return 200", :spam => true do
-      if @video_data['objectRelations'].length > 0
-        obj_details_links =  @selenium.find_elements(:css => "div.column-supplement div.objectDetails a")
-        obj_details_links.length.should > 0
-        obj_details_links.each do |link|
-          rest_client_not_301_home_open link.attribute('href').to_s
-        end
-      end
-    end
-
+    check_object_details
   end
 
-  context "Global Footer" do
-
-    it "should display once" do
-      @selenium.find_elements(:css => "div#ignFooter-container div.ignFooter-topRow").count.should == 1
-      @selenium.find_element(:css => "div#ignFooter-container div.ignFooter-topRow").displayed?.should be_true
-
-      @selenium.find_elements(:css => "div#ignFooter-container div.ignFooter-bottomRow").count.should == 1
-      @selenium.find_element(:css => "div#ignFooter-container div.ignFooter-bottomRow").displayed?.should be_true
-    end
-
+  context "Global Footer Widget" do
+    check_global_footer
   end
 
 end end end

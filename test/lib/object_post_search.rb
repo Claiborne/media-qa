@@ -1,5 +1,39 @@
 module ObjectPostSearch
 
+  @savedObjectId = ''
+  @savedObjectIds = []
+
+  def self.set_saved_id(id)
+    @savedObjectId = id
+  end
+
+  def self.get_saved_id
+    @savedObjectId
+  end
+
+  def self.append_id(id)
+    @savedObjectIds << id
+  end
+
+  def self.get_ids
+    @savedObjectIds
+  end
+
+  def self.blank_saved_ids
+    @savedObjectIds = []
+  end
+
+  def create_valid_release_published
+    r = Random.rand(1000000)
+    {
+        :metadata => {
+            :name => "Media QA Test Release or Obj #{r}",
+            :slug => "media-qa-test-release-or-obj-#{r}",
+            :state => "published"
+        }
+    }.to_json
+  end
+
   def create_role_min
     {
         "metadata" => {
@@ -8,6 +42,26 @@ module ObjectPostSearch
         },
     }.to_json
   end
+
+  def create_valid_release_w_review
+    r = Random.rand(1000000)
+    {
+      :metadata=>{
+          :name => "Media QA Test Release or Obj #{r}",
+          :slug => "media-qa-test-release-or-obj-#{r}",
+          :state => "published"
+      },
+      :network=>{
+        :ign=>{
+          :review=>{
+            :system=>"ign-games",
+            :score=>8.5
+          }
+        }
+      }
+    }.to_json
+  end
+
 
   def update_role_with_objects(movie_id,character_id,roletype_id,game_id,book_id,person_id)
     {
@@ -672,6 +726,68 @@ module ObjectPostSearch
         "metadata" => {
             "region" => "UK"
         }
+    }.to_json
+  end
+
+  def add_score_to_release
+    {
+      :network=>{
+          :ign=>{
+            :review=>{
+              :score=>8.0,
+            }
+          }
+      }
+    }.to_json
+  end
+
+
+  def add_system_score_to_release
+    {
+      :network=>{
+        :ign=>{
+          :review=>{
+            :system=>"ign-games",
+          }
+        }
+      }
+    }.to_json
+  end
+
+  def add_score_and_system_score_to_release
+    {
+      :network=>{
+        :ign=>{
+          :review=>{
+            :system=>"ign-games",
+            :score=>8.5
+          }
+        }
+      }
+    }.to_json
+  end
+
+  def add_scaled_score # should fail
+    {
+      :network=>{
+        :ign=>{
+          :review=>{
+              :scaledScore=>0.45
+          }
+        }
+      }
+    }.to_json
+  end
+
+  def remove_review_from_release
+    {
+      :network=>{
+        :ign=>{
+          :review=>{
+            :score=>''
+          }
+        }
+    }
     }.to_json
   end
 

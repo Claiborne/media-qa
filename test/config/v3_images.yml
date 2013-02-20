@@ -2,7 +2,7 @@ development:
   baseurl: media-image-stg-services-01.sfdev.colo.ignops.com:8080/image
 
 staging:
-  baseurl: media-image-stg-services-01.sfdev.colo.ignops.com:8080/image
+  baseurl: apis.stg.ign.com/image
 
 production:
   baseurl: apis.lan.ign.com/image

@@ -19,7 +19,7 @@ wordpress_preview_urls = []
 
 def ent_review_articles
   {"matchRule"=>"matchAll",
-   "count"=>20,
+   "count"=>30,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
@@ -203,14 +203,14 @@ end
               wordpress_preview_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
               next
             end
-            if (game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1)
+            if (game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/\/preview/))
               wordpress_preview_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
             else
           end
         end
       end
 
-    %w(episodes shows volumes books).each do |o|
+    %w(episodes shows volumes).each do |o|
       objectRelations.each do |object|
         begin
           object_response = RestClient.get "http://apis.lan.ign.com/object/v3/#{o}/legacyId/#{object}"
@@ -224,7 +224,7 @@ end
           wordpress_preview_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           next
         end
-        if (game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1)
+        if (game_data['legacyData']['previewUrl'].to_s.match(/blogs/) || game_data['legacyData']['previewUrl'] == nil || game_data['legacyData']['previewUrl'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/\/preview/))
           wordpress_preview_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
         else
         end

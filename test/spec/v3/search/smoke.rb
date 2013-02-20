@@ -147,7 +147,7 @@ describe "V3 Search API -- Smoke Query '#{q}'" do
     @data['isMore'].should be_true
   end
 
-  it "should return a total value of at least 20,000 unless query is just halo" do
+  it "should return a total value of at least 20,000" do
     @data['total'].should > 20000
   end
 
@@ -160,12 +160,22 @@ describe "V3 Search API -- Smoke Query '#{q}'" do
     types.include?('object').should be_true
   end
 
-  it "should return at least one article in the first 20 results" do
-    types = []
-    20.times do |i|
-      types << @data['data'][i]['type']
+  if q == 'halo 3'
+    it "should return at least one article in the first 40 results" do
+      types = []
+      40.times do |i|
+        types << @data['data'][i]['type']
+      end
+      types.include?('article').should be_true
     end
-    types.include?('article').should be_true
+  else
+    it "should return at least one article in the first 20 results" do
+      types = []
+      20.times do |i|
+        types << @data['data'][i]['type']
+      end
+      types.include?('article').should be_true
+    end
   end
 
   it "should sort results by score" do
@@ -453,7 +463,7 @@ end
 end; end
 =end
 =begin
-describe "V3 Search API -- TEST", :test => true do
+describe "V3 Search API -- TEST" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_search.yml"

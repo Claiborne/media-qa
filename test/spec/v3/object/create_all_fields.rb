@@ -11,7 +11,7 @@ include TopazToken
 
 =begin
 
-describe "V3 Object API -- Create A Release With All Fields", :test => true do
+describe "V3 Object API -- Create A Release With All Fields" do
 
   before(:all) do
     @token = return_topaz_token('objects')

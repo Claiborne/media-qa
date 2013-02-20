@@ -4,7 +4,7 @@ require 'pathconfig'
 require 'rest_client'
 require 'json'
 require 'topaz_token'
-require 'post_search/object_post_search'
+require 'object_post_search'
 
 include ObjectPostSearch
 include TopazToken

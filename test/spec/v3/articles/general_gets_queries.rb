@@ -7,7 +7,7 @@ require 'assert'
 
 include Assert
 
-def basic_checks
+shared_examples "basic article API checks for gets" do
   
   it "should return 200" do
     check_200(@response)
@@ -184,7 +184,7 @@ describe "V3 Articles API -- Get Published Article Type: #{call} -- v3/articles/
   end
 
   context "Basic Checks" do
-    basic_checks
+    include_examples "basic article API checks for gets"
   end
   
 end
