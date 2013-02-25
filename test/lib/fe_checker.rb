@@ -68,11 +68,11 @@ module FeChecker
   def get_international_cookie(cookie)
     case cookie
       when 'www'
-        return :cookies=>{"i18n-ccpref"=>"11-US-www-1"}
+        return :cookies=>{"i18n-ccpref"=>"12-US-www-1"}
       when 'uk'
-        return :cookies=>{"i18n-ccpref"=>"11-UK-uk-1"}
+        return :cookies=>{"i18n-ccpref"=>"12-UK-uk-1"}
       when 'au'
-        return :cookies=>{"i18n-ccpref"=>"11-AU-au-1"}
+        return :cookies=>{"i18n-ccpref"=>"12-AU-au-1"}
       else
         return Exception.new("Can't return international cookie from get_international_cookie method in lib/fe_checker.rb")
     end
