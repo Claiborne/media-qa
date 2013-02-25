@@ -316,21 +316,21 @@ RSpec::Core::RakeTask.new('v3_gobId') do |t|
 end
 
 desc "Run Topaz_registration test"
-RSpec::Core::RakeTask.new('topaz_registration') do |t|
+RSpec::Core::RakeTask.new('testing') do |t|
   t.rspec_opts = ["-Ilib", "--format documentation","--color"]
-  t.pattern = 'spec/topaz/topaz_registration.rb'
+  t.pattern = 'spec/social_api/testing.rb'
 end
 
 desc "Run Social Registration test"
-RSpec::Core::RakeTask.new('registration') do |t|
+RSpec::Core::RakeTask.new('follow_game') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
-  t.pattern = 'spec/social_api/registration.rb'
+  t.pattern = 'spec/social_api/follow_game.rb'
 end
 
 desc "Run Social Newuser test"
-RSpec::Core::RakeTask.new('NewUser') do |t|
+RSpec::Core::RakeTask.new('follow_user') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
-  t.pattern = 'spec/social_api/NewUser.rb'
+  t.pattern = 'spec/social_api/follow_user.rb'
 end
 
 desc "Run Social follow test"
