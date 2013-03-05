@@ -708,7 +708,7 @@ end
 
 ###############################################################
 
-%w(xbox-360 ps3 wii ps-vita pc ds wireless movies tv comics).each do |category|
+%w(xbox-360 ps3 wii ps-vita pc 3ds wireless movies tv comics).each do |category|
 describe "V3 Articles API -- General Get Search for the #{category} blogroll using #{ArticleGetSearchHelper.blogroll(category)}" do
 
   before(:all) do
