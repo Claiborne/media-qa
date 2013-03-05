@@ -1,0 +1,11 @@
+development:
+  baseurl:
+
+staging:
+  baseurl:
+
+aws:
+  baseurl:
+
+production:
+  baseurl: www.ign.com

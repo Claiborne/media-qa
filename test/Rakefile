@@ -186,6 +186,14 @@ RSpec::Core::RakeTask.new('searchpage') do |t|
   t.pattern = 'spec/phantom/search_page.rb'
 end
 
+############# BOARDS #############
+
+desc "Run Boards frontend tests"
+RSpec::Core::RakeTask.new('boards') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/boards/*.rb'
+end
+
 ############# SERVICES #############
 
 desc "Run Affinity API tests"
