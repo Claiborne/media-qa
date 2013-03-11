@@ -20,7 +20,7 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
     @page = "http://#{@config.options['baseurl']}/search?q=#{query}&special=noads".gsub('//www',"//#{locale}")
 
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-    @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+    @selenium.manage.timeouts.implicit_wait = 0
 
     case locale
       when 'uk'

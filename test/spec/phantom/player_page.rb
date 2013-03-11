@@ -27,7 +27,7 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
 
     @page = "http://#{@config.options['baseurl']}#{video_page}".gsub('//www',"//#{locale}")
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-    @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+    @selenium.manage.timeouts.implicit_wait = 0
 
     data_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/slug/#{video_page.match(/[^\/]{2,}$/)}"
     @video_data = JSON.parse(data_response.body)
