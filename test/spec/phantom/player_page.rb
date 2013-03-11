@@ -5,7 +5,7 @@ require 'rest-client'
 require 'json'
 require 'time'
 require 'open_page'; include OpenPage
-require 'video_player_page_helper'; include VideoPlayerPageHelper
+require 'phantom_helpers/video_player_page_helper'; include VideoPlayerPageHelper
 require 'widget-plus/related_videos'; include RelatedVideos
 require 'widget-plus/add_this'; include AddThis
 require 'widget-plus/disqus'; include Disqus
