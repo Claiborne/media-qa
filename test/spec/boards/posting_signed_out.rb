@@ -17,8 +17,11 @@ describe 'Boards - Posting While Not Signed In', :selenium => true do
     @browser_config = BrowserConfig.new
 
     @base_url = "http://#{@config.options['baseurl']}"
-    @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-    @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+
+    client = Selenium::WebDriver::Remote::Http::Default.new
+    client.timeout = 2
+    @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym, :http_client => client
+
   end
 
   after(:all) do
@@ -36,7 +39,9 @@ describe 'Boards - Posting While Not Signed In', :selenium => true do
   describe "Main Page" do
 
     it "should open /boards" do
+      begin
       @selenium.get "#@base_url/boards"
+      rescue Timeout::Error; end
       @selenium.current_url.should == "#@base_url/boards/"
     end
 

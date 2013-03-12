@@ -7,7 +7,6 @@ require 'boards_helper'; include BoardsHelper
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 require 'phantom_helpers/sign_in'; include SignIn
 
-
 describe 'Boards - Smoke Test for Posting', :selenium => true do
 
   before(:all) do
@@ -18,7 +17,7 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
 
     @base_url = "http://#{@config.options['baseurl']}"
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-    @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+    @selenium.manage.timeouts.implicit_wait = 0
   end
 
   after(:all) do
@@ -33,13 +32,14 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
 
   end
 
+  context 'Sign In' do
+    sign_in('/boards/')
+  end
+
   describe "Main Page" do
 
-    context 'Sign In' do
-      sign_in('/boards/')
-    end
-
     context 'Global Header and Nav' do
+      @selenium.navigate.to "http://www.ign.com/boards"
       check_global_header_nav
       check_header_signed_in
     end
