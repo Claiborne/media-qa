@@ -7,7 +7,6 @@ require 'boards_helper'; include BoardsHelper
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 require 'phantom_helpers/sign_in'
 
-
 describe 'Boards - Posting While Not Signed In', :selenium => true do
 
   before(:all) do
@@ -18,9 +17,9 @@ describe 'Boards - Posting While Not Signed In', :selenium => true do
 
     @base_url = "http://#{@config.options['baseurl']}"
 
-    client = Selenium::WebDriver::Remote::Http::Default.new
-    client.timeout = 2
-    @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym, :http_client => client
+    @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
+
+    @wait = Selenium::WebDriver::Wait.new(:timeout => 7)
 
   end
 
@@ -39,9 +38,7 @@ describe 'Boards - Posting While Not Signed In', :selenium => true do
   describe "Main Page" do
 
     it "should open /boards" do
-      begin
       @selenium.get "#@base_url/boards"
-      rescue Timeout::Error; end
       @selenium.current_url.should == "#@base_url/boards/"
     end
 

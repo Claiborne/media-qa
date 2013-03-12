@@ -16,8 +16,9 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
     @browser_config = BrowserConfig.new
 
     @base_url = "http://#{@config.options['baseurl']}"
+
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-    @selenium.manage.timeouts.implicit_wait = 0
+
   end
 
   after(:all) do

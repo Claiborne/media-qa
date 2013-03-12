@@ -55,7 +55,6 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
 
   it "should open #{video_page} in #{ENV['env']}" do
     @selenium.get @page
-    sleep 5
     @selenium.current_url.should == @page
   end
 
@@ -69,13 +68,14 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
   end
 
   it "should display the correct video title" do
-    all = @selenium.find_element(:css => "div.video_details div.video_title")
+    title = @selenium.find_element(:css => "div.video_details div.video_title")
     duration = @selenium.find_element(:css => "div.video_details div.video_title span.video-duration")
     date = @selenium.find_element(:css => "div.video_details div.video_title div.sub-details")
 
-    all.displayed?.should be_true
+    title.displayed?.should be_true
 
-    all.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.downcase.should == get_api_title(@video_data)
+    title = title.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.downcase.gsub(/ +/, ' ')
+    title.should == get_api_title(@video_data).gsub(/ +/, ' ')
   end
 
   it "should display the duration" do
@@ -606,8 +606,8 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
     end
 
     it "should display the correct video title" do
-      title = @selenium.find_element(:css => "div#object-details div.page-object-title").text.downcase
-      title.chomp.strip.should == get_api_title(@video_data)
+      title = @selenium.find_element(:css => "div#object-details div.page-object-title").text.downcase.gsub(/ +/, ' ')
+      title.chomp.strip.should == get_api_title(@video_data).gsub(/ +/, ' ')
     end
 
     it "should display the video date once" do

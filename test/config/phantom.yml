@@ -1,5 +1,5 @@
 development:
-  baseurl: branchname.dev.www.ign.com
+  baseurl: branch.phantom.dev.www.ign.com:10088
 
 staging:
   baseurl: branchname.phantom.stg.www.ign.com
