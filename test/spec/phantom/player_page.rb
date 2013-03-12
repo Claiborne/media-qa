@@ -28,6 +28,8 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
     @page = "http://#{@config.options['baseurl']}#{video_page}".gsub('//www',"//#{locale}")
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
 
+    @wait = Selenium::WebDriver::Wait.new(:timeout => 7)
+
     data_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/slug/#{video_page.match(/[^\/]{2,}$/)}"
     @video_data = JSON.parse(data_response.body)
 
@@ -98,7 +100,7 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
 
     it "should display the playlist once" do
       @selenium.find_elements(:css => "div#video_playlist ul").count.should == 1
-      @selenium.find_element(:css => "div#video_playlist ul").displayed?.should be_true
+      @wait.until { @selenium.find_element(:css => "div#video_playlist ul").displayed? }
     end
 
     it "should correctly display the navigation text" do
@@ -626,14 +628,15 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
     end
 
     it "should display the correct description" do
-
+=begin
       begin
         description = @video_data['promo']['summary'].strip
         if description.to_s.delete('^a-zA-Z0-9').length < 1; throw Exception.new end
       rescue
         description = @video_data['metadata']['description'].strip
       end
-
+=end
+      description = @video_data['metadata']['description'].strip
       desc = @selenium.find_element(:css => "div#object-details span.page-object-description").text.strip.chomp.gsub(/\s+/,' ')
       desc.should == description.strip.chomp.gsub(/\s+/,' ')
 
