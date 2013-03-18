@@ -40,7 +40,6 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
   describe "Main Page" do
 
     context 'Global Header and Nav' do
-      @selenium.navigate.to "http://www.ign.com/boards"
       check_global_header_nav
       check_header_signed_in
     end

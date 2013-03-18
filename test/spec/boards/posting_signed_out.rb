@@ -5,7 +5,6 @@ require 'rest-client'
 require 'json'
 require 'boards_helper'; include BoardsHelper
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
-require 'phantom_helpers/sign_in'
 
 describe 'Boards - Posting While Not Signed In', :selenium => true do
 
