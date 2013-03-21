@@ -151,7 +151,7 @@ desc "Run Video Frontend Tests"
 RSpec::Core::RakeTask.new('videofrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = ['spec/oyster/media/video.rb',
-                 'spec/phantom/video/*.rb']
+                 'spec/phantom*.rb']
 end
 
 desc "Run Articles Frontend Tests"
@@ -164,6 +164,14 @@ desc "Run Tech frontend tests"
 RSpec::Core::RakeTask.new('techfrontend') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/oyster/media/tech.rb'
+end
+
+############# OYSTER VARNISH #############
+
+desc "Run Boards frontend tests"
+RSpec::Core::RakeTask.new('oystervarnish') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/oyster/varnish/*.rb'
 end
 
 ############# PHANTOM #############
@@ -193,6 +201,7 @@ RSpec::Core::RakeTask.new('boards') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/boards/*.rb'
 end
+
 
 ############# PERFORMANCE #############
 
