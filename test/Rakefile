@@ -157,7 +157,7 @@ desc "Run Video Frontend Tests"
 RSpec::Core::RakeTask.new('videofrontend') do |t|
     t.rspec_opts = ["-Ilib","--format documentation","--color"]
     t.pattern = ['spec/oyster/media/video.rb',
-                 'spec/phantom/video/*.rb']
+                 'spec/phantom*.rb']
 end
 
 desc "Run Articles Frontend Tests"
@@ -172,7 +172,17 @@ RSpec::Core::RakeTask.new('techfrontend') do |t|
   t.pattern = 'spec/oyster/media/tech.rb'
 end
 
+<<<<<<< HEAD
 
+=======
+############# OYSTER VARNISH #############
+
+desc "Run Boards frontend tests"
+RSpec::Core::RakeTask.new('oystervarnish') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/oyster/varnish/*.rb'
+end
+>>>>>>> master
 
 ############# PHANTOM #############
 
@@ -192,6 +202,23 @@ desc "Run Search frontend tests"
 RSpec::Core::RakeTask.new('searchpage') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/phantom/search_page.rb'
+end
+
+############# BOARDS #############
+
+desc "Run Boards frontend tests"
+RSpec::Core::RakeTask.new('boards') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/boards/*.rb'
+end
+
+
+############# PERFORMANCE #############
+
+desc "Run Boards performance tests"
+RSpec::Core::RakeTask.new('boardsperf') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'performance/boards/*.rb'
 end
 
 ############# SERVICES #############

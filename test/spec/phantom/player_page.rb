@@ -5,7 +5,7 @@ require 'rest-client'
 require 'json'
 require 'time'
 require 'open_page'; include OpenPage
-require 'video_player_page_helper'; include VideoPlayerPageHelper
+require 'phantom_helpers/video_player_page_helper'; include VideoPlayerPageHelper
 require 'widget-plus/related_videos'; include RelatedVideos
 require 'widget-plus/add_this'; include AddThis
 require 'widget-plus/disqus'; include Disqus
@@ -27,7 +27,8 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
 
     @page = "http://#{@config.options['baseurl']}#{video_page}".gsub('//www',"//#{locale}")
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-    @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+
+    @wait = Selenium::WebDriver::Wait.new(:timeout => 7)
 
     data_response = RestClient.get "http://#{@data_config.options['baseurl']}/v3/videos/slug/#{video_page.match(/[^\/]{2,}$/)}"
     @video_data = JSON.parse(data_response.body)
@@ -56,7 +57,6 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
 
   it "should open #{video_page} in #{ENV['env']}" do
     @selenium.get @page
-    sleep 5
     @selenium.current_url.should == @page
   end
 
@@ -70,13 +70,14 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
   end
 
   it "should display the correct video title" do
-    all = @selenium.find_element(:css => "div.video_details div.video_title")
+    title = @selenium.find_element(:css => "div.video_details div.video_title")
     duration = @selenium.find_element(:css => "div.video_details div.video_title span.video-duration")
     date = @selenium.find_element(:css => "div.video_details div.video_title div.sub-details")
 
-    all.displayed?.should be_true
+    title.displayed?.should be_true
 
-    all.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.downcase.should == get_api_title(@video_data)
+    title = title.text.gsub(duration.text,"").gsub(date.text,"").chomp.rstrip.downcase.gsub(/ +/, ' ')
+    title.should == get_api_title(@video_data).gsub(/ +/, ' ')
   end
 
   it "should display the duration" do
@@ -99,7 +100,7 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
 
     it "should display the playlist once" do
       @selenium.find_elements(:css => "div#video_playlist ul").count.should == 1
-      @selenium.find_element(:css => "div#video_playlist ul").displayed?.should be_true
+      @wait.until { @selenium.find_element(:css => "div#video_playlist ul").displayed? }
     end
 
     it "should correctly display the navigation text" do
@@ -607,8 +608,8 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
     end
 
     it "should display the correct video title" do
-      title = @selenium.find_element(:css => "div#object-details div.page-object-title").text.downcase
-      title.chomp.strip.should == get_api_title(@video_data)
+      title = @selenium.find_element(:css => "div#object-details div.page-object-title").text.downcase.gsub(/ +/, ' ')
+      title.chomp.strip.should == get_api_title(@video_data).gsub(/ +/, ' ')
     end
 
     it "should display the video date once" do
@@ -627,14 +628,15 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
     end
 
     it "should display the correct description" do
-
+=begin
       begin
         description = @video_data['promo']['summary'].strip
         if description.to_s.delete('^a-zA-Z0-9').length < 1; throw Exception.new end
       rescue
         description = @video_data['metadata']['description'].strip
       end
-
+=end
+      description = @video_data['metadata']['description'].strip
       desc = @selenium.find_element(:css => "div#object-details span.page-object-description").text.strip.chomp.gsub(/\s+/,' ')
       desc.should == description.strip.chomp.gsub(/\s+/,' ')
 

@@ -20,7 +20,8 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
     @page = "http://#{@config.options['baseurl']}/search?q=#{query}&special=noads".gsub('//www',"//#{locale}")
 
     @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-    @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+
+    @wait = Selenium::WebDriver::Wait.new(:timeout => 7)
 
     case locale
       when 'uk'
@@ -32,7 +33,7 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
 
     # Search using global header
     @selenium.get "http://#{@config.options['baseurl']}"+"/search?special=noads"
-    search_box = @selenium.find_element :css => 'input#ignHeader-search'
+    search_box = @wait.until { @selenium.find_element :css => 'input#ignHeader-search' }
     search_box.send_keys(query)
     search_box.submit
 
@@ -52,8 +53,7 @@ describe "Search Page (#{query}) -- #{locale.upcase}", :selenium => true do
 
   it "should open the search page in #{ENV['env']}" do
     @selenium.get @page
-    sleep 3
-    @selenium.current_url.gsub('%20',' ').should == @page
+    @wait.until { @selenium.current_url.gsub('%20',' ').should == @page }
   end
 
   context "Global Header and Nav Widget" do
