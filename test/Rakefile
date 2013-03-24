@@ -173,8 +173,11 @@ RSpec::Core::RakeTask.new('techfrontend') do |t|
 end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> master
 ############# OYSTER VARNISH #############
 
 desc "Run Boards frontend tests"
@@ -182,6 +185,9 @@ RSpec::Core::RakeTask.new('oystervarnish') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/oyster/varnish/*.rb'
 end
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 
 ############# PHANTOM #############
