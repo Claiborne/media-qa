@@ -74,6 +74,12 @@ RSpec::Core::RakeTask.new('v3search') do |t|
   t.pattern = 'spec/v3/search/*.rb'
 end
 
+desc "Run v3 promotions tests"
+RSpec::Core::RakeTask.new('v3promotions') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/promotions/get_promotions.rb'
+end
+
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"
@@ -166,6 +172,8 @@ RSpec::Core::RakeTask.new('techfrontend') do |t|
   t.pattern = 'spec/oyster/media/tech.rb'
 end
 
+
+
 ############# PHANTOM #############
 
 desc "Run All Phantom Frontend Tests"
@@ -193,6 +201,14 @@ RSpec::Core::RakeTask.new('affinityapi') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/affinity_api/*.rb'
 end
+
+############ Run Social Stage Services #############
+desc "Run social_api tests"
+task :social_api do
+  RSpec::Core::RakeTask.new('social_api') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/social_api/**/*.rb'
+  end
 
 ############# NON-SPEC SCRIPTS #############
 
@@ -289,13 +305,6 @@ RSpec::Core::RakeTask.new('ign-auth') do |t|
     t.pattern = 'spec/oyster/social/topaz_*.rb'
 end
 
-desc "Run social_api tests"
-task :social_api do
-RSpec::Core::RakeTask.new('social_api') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/social_api/**/*.rb'
-end
-end
 
 desc "Run social_test tests"
 RSpec::Core::RakeTask.new('social_test') do |t|
@@ -355,4 +364,7 @@ desc "Run Social test test"
 RSpec::Core::RakeTask.new('test_person') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/social_api/test_person.rb'
+end
+
+
 end
