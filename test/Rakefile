@@ -10,56 +10,56 @@ ENV["env"] ||= 'staging'
 
 desc "Run all tests"
 RSpec::Core::RakeTask.new('all') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = [
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = [
       'spec/oyster/media/*.rb',
       'spec/v3/*/*.rb'
-      ]  
+  ]
 end
 
 # RUN ALL FRONTEND 
 
 desc "Run all frontend tests"
 RSpec::Core::RakeTask.new('frontend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = [
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = [
       'spec/oyster/media/*.rb',
       'spec/phantom/**/*.rb'
-      ]  
+  ]
 end
 
 # RUN ALL BACKEND
 
 desc "Run all backend tests"
 RSpec::Core::RakeTask.new('backend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/**/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/**/*.rb'
 end
 
 ############# V3 ############# 
 
 desc "Run v3 tests"
 RSpec::Core::RakeTask.new('v3') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/*/*.rb' 
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/*/*.rb'
 end
 
 desc "Run v3 video tests"
 RSpec::Core::RakeTask.new('v3video') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/video/*.rb'    
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/video/*.rb'
 end
 
 desc "Run v3 articles tests"
 RSpec::Core::RakeTask.new('v3article') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/articles/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/articles/*.rb'
 end
 
 desc "Run v3 object tests"
 RSpec::Core::RakeTask.new('v3object') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v3/object/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/object/*.rb'
 end
 
 desc "Run v3 image tests"
@@ -74,18 +74,12 @@ RSpec::Core::RakeTask.new('v3search') do |t|
   t.pattern = 'spec/v3/search/*.rb'
 end
 
-desc "Run v3 promotions tests"
-RSpec::Core::RakeTask.new('v3promotions') do |t|
-  t.rspec_opts = ["-Ilib","--format documentation","--color"]
-  t.pattern = 'spec/v3/promotions/get_promotions.rb'
-end
-
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"
 RSpec::Core::RakeTask.new('oyster') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/oyster/media/*.rb'
 end
 
 desc "Run Object Pages Frontend Tests"
@@ -101,8 +95,8 @@ end
 
 desc "Run Hubs Frontend Tests"
 RSpec::Core::RakeTask.new('hubs') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/hubs.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/oyster/media/hubs.rb'
 end
 
 desc "Run Game Pages Frontend Tests"
@@ -143,27 +137,27 @@ end
 
 desc "Run Game Indices Frontend Tests"
 RSpec::Core::RakeTask.new('gameindices') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/game_indices.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/oyster/media/game_indices.rb'
 end
 
 desc "Run Images Frontend Tests"
 RSpec::Core::RakeTask.new('imagesfrontend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/images.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/oyster/media/images.rb'
 end
 
 desc "Run Video Frontend Tests"
 RSpec::Core::RakeTask.new('videofrontend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = ['spec/oyster/media/video.rb',
-                 'spec/phantom*.rb']
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = ['spec/oyster/media/video.rb',
+               'spec/phantom*.rb']
 end
 
 desc "Run Articles Frontend Tests"
 RSpec::Core::RakeTask.new('articlesfrontend') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/media/articles.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/oyster/media/articles.rb'
 end
 
 desc "Run Tech frontend tests"
@@ -171,7 +165,6 @@ RSpec::Core::RakeTask.new('techfrontend') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/oyster/media/tech.rb'
 end
-
 
 ############# OYSTER VARNISH #############
 
@@ -226,14 +219,6 @@ RSpec::Core::RakeTask.new('affinityapi') do |t|
   t.pattern = 'spec/affinity_api/*.rb'
 end
 
-############ Run Social Stage Services #############
-desc "Run social_api tests"
-task :social_api do
-  RSpec::Core::RakeTask.new('social_api') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/social_api/**/*.rb'
-  end
-
 ############# NON-SPEC SCRIPTS #############
 
 # ADD OBJECTS TO OBJECT-API NEW BUILDS OR REFRESHES
@@ -272,74 +257,81 @@ task "checklinks" do
   ruby 'spec/link_checker/*.rb'
 end
 
-############# DEPRECATED / INVALID ############# 
+############# DEPRECATED / INVALID #############
 
-desc "" 
+desc ""
 RSpec::Core::RakeTask.new('oauth2') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/topaz/oauth2/**/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/topaz/oauth2/**/*.rb'
 end
 
 desc "topaz - entitlement services"
 RSpec::Core::RakeTask.new('entitlement_services') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/topaz/entitlement_services/**/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/topaz/entitlement_services/**/*.rb'
 end
 
 
-desc "Run examples" 
+desc "Run examples"
 RSpec::Core::RakeTask.new('examples') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/examples/**/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/examples/**/*.rb'
 end
 
 desc "Run IGN stress test"
 RSpec::Core::RakeTask.new('ignstress') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/ign-perf/**/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/ign-perf/**/*.rb'
 end
 
 desc "Run v1 tests"
 RSpec::Core::RakeTask.new('v1') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/v1/**/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v1/**/*.rb'
 end
 
 desc "Run social tests"
 RSpec::Core::RakeTask.new('social') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/social/**/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/social/**/*.rb'
 end
 
 desc "Run prime tests"
 RSpec::Core::RakeTask.new('prime') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/prime/*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/prime/*.rb'
 end
 
 desc "Run Topaz tests"
 RSpec::Core::RakeTask.new('authentication-services') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/topaz/ign-auth/topaz_*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/topaz/ign-auth/topaz_*.rb'
 end
 
 desc "Run Topaz tests"
 RSpec::Core::RakeTask.new('ign-auth') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/oyster/social/topaz_*.rb'
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/oyster/social/topaz_*.rb'
 end
 
+desc "Run social_api tests"
+task :social_api do
+  RSpec::Core::RakeTask.new('social_api') do |t|
+    t.rspec_opts = ["-Ilib","--format documentation","--color"]
+    t.pattern = 'spec/social_api/**/*.rb'
+  end
+end
 
 desc "Run social_test tests"
 RSpec::Core::RakeTask.new('social_test') do |t|
-    t.rspec_opts = ["-Ilib"]
-    t.pattern = 'spec/social_test/**/*.rb'
+  t.rspec_opts = ["-Ilib"]
+  t.pattern = 'spec/social_test/**/*.rb'
 end
 
 desc "Run follow user test"
 RSpec::Core::RakeTask.new('status_oauth') do |t|
-    t.rspec_opts = ["-Ilib","--format documentation","--color"]
-    t.pattern = 'spec/social_api/status_oauth.rb'  
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/social_api/status_oauth.rb'
 end
 
 desc "Run gobID for v3 test"
@@ -388,7 +380,4 @@ desc "Run Social test test"
 RSpec::Core::RakeTask.new('test_person') do |t|
   t.rspec_opts = ["-Ilib","--format documentation","--color"]
   t.pattern = 'spec/social_api/test_person.rb'
-end
-
-
 end
