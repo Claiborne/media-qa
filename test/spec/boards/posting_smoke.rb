@@ -46,6 +46,7 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
 
     context 'Main Section' do
       check_main_section_list
+      check_main_section_links
     end
 
   end

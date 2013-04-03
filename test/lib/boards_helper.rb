@@ -40,10 +40,41 @@ module BoardsHelper
     end
   end
 
+  def check_main_section_links
+
+    it 'should not contain broken links to threads', :spam => true do
+      errors = []
+      err_msg = []
+      @selenium.find_elements(:css => "ol#forums div.categoryText a").each do |a|
+        begin
+          rest_client_not_301_open a.attribute('href').to_s
+        rescue Exception => e
+          errors << e
+          err_msg << e.message
+        end
+      end
+      raise errors[0], err_msg.to_s if errors[0]
+
+      errors = []
+      err_msg = []
+      @selenium.find_elements(:css => "ol#forums li.category ol.nodeList h3 a").each do |a|
+        begin
+          puts a.text
+          rest_client_not_301_open a.attribute('href').to_s
+          raise Exception.new "nonono"
+        rescue Exception => e
+          errors << e
+          err_msg << e.message
+        end
+      end
+      raise errors[0], err_msg.to_s if errors[0]
+    end
+  end
+
   def return_boards_list
     [
       {
-      :'ign clubhouse' => [
+      :'community central' => [
         :'the vestibule',
         :'the gcb',
         ]
@@ -56,18 +87,18 @@ module BoardsHelper
         ]
       },
       {
-        :'gaming boards' => [
+        :'gaming' => [
           :xbox,
-          :playstation,
           :nintendo,
           :pc,
+          :playstation,
           :'ios gaming',
           :gamespy,
           :'all game boards'
         ]
       },
       {
-        :'entertainment boards' => [
+        :'entertainment' => [
           :movies,
           :television,
           :comics,
@@ -76,12 +107,12 @@ module BoardsHelper
         ]
       },
       {
-        :'sports boards' => [
+        :'sports' => [
           :'sports community board',
           :baseball,
           :soccer,
-          :basketball,
           :'college basketball',
+          :basketball,
           :football,
           :'college football',
           :hockey,
@@ -90,7 +121,7 @@ module BoardsHelper
         ]
       },
       {
-        :'technology boards' => [
+        :'technology' => [
           :'apple board',
           :'android board',
           :'tech board',

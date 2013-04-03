@@ -9,7 +9,7 @@ Below are the required software and gems you need to install to run this framewo
 *** RUBY ***
 Ruby version 1.9.2 - Recommend using RVM to install and set-up Ruby http://beginrescueend.com/
 
-*** LOCAL RUBY GEMS ***
+*** LOCAL RUBY GEMS [OUTDATED] ***
 json_pure
 nokogiri
 rake

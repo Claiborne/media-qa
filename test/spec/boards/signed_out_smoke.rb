@@ -5,6 +5,7 @@ require 'rest-client'
 require 'json'
 require 'boards_helper'; include BoardsHelper
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
+require 'open_page'; include OpenPage
 
 describe 'Boards - Posting While Not Signed In', :selenium => true do
 
@@ -52,6 +53,7 @@ describe 'Boards - Posting While Not Signed In', :selenium => true do
 
     context 'Main Section' do
       check_main_section_list
+      check_main_section_links
     end
 
   end
