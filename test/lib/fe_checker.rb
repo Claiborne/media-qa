@@ -119,6 +119,16 @@ module FeChecker
       response.code.should eql(200)
     end
   end
+
+  def check_for_broken_images_se(locator)
+    #@doc.css("#{locator} img[src*='http']").each do |img|
+    @selenium.find_elements(:css => "#{locator} img").count.should > 0
+    @selenium.find_elements(:css => "#{locator} img").each do |img|
+      img_src = img.attribute('src').to_s
+      response = rest_client_open img_src
+      response.code.should eql(200)
+    end
+  end
   
   def check_links_not_301_home(locator)
     #@doc.css("#{locator} a[href*='http']").each do |a|

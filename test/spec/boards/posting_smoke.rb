@@ -4,6 +4,7 @@ require 'pathconfig'
 require 'rest-client'
 require 'json'
 require 'boards_helper'; include BoardsHelper
+require 'fe_checker'; include FeChecker
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 require 'phantom_helpers/sign_in'; include SignIn
 
@@ -33,7 +34,7 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
 
   end
 
-  context 'Sign In' do
+  context 'Sign In', :s => true do
     sign_in('/boards/')
   end
 
@@ -49,6 +50,35 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
       check_main_section_links
     end
 
-  end
+    context 'Sidebar Online Now Modules' do
+      check_sidebar_online_now
+    end
 
+    context 'Sidebar Forum Stats' do
+      check_sidebar_forum_stats
+    end
+
+    context 'Post New Thread' do
+
+      it 'should open the My IGN topic index when clicked' do
+        @selenium.find_element(:css => "ol.sectionMain").find_element(:link_text => "My IGN").click
+        @selenium.find_element(:css => 'h1').text.should == 'My IGN'
+        @selenium.current_url.match(/my-ign.80149/)
+      end
+
+      context 'Index Page for My IGN Topic' do
+
+        it "should display the top 'post new thread' button " do
+          @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread']").displayed?.should be_true
+          @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'Post New Thread'
+        end
+
+        it "should display the bottom 'post new thread' button " do
+          @selenium.find_element(:css => "div.pageNavLinkGroup a.callToAction[href*='my-ign.80149/create-thread']").displayed?.should be_true
+          @selenium.find_element(:css => "div.pageNavLinkGroup a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'Post New Thread'
+        end
+
+      end
+    end
+  end
 end

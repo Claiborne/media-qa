@@ -59,15 +59,48 @@ module BoardsHelper
       err_msg = []
       @selenium.find_elements(:css => "ol#forums li.category ol.nodeList h3 a").each do |a|
         begin
-          puts a.text
           rest_client_not_301_open a.attribute('href').to_s
-          raise Exception.new "nonono"
         rescue Exception => e
-          errors << e
-          err_msg << e.message
+          if a.attribute('href').match(/boards\/link-forums\/all-game-boards/)
+          else
+            errors << e
+            err_msg << e.message
+          end
         end
       end
       raise errors[0], err_msg.to_s if errors[0]
+    end
+  end
+
+  def check_sidebar_online_now
+    it 'should display at least 1 staff online now' do
+      @selenium.find_elements(:css => "div.staffOnline ul.followedOnline img").count.should > 0
+    end
+
+    it 'should display unbroken images for staff online now', :spam => true do
+      check_for_broken_images_se "div.staffOnline ul.followedOnline"
+    end
+
+    it 'should display at least 10 members online now' do
+      @selenium.find_elements(:css => "div.membersOnline ul.followedOnline img").count.should > 9
+    end
+
+    it 'should display unbroken images for members online now', :spam => true do
+      check_for_broken_images_se "div.membersOnline ul.followedOnline"
+    end
+  end
+
+  def check_sidebar_forum_stats
+    it 'should display more than 4,500,000 discussions' do
+      @selenium.find_element(:css => "div#boardStats dl.discussionCount dd").text.gsub(',','').to_i.should > 4500000
+    end
+
+    it 'should display more than 90,900,000 messages' do
+      @selenium.find_element(:css => "div#boardStats dl.messageCount dd").text.gsub(',','').to_i.should > 90900000
+    end
+
+    it 'should display more than 870,000 discussions' do
+      @selenium.find_element(:css => "div#boardStats dl.memberCount dd").text.gsub(',','').to_i.should > 870000
     end
   end
 

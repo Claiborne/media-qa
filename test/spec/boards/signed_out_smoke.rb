@@ -4,8 +4,9 @@ require 'pathconfig'
 require 'rest-client'
 require 'json'
 require 'boards_helper'; include BoardsHelper
-require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 require 'open_page'; include OpenPage
+require 'fe_checker'; include FeChecker
+require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 
 describe 'Boards - Posting While Not Signed In', :selenium => true do
 
@@ -54,6 +55,14 @@ describe 'Boards - Posting While Not Signed In', :selenium => true do
     context 'Main Section' do
       check_main_section_list
       check_main_section_links
+    end
+
+    context 'Sidebar Online Now Modules' do
+      check_sidebar_online_now
+    end
+
+    context 'Sidebar Forum Stats' do
+      check_sidebar_forum_stats
     end
 
   end
