@@ -182,4 +182,17 @@ module BoardsHelper
     ]
   end
 
+  class Qqq
+    @@a
+
+    def self.set_a(a)
+      @@a = a
+    end
+
+    def self.get_a
+      @@a
+    end
+
+  end
+
 end

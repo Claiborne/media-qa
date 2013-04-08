@@ -58,7 +58,7 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
       check_sidebar_forum_stats
     end
 
-    context 'Post New Thread' do
+    context 'Post New Thread', :s => true do
 
       it 'should open the My IGN topic index when clicked' do
         @selenium.find_element(:css => "ol.sectionMain").find_element(:link_text => "My IGN").click
@@ -67,16 +67,35 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
       end
 
       context 'Index Page for My IGN Topic' do
-
         it "should display the top 'post new thread' button " do
           @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread']").displayed?.should be_true
-          @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'Post New Thread'
+          @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'POST NEW THREAD'
         end
 
         it "should display the bottom 'post new thread' button " do
           @selenium.find_element(:css => "div.pageNavLinkGroup a.callToAction[href*='my-ign.80149/create-thread']").displayed?.should be_true
-          @selenium.find_element(:css => "div.pageNavLinkGroup a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'Post New Thread'
+          @selenium.find_element(:css => "div.pageNavLinkGroup a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'POST NEW THREAD'
         end
+
+        it 'should open the new thread page when clicked' do
+          @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread']").click
+          @selenium.find_element(:css => 'h1').text.should == 'Create Thread'
+          @selenium.current_url.match(/my-ign.80149\/create-thread/)
+        end
+
+      context 'Create Thread Page', :s => true do
+
+        it 'should type a title into the title field' do
+          Qqq.set_a("HELLO")
+        end
+
+        it 'should type a body into the body field' do
+          puts Qqq.get_a;puts Qqq.get_a;puts Qqq.get_a;puts Qqq.get_a
+        end
+
+        it 'should create a thread when clicked'
+
+      end
 
       end
     end
