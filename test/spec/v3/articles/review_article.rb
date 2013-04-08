@@ -11,7 +11,7 @@ include TopazToken
 
 class ArticleReviewHelper
 
-  @rand_num = Random.rand(100000-999999)
+  @rand_num = Random.rand(100000)
 
   @article_id = "ARTICLE_ID"
 
