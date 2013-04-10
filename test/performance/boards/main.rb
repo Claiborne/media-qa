@@ -11,6 +11,34 @@ http://www.ign.com/boards/threads/anyone-remember-this-a-few-months-back-ms-regi
 http://www.ign.com/boards/recent-activity/
 )
 
+puts "-- AVERAGES --".blue
+
+response_times = []
+file = File.new("/Users/wclaiborne/Desktop/boardsperf/responsetime.txt", "r")
+while (line = file.gets)
+  response_times << line.to_i
+end
+file.close
+
+dom_load_times = []
+file = File.new("/Users/wclaiborne/Desktop/boardsperf/domloaded.txt", "r")
+while (line = file.gets)
+  dom_load_times << line.to_f
+end
+file.close
+
+on_load_times = []
+file = File.new("/Users/wclaiborne/Desktop/boardsperf/onload.txt", "r")
+while (line = file.gets)
+  on_load_times << line.to_f
+end
+file.close
+
+puts "  AVG RESPONSE TIMES: #{(response_times.inject{|sum,x| sum + x })/response_times.length}".blue
+puts "  AVG DOM LOAD TIMES: #{(dom_load_times.inject{|sum,x| sum + x }).to_f/dom_load_times.length.to_f}".blue
+puts "  AVG ON LOAD TIMES: #{(on_load_times.inject{|sum,x| sum + x }).to_f/on_load_times.length.to_f}".blue
+puts ''
+
 urls.each do |url|
 
   puts url.yellow
@@ -23,21 +51,23 @@ urls.each do |url|
   #response time
   rt = timing['responseEnd'] - timing['requestStart']
   puts "    RESPONSE TIME: #{rt} MS".green
+  File.open("/Users/wclaiborne/Desktop/boardsperf/responsetime.txt", 'a') { |file| file.puts(rt) }
 
   #dom load
   dl = timing['domContentLoadedEventEnd'] - timing['navigationStart']
   puts "    DOM LOAD TIME: #{dl/1000.to_f} Seconds".green
+  File.open("/Users/wclaiborne/Desktop/boardsperf/domloaded.txt", 'a') { |file| file.puts(dl/1000.to_f) }
 
   #on load
   ol = timing['loadEventEnd'] - timing['navigationStart']
   puts "    ON LOAD TIME: #{ol/1000.to_f} Seconds".green
+  File.open("/Users/wclaiborne/Desktop/boardsperf/onload.txt", 'a') { |file| file.puts(ol/1000.to_f) }
 
   puts ''
 
   @selenium.quit
 
 end
-
 
 =begin
 puts ''
