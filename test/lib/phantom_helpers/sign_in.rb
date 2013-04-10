@@ -19,12 +19,13 @@ module SignIn
 
   end
 
-  def sign_in(r)
+  def sign_in(r, user_name='smoketest@testign.com', user_password='testpassword')
     it "should sign in" do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../config/boards.yml"
       config = PathConfig.new
       base_url = "http://#{config.options['baseurl']}"
-      do_sign_in(@selenium, 'smoketest@testign.com', 'testpassword', "#{base_url}#{r}")
+      #do_sign_in(@selenium, 'smoketest@testign.com', 'testpassword', "#{base_url}#{r}")
+      do_sign_in(@selenium, user_name, user_password, "#{base_url}#{r}")
     end
   end
 

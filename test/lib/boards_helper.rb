@@ -182,15 +182,24 @@ module BoardsHelper
     ]
   end
 
-  class Qqq
-    @@a
+  class BoardsVar
+    @@boards_var
+    @@url_var
 
-    def self.set_a(a)
-      @@a = a
+    def self.set_var(x)
+      @@boards_var = x
     end
 
-    def self.get_a
-      @@a
+    def self.get_var
+      @@boards_var
+    end
+
+    def self.set_url(x)
+      @@url_var = x
+    end
+
+    def self.get_url
+      @@url_var
     end
 
   end
