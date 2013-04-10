@@ -59,7 +59,7 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
       check_sidebar_forum_stats
     end
 
-    context 'Post New Thread' do
+    describe 'Post New Thread' do
 
       it 'should open the My IGN topic index when clicked' do
         @selenium.find_element(:css => "ol.sectionMain").find_element(:link_text => "My IGN").click
@@ -136,7 +136,7 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
       end
     end
 
-    context 'Clean Up / Delete' do
+    describe 'Clean Up / Delete' do
 
       it 'should prepare clean up' do
         @selenium.get "http://s.ign.com/signout"
