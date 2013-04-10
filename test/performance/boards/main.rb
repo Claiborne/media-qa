@@ -3,7 +3,6 @@ require 'colorize'
 
 urls = %w(
 http://www.ign.com/boards
-http://www.ign.com
 http://www.ign.com/boards/forums/the-vestibule.5296/
 http://www.ign.com/boards/forums/xbox.8271/
 http://www.ign.com/boards/threads/the-bad-changes-to-halo-4-by-343-industries.452950011/
