@@ -8,7 +8,7 @@ require 'open_page'; include OpenPage
 require 'fe_checker'; include FeChecker
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 
-describe 'Boards - Posting While Not Signed In', :selenium => true do
+describe 'Boards - Browsing While Not Signed In', :selenium => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../config/boards.yml"
