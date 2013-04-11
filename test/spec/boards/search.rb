@@ -8,7 +8,7 @@ require 'fe_checker'; include FeChecker
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 require 'phantom_helpers/sign_in'; include SignIn
 
-describe 'Boards - Search Functionality', :selenium => true do
+describe 'Boards - Search', :selenium => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../config/boards.yml"
@@ -72,7 +72,7 @@ describe 'Boards - Search Functionality', :selenium => true do
       end
     end
 
-    it 'should not contain any broken or 301 links to threads' do
+    it 'should not contain any broken or 301 links to threads', :spam => true do
       @selenium.find_elements(:css => "li.searchResult.thread.primaryContent h3.title a").each do |l|
         resp = rest_client_not_301_open l.attribute('href').to_s
         page = Nokogiri::HTML(resp)

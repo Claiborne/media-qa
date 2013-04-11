@@ -59,166 +59,170 @@ describe 'Boards - Posting and Replying', :selenium => true do
       check_sidebar_forum_stats
     end
 
-    describe 'Post New Thread' do
+  end
 
-      it 'should open the My IGN topic index when clicked' do
-        @selenium.find_element(:css => "ol.sectionMain").find_element(:link_text => "My IGN").click
-        @selenium.find_element(:css => 'h1').text.should == 'My IGN'
-        @selenium.current_url.match(/my-ign.80149/)
-      end
+  describe 'Post New Thread' do
 
-      context 'Index Page for My IGN Topic' do
-        it "should display the top 'post new thread' button " do
-          @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread']").displayed?.should be_true
-          @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'POST NEW THREAD'
-        end
-
-        it "should display the bottom 'post new thread' button " do
-          @selenium.find_element(:css => "div.pageNavLinkGroup a.callToAction[href*='my-ign.80149/create-thread']").displayed?.should be_true
-          @selenium.find_element(:css => "div.pageNavLinkGroup a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'POST NEW THREAD'
-        end
-
-        it 'should open the new thread page when clicked' do
-          @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread']").click
-          @wait.until {@selenium.find_element(:css => 'h1')}
-          @selenium.find_element(:css => 'h1').text.should == 'Create Thread'
-          @selenium.current_url.match(/my-ign.80149\/create-thread/)
-        end
-
-      context 'Create Thread Page' do
-
-        it 'should type a title into the title field' do
-          r = BoardsVar.set_var Random.rand(1000000000).to_s
-          title = "QA Test #{r}"
-          @selenium.find_element(:css => "input#ctrl_title_thread_create").send_keys title
-
-        end
-
-        it 'should type a body into the body field' do
-          body = "Test body #{BoardsVar.get_var}"
-          @selenium.switch_to.frame("ctrl_message_html_ifr")
-          @selenium.find_element(:id => 'tinymce').send_keys body
-          @selenium.switch_to.default_content
-          sleep 1
-        end
-
-        it 'should create a thread when clicked' do
-          @selenium.find_element(:css => 'input.primary.button').click
-          @wait.until {@selenium.current_url.to_s.match(/threads\/qa-test-.../)}
-          BoardsVar.set_url @selenium.current_url.to_s
-        end
-
-      end
-
-      context 'View Thread Page' do
-
-        it 'should display the correct title' do
-          @selenium.find_element(:css => 'h1').text.should == "QA Test #{BoardsVar.get_var}"
-        end
-
-        it 'should display the correct body' do
-          @selenium.find_element(:css => 'div.messageContent blockquote.messageText').text.should == "Test body #{BoardsVar.get_var}"
-        end
-
-      end
-
-      context 'Index Page for My IGN Topic' do
-
-        it 'should display the post' do
-          @selenium.find_element(:css => "div.breadBoxTop a[href*='/forums/my-ign']").click
-          @wait.until { @selenium.find_element(:link_text => "QA Test #{BoardsVar.get_var}") }
-        end
-
-      end
-
-      end
+    it 'should open the My IGN topic index when clicked' do
+      @selenium.find_element(:css => "ol.sectionMain").find_element(:link_text => "My IGN").click
+      @selenium.find_element(:css => 'h1').text.should == 'My IGN'
+      @selenium.current_url.match(/my-ign.80149/)
     end
 
-    describe 'Reply To Thread' do
-
-      it 'should sign out the current user' do
-        @selenium.get "http://s.ign.com/signout"
+    context 'Index Page for My IGN Topic' do
+      it "should display the top 'post new thread' button " do
+        @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread']").displayed?.should be_true
+        @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'POST NEW THREAD'
       end
 
-      sign_in('/boards/','qatest@testign.com','testpassword')
+      it "should display the bottom 'post new thread' button " do
+        @selenium.find_element(:css => "div.pageNavLinkGroup a.callToAction[href*='my-ign.80149/create-thread']").displayed?.should be_true
+        @selenium.find_element(:css => "div.pageNavLinkGroup a.callToAction[href*='my-ign.80149/create-thread'] span").text.should == 'POST NEW THREAD'
+      end
 
-      context 'View Thread Page' do
+      it 'should open the new thread page when clicked' do
+        @selenium.find_element(:css => "div.breadBoxTop a.callToAction[href*='my-ign.80149/create-thread']").click
+        @wait.until {@selenium.find_element(:css => 'h1')}
+        @selenium.find_element(:css => 'h1').text.should == 'Create Thread'
+        @selenium.current_url.match(/my-ign.80149\/create-thread/)
+      end
 
-        it 'should open the newly created thread' do
-          @selenium.get BoardsVar.get_url
-        end
+    context 'Create Thread Page' do
 
-        it 'should display the correct title' do
-          @selenium.find_element(:css => 'h1').text.should == "QA Test #{BoardsVar.get_var}"
-        end
+      it 'should type a title into the title field' do
+        r = BoardsVar.set_var Random.rand(1000000000).to_s
+        title = "QA Test #{r}"
+        @selenium.find_element(:css => "input#ctrl_title_thread_create").send_keys title
 
-        it 'should display the correct body' do
-          @selenium.find_element(:css => 'div.messageContent blockquote.messageText').text.should == "Test body #{BoardsVar.get_var}"
-        end
+      end
 
-        it 'should type a reply' do
-          reply = "Test reply #{BoardsVar.get_var}"
-          @selenium.switch_to.frame("ctrl_message_html_ifr")
-          @selenium.find_element(:id => 'tinymce').send_keys reply
-          @selenium.switch_to.default_content
-          sleep 1
-        end
+      it 'should type a body into the body field' do
+        body = "Test body #{BoardsVar.get_var}"
+        @selenium.switch_to.frame("ctrl_message_html_ifr")
+        @selenium.find_element(:id => 'tinymce').send_keys body
+        @selenium.switch_to.default_content
+        sleep 1
+      end
 
-        it 'should create a reply when clicked' do
-          discussion_count = @selenium.find_elements(:css => 'ol.messageList li.message').count
-          @selenium.find_element(:css => "div.submitUnit input[value='Post Reply']").click
-          @wait.until { @selenium.find_elements(:css => 'ol.messageList li.message').count == discussion_count+1}
-        end
-
-        it 'should still display the reply upon refresh' do
-          @selenium.navigate.refresh
-          messages = []
-          @selenium.find_elements(:css => 'ol.messageList li.message blockquote.messageText').each do |msg|
-            messages << msg.text
-          end
-          messages.should include("Test reply #{BoardsVar.get_var}")
-        end
-
+      it 'should create a thread when clicked' do
+        @selenium.find_element(:css => 'input.primary.button').click
+        @wait.until {@selenium.current_url.to_s.match(/threads\/qa-test-.../)}
+        BoardsVar.set_url @selenium.current_url.to_s
       end
 
     end
 
-    describe 'Alerts' do
+    context 'View Thread Page' do
 
-      it 'should sign out the current user' do
-        @selenium.get "http://s.ign.com/signout"
+      it 'should display the correct title' do
+        @selenium.find_element(:css => 'h1').text.should == "QA Test #{BoardsVar.get_var}"
       end
 
-      sign_in('/boards/','smoketest@testign.com','testpassword')
-
-      it 'should display at least one new alert in the boards header' do
-        @selenium.find_element(:css => 'div.mainNavigation span.navTab.alerts span.Total').text.to_i.should > 0
+      it 'should display the correct body' do
+        @selenium.find_element(:css => 'div.messageContent blockquote.messageText').text.should == "Test body #{BoardsVar.get_var}"
       end
 
     end
 
-    describe 'Clean Up / Delete' do
+    context 'Index Page for My IGN Topic' do
 
-      it 'should prepare clean up' do
-        @selenium.get "http://s.ign.com/signout"
+      it 'should display the post' do
+        @selenium.find_element(:css => "div.breadBoxTop a[href*='/forums/my-ign']").click
+        @wait.until { @selenium.find_element(:link_text => "QA Test #{BoardsVar.get_var}") }
       end
 
-      sign_in('/boards/','williamjclaiborne@hotmail.com','gkastle')
+    end
 
+    end
+  end
 
-      it 'should delete the post just created' do
+  describe 'Reply To Thread' do
+
+    it 'should sign out the current user' do
+      @selenium.get "http://s.ign.com/signout"
+    end
+
+    sign_in('/boards/','qatest@testign.com','testpassword')
+
+    context 'View Thread Page' do
+
+      it 'should open the newly created thread' do
         @selenium.get BoardsVar.get_url
-        @selenium.find_element(:css => "a[class='item control delete OverlayTrigger']").click
-        @wait.until { @selenium.find_element(:css => "div.xenOverlay input#ctrl_hard_delete") }
-        @selenium.find_element(:css => "div.xenOverlay input#ctrl_hard_delete").click
-        @selenium.find_element(:css => "dl.ctrlUnit.submitUnit input[value='Delete Post']").click
       end
 
-      it 'should have deleted listing on the My IGN index page' do
-        @wait.until { @selenium.current_url.to_s.match(/forums\/my-ign.../) }
-        expect {  @selenium.find_element(:link_text => "QA Test #{BoardsVar.get_var}") }.to raise_error(Selenium::WebDriver::Error::NoSuchElementError)
+      it 'should display the correct title' do
+        @selenium.find_element(:css => 'h1').text.should == "QA Test #{BoardsVar.get_var}"
       end
 
+      it 'should display the correct body' do
+        @selenium.find_element(:css => 'div.messageContent blockquote.messageText').text.should == "Test body #{BoardsVar.get_var}"
+      end
+
+      it 'should type a reply' do
+        reply = "Test reply #{BoardsVar.get_var}"
+        @selenium.switch_to.frame("ctrl_message_html_ifr")
+        @selenium.find_element(:id => 'tinymce').send_keys reply
+        @selenium.switch_to.default_content
+        sleep 1
+      end
+
+      it 'should create a reply when clicked' do
+        discussion_count = @selenium.find_elements(:css => 'ol.messageList li.message').count
+        @selenium.find_element(:css => "div.submitUnit input[value='Post Reply']").click
+        @wait.until { @selenium.find_elements(:css => 'ol.messageList li.message').count == discussion_count+1}
+      end
+
+      it 'should still display the reply upon refresh' do
+        @selenium.navigate.refresh
+        messages = []
+        @selenium.find_elements(:css => 'ol.messageList li.message blockquote.messageText').each do |msg|
+          messages << msg.text
+        end
+        messages.should include("Test reply #{BoardsVar.get_var}")
+      end
+
+    end
+
+  end
+
+  describe 'Alerts' do
+
+    it 'should sign out the current user' do
+      @selenium.get "http://s.ign.com/signout"
+    end
+
+    sign_in('/boards/','smoketest@testign.com','testpassword')
+
+    it 'should display one new alert in the boards header' do
+      @selenium.find_element(:css => 'div.mainNavigation span.navTab.alerts span.Total').text.to_i.should == 1
+    end
+
+    it 'should clear alerts' do
+      @selenium.action.move_to(@selenium.find_element :css => 'div.mainNavigation span.navTab.alerts a').perform
+    end
+
+  end
+
+  describe 'Clean Up / Delete' do
+
+    it 'should prepare clean up' do
+      @selenium.get "http://s.ign.com/signout"
+    end
+
+    sign_in('/boards/','williamjclaiborne@hotmail.com','gkastle')
+
+
+    it 'should delete the post just created' do
+      @selenium.get BoardsVar.get_url
+      @selenium.find_element(:css => "a[class='item control delete OverlayTrigger']").click
+      @wait.until { @selenium.find_element(:css => "div.xenOverlay input#ctrl_hard_delete") }
+      @selenium.find_element(:css => "div.xenOverlay input#ctrl_hard_delete").click
+      @selenium.find_element(:css => "dl.ctrlUnit.submitUnit input[value='Delete Post']").click
+    end
+
+    it 'should have deleted listing on the My IGN index page' do
+      @wait.until { @selenium.current_url.to_s.match(/forums\/my-ign.../) }
+      expect {  @selenium.find_element(:link_text => "QA Test #{BoardsVar.get_var}") }.to raise_error(Selenium::WebDriver::Error::NoSuchElementError)
     end
 
   end
