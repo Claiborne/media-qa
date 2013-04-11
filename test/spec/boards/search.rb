@@ -72,6 +72,12 @@ describe 'Boards - Search Functionality', :selenium => true do
       end
     end
 
+    it 'should not contain any broken or 301 links to threads' do
+      @selenium.find_elements(:css => "li.searchResult.thread.primaryContent h3.title a").each do |l|
+        rest_client_not_301_open l.attribute('href').to_s
+      end
+    end
+
   end
 
 end
