@@ -8,7 +8,7 @@ require 'fe_checker'; include FeChecker
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 require 'phantom_helpers/sign_in'; include SignIn
 
-describe 'Boards - Smoke Test for Posting', :selenium => true do
+describe 'Boards - Posting and Replying', :selenium => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../config/boards.yml"
@@ -96,12 +96,10 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
 
         it 'should type a body into the body field' do
           body = "Test body #{BoardsVar.get_var}"
-
           @selenium.switch_to.frame("ctrl_message_html_ifr")
           @selenium.find_element(:id => 'tinymce').send_keys body
           @selenium.switch_to.default_content
           sleep 1
-
         end
 
         it 'should create a thread when clicked' do
@@ -136,6 +134,55 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
       end
     end
 
+    describe 'Reply To Thread' do
+
+      it 'should sign out the current user' do
+        @selenium.get "http://s.ign.com/signout"
+      end
+
+      sign_in('/boards/','qatest@testign.com','testpassword')
+
+      context 'View Thread Page' do
+
+        it 'should open the newly created thread' do
+          @selenium.get BoardsVar.get_url
+        end
+
+        it 'should display the correct title' do
+          @selenium.find_element(:css => 'h1').text.should == "QA Test #{BoardsVar.get_var}"
+        end
+
+        it 'should display the correct body' do
+          @selenium.find_element(:css => 'div.messageContent blockquote.messageText').text.should == "Test body #{BoardsVar.get_var}"
+        end
+
+        it 'should type a reply' do
+          reply = "Test reply #{BoardsVar.get_var}"
+          @selenium.switch_to.frame("ctrl_message_html_ifr")
+          @selenium.find_element(:id => 'tinymce').send_keys reply
+          @selenium.switch_to.default_content
+          sleep 1
+        end
+
+        it 'should create a reply when clicked' do
+          discussion_count = @selenium.find_elements(:css => 'ol.messageList li.message').count
+          @selenium.find_element(:css => "div.submitUnit input[value='Post Reply']").click
+          @wait.until { @selenium.find_elements(:css => 'ol.messageList li.message').count == discussion_count+1}
+        end
+
+        it 'should still display the reply upon refresh' do
+          @selenium.navigate.refresh
+          messages = []
+          @selenium.find_elements(:css => 'ol.messageList li.message blockquote.messageText').each do |msg|
+            messages << msg.text
+          end
+          messages.should include("Test reply #{BoardsVar.get_var}")
+        end
+
+      end
+
+    end
+
     describe 'Clean Up / Delete' do
 
       it 'should prepare clean up' do
@@ -143,6 +190,7 @@ describe 'Boards - Smoke Test for Posting', :selenium => true do
       end
 
       sign_in('/boards/','williamjclaiborne@hotmail.com','gkastle')
+
 
       it 'should delete the post just created' do
         @selenium.get BoardsVar.get_url
