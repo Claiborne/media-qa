@@ -8,7 +8,7 @@ require 'fe_checker'; include FeChecker
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 require 'phantom_helpers/sign_in'; include SignIn
 
-describe 'Boards - Posting and Replying', :selenium => true do
+describe 'Boards - Posting and Replying', :selenium => true, :s => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../config/boards.yml"
@@ -179,6 +179,20 @@ describe 'Boards - Posting and Replying', :selenium => true do
           messages.should include("Test reply #{BoardsVar.get_var}")
         end
 
+      end
+
+    end
+
+    describe 'Alerts' do
+
+      it 'should sign out the current user' do
+        @selenium.get "http://s.ign.com/signout"
+      end
+
+      sign_in('/boards/','smoketest@testign.com','testpassword')
+
+      it 'should display at least one new alert in the boards header' do
+        @selenium.find_element(:css => 'div.mainNavigation span.navTab.alerts span.Total').text.to_i.should > 0
       end
 
     end
