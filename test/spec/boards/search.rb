@@ -8,7 +8,7 @@ require 'fe_checker'; include FeChecker
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
 require 'phantom_helpers/sign_in'; include SignIn
 
-describe 'Boards - Search Functionality', :selenium => true, :s=>true do
+describe 'Boards - Search Functionality', :selenium => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../config/boards.yml"
