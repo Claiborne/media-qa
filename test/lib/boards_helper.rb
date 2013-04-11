@@ -1,5 +1,7 @@
 module BoardsHelper
 
+  require 'nokogiri'
+
   def check_sidebar_log_in
 
     it "should display", :spam => true do
@@ -47,11 +49,13 @@ module BoardsHelper
       err_msg = []
       @selenium.find_elements(:css => "ol#forums div.categoryText a").each do |a|
         begin
-          rest_client_not_301_open a.attribute('href').to_s
+          resp = rest_client_not_301_open a.attribute('href').to_s
         rescue Exception => e
           errors << e
           err_msg << e.message
         end
+        page = Nokogiri::HTML(resp)
+        page.css("body").text.delete('^a-z').length.should > 0
       end
       raise errors[0], err_msg.to_s if errors[0]
 
@@ -59,13 +63,18 @@ module BoardsHelper
       err_msg = []
       @selenium.find_elements(:css => "ol#forums li.category ol.nodeList h3 a").each do |a|
         begin
-          rest_client_not_301_open a.attribute('href').to_s
+          resp = rest_client_not_301_open a.attribute('href').to_s
         rescue Exception => e
           if a.attribute('href').match(/boards\/link-forums\/all-game-boards/)
           else
             errors << e
             err_msg << e.message
           end
+        end
+        if a.attribute('href').match(/boards\/link-forums\/all-game-boards/)
+        else
+          page = Nokogiri::HTML(resp)
+          page.css("body").text.delete('^a-z').length.should > 0
         end
       end
       raise errors[0], err_msg.to_s if errors[0]
