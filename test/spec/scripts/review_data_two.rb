@@ -19,7 +19,7 @@ wordpress_preview_urls = []
 
 def ent_review_articles
   {"matchRule"=>"matchAll",
-   "count"=>30,
+   "count"=>40,
    "startIndex"=>0,
    "networks"=>"ign",
    "states"=>"published",
