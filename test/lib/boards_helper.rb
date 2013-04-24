@@ -73,10 +73,10 @@ module BoardsHelper
         end
         if a.attribute('href').match(/boards\/link-forums\/all-game-boards/)
         else
-          page = Nokogiri::HTML(resp)
-          page.css("body").text.delete('^a-z').length.should > 0
+          Nokogiri::HTML(resp)
         end
       end
+      puts errors.to_s
       raise errors[0], err_msg.to_s if errors[0]
     end
   end
