@@ -26,7 +26,7 @@ def ent_review_articles
    "rules"=>[
        {"field"=>"tags.slug",
         "condition"=>"containsNone",
-        "value"=>"games"
+        "value"=>"games,game"
        },
        {"field"=>"metadata.articleType",
         "condition"=>"is",
@@ -48,7 +48,7 @@ def ent_preview_articles
    "rules"=>[
        {"field"=>"tags.slug",
         "condition"=>"containsNone",
-        "value"=>"games"
+        "value"=>"games,game"
        },
        {"field"=>"metadata.articleType",
         "condition"=>"is",

@@ -11,13 +11,10 @@ def game_review_articles
    "networks"=>"ign",
    "states"=>"published",
    "rules"=>[
-       {"field"=>"tags",
-        "rules"=>[
-            {
-                "field"=>"tags.slug",
-                "condition"=>"is",
-                "value"=>"games"},
-        ]
+       {
+       "field"=>"tags.slug",
+       "condition"=>"containsOne",
+       "value"=>"games,game"
        },
        {"field"=>"metadata.articleType",
         "condition"=>"is",
@@ -37,13 +34,10 @@ def game_preview_articles
    "networks"=>"ign",
    "states"=>"published",
    "rules"=>[
-       {"field"=>"tags",
-        "rules"=>[
-            {
-                "field"=>"tags.slug",
-                "condition"=>"is",
-                "value"=>"games"},
-        ]
+       {
+       "field"=>"tags.slug",
+       "condition"=>"containsOne",
+       "value"=>"games,game"
        },
        {"field"=>"metadata.articleType",
         "condition"=>"is",
@@ -66,6 +60,7 @@ response = RestClient.get url
 data = JSON.parse(response.body)
 data['data'].each do |article|
 
+  puts 'checking'
 
   objectRelations = []
   objectRelations = article["legacyData"]["objectRelations"]
@@ -133,6 +128,8 @@ url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
 response = RestClient.get url
 data = JSON.parse(response.body)
 data['data'].each do |article|
+
+  puts 'checking'
 
   objectRelations = []
   objectRelations = article["legacyData"]["objectRelations"]
