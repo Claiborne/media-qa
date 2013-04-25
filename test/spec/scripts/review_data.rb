@@ -60,8 +60,6 @@ response = RestClient.get url
 data = JSON.parse(response.body)
 data['data'].each do |article|
 
-  puts 'checking'
-
   objectRelations = []
   objectRelations = article["legacyData"]["objectRelations"]
 
@@ -128,8 +126,6 @@ url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
 response = RestClient.get url
 data = JSON.parse(response.body)
 data['data'].each do |article|
-
-  puts 'checking'
 
   objectRelations = []
   objectRelations = article["legacyData"]["objectRelations"]
