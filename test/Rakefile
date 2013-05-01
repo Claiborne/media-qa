@@ -74,6 +74,12 @@ RSpec::Core::RakeTask.new('v3search') do |t|
   t.pattern = 'spec/v3/search/*.rb'
 end
 
+desc "Run v3 redirect tests"
+RSpec::Core::RakeTask.new('v3redirect') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/redirect/*.rb'
+end
+
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"
