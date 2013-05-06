@@ -65,13 +65,13 @@ describe "V3 Boards API -- General Gets -- /boards" do
 
   it "should have a 'primaryLegacyId' field for each board" do
     @data['data'].each do |b|
-      b['primaryLegacyId']
+      b['primaryLegacyId'].should be_true
     end
   end
 
   it "should have a 'relatedLegacyIds' field for each board" do
     @data['data'].each do |b|
-      b['relatedLegacyIds']
+      b['relatedLegacyIds'].should be_true
     end
   end
 
@@ -141,13 +141,13 @@ describe "V3 Boards API -- General Gets -- /boards?count=200&startIndex=199" do
 
   it "should have a 'primaryLegacyId' field for each board" do
     @data['data'].each do |b|
-      b['primaryLegacyId']
+      b['primaryLegacyId'].should be_true
     end
   end
 
   it "should have a 'relatedLegacyIds' field for each board" do
     @data['data'].each do |b|
-      b['relatedLegacyIds']
+      b['relatedLegacyIds'].should be_true
     end
   end
 
