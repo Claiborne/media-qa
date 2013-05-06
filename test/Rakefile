@@ -80,6 +80,12 @@ RSpec::Core::RakeTask.new('v3redirect') do |t|
   t.pattern = 'spec/v3/redirect/*.rb'
 end
 
+desc "Run v3 boards tests"
+RSpec::Core::RakeTask.new('v3board') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/boards/*.rb'
+end
+
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"

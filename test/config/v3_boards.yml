@@ -1,0 +1,8 @@
+development:
+  baseurl:
+
+staging:
+  baseurl: apis.stg.ign.com/board/v3
+
+production:
+  baseurl: apis.lan.ign.com/board/v3
