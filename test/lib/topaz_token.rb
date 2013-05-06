@@ -6,6 +6,8 @@ require 'rest_client'
   # FOR PRODUCTION MAKE A POST REQUEST TO THIS URL:
   # http://secure.ign.com/v3/authorization/oauth/token?grant_type=client_credentials&client_id=4e972e6be4b0a23ca6e1f2e6&client_secret=abc123
 
+  # SCOPE: ["authorization-config","playlists","read","authentication-user","articles","canSeeAll","authorization-client","entitlements-config","promotions","authentication-login","entitlements-set","authentication-ticket","videos","objects","images","write","social-ratings","redirect"]
+
   def self.initial
     file = File.new(File.dirname(__FILE__) + "/../config/topaz_token.txt", "r")
     @token = file.gets.to_s
