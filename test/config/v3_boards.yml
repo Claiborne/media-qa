@@ -6,3 +6,6 @@ staging:
 
 production:
   baseurl: apis.lan.ign.com/board/v3
+
+aws:
+  baseurl: 10.97.64.101:8082/board/v3

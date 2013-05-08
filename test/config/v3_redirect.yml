@@ -6,3 +6,6 @@ staging:
 
 production:
   baseurl: apis.lan.ign.com/redirect/v3
+
+aws:
+  baseurl: 10.97.64.101:8080/redirect/v3

@@ -6,3 +6,6 @@ staging:
 
 production:
   baseurl: apis.lan.ign.com/wiki/v3
+
+aws:
+  baseurl: 10.97.64.101:8081/wiki/v3
