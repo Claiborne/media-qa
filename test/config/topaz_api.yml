@@ -8,5 +8,5 @@ production:
   baseurl: secure.ign.com
 
 aws:
-  baseurl: secure-stg.ign.com
+  baseurl: secure.ign.com
 
