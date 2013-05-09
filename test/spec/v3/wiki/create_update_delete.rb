@@ -41,16 +41,22 @@ module WikiHelper
   end
 
   def self.update_wiki_first
-
-  end
-
-  def self.update_wiki_second
-
+    {
+      :slug=>"media-qa-test-wiki-#{@rand_num1}-edited",
+      :mediawikiUrl=>"media-qa-test-wiki-#{@rand_num1}-edited",
+      :wikiName=>"Media QA Test Wiki #{@rand_num1} Edited",
+      :hidden=>false,
+      :staff=>false,
+      :locked=>false,
+      :static=>false,
+      :hasMap=>false,
+      :hasPokedex=>false
+    }
   end
 
 end
 
-describe "V3 Wiki API -- Create A Wiki", :stg1 => true do
+describe "V3 Wiki API -- Create A Wiki", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
@@ -85,7 +91,7 @@ describe "V3 Wiki API -- Create A Wiki", :stg1 => true do
   end end
 end
 
-describe "V3 Wiki API -- Get Wiki Just Created", :stg1 => true do
+describe "V3 Wiki API -- Get Wiki Just Created", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
@@ -118,7 +124,45 @@ describe "V3 Wiki API -- Get Wiki Just Created", :stg1 => true do
 
 end
 
-describe "V3 Wiki API -- Delete A Wiki", :stg1 => true do
+describe "V3 Wiki API -- Update A Wiki", :stg => true do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
+    @config = PathConfig.new
+    @url = "http://10.97.64.101:8081/wiki/v3/wikis/#{WikiHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
+    begin
+      @response = RestClient.put @url, WikiHelper.update_wiki_first.to_json, :content_type => "application/json"
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    @response.code.should == 200
+    sleep 2
+  end
+
+  it 'should return the updated values' do
+    url = "http://10.97.64.101:8081/wiki/v3/wikis/#{WikiHelper::Vars.get_id}?fresh=true"
+    res = RestClient.get url
+    data = JSON.parse(res.body)
+    {:slug=>WikiHelper.update_wiki_first[:slug], :mediawikiUrl=>WikiHelper.update_wiki_first[:mediawikiUrl], :wikiName=>WikiHelper.update_wiki_first[:wikiName]}.each do |k,v|
+      data[k.to_s].should == v
+    end
+  end
+
+end
+
+describe "V3 Wiki API -- Delete A Wiki", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
@@ -154,7 +198,7 @@ describe "V3 Wiki API -- Delete A Wiki", :stg1 => true do
 
 end
 
-describe "V3 Wiki API -- Confirm Delete A Wiki Using '/ID'", :stg1 => true do
+describe "V3 Wiki API -- Confirm Delete A Wiki Using '/ID'", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
