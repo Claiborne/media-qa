@@ -35,7 +35,7 @@ module RedirectHelper
 
 end
 
-describe "V3 Redirect API -- Add A Redirect", :stg => true do
+describe "V3 Redirect API -- Create A Redirect", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_redirect.yml"

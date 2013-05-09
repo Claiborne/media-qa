@@ -68,7 +68,7 @@ module BoardsHelper
 
 end
 
-describe "V3 Boards API -- Add A Board", :stg => true do
+describe "V3 Boards API -- Create A Board", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
