@@ -68,7 +68,7 @@ module BoardsHelper
 
 end
 
-describe "V3 Boards API -- Add A Board", :stg1 => true do
+describe "V3 Boards API -- Add A Board", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
@@ -111,7 +111,7 @@ describe "V3 Boards API -- Add A Board", :stg1 => true do
 
 end
 
-describe "V3 Boards API -- Update A Board", :stg1 => true do
+describe "V3 Boards API -- Update A Board", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
@@ -148,7 +148,7 @@ describe "V3 Boards API -- Update A Board", :stg1 => true do
 
 end
 
-describe "V3 Boards API -- Update A Board A Second Time", :stg1 => true do
+describe "V3 Boards API -- Update A Board A Second Time", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
@@ -184,7 +184,7 @@ describe "V3 Boards API -- Update A Board A Second Time", :stg1 => true do
 
 end
 
-describe "V3 Boards API -- Delete A Board", :stg1 => true do
+describe "V3 Boards API -- Delete A Board", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
@@ -220,7 +220,7 @@ describe "V3 Boards API -- Delete A Board", :stg1 => true do
 
 end
 
-describe "V3 Boards API -- Confirm Delete A Board Using '/ID'", :stg1 => true do
+describe "V3 Boards API -- Confirm Delete A Board Using '/ID'", :stg => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
