@@ -68,7 +68,7 @@ module BoardsHelper
 
 end
 
-describe "V3 Boards API -- Add A Board", :stg => true do
+describe "V3 Boards API -- Add A Board", :stg1 => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
@@ -111,7 +111,48 @@ describe "V3 Boards API -- Add A Board", :stg => true do
 
 end
 
-describe "V3 Boards API -- Update A Board", :stg => true do
+describe "V3 Boards API -- Get Board Just Created", :stg1 => true do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
+    @config = PathConfig.new
+    TopazToken.set_token('boards-admin')
+    @url = "http://10.97.64.101:8082/board/v3/boards/#{BoardsHelper::Vars.get_id}"
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  it "should return 200" do
+    @response.code.should == 200
+  end
+
+  it 'should return the appropriate xenforoId value' do
+    @data['xenforoId'].should == BoardsHelper.new_board[:xenforoId]
+  end
+
+  it 'should return the appropriate primaryLegacyId value' do
+    @data['primaryLegacyId'].should == BoardsHelper.new_board[:primaryLegacyId]
+  end
+
+  it 'should return the appropriate relatedLegacyIds value' do
+    @data['relatedLegacyIds'].should == BoardsHelper.new_board[:relatedLegacyIds]
+  end
+
+end
+
+describe "V3 Boards API -- Update A Board", :stg1 => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
@@ -148,7 +189,7 @@ describe "V3 Boards API -- Update A Board", :stg => true do
 
 end
 
-describe "V3 Boards API -- Update A Board A Second Time", :stg => true do
+describe "V3 Boards API -- Update A Board A Second Time", :stg1 => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
@@ -184,7 +225,7 @@ describe "V3 Boards API -- Update A Board A Second Time", :stg => true do
 
 end
 
-describe "V3 Boards API -- Delete A Board", :stg => true do
+describe "V3 Boards API -- Delete A Board", :stg1 => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
@@ -220,7 +261,7 @@ describe "V3 Boards API -- Delete A Board", :stg => true do
 
 end
 
-describe "V3 Boards API -- Confirm Delete A Board Using '/ID'", :stg => true do
+describe "V3 Boards API -- Confirm Delete A Board Using '/ID'", :stg1 => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
