@@ -8,4 +8,7 @@ production:
   baseurl: apis.lan.ign.com/board/v3
 
 aws:
+  baseurl: internal-media-apis-boards-80200747.us-east-1.elb.amazonaws.com/board/v3
+
+aws-1:
   baseurl: 10.97.64.101:8082/board/v3

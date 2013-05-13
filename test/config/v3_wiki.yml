@@ -8,4 +8,7 @@ production:
   baseurl: apis.lan.ign.com/wiki/v3
 
 aws:
+  baseurl: internal-media-apis-wiki-1691272922.us-east-1.elb.amazonaws.com/wiki/v3
+
+aws-1:
   baseurl: 10.97.64.101:8081/wiki/v3

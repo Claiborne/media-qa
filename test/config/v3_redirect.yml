@@ -8,4 +8,10 @@ production:
   baseurl: apis.lan.ign.com/redirect/v3
 
 aws:
+  baseurl: internal-media-apis-redirect-29707402.us-east-1.elb.amazonaws.com/redirect/v3
+
+aws-1:
   baseurl: 10.97.64.101:8080/redirect/v3
+
+aws-2:
+  baseurl: 10.97.67.140:8080/redirect/v3
