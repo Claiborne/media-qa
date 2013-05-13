@@ -56,7 +56,7 @@ describe "V3 Redirect API -- General Gets -- /redirects?from=#{r}" do
 
 end end
 
-describe "V3 Redirect API -- General Gets -- /redirects?from=ID", :stg => true do
+describe "V3 Redirect API -- General Gets -- /redirects?from=ID", :stg1 => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_redirect.yml"

@@ -11,8 +11,10 @@ http://www.ign.com/boards/threads/anyone-remember-this-a-few-months-back-ms-regi
 http://www.ign.com/boards/recent-activity/
 )
 
-puts "-- AVERAGES --".blue
+urls = %w(http://internal-media-apis-boards-80200747.us-east-1.elb.amazonaws.com/board/v3/boards/legacyId/229 http://internal-media-apis-boards-80200747.us-east-1.elb.amazonaws.com/board/v3/boards/legacyId/229 http://internal-media-apis-boards-80200747.us-east-1.elb.amazonaws.com/board/v3/boards/legacyId/229 http://internal-media-apis-boards-80200747.us-east-1.elb.amazonaws.com/board/v3/boards/legacyId/229 http://internal-media-apis-boards-80200747.us-east-1.elb.amazonaws.com/board/v3/boards/legacyId/229)
 
+puts "-- AVERAGES --".blue
+=begin
 response_times = []
 file = File.new("/Users/wclaiborne/Desktop/boardsperf/responsetime.txt", "r")
 while (line = file.gets)
@@ -38,7 +40,7 @@ puts "  AVG RESPONSE TIMES: #{(response_times.inject{|sum,x| sum + x })/response
 puts "  AVG DOM LOAD TIMES: #{(dom_load_times.inject{|sum,x| sum + x }).to_f/dom_load_times.length.to_f}".blue
 puts "  AVG ON LOAD TIMES: #{(on_load_times.inject{|sum,x| sum + x }).to_f/on_load_times.length.to_f}".blue
 puts ''
-
+=end
 urls.each do |url|
 
   puts url.yellow
@@ -51,17 +53,17 @@ urls.each do |url|
   #response time
   rt = timing['responseEnd'] - timing['requestStart']
   puts "    RESPONSE TIME: #{rt} MS".green
-  File.open("/Users/wclaiborne/Desktop/boardsperf/responsetime.txt", 'a') { |file| file.puts(rt) }
+  #File.open("/Users/wclaiborne/Desktop/boardsperf/responsetime.txt", 'a') { |file| file.puts(rt) }
 
   #dom load
-  dl = timing['domContentLoadedEventEnd'] - timing['navigationStart']
-  puts "    DOM LOAD TIME: #{dl/1000.to_f} Seconds".green
-  File.open("/Users/wclaiborne/Desktop/boardsperf/domloaded.txt", 'a') { |file| file.puts(dl/1000.to_f) }
+  #dl = timing['domContentLoadedEventEnd'] - timing['navigationStart']
+  #puts "    DOM LOAD TIME: #{dl/1000.to_f} Seconds".green
+  #File.open("/Users/wclaiborne/Desktop/boardsperf/domloaded.txt", 'a') { |file| file.puts(dl/1000.to_f) }
 
   #on load
-  ol = timing['loadEventEnd'] - timing['navigationStart']
-  puts "    ON LOAD TIME: #{ol/1000.to_f} Seconds".green
-  File.open("/Users/wclaiborne/Desktop/boardsperf/onload.txt", 'a') { |file| file.puts(ol/1000.to_f) }
+  #ol = timing['loadEventEnd'] - timing['navigationStart']
+  #puts "    ON LOAD TIME: #{ol/1000.to_f} Seconds".green
+  #File.open("/Users/wclaiborne/Desktop/boardsperf/onload.txt", 'a') { |file| file.puts(ol/1000.to_f) }
 
   puts ''
 

@@ -53,8 +53,8 @@ describe "V3 Redirect API -- Add A Redirect Without a Valid Token", :stg => true
 
   end
 
-  it "should return 401" do
-    expect {RestClient.post @url, @body, :content_type => "application/json"}.to raise_error(RestClient::Unauthorized)
+  it "should return 403" do
+    expect {RestClient.post @url, @body, :content_type => "application/json"}.to raise_error(RestClient::Forbidden)
   end
 
 end
