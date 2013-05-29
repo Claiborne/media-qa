@@ -9,62 +9,62 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="US_PAUSE" elementType="Argument">
             <stringProp name="Argument.name">US_PAUSE</stringProp>
-            <stringProp name="Argument.value">500</stringProp>
+            <stringProp name="Argument.value">${__P(timer,5000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="US_PAUSE_WITHOUT" elementType="Argument">
             <stringProp name="Argument.name">US_PAUSE_WITHOUT</stringProp>
-            <stringProp name="Argument.value">500</stringProp>
+            <stringProp name="Argument.value">${__P(timer,5000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UK_PAUSE" elementType="Argument">
             <stringProp name="Argument.name">UK_PAUSE</stringProp>
-            <stringProp name="Argument.value">500</stringProp>
+            <stringProp name="Argument.value">${__P(timer,5000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="CA_PAUSE" elementType="Argument">
             <stringProp name="Argument.name">CA_PAUSE</stringProp>
-            <stringProp name="Argument.value">500</stringProp>
+            <stringProp name="Argument.value">${__P(timer,5000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="AU_PAUSE" elementType="Argument">
             <stringProp name="Argument.name">AU_PAUSE</stringProp>
-            <stringProp name="Argument.value">500</stringProp>
+            <stringProp name="Argument.value">${__P(timer,5000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="IE_PAUSE" elementType="Argument">
             <stringProp name="Argument.name">IE_PAUSE</stringProp>
-            <stringProp name="Argument.value">500</stringProp>
+            <stringProp name="Argument.value">${__P(timer,5000)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="US" elementType="Argument">
             <stringProp name="Argument.name">US</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">${__P(us,0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="US_WO" elementType="Argument">
             <stringProp name="Argument.name">US_WO</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">${__P(uswo,0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UK" elementType="Argument">
             <stringProp name="Argument.name">UK</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">${__P(uk,0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="CA" elementType="Argument">
             <stringProp name="Argument.name">CA</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">${__P(ca,0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="AU" elementType="Argument">
             <stringProp name="Argument.name">AU</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">${__P(au,0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="IE" elementType="Argument">
             <stringProp name="Argument.name">IE</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">${__P(ie,0)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -470,9 +470,9 @@
           <stringProp name="62212837">AGENT</stringProp>
         </collectionProp>
         <collectionProp name="UserParameters.thread_values">
-          <collectionProp name="391593846">
-            <stringProp name="-1324950049">${__StringFromFile(/Users/wclaiborne/git/media-qa/test/performance/oyster_052013/urls.txt)}</stringProp>
-            <stringProp name="1683608844">${__StringFromFile(/Users/wclaiborne/git/media-qa/test/performance/oyster_052013/user_agent.txt)}</stringProp>
+          <collectionProp name="1917421699">
+            <stringProp name="74431050">${__StringFromFile(/home/ec2-user/urls.txt)}</stringProp>
+            <stringProp name="-2132249289">${__StringFromFile(/home/ec2-user/user_agent.txt)}</stringProp>
           </collectionProp>
         </collectionProp>
         <boolProp name="UserParameters.per_iteration">false</boolProp>
