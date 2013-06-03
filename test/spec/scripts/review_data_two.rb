@@ -97,7 +97,7 @@ end
     catch (:error_404) do
       objectRelations.each do |object|
         begin
-          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}?fresh=true"
         rescue
           throw :error_404
         end
@@ -130,7 +130,7 @@ end
     catch (:error_404) do
       objectRelations.each do |object|
         begin
-          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/#{o}/legacyId/#{object}"
+          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/#{o}/legacyId/#{object}?fresh=true"
         rescue
           throw :error_404
         end
@@ -147,10 +147,7 @@ end
           wordpress_review_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
           next
         end
-        if (game_data['network']['ign']['review']['score'].to_s.length < 1 || game_data['legacyData']['reviewUrl'].to_s.match(/blogs/) || game_data['legacyData']['reviewUrl'].to_s.length < 1 || game_data['network']['ign']['review']['score'] == nil || game_data['legacyData']['reviewUrl'] == nil || game_data['legacyData']['reviewUrl'].to_s.match(/\/preview/))
-          wordpress_review_urls << "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1"
-        else
-        end
+
       end
     end
     end
@@ -191,7 +188,7 @@ end
 
       objectRelations.each do |object|
         begin
-          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}"
+          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}?fresh=true"
         rescue
           next
         end
@@ -213,7 +210,7 @@ end
     %w(episodes shows volumes).each do |o|
       objectRelations.each do |object|
         begin
-          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/#{o}/legacyId/#{object}"
+          object_response = RestClient.get "http://apis.lan.ign.com/object/v3/#{o}/legacyId/#{object}?fresh=true"
         rescue
           next
         end
