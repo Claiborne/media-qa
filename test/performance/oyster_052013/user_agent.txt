@@ -14,5 +14,10 @@ Firefox
 Chrome
 Firefox
 Safari
+Chrome
+Firefox
+Safari
+Chrome
+Chrome
 iPhone
 Android
