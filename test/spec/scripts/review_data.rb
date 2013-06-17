@@ -142,6 +142,14 @@ data['data'].each do |article|
       game_data = JSON.parse(object_response.body)
       game_data['data'].each do |game_data|
         if game_data['metadata']['region'] == 'US'
+          begin
+            game_data['legacyData']['previewUrl']
+          rescue
+            puts "PREVIEW URL MISSING:"
+            puts "http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}?fresh=true"
+            puts "http://write.ign.com/wp-admin/post.php?post=#{article['refs']['wordpressId']}&action=edit&message=1" 
+            next
+          end
           if game_data['legacyData']['previewUrl']
             if game_data['legacyData']['previewUrl'].to_s.match(/com\/articles\//)
               #puts "PASS: http://apis.lan.ign.com/object/v3/releases/legacyId/#{object}?fresh=true"
