@@ -129,7 +129,7 @@ describe "V3 Article API -- GET Specific Non-Published Article", :stg=> true do
 
   before(:all) do
     TopazToken.set_token('articles')
-    @base_url = "media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles"
+    @base_url = "apis.stg.ign.com/article/v3/articles"
 
     @rand_num = Random.rand(500)
     @article_body = {:metadata=>{:headline=>"Media QA Test Article #@rand_num",:articleType=>"article",:state=>"draft"},:authors=>[{:name=>"Media QA"}],:refs=>{:wordpressId=>234209374}}.to_json

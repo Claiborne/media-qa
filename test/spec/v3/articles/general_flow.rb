@@ -47,10 +47,10 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Create An Article -- POST media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles?oauth_token={token}", :stg => true do
+describe "V3 Articles API -- Create An Article -- POST apis.stg.ign.com/article/v3/articles?oauth_token={token}", :stg => true do
 
   before(:all) do
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles?oauth_token=#{HelperVarsArticleFlow.return_token}"
+    @url = "http://apis.stg.ign.com/article/v3/articles?oauth_token=#{HelperVarsArticleFlow.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, HelperVarsArticleFlow.body_request, :content_type => "application/json"
     rescue => e
@@ -93,10 +93,10 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Created -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
+describe "V3 Articles API -- Check Article Just Created -- apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}"
+    @url = "http://apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -281,11 +281,11 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Update Article Just Created -- PUT media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token={token}", :stg => true do
+describe "V3 Articles API -- Update Article Just Created -- PUT apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token={token}", :stg => true do
 
   before(:all) do
     put_body = {"content" => ["Test Content Change #{Random.rand(10000-99999)}"]}.to_json
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token=#{HelperVarsArticleFlow.return_token}"
+    @url = "http://apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token=#{HelperVarsArticleFlow.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, put_body, :content_type => "application/json"
     rescue => e
@@ -318,10 +318,10 @@ end
 
 ##################################################################
 
-describe "V3 Articles API -- Check Article Just Updated -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
+describe "V3 Articles API -- Check Article Just Updated -- apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}"
+    @url = "http://apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -508,10 +508,10 @@ end
 ####################################################################
 # CLEAN UP / DELETE RELEASE
 
-describe "V3 Articles API -- Clean up / Delete -- media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
+describe "V3 Articles API -- Clean up / Delete -- apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token=#{HelperVarsArticleFlow.return_token}"
+    @url = "http://apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token=#{HelperVarsArticleFlow.return_token}&fresh=true"
     begin
       @response = RestClient.delete @url
     rescue => e
@@ -530,7 +530,7 @@ describe "V3 Articles API -- Clean up / Delete -- media-article-stg-services-01.
   end
 
   it "should return a 404 after deleting the article" do
-    expect {RestClient.get "media-article-stg-services-01.sfdev.colo.ignops.com:8080/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
