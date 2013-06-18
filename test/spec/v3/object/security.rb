@@ -102,7 +102,7 @@ before(:all) do
   PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
   @config = PathConfig.new
   TopazToken.set_token('objects')
-  @base_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/"
+  @base_url = "http://apis.stg.ign.com/object/v3/"
   @object_array = []
   @legacy_id_array = []
   @rand_num = Random.rand(10000)

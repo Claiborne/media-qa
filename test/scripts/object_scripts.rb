@@ -395,7 +395,7 @@ File.open('/Users/wclaiborne/Desktop/object_api.json', 'w') {|f| f.write(@respon
 #@url = "http://10.92.218.26:8080/releases/search"
 
 
-@url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/search?q="+movie_search.to_s
+@url = "http://apis.stg.ign.com/object/v3/releases/search?q="+movie_search.to_s
 @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
 begin
   @response = RestClient.get @url

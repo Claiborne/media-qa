@@ -8,7 +8,7 @@ describe "Add Comic Data", :comic => true do
   include TopazToken
 
   before(:all) do
-    @url = "media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3"
+    @url = "apis.stg.ign.com/object/v3"
     @token = return_topaz_token('object')
     Obj = ObjectApiJsonBodies.new
   end
@@ -40,7 +40,7 @@ describe "Add TV Data", :tv => true do
   include TopazToken
 
   before(:all) do
-    @url = "media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3"
+    @url = "apis.stg.ign.com/object/v3"
     @token = return_topaz_token('object')
     Obj = ObjectApiJsonBodies.new
   end
@@ -67,7 +67,7 @@ describe "Add Stars Data", :stars => true do
   include TopazToken
 
   before(:all) do
-    @url = "media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3"
+    @url = "apis.stg.ign.com/object/v3"
     @token = return_topaz_token('object')
     Obj = ObjectApiJsonBodies.new
   end

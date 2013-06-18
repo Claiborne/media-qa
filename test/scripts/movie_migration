@@ -26,7 +26,7 @@ describe "Movie Migration /release data" do
     valid_movie_types = %w(theater on-demand made-for-tv direct-to-video)
     valid_movie_region = %w(US UK AU IE CA)
     puts ""
-    url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/search?q="+movie_search(index,200).to_s
+    url = "http://apis.stg.ign.com/object/v3/releases/search?q="+movie_search(index,200).to_s
     url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       response = RestClient.get url
@@ -136,7 +136,7 @@ describe "Movie Migration /release data" do
   end;end
 =begin
   it "should pass" do
-    url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/search?q="+movie_search(0,50).to_s
+    url = "http://apis.stg.ign.com/object/v3/releases/search?q="+movie_search(0,50).to_s
     url = url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       response = RestClient.get url
@@ -227,7 +227,7 @@ describe "Movie Migration /movie data", :basic => true do
 
     while start_index < 2000
 
-      url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?count=200&startIndex=#{start_index}"
+      url = "http://apis.stg.ign.com/object/v3/movies?count=200&startIndex=#{start_index}"
       response = RestClient.get url
       data = JSON.parse(response.body)
 

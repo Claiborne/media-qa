@@ -90,14 +90,14 @@ describe "V3 Object API -- Create Release Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('release'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('release'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
@@ -110,7 +110,7 @@ describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_release, :content_type => "application/json"
     rescue => e
@@ -133,7 +133,7 @@ describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
   
   it "should return a 200 when called via GET" do
     begin 
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{@data['releaseId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/releases/#{@data['releaseId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -160,14 +160,14 @@ describe "V3 Object API -- Create Release Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the release" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{@data['releaseId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/releases/#{@data['releaseId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{@data['releaseId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/releases/#{@data['releaseId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
   
 end
@@ -179,14 +179,14 @@ describe "V3 Object API -- Create Game Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/games?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('game'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/games?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('game'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
@@ -199,7 +199,8 @@ describe "V3 Object API -- Create Game Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/games?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true
+    "
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_game, :content_type => "application/json"
     rescue => e
@@ -222,7 +223,7 @@ describe "V3 Object API -- Create Game Positive Smoke", :stg => true do
   
   it "should return a 200 when called via GET" do
     begin 
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['gameId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/games/#{@data['gameId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -234,14 +235,14 @@ describe "V3 Object API -- Create Game Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the game" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['gameId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/games/#{@data['gameId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{@data['gameId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/games/#{@data['gameId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
   
 end
@@ -253,28 +254,28 @@ describe "V3 Object API -- Create Company Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('company'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('company'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('company'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('company'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
@@ -287,7 +288,7 @@ describe "V3 Object API -- Create Company Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/companies?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('company'), :content_type => "application/json"
     rescue => e
@@ -310,7 +311,7 @@ describe "V3 Object API -- Create Company Positive Smoke", :stg => true do
   
   it "should return a 200 when called via GET" do
     begin 
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companyId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/companies/#{@data['companyId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -322,14 +323,14 @@ describe "V3 Object API -- Create Company Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the company" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companyId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/companies/#{@data['companyId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{@data['companyId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/companies/#{@data['companyId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
   
 end
@@ -341,28 +342,28 @@ describe "V3 Object API -- Create Feature Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('feature'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('feature'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('feature'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('feature'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
@@ -375,7 +376,7 @@ describe "V3 Object API -- Create Feature Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/features?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('feature'), :content_type => "application/json"
     rescue => e
@@ -398,7 +399,7 @@ describe "V3 Object API -- Create Feature Positive Smoke", :stg => true do
   
   it "should return a 200 when called via GET" do
     begin 
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{@data['featureId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/features/#{@data['featureId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -410,14 +411,14 @@ describe "V3 Object API -- Create Feature Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the feature" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{@data['featureId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/features/#{@data['featureId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{@data['featureId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/features/#{@data['featureId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
   
 end
@@ -429,28 +430,28 @@ describe "V3 Object API -- Create Genre Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('genre'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('genre'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('genre'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('genre'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
@@ -463,7 +464,7 @@ describe "V3 Object API -- Create Genre Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/genres?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('genre'), :content_type => "application/json"
     rescue => e
@@ -486,7 +487,7 @@ describe "V3 Object API -- Create Genre Positive Smoke", :stg => true do
   
   it "should return a 200 when called via GET" do
     begin 
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{@data['genreId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/genres/#{@data['genreId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -498,14 +499,14 @@ describe "V3 Object API -- Create Genre Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the genre" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{@data['genreId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/genres/#{@data['genreId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{@data['genreId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/genres/#{@data['genreId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
   
 end
@@ -517,28 +518,28 @@ describe "V3 Object API -- Create Hardware Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('hardware'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('hardware'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('hardware'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('hardware'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
@@ -551,7 +552,7 @@ describe "V3 Object API -- Create Hardware Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/hardware?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('hardware'), :content_type => "application/json"
     rescue => e
@@ -574,7 +575,7 @@ describe "V3 Object API -- Create Hardware Positive Smoke", :stg => true do
   
   it "should return a 200 when called via GET" do
     begin 
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{@data['hardwareId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/hardware/#{@data['hardwareId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -586,14 +587,14 @@ describe "V3 Object API -- Create Hardware Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the hardware" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{@data['hardwareId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/hardware/#{@data['hardwareId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{@data['hardwareId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/hardware/#{@data['hardwareId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
   
 end
@@ -605,28 +606,28 @@ describe "V3 Object API -- Create Market Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('market'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.name is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('market'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('market'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
   it "should return a 400 when metadata.slug is missing" do
      PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      @url = "http://apis.stg.ign.com/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('market'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
   
@@ -639,7 +640,7 @@ describe "V3 Object API -- Create Market Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/markets?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('market'), :content_type => "application/json"
     rescue => e
@@ -662,7 +663,7 @@ describe "V3 Object API -- Create Market Positive Smoke", :stg => true do
   
   it "should return a 200 when called via GET" do
     begin 
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets/#{@data['marketId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/markets/#{@data['marketId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -674,14 +675,14 @@ describe "V3 Object API -- Create Market Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the market" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets/#{@data['marketId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/markets/#{@data['marketId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets/#{@data['marketId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/markets/#{@data['marketId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -693,28 +694,28 @@ describe "V3 Object API -- Create Movie Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('movie'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('movie'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 =end
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('movie'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('movie'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
@@ -727,7 +728,7 @@ describe "V3 Object API -- Create Movie Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/movies?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('movie'), :content_type => "application/json"
     rescue => e
@@ -750,7 +751,7 @@ describe "V3 Object API -- Create Movie Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/#{@data['movieId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/movies/#{@data['movieId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -783,14 +784,14 @@ describe "V3 Object API -- Create Movie Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the movie" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/#{@data['movieId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/movies/#{@data['movieId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/#{@data['movieId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/movies/#{@data['movieId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -802,14 +803,14 @@ describe "V3 Object API -- Create Book Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/books?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('book'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/books?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('book'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
@@ -822,7 +823,7 @@ describe "V3 Object API -- Create Book Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/books?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('book'), :content_type => "application/json"
     rescue => e
@@ -845,7 +846,7 @@ describe "V3 Object API -- Create Book Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/#{@data['bookId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/books/#{@data['bookId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -878,14 +879,14 @@ describe "V3 Object API -- Create Book Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the book" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/#{@data['bookId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/books/#{@data['bookId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/#{@data['bookId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/books/#{@data['bookId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -897,28 +898,28 @@ describe "V3 Object API -- Create Volume Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('volume'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('volume'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('volume'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('volume'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
@@ -931,7 +932,7 @@ describe "V3 Object API -- Create Volume Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/volumes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('volume'), :content_type => "application/json"
     rescue => e
@@ -954,7 +955,7 @@ describe "V3 Object API -- Create Volume Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{@data['volumeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/volumes/#{@data['volumeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1002,14 +1003,14 @@ describe "V3 Object API -- Create Volume Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the volume" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{@data['volumeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/volumes/#{@data['volumeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{@data['volumeId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/volumes/#{@data['volumeId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -1021,28 +1022,28 @@ describe "V3 Object API -- Create Role Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('role'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('role'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('role'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('role'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
@@ -1055,7 +1056,7 @@ describe "V3 Object API -- Create Role Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roles?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_role('role'), :content_type => "application/json"
     rescue => e
@@ -1078,7 +1079,7 @@ describe "V3 Object API -- Create Role Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{@data['roleId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/roles/#{@data['roleId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1090,14 +1091,14 @@ describe "V3 Object API -- Create Role Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the role" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{@data['roleId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/roles/#{@data['roleId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{@data['roleId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/roles/#{@data['roleId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -1109,28 +1110,28 @@ describe "V3 Object API -- Create Person Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('people'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('people'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('people'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('people'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
@@ -1143,7 +1144,7 @@ describe "V3 Object API -- Create Person Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/people?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('people'), :content_type => "application/json"
     rescue => e
@@ -1166,7 +1167,7 @@ describe "V3 Object API -- Create Person Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/#{@data['personId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/people/#{@data['personId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1180,14 +1181,14 @@ describe "V3 Object API -- Create Person Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the person" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/#{@data['personId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/people/#{@data['personId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/#{@data['personId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/people/#{@data['personId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -1199,28 +1200,28 @@ describe "V3 Object API -- Create RoleType Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('roletype'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
@@ -1233,7 +1234,7 @@ describe "V3 Object API -- Create RoleType Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roleTypes?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('roletype'), :content_type => "application/json"
     rescue => e
@@ -1256,7 +1257,7 @@ describe "V3 Object API -- Create RoleType Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{@data['roleTypeId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/roleTypes/#{@data['roleTypeId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1268,14 +1269,14 @@ describe "V3 Object API -- Create RoleType Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the roletype" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{@data['roleTypeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/roleTypes/#{@data['roleTypeId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{@data['roleTypeId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/roleTypes/#{@data['roleTypeId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -1287,28 +1288,28 @@ describe "V3 Object API -- Create Character Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('character'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('character'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('character'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('character'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
@@ -1321,7 +1322,7 @@ describe "V3 Object API -- Create Character Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/characters?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('character'), :content_type => "application/json"
     rescue => e
@@ -1344,7 +1345,7 @@ describe "V3 Object API -- Create Character Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/#{@data['characterId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/characters/#{@data['characterId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1358,14 +1359,14 @@ describe "V3 Object API -- Create Character Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the character" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/#{@data['characterId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/characters/#{@data['characterId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/#{@data['characterId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/characters/#{@data['characterId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -1377,28 +1378,28 @@ describe "V3 Object API -- Create Show Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('show'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('show'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when length of metadata.name is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_name('show'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.name is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_name('show'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
@@ -1411,7 +1412,7 @@ describe "V3 Object API -- Create Show Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/shows?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_object('show'), :content_type => "application/json"
     rescue => e
@@ -1434,7 +1435,7 @@ describe "V3 Object API -- Create Show Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows/#{@data['showId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/shows/#{@data['showId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1448,14 +1449,14 @@ describe "V3 Object API -- Create Show Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the show" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows/#{@data['showId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/shows/#{@data['showId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows/#{@data['showId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/shows/#{@data['showId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end
@@ -1467,14 +1468,14 @@ describe "V3 Object API -- Create Season Negative Smoke", :stg => true do
   it "should return a 400 when length of metadata.slug is zero" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/seasons?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_with_zero_length_slug('season'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 
   it "should return a 400 when metadata.slug is missing" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/seasons?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     expect { RestClient.post @url, V3ObjCreateSmoke.create_object_no_slug('season'), :content_type => "application/json" }.to raise_error(RestClient::BadRequest)
   end
 end
@@ -1486,7 +1487,7 @@ describe "V3 Object API -- Create Season Positive Smoke", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/seasons?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_game, :content_type => "application/json"
     rescue => e
@@ -1509,7 +1510,7 @@ describe "V3 Object API -- Create Season Positive Smoke", :stg => true do
 
   it "should return a 200 when called via GET" do
     begin
-      response = RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons/#{@data['seasonId']}"
+      response = RestClient.get "http://apis.stg.ign.com/object/v3/seasons/#{@data['seasonId']}?fresh=true"
       check_200 response
       CreateSmokeHelperVars.set_object JSON.parse(response.body)
     rescue => e
@@ -1521,14 +1522,14 @@ describe "V3 Object API -- Create Season Positive Smoke", :stg => true do
 
   it "should return a 404 when deleting the season" do
 
-    del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons/#{@data['seasonId']}?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    del_url = "http://apis.stg.ign.com/object/v3/seasons/#{@data['seasonId']}?oauth_token=#{CreateSmokeHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.delete del_url
     rescue => e
       raise Exception.new(e.message+" "+del_url)
     end
 
-    expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons/#{@data['seasonId']}"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "http://apis.stg.ign.com/object/v3/seasons/#{@data['seasonId']}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
 end

@@ -214,7 +214,7 @@ describe "V3 Object API -- Create Game", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/games?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_game_body(UpdateHelperVars.return_object_slug('game',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -253,7 +253,7 @@ describe "V3 Object API -- Create Company", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/companies?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, create_company_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('company',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -292,7 +292,7 @@ describe "V3 Object API -- Create Feature", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/features?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, create_feature_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('feature',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -332,7 +332,7 @@ describe "V3 Object API -- Create Genre", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/genres?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_genre_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('genre',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -371,7 +371,7 @@ describe "V3 Object API -- Create Second Genre", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/genres?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_genre_body(UpdateHelperVars.return_number_2,UpdateHelperVars.return_object_slug('genre',UpdateHelperVars.return_number_2)), :content_type => "application/json"
     rescue => e
@@ -410,7 +410,7 @@ describe "V3 Object API -- Create Hardware", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/hardware?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, create_hardware_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('hardware',UpdateHelperVars.return_number),UpdateHelperVars.return_company_id), :content_type => "application/json"
     rescue => e
@@ -449,7 +449,7 @@ describe "V3 Object API -- Create Market", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/markets?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, create_market_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('market',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -488,7 +488,7 @@ describe "V3 Object API -- Create Movie", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/movies?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_movie_body(UpdateHelperVars.return_object_slug('movie',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -527,7 +527,7 @@ describe "V3 Object API -- Create Volume", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/volumes?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_volume_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('volume',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -566,7 +566,7 @@ describe "V3 Object API -- Create Book", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/books?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_book_body(UpdateHelperVars.return_object_slug('book',UpdateHelperVars.return_number),UpdateHelperVars.return_volume_id), :content_type => "application/json"
     rescue => e
@@ -605,7 +605,7 @@ describe "V3 Object API -- Create Person", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/people?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_person_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('person',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -644,7 +644,7 @@ describe "V3 Object API -- Create Character", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/characters?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_character_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('character',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -683,7 +683,7 @@ describe "V3 Object API -- Create RoleType", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roleTypes?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_roletype_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('roletype',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -722,7 +722,7 @@ describe "V3 Object API -- Create Show", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/shows?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_show_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('show',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -761,7 +761,7 @@ describe "V3 Object API -- Create Season", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/seasons?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_season_body(UpdateHelperVars.return_object_slug('season',UpdateHelperVars.return_number),UpdateHelperVars.return_show_id), :content_type => "application/json"
     rescue => e
@@ -800,7 +800,7 @@ describe "V3 Object API -- Create Episode", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/episodes?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/episodes?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_episode_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('episode',UpdateHelperVars.return_number),UpdateHelperVars.return_show_id,UpdateHelperVars.return_season_id), :content_type => "application/json"
     rescue => e
@@ -839,7 +839,7 @@ describe "V3 Object API -- Create Role", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roles?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, create_role_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('role',UpdateHelperVars.return_number), UpdateHelperVars.return_movie_id, UpdateHelperVars.return_character_id, UpdateHelperVars.return_roletype_id, UpdateHelperVars.return_game_id, UpdateHelperVars.return_book_id,UpdateHelperVars.return_person_id), :content_type => "application/json"
     rescue => e
@@ -878,7 +878,7 @@ describe "V3 Object API -- Create Release", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/releases?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.post @url, create_release_body(UpdateHelperVars.return_number,UpdateHelperVars.return_game_id,UpdateHelperVars.return_company_id,UpdateHelperVars.return_feature_id,UpdateHelperVars.return_genre_id,UpdateHelperVars.return_genre2_id,UpdateHelperVars.return_hardware_id,UpdateHelperVars.return_market_id,UpdateHelperVars.return_movie_id,UpdateHelperVars.return_book_id,UpdateHelperVars.return_season_id), :content_type => "application/json"
     rescue => e
@@ -918,7 +918,7 @@ describe "V3 Object API -- Update Game", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/games/#{UpdateHelperVars.return_game_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/games/#{UpdateHelperVars.return_game_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.put @url, update_game_body(UpdateHelperVars.return_object_slug('game',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -956,7 +956,7 @@ describe "V3 Object API -- Update Company", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/companies/#{UpdateHelperVars.return_company_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/companies/#{UpdateHelperVars.return_company_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.put @url, update_company_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('company',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -994,7 +994,7 @@ describe "V3 Object API -- Update Feature", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/features/#{UpdateHelperVars.return_feature_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/features/#{UpdateHelperVars.return_feature_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.put @url, update_feature_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('feature',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1032,7 +1032,7 @@ describe "V3 Object API -- Update Genre", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{UpdateHelperVars.return_genre_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/genres/#{UpdateHelperVars.return_genre_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.put @url, update_genre_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('genre',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1070,7 +1070,7 @@ describe "V3 Object API -- Update Second Genre", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/genres/#{UpdateHelperVars.return_genre2_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/genres/#{UpdateHelperVars.return_genre2_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, update_genre_body(UpdateHelperVars.return_number_2,UpdateHelperVars.return_object_slug('genre',UpdateHelperVars.return_number_2)), :content_type => "application/json"
     rescue => e
@@ -1108,7 +1108,7 @@ describe "V3 Object API -- Update Hardware", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/hardware/#{UpdateHelperVars.return_hardware_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/hardware/#{UpdateHelperVars.return_hardware_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.put @url, update_hardware_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('hardware',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1146,7 +1146,7 @@ describe "V3 Object API -- Update Market", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/markets/#{UpdateHelperVars.return_market_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/markets/#{UpdateHelperVars.return_market_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.put @url, update_market_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('market',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1184,7 +1184,7 @@ describe "V3 Object API -- Update Movie", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/movies/#{UpdateHelperVars.return_movie_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/movies/#{UpdateHelperVars.return_movie_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, update_movie_body(UpdateHelperVars.return_object_slug('movie',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1222,7 +1222,7 @@ describe "V3 Object API -- Update Volume", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/#{UpdateHelperVars.return_volume_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/volumes/#{UpdateHelperVars.return_volume_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, update_volume_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('volume',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1260,10 +1260,10 @@ describe "V3 Object API -- Update Book", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/#{UpdateHelperVars.return_book_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/books/#{UpdateHelperVars.return_book_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
-      vol1 = JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/slug/100-bullets").body)['volumeId']
-      vol2 = JSON.parse(RestClient.get("http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/volumes/slug/batman-the-return").body)['volumeId']
+      vol1 = JSON.parse(RestClient.get("http://apis.stg.ign.com/object/v3/volumes/slug/100-bullets?fresh=true").body)['volumeId']
+      vol2 = JSON.parse(RestClient.get("http://apis.stg.ign.com/object/v3/volumes/slug/batman-the-return?fresh=true").body)['volumeId']
       @response = RestClient.put @url, update_book_body(UpdateHelperVars.return_object_slug('book',UpdateHelperVars.return_number), vol1, vol2), :content_type => "application/json"
     rescue => e
       raise Exception.new(e.message)
@@ -1300,7 +1300,7 @@ describe "V3 Object API -- Update Person", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/people/#{UpdateHelperVars.return_person_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/people/#{UpdateHelperVars.return_person_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, update_person_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('person',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1338,7 +1338,7 @@ describe "V3 Object API -- Update Character", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/characters/#{UpdateHelperVars.return_character_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/characters/#{UpdateHelperVars.return_character_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, update_character_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('character',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1376,7 +1376,7 @@ describe "V3 Object API -- Update RoleType", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roleTypes/#{UpdateHelperVars.return_roletype_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roleTypes/#{UpdateHelperVars.return_roletype_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, update_roletype_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('roletype',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1417,7 +1417,7 @@ describe "V3 Object API -- Update Show", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/shows/#{UpdateHelperVars.return_show_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/shows/#{UpdateHelperVars.return_show_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, update_show_body(UpdateHelperVars.return_number,UpdateHelperVars.return_object_slug('show',UpdateHelperVars.return_number)), :content_type => "application/json"
     rescue => e
@@ -1455,7 +1455,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Episode", :stg => tru
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/episodes/#{UpdateHelperVars.return_episode_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/episodes/#{UpdateHelperVars.return_episode_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1507,7 +1507,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Book", :stg => true d
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/books/#{UpdateHelperVars.return_book_id}"
+    @url = "http://apis.stg.ign.com/object/v3/books/#{UpdateHelperVars.return_book_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1567,7 +1567,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Role", :stg => true d
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/roles/#{UpdateHelperVars.return_role_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/roles/#{UpdateHelperVars.return_role_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1664,7 +1664,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Release", :stg => tru
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/releases/#{UpdateHelperVars.return_release_id}?oauth_token=#{UpdateHelperVars.return_token}"
+    @url = "http://apis.stg.ign.com/object/v3/releases/#{UpdateHelperVars.return_release_id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -1865,7 +1865,7 @@ describe "V3 Object API -- Check Nested Updates Reflect in Season", :stg => true
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/seasons/#{UpdateHelperVars.return_season_id}"
+    @url = "http://apis.stg.ign.com/object/v3/seasons/#{UpdateHelperVars.return_season_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1964,7 +1964,7 @@ describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
         id = ""
     end
 
-  del_url = "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{obj[val]}/#{id}?oauth_token=#{UpdateHelperVars.return_token}"
+  del_url = "http://apis.stg.ign.com/object/v3/#{obj[val]}/#{id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
   begin
     @response = RestClient.delete del_url
   rescue => e
@@ -1973,7 +1973,7 @@ describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
 
   sleep 0.35
 
-  expect {RestClient.get "http://media-object-stg-services-01.sfdev.colo.ignops.com:8080/object/v3/#{obj[val]}/#{id}"}.to raise_error(RestClient::ResourceNotFound)
+  expect {RestClient.get "http://apis.stg.ign.com/object/v3/#{obj[val]}/#{id}?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
 
   end 
   end
