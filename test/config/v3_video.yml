@@ -1,5 +1,5 @@
 development:
-  baseurl: apis.stg.ign.com/video
+  baseurl: 
 
 staging:
   baseurl: apis.stg.ign.com/video
