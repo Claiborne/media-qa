@@ -104,9 +104,9 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
     end
 
     it "should correctly display the navigation text" do
-      nav_text = ['E3 FEATURED VIDEOS', 'MUST WATCH', 'RELATED','IGN SHOWS', 'REVIEWS', 'TRAILERS']
+      nav_text = ['MUST WATCH', 'RELATED','IGN SHOWS', 'REVIEWS', 'TRAILERS']
       items = @selenium.find_elements(:css => "div.video_playlist_selector a.video_playlist_button span.item")
-      items.count.should.should == 6
+      items.count.should.should == 5
       items.each_with_index do |val, index|
         val.text.should == nav_text[index]
       end
@@ -127,10 +127,10 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
       @selenium.find_elements(:css => "ul#videos-list li").count.should > 9
     end
 
-    it "should highlight E3 Featured videos in the nav by default" do
+    it "should highlight Must Watch videos in the nav by default" do
       selected = @selenium.find_element(:css => "div.video_playlist_selector span.item-container")
       selected.attribute('class').to_s.match(/container-selected/).should be_true
-      selected.text.should == 'E3 FEATURED VIDEOS'
+      selected.text.should == 'MUST WATCH'
     end
 
     it "should be populated with at least 10 list item links" do
@@ -140,7 +140,9 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
     it "should display Must Watch videos by default" do
       @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
       @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
-        a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
+        #a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
+        a.attribute('href').to_s.match(/api.taboola.com/).should be_true
+        a.attribute('href').to_s.match(/ign-ign/).should be_true
         a.text.delete('^a-zA-Z').length.should > 0
       end
     end
