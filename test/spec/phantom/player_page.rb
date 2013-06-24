@@ -141,8 +141,12 @@ describe "Video Player Page -- #{locale.upcase} #{video_page}", :selenium => tru
       @selenium.find_elements(:css => "ul#videos-list li a").count.should > 9
       @selenium.find_elements(:css => "ul#videos-list li a").each do |a|
         #a.attribute('href').to_s.match(/ign.com\/videos\/\d{4}\/\d{2}\/\d{2}\/./).should be_true
-        a.attribute('href').to_s.match(/api.taboola.com/).should be_true
-        a.attribute('href').to_s.match(/ign-ign/).should be_true
+        begin
+          a.attribute('href').to_s.match(/api.taboola.com/).should be_true
+          a.attribute('href').to_s.match(/ign-ign/).should be_true
+        rescue => e
+          raise "Expected match api.taboola.com && ign-ign. Got #{a.attribute('href')}"
+        end
         a.text.delete('^a-zA-Z').length.should > 0
       end
     end
