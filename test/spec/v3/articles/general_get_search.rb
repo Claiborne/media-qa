@@ -305,7 +305,42 @@ class ArticleGetSearchHelper
     ],
     "startIndex"=>0,
     "count"=>200
-  }.to_json
+    }.to_json
+  end
+  
+  def self.category_contains(n)
+    {
+    "matchRule"=>"matchAll",
+    "rules"=>[
+      {
+         "field"=>"categories.slug",
+         "condition"=>"containsAll",
+         "value"=>"ps3,ign"
+      },
+      {
+         "field"=>"categories.slug",
+         "condition"=>"containsNone",
+         "value"=>"xbox-360,pc"
+      }
+    ],
+    "startIndex"=>n.to_i,
+    "count"=>200
+    }.to_json
+  end
+  
+  def self.category_contains_one(n)
+    {
+    "matchRule"=>"matchAll",
+    "rules"=>[
+      {
+         "field"=>"categories.slug",
+         "condition"=>"containsOne",
+         "value"=>"pc"
+      }
+    ],
+    "startIndex"=>n.to_i,
+    "count"=>200
+    }.to_json
   end
 
 end
@@ -1020,7 +1055,6 @@ describe "V3 Articles API -- General Get Search with 'isNot' using #{ArticleGetS
 
   end
 
-
   context 'Basic Checks', :prd => true do
     include_examples "basic article API checks", 200
   end
@@ -1063,7 +1097,6 @@ describe "V3 Articles API -- General Get Search with a nested query using #{Arti
   after(:all) do
 
   end
-
 
   context 'Basic Checks' do
     include_examples "basic article API checks", 200
@@ -1110,7 +1143,6 @@ describe "V3 Articles API -- General Get Search with 'containsNone' and 'contain
 
   end
 
-
   context 'Basic Checks' do
     include_examples "basic article API checks", 200
   end
@@ -1139,5 +1171,111 @@ describe "V3 Articles API -- General Get Search with 'containsNone' and 'contain
     end
   end
   
+end
+
+###############################################################
+
+%w(0 200 400).each do |num|
+describe "V3 Articles API -- General Get Search with 'containsNone' and 'containsAll' using #{ArticleGetSearchHelper.category_contains(num)}" do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.category_contains(num).to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  context 'Basic Checks' do
+    include_examples "basic article API checks", 200
+  end
+
+  it "should only return articles with categories of 'ps3' and 'ign'" do
+    @data['data'].each do |article|
+      categories = []
+      article['categories'].each do |c|
+        categories << c['slug']
+      end
+      categories.include?('ps3').should be_true
+      categories.include?('ign').should be_true
+    end  
+  end
+  
+  it "should not return any articles with categories of 'xbox-360' or 'pc'" do
+    @data['data'].each do |article|
+      categories = []
+      article['categories'].each do |c|
+        categories << c['slug']
+      end
+      categories.include?('xbox-360').should be_false
+      categories.include?('pc').should be_false
+    end
+  end
+
+end 
+end
+
+###############################################################
+
+%w(0 200).each do |num|
+describe "V3 Articles API -- General Get Search with 'containsNone' and 'containsAll' using #{ArticleGetSearchHelper.category_contains_one(num)}" do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleGetSearchHelper.category_contains_one(num).to_s
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+
+  before(:each) do
+
+  end
+
+  after(:each) do
+
+  end
+
+  after(:all) do
+
+  end
+
+  context 'Basic Checks' do
+    include_examples "basic article API checks", 200
+  end
+
+  it "should only return articles with a category of 'pc'" do
+    @data['data'].each do |article|
+      categories = []
+      article['categories'].each do |c|
+        categories << c['slug']
+      end
+      categories.include?('pc').should be_true
+    end  
+  end
+
+end 
 end
 
