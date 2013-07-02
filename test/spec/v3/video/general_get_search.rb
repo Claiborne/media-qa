@@ -676,7 +676,7 @@ end
 
 ################################################################################
 
-describe "V3 Video API -- GET Search Using #{VideoGetSearch.contains_all}", :test => true do
+describe "V3 Video API -- GET Search Using #{VideoGetSearch.contains_all}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -742,7 +742,7 @@ end
 
 ################################################################################
 
-describe "V3 Video API -- GET Search Using #{VideoGetSearch.contains_none}", :test => true do
+describe "V3 Video API -- GET Search Using #{VideoGetSearch.contains_none}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -809,7 +809,7 @@ end
 ################################################################################
 
 %w(0 200 400 600).each do |num|
-describe "V3 Video API -- GET Search Using #{VideoGetSearch.contains_one(num)}", :test => true do
+describe "V3 Video API -- GET Search Using #{VideoGetSearch.contains_one(num)}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -877,7 +877,7 @@ end
 ################################################################################
 
 %w(0 200 400 600).each do |num|
-describe "V3 Video API -- GET Search Using #{VideoGetSearch.object_relations_contains(num)}", :test => true do
+describe "V3 Video API -- GET Search Using #{VideoGetSearch.object_relations_contains(num)}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -952,7 +952,7 @@ end
 
 ################################################################################
 
-describe "V3 Video API -- GET Search Using #{VideoGetSearch.tag_contains}", :test => true do
+describe "V3 Video API -- GET Search Using #{VideoGetSearch.tag_contains}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -1031,7 +1031,7 @@ end
 
 ################################################################################
 
-describe "V3 Video API -- GET Search Using #{VideoGetSearch.category_contains}", :test => true do
+describe "V3 Video API -- GET Search Using #{VideoGetSearch.category_contains}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
@@ -1101,7 +1101,7 @@ end
 
 ################################################################################
 
-describe "V3 Video API -- GET Search Using #{VideoGetSearch.category_contains_one}", :test => true do
+describe "V3 Video API -- GET Search Using #{VideoGetSearch.category_contains_one}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
