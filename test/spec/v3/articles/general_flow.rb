@@ -26,18 +26,44 @@ class HelperVarsArticleFlow
   def self.set_article_id(id)
     @article_id  = id
   end
+  
+  def self.search_article
+    {
+    "matchRule"=>"matchAll",
+    "rules"=>[
+      {
+         "field"=>"tags.slug",
+         "condition"=>"containsAll",
+         "value"=>"one,two"
+      },
+    ],
+    "startIndex"=>0,
+    "count"=>20,
+    "fromDate"=>"2011-10-00T00:00:00-0000",
+    "toDate"=>"2014-07-02T14:55:40-0000"
+    }.to_json
+  end
 
   def self.body_request
     {
         "metadata" => {
             "headline"=>"Media QA Test Article #{Random.rand(100000-999999)}",
             "articleType"=>"article",
-            "state"=>"published"
+            "state"=>"published",
+            "publishDate"=>"2013-07-02T17:50:30+0000"
         },
         "authors" => [
             {
                 "name"=>"Media-QA"
             }
+        ],
+        "tags" => [
+          {
+            "slug"=>"one"
+          },
+          {
+            "slug"=>"two"
+          }
         ],
         "content" => ["Test Content Body. Media QA Test Article..."]
     }.to_json
@@ -276,6 +302,33 @@ describe "V3 Articles API -- Check Article Just Created -- apis.stg.ign.com/arti
 
   it "should return an article with content value of 'Test Content Body. Media QA Test Article...'" do
     @data['content'][0].should == "Test Content Body. Media QA Test Article..."
+  end
+end
+
+##################################################################
+
+describe "V3 Articles API -- Search For Article Just Created - GET #{HelperVarsArticleFlow.search_article}", :stg => true do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+HelperVarsArticleFlow.search_article.to_s+"&oauth_token=#{HelperVarsArticleFlow.return_token}&fresh=true"
+    @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
+    begin 
+       @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+  
+  it "should return the article just created" do
+    ids = []
+    @data['data'].each do |article|
+      ids << article['articleId']
+    end
+    sleep 5
+    ids.include?(HelperVarsArticleFlow.return_article_id).should be_true
   end
 end
 
