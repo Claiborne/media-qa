@@ -63,7 +63,6 @@ shared_examples "basic article API checks for gets" do
   [ "articleId",
     "metadata", 
     "tags", 
-    "refs",
     "authors",
     "categoryLocales",
     "categories",
