@@ -92,6 +92,12 @@ RSpec::Core::RakeTask.new('v3wiki') do |t|
   t.pattern = 'spec/v3/wiki/*.rb'
 end
 
+desc "Run v3 slotter tests"
+RSpec::Core::RakeTask.new('v3slotter') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/v3/slotter/*.rb'
+end
+
 ############# OYSTER #############
 
 desc "Run All Oyster Frontend Tests"
