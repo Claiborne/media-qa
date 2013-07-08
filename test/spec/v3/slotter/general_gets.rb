@@ -1,5 +1,4 @@
 require 'rspec'
-require 'nokogiri'
 require 'pathconfig'
 require 'rest_client'
 require 'json'
