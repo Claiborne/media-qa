@@ -1,7 +1,7 @@
 require 'yaml'
 
 class PathConfig
-  attr_accessor :options
+  attr_accessor :options, :staging, :development
 
   def self.config_path=(path)
     @@config_path = path
@@ -12,6 +12,8 @@ class PathConfig
     environment = ENV['env']
     configs = YAML.load_file(@@config_path)
     @options = configs[environment]
+    @staging = configs['staging'] if configs['staging']
+    @development = configs['development'] if configs['development']
 
     # this is a bad hack for branch substitution
     @options['baseurl'] = @options['baseurl'].gsub(/branchname/, ENV['branch']) unless ENV['branch'] == nil    
