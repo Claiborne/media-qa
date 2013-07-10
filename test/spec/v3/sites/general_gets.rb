@@ -6,6 +6,10 @@ require 'assert'
 
 include Assert
 
+# GET /sites
+# GET by /sites/beacons/www.ign.com
+# GET by /categories/tags/xbox-360
+
 describe "V3 Sites API -- GET /sites" do
 
   before(:all) do
@@ -75,7 +79,6 @@ describe "V3 Sites API -- GET /sites" do
 
 end
 
-
 describe "V3 Sites API -- GET by /sites/beacons/www.ign.com", :prd => true do
 
   before(:all) do
@@ -135,5 +138,54 @@ describe "V3 Sites API -- GET by /sites/beacons/www.ign.com", :prd => true do
   it "should return the correct ga.attributes._setDomainName value" do
     @data['beacons']['ga']['attributes']['_setDomainName'].should == '.ign.com'
   end
+end
+
+describe "V3 Sites API -- GET by /categories/tags/xbox-360", :prd => true do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_sites.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/categories/tags/xbox-360"
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+  
+  it "should return 200" do
+    check_200 @response
+  end
+  
+  it "should return at least three entires" do
+    @data.count.should > 2
+  end
+  
+  it "should return IGN Home, Other, and Tech" do
+    site_names = []
+    @data.each do |s|
+      site_names << s['slug']
+    end
+    %w(ign-home ign-other tech).each do |x|
+      site_names.include?(x).should be_true
+    end
+  end 
+  
+  it "should return only sites tagged xbox-360" do
+    @data.each do |s|
+      tags = []
+      s['tags'].each do |tag|
+        tags << tag['slug']   
+      end
+      begin
+        tags.length.should > 0
+        tags.include?('xbox-360').should be_true
+      rescue => e
+        raise e, e.message+"\n#{s['name']} returned the following tags: #{tags}" 
+      end
+    end
+  end
+  
 end
 
