@@ -6,7 +6,7 @@ require 'assert'
 
 include Assert
 
-describe "V3 Sites API -- GET to /sites" do
+describe "V3 Sites API -- GET /sites" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_sites.yml"
@@ -25,11 +25,17 @@ describe "V3 Sites API -- GET to /sites" do
     check_200 @response
   end
   
-  it "should return 19 sites" do
+  it "should return 19 sites", :prd => true do
     @data.count.should == 19
   end
   
-  it "should return the appropriate sites" do
+  it "should return at least one site", :stg => true do
+    @data.count.should > 0
+    check_not_blank @data[0]
+    check_not_nil @data[0]
+  end
+  
+  it "should return the appropriate sites (checking by slugs)", :prd => true do
     slugs = []
     @data.each do |s|
       slugs << s['slug']
@@ -37,5 +43,97 @@ describe "V3 Sites API -- GET to /sites" do
     slugs.should =~ @prd_slugs
   end
   
+  it "should return a slug value", :stg => true do
+    check_not_blank @data[0]['slug']
+    check_not_nil @data[0]['slug']
+  end
+  
+  it "should only return sites with an enabled value of true" do
+    @data.each do |s|
+      begin
+        s['enabled'].should == true
+      rescue => e
+        raise e, "This site is not enabled:\n #{s}"
+      end
+    end
+  end
+  
+  it "should return a urlSnippet value for each site" do
+    @data.each do |s|
+      check_not_blank s['urlSnippets'].to_s
+      check_not_nil s['urlSnippets'].to_s
+    end
+  end
+  
+  %w(_id version lastUpdated).each do |key|
+  it "should return a meta.#{key} value for each site" do
+    @data.each do |s|
+      check_not_blank s['meta'][key].to_s
+      check_not_nil s['meta'][key].to_s
+    end
+  end end
+
+end
+
+
+describe "V3 Sites API -- GET by /sites/beacons/www.ign.com", :prd => true do
+
+  before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_sites.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.options['baseurl']}/sites/beacons/www.ign.com"
+    begin 
+      @response = RestClient.get @url
+    rescue => e
+      raise Exception.new(e.message+" "+@url)
+    end
+    @data = JSON.parse(@response.body)
+  end
+  
+  it "should return 200" do
+    check_200 @response
+  end
+  
+  {:slug => 'www-ign', :name => 'IGN US', :enabled => true, :urlSnippets => ['www.ign.com']}.each do |k,v|
+  it "should return the appropriate #{k} value" do
+    @data[k.to_s].should == v
+  end end
+  
+  %w(adsense audience buyerbase chartbeat comscore ga).each do |beacon|
+  it "should have the #{beacon} beacon enabled" do
+    @data['beacons'][beacon]['enabled'].to_s.should == 'true'
+  end end
+  
+  %w(cr exelate lighthouse linksmart).each do |beacon|
+  it "should have the #{beacon} beacon disenabled" do
+    @data['beacons'][beacon]['enabled'].to_s.should == 'false'
+  end end
+  
+  %w(adsense audience linksmart chartbeat comscore ga exelate).each do |beacon|
+  it "should return non-blank, non-nil attribute values for #{beacon}" do
+    @data['beacons'][beacon]['attributes'].length.should > 0
+    @data['beacons'][beacon]['attributes'].each do |attr|
+      check_not_blank attr
+      check_not_nil attr
+    end
+  end end
+  
+  it 'should return a meta._id value of 502575cba4278f4da84aa470' do
+    @data['meta']['_id'].should == '502575cba4278f4da84aa470'
+  end
+  
+  %w(version lastUpdated).each do |key|
+  it "should return values for meta.#{key}" do
+    check_not_blank @data['meta'][key].to_s
+    check_not_nil @data['meta'][key].to_s
+  end end
+  
+  it "should return the correct chartbeat.attributes.domain value" do
+    @data['beacons']['chartbeat']['attributes']['domain'].should == 'ign.com'
+  end
+  
+  it "should return the correct ga.attributes._setDomainName value" do
+    @data['beacons']['ga']['attributes']['_setDomainName'].should == '.ign.com'
+  end
 end
 
