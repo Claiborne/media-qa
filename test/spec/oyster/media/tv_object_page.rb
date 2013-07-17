@@ -35,6 +35,7 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/tv/#{url_slug}" do
     end
     @data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/shows/legacyId/#@legacy_id").body)
     @us_data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/shows/legacyId/#@legacy_id?").body)
+    puts "http://apis.lan.ign.com/object/v3/shows/legacyId/#@legacy_id"
   end # end before all
 
   it "should return 200" do
@@ -67,7 +68,7 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/tv/#{url_slug}" do
     end
 
     it "should display the same air date the object API returns" do
-      Time.parse(@doc.css('div.contentDetails div:nth-child(4) strong').text).to_s.match(/^.{10}/).to_s.should == @data['metadata']['airDate']['show']
+      Time.parse(@doc.css('div.contentDetails > div:nth-child(4) strong').text).to_s.match(/^.{10}/).to_s.should == @data['metadata']['airDate']['show']
     end
 
     it "should include the Facebook Like button" do
