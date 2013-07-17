@@ -76,7 +76,7 @@ module BoardsHelper
           Nokogiri::HTML(resp)
         end
       end
-      puts errors.to_s
+      puts errors.to_s if errors
       raise errors[0], err_msg.to_s if errors[0]
     end
   end
@@ -131,9 +131,9 @@ module BoardsHelper
       {
         :'gaming' => [
           :xbox,
-          :nintendo,
-          :pc,
           :playstation,
+          :pc,
+          :nintendo,
           :'ios gaming',
           :gamespy,
           :'all game boards'
@@ -153,8 +153,8 @@ module BoardsHelper
           :'sports community board',
           :baseball,
           :soccer,
-          :'college basketball',
           :basketball,
+          :'college basketball',
           :football,
           :'college football',
           :hockey,
