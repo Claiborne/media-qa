@@ -11,6 +11,9 @@ include FeChecker
 
 #darksiders-ii/xbox-360-14336768 heavenly-sword/ps3-700186 littlebigplanet/vita-98907 nhl-13/xbox-360-128182 metal-gear-solid-844505/gbc-13458 call-of-duty-black-ops-ii/pc-126314 professional-fishermans-tour-big-bass-open/3ds-87854
 
+#%w(halo-4/xbox-360-110563).each do |url_slug|
+#%w(www).each do |domain_locale|
+
 %w(halo-4/xbox-360-110563 the-last-of-us/ps3-123980).each do |url_slug|
 %w(www uk au).each do |domain_locale|
 
@@ -47,7 +50,7 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
     rescue
       @images = "ERROR_GETTING_IMAGES"
     end
-    @articles = (JSON.parse RestClient.get("http://apis.lan.ign.com/article/v3/articles/search?q=#{articles}").body)
+    @articles = (JSON.parse RestClient.get("http://apis.lan.ign.com/article/v3/articles/search?q=#{articles}").body)  
     @videos = (JSON.parse RestClient.get("http://apis.lan.ign.com/video/v3/videos/search?q=#{videos}").body)
     @data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/releases/legacyId/#@legacy_id?metadata.region=#@locale").body)['data'][0]
     @us_data = (JSON.parse RestClient.get("http://apis.lan.ign.com/object/v3/releases/legacyId/#@legacy_id?metadata.region=US").body)['data'][0]
@@ -249,7 +252,7 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
   end
 
   context "Latest Stories" do
-
+=begin
      it "should display the same articles as the article API" do
        fe_slugs = []; api_slugs = []
        @doc.css('ul.updatesList h3 a.articleTitle').each do |article|
@@ -259,6 +262,18 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
         api_slugs << article['metadata']['slug']
        end
        fe_slugs.should == api_slugs
+     end
+=end
+     it "should display the same articles as the article API" do
+       fe_headlines = []; api_headlines = []
+       @doc.css('ul.updatesList h3 a.articleTitle').each do |article|
+         fe_headlines << article.text
+       end
+       @articles['data'].each do |article|
+        api_headlines << article['metadata']['headline']
+       end
+       fe_headlines.count.should > 0
+       fe_headlines.should == api_headlines
      end
 
     context "View All Stories Button" do
@@ -314,8 +329,8 @@ describe "Oyster Game Object Pages - #{domain_locale}.ign.com/games/#{url_slug}"
   context "Games You May Like" do
 
     it "should display six games" do
-      @doc.css("div.GameYouMayLike_Details_Game_Name a").count.should == 6
-      @doc.css("div.GameYouMayLike_Details_Game_Name a").each do |game|
+      @doc.css("div.gamesYouMayLike_content div.gamesYouMayLike-name a").count.should == 6
+      @doc.css("div.gamesYouMayLike_content div.gamesYouMayLike-name a").each do |game|
         game.text.delete('^a-zA-Z').length.should > 0
       end
     end
