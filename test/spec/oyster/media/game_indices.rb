@@ -16,7 +16,7 @@ include TopGames
 def platform_list; ['all','xbox-360']; end
 def genre_list; ['all','action']; end
 
-def common_assertions
+def common_assertions(object_list, object_title, object_list_object, object_genre, item_platform, old_page = true)
   
   it "should return 200", :smoke => true do
   end
@@ -38,50 +38,52 @@ def common_assertions
   end
   
   it "should return at least one game", :smoke => true do
-    @doc.at_css('div.gameList div.game-title').should be_true
-    @doc.at_css('div.gameList div.game-title').text.delete("^a-zA-Z").length.should > 0
+    @doc.at_css("div.#{object_list} div.#{object_title}").should be_true
+    @doc.at_css("div.#{object_list} div.#{object_title}").text.delete("^a-zA-Z").length.should > 0
   end
   
   it "should display a title for each game" do
-    @doc.css('div.gameList div.gameList-game').each do |game|
-      game.at_css('div.game-title a').should be_true
-      game.at_css('div.game-title a').text.delete("^a-zA-Z").length.should > 0
+    @doc.css("div.#{object_list} div.#{object_list_object}").each do |game|
+      game.at_css("div.#{object_title} a").should be_true
+      game.at_css("div.#{object_title} a").text.delete("^a-zA-Z").length.should > 0
     end
   end
   
   it "should display a platform for each game" do
-    @doc.css('div.gameList div.gameList-game').each do |game|
-      game.at_css('span.game-platform').should be_true
-      game.at_css('span.game-platform').text.delete("^a-zA-Z").length.should > 0
+    @doc.css("div.#{object_list} div.#{object_list_object}").each do |game|
+      game.at_css("span.#{item_platform}").should be_true
+      game.at_css("span.#{item_platform}").text.delete("^a-zA-Z").length.should > 0
     end
   end
   
   it "should display a genre for each game" do
-    @doc.css('div.gameList div.gameList-game').each do |game|
-      game.at_css('span.game-genre').should be_true
-      game.at_css('span.game-genre').text.delete("^a-zA-Z0-9").length.should > 0
+    @doc.css("div.#{object_list} div.#{object_list_object}").each do |game|
+      game.at_css("span.#{object_genre}").should be_true
+      game.at_css("span.#{object_genre}").text.delete("^a-zA-Z0-9").length.should > 0
     end
   end
   
   it "should display a release data for each game" do
-    @doc.css('div.gameList div.gameList-game').each do |game|
-      game.at_css('div.releaseDate').should be_true
-      game.at_css('div.releaseDate').text.delete("^a-zA-Z0-9").length.should > 0
+    @doc.css("div.#{object_list} div.#{object_list_object}").each do |game|
+      game.at_css("div.releaseDate").should be_true
+      game.at_css("div.releaseDate").text.delete("^a-zA-Z0-9").length.should > 0
     end
   end
   
-  platform_list.each do |platform|
+  if old_page then
+  platform_list.each do |platform| 
     it "should include a link to sort by platform=#{platform}" do
       @doc.at_css('div.container_24 ul.platform-filters li a').attribute("href*='platform=#{platform}'")
     end
   end
+  end
   
 end
 
-def review_assertions
+def review_assertions(object_list, object_list_object)
 
   it "should return a review score for each game displayed", :smoke => true do
-    @doc.css('div.gameList div.gameList-game').each do |game_list|
+    @doc.css("div.#{object_list} div.#{object_list_object}").each do |game_list|
       game_list.at_css('span.scoreBox-score').should be_true
       game_list.css('span.scoreBox-score').text.delete("^0-9").length.should > 0
       game_list.at_css('span.scoreBox-scorePhrase').should be_true
@@ -116,9 +118,9 @@ describe "Game Indices -- /games/reviews" do
 
   end
     
-  common_assertions
+  common_assertions('itemList', 'item-title', 'itemList-item', 'item-genre', 'item-platform', false)
   
-  review_assertions
+  review_assertions('gameList', 'gameList-game')
 
 end
 
@@ -166,9 +168,9 @@ describe "Game Indices -- /games/reviews/#{platform}" do
     end
   end
 
-  common_assertions
+  common_assertions('gameList', 'game-title', 'gameList-game', 'game-genre', 'game-platform')
   
-  review_assertions
+  review_assertions('gameList', 'gameList-game')
 
 end
 end
@@ -194,9 +196,9 @@ describe "Game Indices -- /games/reviews/#{platform}?genre=#{genre}" do
 
   end
 
-  common_assertions
+  common_assertions('gameList', 'game-title', 'gameList-game', 'game-genre', 'game-platform')
   
-  review_assertions
+  review_assertions('gameList', 'gameList-game')
 
 end
 end
@@ -221,9 +223,9 @@ describe "Game Indices -- /games/editors-choice" do
 
   end
 
-  common_assertions
+  common_assertions('gameList', 'game-title', 'gameList-game', 'game-genre', 'game-platform')
   
-  review_assertions
+  review_assertions('gameList', 'gameList-game')
   
 end
 
@@ -247,9 +249,9 @@ describe "Game Indices -- /games/editors-choice/#{platform}" do
 
   end
   
-  common_assertions
+  common_assertions('gameList', 'game-title', 'gameList-game', 'game-genre', 'game-platform')
   
-  review_assertions
+  review_assertions('gameList', 'gameList-game')
 
 end
 end
@@ -275,10 +277,10 @@ describe "Game Indices -- /games/editors-choice/#{platform}?genre=#{genre}" do
 
   end
 
-  common_assertions
+  common_assertions('gameList', 'game-title', 'gameList-game', 'game-genre', 'game-platform')
   
-  review_assertions
-
+  review_assertions('gameList', 'gameList-game')
+  
 end
 end
 end
@@ -302,7 +304,7 @@ describe "Game Indices -- /games/upcoming" do
 
   end
 
-  common_assertions
+  common_assertions('itemList', 'item-title', 'itemList-item', 'item-genre', 'item-platform', false)
   
 end
 
@@ -326,7 +328,7 @@ describe "Game Indices -- /games/upcoming/#{platform}" do
 
   end
   
-  common_assertions
+  common_assertions('gameList', 'game-title', 'gameList-game', 'game-genre', 'game-platform')
 
 end
 end
@@ -352,7 +354,7 @@ describe "Game Indices -- /games/upcoming/#{platform}?genre=#{genre}" do
 
   end
 
-  common_assertions
+  common_assertions('gameList', 'game-title', 'gameList-game', 'game-genre', 'game-platform')
 
 end
 end
@@ -377,7 +379,7 @@ describe "Game Indices -- /games/upcoming?filter=latest" do
 
   end
 
-  common_assertions
+  common_assertions('itemList', 'item-title', 'itemList-game', 'item-genre', 'item-platform', false)
   
 end
 
@@ -401,7 +403,7 @@ describe "Game Indices -- /games/upcoming/#{platform}?filter=latest" do
 
   end
   
-  common_assertions
+  common_assertions('gameList', 'game-title', 'gameList-game', 'game-genre', 'game-platform')
 
 end
 end
@@ -427,7 +429,7 @@ describe "Game Indices -- /games/upcoming/#{platform}?genre=#{genre}&filter=late
 
   end
 
-  common_assertions
+  common_assertions('gameList', 'game-title', 'gameList-game', 'game-genre', 'game-platform')
 
 end
 end
@@ -450,6 +452,9 @@ describe "Game Indices -- /games" do
 
   after(:each) do
 
+  end
+  
+  it 'should return a 200' do
   end
 
 end
