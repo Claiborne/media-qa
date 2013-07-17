@@ -147,7 +147,7 @@ end end end
 # Game Review
 
 %w(/articles/2012/10/01/resident-evil-6-review).each do |review|
-%w(www uk au).each do |domain_locale|
+%w(uk au).each do |domain_locale|
 describe "New Review Article Page -- #{domain_locale} #{review}" do
 
   before(:all) do
@@ -327,7 +327,7 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
     end
 
     it "should link to the game's object page in the name" do
-      @doc.css('div#review-breakdown span.object-title a').attribute('href').to_s.should == "http://xbox360.ign.com/objects/117/117995.html"
+      @doc.css('div#review-breakdown span.object-title a').attribute('href').to_s.should == "http://www.ign.com/games/resident-evil-6"
     end
 
     it "should display a score of 7.9" do
@@ -527,7 +527,7 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
     end
 
     it "should link to the movie's object page in the name" do
-      @doc.css('div#review-breakdown span.object-title a').attribute('href').to_s.should == "http://movies.ign.com/objects/143/14322233.html"
+      @doc.css('div#review-breakdown span.object-title a').attribute('href').to_s.should == "http://www.ign.com/movies/inception"
     end
 
     it "should display a score of 10" do
@@ -697,11 +697,11 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
   context "Score Breakdown Box" do
 
     it "should display the correct object name and platform" do
-      @doc.css('div#review-breakdown div.title-container').text.should == 'Raising the Bar on Tv-episodes'
+      @doc.css('div#review-breakdown div.title-container').text.should == 'Raising the Bar on TV Episodes'
     end
 
     it "should link to the game's object page in the name" do
-      @doc.css('div#review-breakdown span.object-title a').attribute('href').to_s.should == "http://tv.ign.com/objects/144/144180.html"
+      @doc.css('div#review-breakdown span.object-title a').attribute('href').to_s.should == "http://www.ign.com/tv/south-park"
     end
 
     it "should display a score of 8.7" do
@@ -837,11 +837,11 @@ describe "New Review Article Page -- #{domain_locale} #{review}" do
   context "Score Breakdown Box" do
 
     it "should display the correct object name and platform" do
-      @doc.css('div.breakdown-box div.title-container').text.should == 'Dark Shadows on Blu-ray'
+      @doc.css('div.breakdown-box div.title-container').text.should == 'Dark Shadows on Movies'
     end
 
     it "should link to the game's object page in the name" do
-      @doc.css('div.breakdown-box span.object-title a').attribute('href').to_s.should == "http://bluray.ign.com/objects/138/138690.html"
+      @doc.css('div.breakdown-box span.object-title a').attribute('href').to_s.should == "http://www.ign.com/movies/dark-shadows"
     end
 
     it "should display a score of 5.3" do
