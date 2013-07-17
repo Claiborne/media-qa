@@ -147,7 +147,7 @@ end end end
 # Game Review
 
 %w(/articles/2012/10/01/resident-evil-6-review).each do |review|
-%w(uk au).each do |domain_locale|
+%w(www uk au).each do |domain_locale|
 describe "New Review Article Page -- #{domain_locale} #{review}" do
 
   before(:all) do
