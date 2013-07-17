@@ -81,7 +81,7 @@ module FeChecker
   def get_locale(base_url,cookie)
     response = RestClient.get("http://#{base_url}/i18n",cookie)
     doc = Nokogiri::HTML(response)
-    locale = doc.at_css('table tr:nth-child(5) > td:nth-child(2)').text
+    locale = doc.at_css('table > tr:nth-child(5) > td:nth-child(2)').text
     case locale
       when 'US'
         return 'www'
