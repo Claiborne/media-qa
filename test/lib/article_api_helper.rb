@@ -141,8 +141,32 @@ class ArticleAPIHelper
      ],
     }.to_json
   end
+  
+  # This method assumes max is 20
+  def self.enforce_max_contains(contains)
+    {
+    :matchRule=>"matchAll",
+    :rules=>[
+      {
+         :field=>"metadata.articleType",
+         :condition=>"is",
+         :value=>"post"
+      },
+      {
+         :field=>"tags.slug",
+         :condition=>contains,
+         :value=>"zz1,zz2,zz3,zz4,zz5,zz6,zz7,zz8,zz9,zz10,zz11,zz12,zz13,zz14,zz15,zz16,zz17,zz18,zz19,ps3,xbox-360"
+      }
+    ],
+    :startIndex=>0,
+    :count=>200,
+    :networks=>"ign",
+    :states=>"published",
+    :fields=>["metadata.headline","metadata.publishDate","tags.slug"]
+  }.to_json  
+  end
 
-end
+end #end ArticleAPIHelper
 
 shared_examples "basic article API checks" do |count|
 
