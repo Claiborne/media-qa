@@ -11,7 +11,7 @@ describe "V3 Wiki API -- General Gets -- /wikis" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/wikis"
+    @url = "http://#{@config.options['baseurl']}/wikis?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -37,7 +37,7 @@ describe "V3 Wiki API -- General Gets -- /wikis?count=200&startIndex=49", :prd =
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/wikis?count=200&startIndex=49"
+    @url = "http://#{@config.options['baseurl']}/wikis?count=200&startIndex=49&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -63,7 +63,7 @@ describe "V3 Wiki API -- General Gets -- /wikis?count=100&startIndex=49", :stg =
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/wikis?count=100&startIndex=49"
+    @url = "http://#{@config.options['baseurl']}/wikis?count=100&startIndex=49&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -90,7 +90,7 @@ describe "V3 Wiki API -- General Gets -- /wikis#{sort}&count=75" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/wikis#{sort}&count=75"
+    @url = "http://#{@config.options['baseurl']}/wikis#{sort}&count=75&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -125,7 +125,7 @@ describe "V3 Wiki API -- General Gets -- /wikis?sortBy=createdDate&sortOrder=asc
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/wikis?sortBy=createdDate&sortOrder=asc&count=75"
+    @url = "http://#{@config.options['baseurl']}/wikis?sortBy=createdDate&sortOrder=asc&count=75&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -160,7 +160,7 @@ describe "V3 Wiki API -- Get By Wiki ID" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    url = "http://#{@config.options['baseurl']}/wikis?count=30"
+    url = "http://#{@config.options['baseurl']}/wikis?count=30&fresh=true"
     begin
       response = RestClient.get url
     rescue => e
@@ -189,7 +189,7 @@ describe "V3 Wiki API -- Get By Wiki ID" do
 
   it 'should get a wiki by ID' do
     @ids.each do |id|
-      url = "http://#{@config.options['baseurl']}/wikis/#{id}"
+      url = "http://#{@config.options['baseurl']}/wikis/#{id}?fresh=true"
       begin
         @response = RestClient.get url
       rescue => e
@@ -211,7 +211,7 @@ describe "V3 Wiki API -- Get By Slug" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    url = "http://#{@config.options['baseurl']}/wikis?count=30"
+    url = "http://#{@config.options['baseurl']}/wikis?count=30&fresh=true"
     begin
       response = RestClient.get url
     rescue => e
@@ -240,7 +240,7 @@ describe "V3 Wiki API -- Get By Slug" do
 
   it 'should get a wiki by ID' do
     @slugs.each do |slug|
-      url = "http://#{@config.options['baseurl']}/wikis/slug/#{slug}"
+      url = "http://#{@config.options['baseurl']}/wikis/slug/#{slug}?fresh=true"
       begin
         @response = RestClient.get url
       rescue => e
@@ -262,7 +262,7 @@ describe "V3 Wiki API -- Get By objectId" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    url = "http://#{@config.options['baseurl']}/wikis?count=30"
+    url = "http://#{@config.options['baseurl']}/wikis?count=30&fresh=true"
     begin
       response = RestClient.get url
     rescue => e
@@ -291,7 +291,7 @@ describe "V3 Wiki API -- Get By objectId" do
 
   it 'should get a wiki by ID' do
     @objects.each do |obj|
-      url = "http://#{@config.options['baseurl']}/wikis/objectId/#{obj}"
+      url = "http://#{@config.options['baseurl']}/wikis/objectId/#{obj}?fresh=true"
       begin
         @response = RestClient.get url
       rescue => e
