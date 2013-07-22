@@ -527,7 +527,7 @@ describe "V3 Object API -- GET Search for Published 360 Releases: #{GeneralGetSe
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_search_smoke.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_search_smoke.to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -595,7 +595,7 @@ describe "V3 Object API -- GET Search for Reviewed Releases: #{GeneralGetSearchH
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.reviewed_games.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.reviewed_games.to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -652,7 +652,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/releases/search?q="+request_body.to_s
+      @url = "http://#{@config.options['baseurl']}/releases/search?q="+request_body.to_s+"&fresh=true"
       @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
       begin 
          @response = RestClient.get @url
@@ -708,7 +708,7 @@ describe "V3 Object API -- GET Search for Bioware Releases By Dev Name: #{Genera
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.bioware_games_by_dev_name.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.bioware_games_by_dev_name.to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -759,7 +759,7 @@ describe "V3 Object API -- GET Search for Bioware Releases By Dev legacyId: #{Ge
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.bioware_games_by_dev_legacyid.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.bioware_games_by_dev_legacyid.to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -820,7 +820,7 @@ describe "V3 Object API -- GET Search for Releases by status==#{is_released}: #{
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_by_is_released(is_released).to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_by_is_released(is_released).to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -860,7 +860,7 @@ describe "V3 Object API -- GET Search - Test Pagination Using: #{GeneralGetSearc
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_pagination(11,0).to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_pagination(11,0).to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin 
        @response = RestClient.get @url
@@ -886,7 +886,7 @@ describe "V3 Object API -- GET Search - Test Pagination Using: #{GeneralGetSearc
    
   it "should pass basic pagination check" do
     begin 
-      @url2 = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_pagination(10,10).to_s
+      @url2 = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.release_pagination(10,10).to_s+"&fresh=true"
       @url2 = @url2.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
       @response = RestClient.get @url2
     rescue => e
@@ -918,7 +918,7 @@ describe "V3 Object API -- GET Search - Search Using Condition 'in' using: #{Gen
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug',"in").to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug',"in").to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -969,7 +969,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'content.primaryGenre.metadata.slug',"in").to_s
+      @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'content.primaryGenre.metadata.slug',"in").to_s+"&fresh=true"
       @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
       begin
         @response = RestClient.get @url
@@ -1020,7 +1020,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug',"notIn").to_s
+      @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_using_condition_in(in_val,'hardware.platform.metadata.slug',"notIn").to_s+"&fresh=true"
       @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
       begin
         @response = RestClient.get @url
@@ -1063,7 +1063,7 @@ describe "V3 Object API -- GET Search - Search Movies By Type using: #{GeneralGe
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_movies_by_type(movie_type).to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_movies_by_type(movie_type).to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1106,7 +1106,7 @@ describe "V3 Object API -- GET Search - Search Movies By legacyId using: #{call}
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+call.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+call.to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1151,7 +1151,7 @@ describe "V3 Object API -- GET Search - Search Movies By Genre using: #{call}" d
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+call.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+call.to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1191,7 +1191,7 @@ describe "V3 Object API -- GET Search - Search Books using: #{GeneralGetSearchHe
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_books.to_s
+    @url = "http://#{@config.options['baseurl']}/releases/search?q="+GeneralGetSearchHelperMethods.search_books.to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1237,7 +1237,7 @@ end
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{call}"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{call}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1281,7 +1281,7 @@ describe "V3 Object API -- GET Search - Search Volumes using: #{GeneralGetSearch
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.search_books_by_volume}"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.search_books_by_volume}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1330,7 +1330,7 @@ describe "V3 Object API -- GET Search - Search Volumes using: #{GeneralGetSearch
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.search_volumes}"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.search_volumes}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1377,7 +1377,7 @@ describe "V3 Object API -- GET Search - Search Roles RoleType using: #{GeneralGe
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_roletype}"
+    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_roletype}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1422,7 +1422,7 @@ describe "V3 Object API -- GET Search - Search Roles Person using: #{GeneralGetS
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_person}"
+    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_person}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1471,7 +1471,7 @@ describe "V3 Object API -- GET Search - Search Roles Movie using: #{GeneralGetSe
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_movie_exists}"
+    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_movie_exists}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1523,7 +1523,7 @@ describe "V3 Object API -- GET Search - Search Roles Characters using: #{General
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_character}"
+    @url = "http://#{@config.options['baseurl']}/roles/search?q=#{GeneralGetSearchHelperMethods.search_role_character}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1574,7 +1574,7 @@ describe "V3 Object API -- GET Search - Search #{obj} Using: #{GeneralGetSearchH
 before(:all) do
   PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
   @config = PathConfig.new
-  @url = "http://#{@config.options['baseurl']}/#{obj}/search?q=#{GeneralGetSearchHelperMethods.search_without_state_filter(index)}"
+  @url = "http://#{@config.options['baseurl']}/#{obj}/search?q=#{GeneralGetSearchHelperMethods.search_without_state_filter(index)}&fresh=true"
   @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
   begin
     @response = RestClient.get @url
@@ -1616,7 +1616,7 @@ describe "V3 Object API -- GET Search - Search Releases Using: #{GeneralGetSearc
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.release_by_popularity}"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{GeneralGetSearchHelperMethods.release_by_popularity}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url

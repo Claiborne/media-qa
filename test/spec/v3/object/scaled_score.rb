@@ -27,7 +27,7 @@ describe "V3 Object API -- Get Search For ScaledScore I" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
     TopazToken.set_token('objects')
-    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{search_body}"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{search_body}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -91,7 +91,7 @@ describe "V3 Object API -- Get Search For ScaledScore II" do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
     TopazToken.set_token('objects')
-    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{search_body}"
+    @url = "http://#{@config.options['baseurl']}/releases/search?q=#{search_body}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url

@@ -26,7 +26,7 @@ describe "V3 Object API -- Releases Query Tests -- /releases?count=35&startIndex
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases?count=35&startIndex=35&metadata.state=published&metadata.region=UK"
+    @url = "http://#{@config.options['baseurl']}/releases?count=35&startIndex=35&metadata.state=published&metadata.region=UK&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -120,7 +120,7 @@ describe "V3 Object API -- Releases Sort Order Tests -- /releases?count=200&star
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases?count=200&startIndex=#{start_index}&metadata.state=published"
+    @url = "http://#{@config.options['baseurl']}/releases?count=200&startIndex=#{start_index}&metadata.state=published&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -187,7 +187,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/releases?count=200&startIndex=#{start_index}&metadata.state=published&sortBy=metadata.name&sortOrder=#{order}"
+      @url = "http://#{@config.options['baseurl']}/releases?count=200&startIndex=#{start_index}&metadata.state=published&sortBy=metadata.name&sortOrder=#{order}&fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -275,7 +275,7 @@ describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
     TopazToken.set_token('objects')
-    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}"
+    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -357,7 +357,7 @@ describe "V3 Object API -- GET For Unknown Release Objects -- /objects/legacyId/
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}"
+    @url = "http://#{@config.options['baseurl']}/objects/legacyId/#{id}?fresh=true"
   end
 
   before(:each) do

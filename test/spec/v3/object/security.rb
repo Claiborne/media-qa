@@ -27,7 +27,7 @@ describe "V3 Object API -- GET #{obj} with metadata.state=#{state} WITHOUT OAuth
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/#{obj}?metadata.state=#{state}&count=200"
+    @url = "http://#{@config.options['baseurl']}/#{obj}?metadata.state=#{state}&count=200&fresh=true"
   end
 
   before(:each) do
@@ -56,7 +56,7 @@ describe "V3 Object API -- GET #{obj} with ?metadata.state=#{state}&count=200&st
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/#{obj}?metadata.state=#{state}&count=200&startIndex=#{start}"
+    @url = "http://#{@config.options['baseurl']}/#{obj}?metadata.state=#{state}&count=200&startIndex=#{start}&fresh=true"
 
     begin
       @response = RestClient.get @url

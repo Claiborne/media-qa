@@ -104,7 +104,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /ping" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/ping"
+    @url = "http://#{@config.options['baseurl']}/ping?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -137,7 +137,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases?count=200"
+    @url = "http://#{@config.options['baseurl']}/releases?count=200&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -233,7 +233,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/legacyId/110694" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/legacyId/110694"
+    @url = "http://#{@config.options['baseurl']}/releases/legacyId/110694?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -296,7 +296,7 @@ describe "V3 Object API -- Releases Smoke Tests -- /releases/#{ObjectIds.me3_uk_
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/releases/#{ObjectIds.me3_uk_release_id}"
+    @url = "http://#{@config.options['baseurl']}/releases/#{ObjectIds.me3_uk_release_id}?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -355,7 +355,7 @@ describe "V3 Object API -- Games Smoke Tests -- /games?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/games?count=200"
+    @url = "http://#{@config.options['baseurl']}/games?count=200&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -446,7 +446,7 @@ describe "V3 Object API -- Games Smoke Tests -- /games#{call}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/games#{call}"
+    @url = "http://#{@config.options['baseurl']}/games#{call}?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -501,7 +501,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/companies?count=200"
+    @url = "http://#{@config.options['baseurl']}/companies?count=200&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -598,7 +598,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies?query=art&count=2
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/companies?query=art&count=200"
+    @url = "http://#{@config.options['baseurl']}/companies?query=art&count=200&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -658,7 +658,7 @@ describe "V3 Object API -- Companies Smoke Tests -- /companies#{call}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/companies#{call}"
+    @url = "http://#{@config.options['baseurl']}/companies#{call}?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -718,7 +718,7 @@ describe "V3 Object API -- Features Smoke Tests -- /features?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/features?count=200"
+    @url = "http://#{@config.options['baseurl']}/features?count=200&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -799,7 +799,7 @@ describe "V3 Object API -- Features Smoke Tests -- /features#{call}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/features#{call}"
+    @url = "http://#{@config.options['baseurl']}/features#{call}?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -859,7 +859,7 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/genres?count=200"
+    @url = "http://#{@config.options['baseurl']}/genres?count=200&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -940,7 +940,7 @@ describe "V3 Object API -- Genre Smoke Tests -- /genres#{call}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/genres#{call}"
+    @url = "http://#{@config.options['baseurl']}/genres#{call}?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -1000,7 +1000,7 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/hardware?count=200"
+    @url = "http://#{@config.options['baseurl']}/hardware?count=200&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -1081,7 +1081,7 @@ describe "V3 Object API -- Hardware Smoke Tests -- /hardware#{call}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/hardware#{call}"
+    @url = "http://#{@config.options['baseurl']}/hardware#{call}?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -1141,7 +1141,7 @@ describe "V3 Object API -- Movies Smoke Tests -- /movies?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/movies?count=200"
+    @url = "http://#{@config.options['baseurl']}/movies?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1224,7 +1224,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/movies#{call}"
+      @url = "http://#{@config.options['baseurl']}/movies#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -1284,7 +1284,7 @@ describe "V3 Object API -- Books Smoke Tests -- /books?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/books?count=200"
+    @url = "http://#{@config.options['baseurl']}/books?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1367,7 +1367,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/books#{call}"
+      @url = "http://#{@config.options['baseurl']}/books#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -1427,7 +1427,7 @@ describe "V3 Object API -- Volumes Smoke Tests -- /volumes?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/volumes?count=200"
+    @url = "http://#{@config.options['baseurl']}/volumes?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1510,7 +1510,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/volumes#{call}"
+      @url = "http://#{@config.options['baseurl']}/volumes#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -1570,7 +1570,7 @@ describe "V3 Object API -- People Smoke Tests -- /people?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/people?count=200"
+    @url = "http://#{@config.options['baseurl']}/people?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1653,7 +1653,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/people#{call}"
+      @url = "http://#{@config.options['baseurl']}/people#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -1713,7 +1713,7 @@ describe "V3 Object API -- Character Smoke Tests -- /characters?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/characters?count=200"
+    @url = "http://#{@config.options['baseurl']}/characters?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1796,7 +1796,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/characters#{call}"
+      @url = "http://#{@config.options['baseurl']}/characters#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -1856,7 +1856,7 @@ describe "V3 Object API -- RoleType Smoke Tests -- /roleTypes?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/roleTypes?count=200"
+    @url = "http://#{@config.options['baseurl']}/roleTypes?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -1939,7 +1939,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/roleTypes#{call}"
+      @url = "http://#{@config.options['baseurl']}/roleTypes#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -1999,7 +1999,7 @@ describe "V3 Object API -- Role Smoke Tests -- /roles?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/roles?count=200"
+    @url = "http://#{@config.options['baseurl']}/roles?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -2091,7 +2091,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/roles#{call}"
+      @url = "http://#{@config.options['baseurl']}/roles#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -2179,7 +2179,7 @@ describe "V3 Object API -- Shows Smoke Tests -- /shows?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/shows?count=200"
+    @url = "http://#{@config.options['baseurl']}/shows?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -2271,7 +2271,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/shows#{call}"
+      @url = "http://#{@config.options['baseurl']}/shows#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -2366,7 +2366,7 @@ describe "V3 Object API -- Seasons Smoke Tests -- /seasons?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/seasons?count=200"
+    @url = "http://#{@config.options['baseurl']}/seasons?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -2458,7 +2458,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/seasons#{call}"
+      @url = "http://#{@config.options['baseurl']}/seasons#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -2523,7 +2523,7 @@ describe "V3 Object API -- Episodes Smoke Tests -- /episodes?count=200" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/episodes?count=200"
+    @url = "http://#{@config.options['baseurl']}/episodes?count=200&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -2615,7 +2615,7 @@ end
     before(:all) do
       PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
       @config = PathConfig.new
-      @url = "http://#{@config.options['baseurl']}/episodes#{call}"
+      @url = "http://#{@config.options['baseurl']}/episodes#{call}?fresh=true"
       begin
         @response = RestClient.get @url
       rescue => e
@@ -2684,7 +2684,7 @@ describe "V3 Object API -- Episodes Smoke Tests -- /episodes/show/#{ObjectIds.sh
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/episodes/show/#{ObjectIds.show_id}"
+    @url = "http://#{@config.options['baseurl']}/episodes/show/#{ObjectIds.show_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -2789,7 +2789,7 @@ describe "V3 Object API -- Episodes Smoke Tests -- /episodes/season/#{ObjectIds.
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/episodes/season/#{ObjectIds.season_id}?count=50"
+    @url = "http://#{@config.options['baseurl']}/episodes/season/#{ObjectIds.season_id}?count=50&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
