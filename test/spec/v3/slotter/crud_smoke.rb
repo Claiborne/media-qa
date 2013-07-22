@@ -315,7 +315,7 @@ describe "V3 Slotter API -- Delete Slotter Meta Entry", :stg => true do
   
   it "should return a 404 when requested" do
     expect do
-      RestClient.get "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}"
+      RestClient.get "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}?fresh=true"
     end.to raise_error(RestClient::ResourceNotFound)
   end
   
