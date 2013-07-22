@@ -175,7 +175,7 @@ describe "V3 Slotter API -- Check Published Content", :stg => true do
     TopazToken.set_token('manage-slotters')
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/_published?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/_published?oauth_token=#{TopazToken.return_token}&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
