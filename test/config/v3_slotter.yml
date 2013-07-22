@@ -1,5 +1,5 @@
 development:
-  baseurl: 
+  baseurl: No-url-here-nonononono
 
 staging:
   baseurl: media-slotter-stg-api-01.sfdev.colo.ignops.com:8080/slotter/v3
@@ -8,7 +8,7 @@ production:
   baseurl: apis.lan.ign.com/slotter/v3
   
 aws01:
-	baseurl: ign-apis-prd-services-01.aws1.ignops.com:8080/slotter/v3
+  baseurl: ign-apis-prd-services-01.aws1.ignops.com:8080/slotter/v3
 	
 aws02:
-	baseurl: ign-apis-prd-services-02.aws1.ignops.com:8080/slotter/v3
+  baseurl: ign-apis-prd-services-02.aws1.ignops.com:8080/slotter/v3
