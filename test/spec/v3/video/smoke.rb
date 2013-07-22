@@ -9,7 +9,7 @@ require 'assert'
 include Assert
 
 [ "", 
-  "state/published",
+  "state/published?fresh=true",
   "?metadata.state=published&metadata.networks=ign",
   "network/ign?metadata.state=published",
   "state/published?metadata.networks=ign&metadata.state=published",
@@ -21,7 +21,7 @@ describe "V3 Video API -- General Smoke Tests -- #{call}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
+    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -147,7 +147,7 @@ describe "V3 Video API -- Playlists Smoke Tests -- /v3/playlists" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/playlists"
+    @url = "http://#{@config.options['baseurl']}/v3/playlists?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e

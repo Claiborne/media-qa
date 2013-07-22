@@ -18,7 +18,7 @@ describe "V3 Video API -- #{k} -- #{v}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos#{v}"
+    @url = "http://#{@config.options['baseurl']}/v3/videos#{v}?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -209,7 +209,7 @@ describe "V3 Video API -- Get Videos in Published State -- #{call}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
+    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -258,7 +258,7 @@ describe "V3 Video API -- Get Videos Using Count and Start Index -- #{call}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}"
+    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -324,7 +324,7 @@ describe "V3 Video API -- Get Videos By Network -- #{call}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos#{call}"
+    @url = "http://#{@config.options['baseurl']}/v3/videos#{call}&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -373,7 +373,7 @@ describe "V3 Videotags API -- tags/event Tests -- /v3/videotags/event" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videotags/event"
+    @url = "http://#{@config.options['baseurl']}/v3/videotags/event?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e

@@ -295,7 +295,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.is_classification(co
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.is_classification(count)
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.is_classification(count)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -358,7 +358,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.is_classification_ne
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.is_classification_negative(count)
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.is_classification_negative(count)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -403,7 +403,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.networks_negative(co
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.networks_negative(count)
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.networks_negative(count)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -448,7 +448,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.tags(count)}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.tags(count)
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.tags(count)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -512,7 +512,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.tags(count)}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.tags(count)
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.tags(count)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -576,7 +576,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.tags_negative(count)
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.tags_negative(count)
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.tags_negative(count)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -620,7 +620,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.video_series}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.video_series
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.video_series+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -681,7 +681,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.contains_all}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.contains_all
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.contains_all+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -747,7 +747,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.contains_none}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.contains_none
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.contains_none+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -814,7 +814,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.contains_one(num)}" 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.contains_one(num)
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.contains_one(num)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -882,7 +882,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.object_relations_con
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.object_relations_contains(num)
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.object_relations_contains(num)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -957,7 +957,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.tag_contains}" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.tag_contains
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.tag_contains+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1036,7 +1036,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.category_contains}" 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.category_contains
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.category_contains+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1106,7 +1106,7 @@ describe "V3 Video API -- GET Search Using #{VideoGetSearch.category_contains_on
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.category_contains_one
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q="+VideoGetSearch.category_contains_one+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1170,7 +1170,7 @@ describe "V3 Video API -- GET Search Playlists Using #{VideoGetSearch.playlist_l
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/playlists/search?q="+VideoGetSearch.playlist_locale
+    @url = "http://#{@config.options['baseurl']}/v3/playlists/search?q="+VideoGetSearch.playlist_locale+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -1226,7 +1226,7 @@ describe "V3 Video API -- GET Search Playlists Using #{VideoGetSearch.playlist_b
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/playlists/search?q="+VideoGetSearch.playlist_by_date_range
+    @url = "http://#{@config.options['baseurl']}/v3/playlists/search?q="+VideoGetSearch.playlist_by_date_range+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url

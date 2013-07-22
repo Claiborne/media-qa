@@ -44,7 +44,7 @@ describe "V3 Video API -- GET Unpublished Videos Using 'state/#{state}' Endpoint
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/state/#{state}?count=200"
+    @url = "http://#{@config.options['baseurl']}/v3/videos/state/#{state}?count=200&fresh=true"
     TopazToken.set_token('videos')
   end
 
@@ -86,7 +86,7 @@ describe "V3 Video API -- GET Unpublished Videos Using '?metadata.state=#{state}
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos?metadata.state=#{state}&count=200"
+    @url = "http://#{@config.options['baseurl']}/v3/videos?metadata.state=#{state}&count=200&fresh=true"
     TopazToken.set_token('videos')
   end
 
@@ -161,7 +161,7 @@ describe "V3 Video API -- GET Search #{state} Videos" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q=#{get_videos_by_state(state)}"
+    @url = "http://#{@config.options['baseurl']}/v3/videos/search?q=#{get_videos_by_state(state)}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     TopazToken.set_token('videos')
   end
@@ -194,7 +194,7 @@ describe "V3 Video API -- GET Unpublished Playlists Using '?metadata.state=#{sta
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/playlists?metadata.state=#{state}&count=75"
+    @url = "http://#{@config.options['baseurl']}/v3/playlists?metadata.state=#{state}&count=75&fresh=true"
     TopazToken.set_token('videos')
   end
 
@@ -256,7 +256,7 @@ describe "V3 Video API -- GET Search Ask #{state} Playlists" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/playlists/search?q=#{get_playlists_by_state(state)}"
+    @url = "http://#{@config.options['baseurl']}/v3/playlists/search?q=#{get_playlists_by_state(state)}&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     TopazToken.set_token('videos')
   end
@@ -289,7 +289,7 @@ describe "V3 Video API -- GET Unpublished Playlists Using '?metadata.state=#{sta
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/playlists?metadata.state=#{state}&count=200"
+    @url = "http://#{@config.options['baseurl']}/v3/playlists?metadata.state=#{state}&count=200&fresh=true"
     TopazToken.set_token('videos')
   end
 
