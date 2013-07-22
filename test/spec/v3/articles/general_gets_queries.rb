@@ -153,7 +153,7 @@ describe "V3 Articles API -- Get Published Article Type: #{call} -- v3/articles/
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles/type/#{call}?metadata.state=published"
+    @url = "http://#{@config.options['baseurl']}/v3/articles/type/#{call}?metadata.state=published&fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e

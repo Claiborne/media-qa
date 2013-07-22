@@ -32,7 +32,7 @@ describe "V3 Article API -- GET Unpublished Articles Using /state/#{state} Endpo
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
     TopazToken.set_token('articles')
-    @url = "http://#{@config.options['baseurl']}/v3/articles/state/#{state}"
+    @url = "http://#{@config.options['baseurl']}/v3/articles/state/#{state}?fresh=true"
     TopazToken.set_token('videos')
   end
 
@@ -65,7 +65,7 @@ describe "V3 Article API -- GET Unpublished Articles Using ?metadata.state=#{sta
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
     TopazToken.set_token('articles')
-    @url = "http://#{@config.options['baseurl']}/v3/articles?metadata.state=#{state}"
+    @url = "http://#{@config.options['baseurl']}/v3/articles?metadata.state=#{state}&fresh=true"
     TopazToken.set_token('videos')
   end
 
@@ -98,7 +98,7 @@ describe "V3 Article API -- GET Unpublished Articles Using ?metadata.state=#{sta
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
     TopazToken.set_token('articles')
-    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleAPIHelper.get_articles_by_state(state).to_s
+    @url = "http://#{@config.options['baseurl']}/v3/articles/search?q="+ArticleAPIHelper.get_articles_by_state(state).to_s+"&fresh=true"
     @url = @url.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     TopazToken.set_token('videos')
   end
@@ -129,7 +129,7 @@ describe "V3 Article API -- GET Specific Non-Published Article", :stg=> true do
 
   before(:all) do
     TopazToken.set_token('articles')
-    @base_url = "apis.stg.ign.com/article/v3/articles"
+    @base_url = "http://#{@config.options['baseurl']}/v3/articles"
 
     @rand_num = Random.rand(500)
     @article_body = {:metadata=>{:headline=>"Media QA Test Article #@rand_num",:articleType=>"article",:state=>"draft"},:authors=>[{:name=>"Media QA"}],:refs=>{:wordpressId=>234209374}}.to_json
@@ -154,7 +154,7 @@ describe "V3 Article API -- GET Specific Non-Published Article", :stg=> true do
 
   end
 
-  it "should create a video" do
+  it "should create am article" do
     res = RestClient.post "#{@base_url}?oauth_token=#{TopazToken.return_token}", @article_body, :content_type => "application/json"
     data = JSON.parse(res.body)
     puts data['articleId']
@@ -164,25 +164,25 @@ describe "V3 Article API -- GET Specific Non-Published Article", :stg=> true do
   end
 
   it "should return a 200 when trying to GET a draft article by articleId with OAuth" do
-    res = RestClient.get "#{@base_url}/#{ArticleData.article_id}?oauth_token=#{TopazToken.return_token}"
+    res = RestClient.get "#{@base_url}/#{ArticleData.article_id}?oauth_token=#{TopazToken.return_token}&fresh=true"
     res.code.should == 200
     d = JSON.parse(res.body)
     d['metadata']['state'].should == "draft"
   end
 
   it "should return a 200 when trying to GET a draft article by slug with OAuth" do
-    res = RestClient.get "#{@base_url}/slug/media-qa-test-article-#@rand_num?oauth_token=#{TopazToken.return_token}"
+    res = RestClient.get "#{@base_url}/slug/media-qa-test-article-#@rand_num?oauth_token=#{TopazToken.return_token}&fresh=true"
     res.code.should == 200
     d = JSON.parse(res.body)
     d['metadata']['state'].should == "draft"
   end
 
   it "should return a 401 when trying to GET a draft article by articleId without OAuth" do
-    expect {RestClient.get "#{@base_url}/#{ArticleData.article_id}"}.to raise_error(RestClient::Unauthorized)
+    expect {RestClient.get "#{@base_url}/#{ArticleData.article_id}?fresh=true"}.to raise_error(RestClient::Unauthorized)
   end
 
   it "should return a 404 when trying to GET a draft article by slug without OAuth" do
-    expect {RestClient.get "#{@base_url}/slug/media-qa-test-article-#@rand_num"}.to raise_error(RestClient::ResourceNotFound)
+    expect {RestClient.get "#{@base_url}/slug/media-qa-test-article-#@rand_num?fresh=true"}.to raise_error(RestClient::ResourceNotFound)
   end
 
   it "should clean up" do

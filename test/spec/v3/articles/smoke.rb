@@ -19,7 +19,7 @@ describe "V3 Articles API -- General Smoke Tests -- v3/articles#{call}", :smoke 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles#{call}"
+    @url = "http://#{@config.options['baseurl']}/v3/articles#{call}?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -237,7 +237,7 @@ describe "V3 Articles API -- Get Article By #{k} -- #{v}", :smoke => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles#{v}"
+    @url = "http://#{@config.options['baseurl']}/v3/articles#{v}?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
