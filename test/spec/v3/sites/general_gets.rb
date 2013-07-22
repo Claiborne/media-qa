@@ -15,7 +15,7 @@ describe "V3 Sites API -- GET /sites" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_sites.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/sites"
+    @url = "http://#{@config.options['baseurl']}/sites?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -84,7 +84,7 @@ describe "V3 Sites API -- GET by /sites/beacons/www.ign.com", :prd => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_sites.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/sites/beacons/www.ign.com"
+    @url = "http://#{@config.options['baseurl']}/sites/beacons/www.ign.com?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
@@ -145,7 +145,7 @@ describe "V3 Sites API -- GET by /categories/tags/xbox-360", :prd => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_sites.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/categories/tags/xbox-360"
+    @url = "http://#{@config.options['baseurl']}/categories/tags/xbox-360?fresh=true"
     begin 
       @response = RestClient.get @url
     rescue => e
