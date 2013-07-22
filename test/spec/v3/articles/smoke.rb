@@ -8,18 +8,18 @@ require 'assert'
 include Assert
 
 [ "",
-  "?metadata.state=published",
-  "/type/post",
-  "/type/cheat",
-  "/type/article",
-  "/state/published"].each do |call|
+  "?metadata.state=published&fresh=true",
+  "/type/post?fresh=true",
+  "/type/cheat?fresh=true",
+  "/type/article?fresh=true",
+  "/state/published?fresh=true"].each do |call|
 
 describe "V3 Articles API -- General Smoke Tests -- v3/articles#{call}", :smoke => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/articles#{call}?fresh=true"
+    @url = "http://#{@config.options['baseurl']}/v3/articles#{call}"
     begin 
       @response = RestClient.get @url
     rescue => e
