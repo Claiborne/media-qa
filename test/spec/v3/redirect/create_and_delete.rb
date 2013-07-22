@@ -93,7 +93,7 @@ describe "V3 Redirect API -- Confirm Add A Redirect Using '/ID'", :stg => true d
     @config = PathConfig.new
     TopazToken.set_token('redirect')
     #@url = @url = "http://#{@config.options['baseurl']}/redirects/#{RedirectHelper::Vars.get_id}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects/#{RedirectHelper::Vars.get_id}"
+    @url = "http://apis.stg.ign.com/redirect/v3/redirects/#{RedirectHelper::Vars.get_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -143,7 +143,7 @@ describe "V3 Redirect API -- Confirm Add A Redirect Using '?from='", :stg => tru
     @config = PathConfig.new
     TopazToken.set_token('redirect')
     #@url = @url = "http://#{@config.options['baseurl']}/redirects?from=#{RedirectHelper.new_redirect[:from]}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects?from=#{RedirectHelper.new_redirect[:from]}"
+    @url = "http://apis.stg.ign.com/redirect/v3/redirects?from=#{RedirectHelper.new_redirect[:from]}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
