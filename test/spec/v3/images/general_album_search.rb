@@ -69,7 +69,7 @@ describe "V3 Image API -- GET Album Search Using #{GeneralAlbumSearch.networks}"
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.networks
+    @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.networks+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -130,7 +130,7 @@ describe "V3 Image API -- GET Album Search Using #{GeneralAlbumSearch.locale}" d
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.locale
+    @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.locale+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -192,7 +192,7 @@ describe "V3 Image API -- GET Album Search Using #{GeneralAlbumSearch.tags_conta
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.tags_contains_all
+    @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.tags_contains_all+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -259,7 +259,7 @@ describe "V3 Image API -- GET Albums Search Using #{GeneralAlbumSearch.range_and
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.range_and_sort_order(order)
+    @url = "http://#{@config.options['baseurl']}/v3/albums/search?q="+GeneralAlbumSearch.range_and_sort_order(order)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url

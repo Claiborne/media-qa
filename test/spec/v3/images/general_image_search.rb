@@ -102,7 +102,7 @@ describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.networks}"
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.networks
+    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.networks+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -158,7 +158,7 @@ describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.legacy_id_
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.legacy_id_and_tags
+    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.legacy_id_and_tags+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -224,7 +224,7 @@ describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.tags_conta
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.tags_contains_all
+    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.tags_contains_all+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -286,7 +286,7 @@ describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.range_and_
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.range_and_sort_order(order)
+    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.range_and_sort_order(order)+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -364,7 +364,7 @@ describe "V3 Image API -- GET Image Search Using #{GeneralImageSearch.match_any}
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.match_any
+    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.match_any+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
     begin
       @response = RestClient.get @url
@@ -428,7 +428,7 @@ describe "V3 Image API -- GET Image Search _Without Auth_ Using #{GeneralImageSe
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_images.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.draft
+    @url = "http://#{@config.options['baseurl']}/v3/images/search?q="+GeneralImageSearch.draft+"&fresh=true"
     @url = @url.to_s.gsub(/\"|\{|\}|\||\\|\^|\[|\]|`|\s+/) { |m| CGI::escape(m) }
   end
 
