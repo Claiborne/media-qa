@@ -12,7 +12,7 @@ describe "V3 Boards API -- General Gets -- /boards" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/boards"
+    @url = "http://#{@config.options['baseurl']}/boards?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -88,7 +88,7 @@ describe "V3 Boards API -- General Gets -- /boards?count=200&startIndex=199" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/boards?count=200&startIndex=199"
+    @url = "http://#{@config.options['baseurl']}/boards?count=200&startIndex=199&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e

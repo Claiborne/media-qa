@@ -12,7 +12,7 @@ describe "V3 Boards API -- General Gets -- /legacyId/:id" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
-    url = "http://#{@config.options['baseurl']}/boards"
+    url = "http://#{@config.options['baseurl']}/boards?fresh=true"
     res = RestClient.get url
     d = JSON.parse(res.body)
     @legacy_ids = []
@@ -35,7 +35,7 @@ describe "V3 Boards API -- General Gets -- /legacyId/:id" do
 
   it "should get a board by xenforoId" do
     @legacy_ids.each do |id|
-      url = "http://#{@config.options['baseurl']}/boards/legacyId/#{id}"
+      url = "http://#{@config.options['baseurl']}/boards/legacyId/#{id}?fresh=true"
       begin
         res = RestClient.get url
       rescue => e

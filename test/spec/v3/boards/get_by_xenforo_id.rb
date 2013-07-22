@@ -12,7 +12,7 @@ describe "V3 Boards API -- General Gets -- /xenforoId/:id" do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
-    url = "http://#{@config.options['baseurl']}/boards?count=25"
+    url = "http://#{@config.options['baseurl']}/boards?count=25&fresh=true"
     res = RestClient.get url
     d = JSON.parse(res.body)
     @xenforo_ids = []
@@ -35,7 +35,7 @@ describe "V3 Boards API -- General Gets -- /xenforoId/:id" do
 
   it "should get a board by xenforoId" do
     @xenforo_ids.each do |id|
-      url = "http://#{@config.options['baseurl']}/boards/xenforoId/#{id}"
+      url = "http://#{@config.options['baseurl']}/boards/xenforoId/#{id}?fresh=true"
       begin
       res = RestClient.get url
       rescue => e

@@ -117,7 +117,7 @@ describe "V3 Boards API -- Get Board Just Created", :stg => true do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
     TopazToken.set_token('boards-admin')
-    @url = "http://10.97.64.101:8082/board/v3/boards/#{BoardsHelper::Vars.get_id}"
+    @url = "http://10.97.64.101:8082/board/v3/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -266,7 +266,7 @@ describe "V3 Boards API -- Confirm Delete A Board Using '/ID'", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
-    @url = "http://10.97.64.101:8082/board/v3/boards/#{BoardsHelper::Vars.get_id}"
+    @url = "http://10.97.64.101:8082/board/v3/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
   end
 
   before(:each) do
