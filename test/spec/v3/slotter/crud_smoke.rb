@@ -28,7 +28,7 @@ describe "V3 Slotter API -- Create Slotter Meta Entry", :stg => true do
     TopazToken.set_token('manage-slotters')
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/slotters?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.post @url, {"name"=>"Media QA Test #{Random.rand(10000-9999999)}"}.to_json, {:content_type => "application/json", :Principal => "wclaiborne Test Automation"}
       sleep 2
@@ -54,7 +54,7 @@ describe "V3 Slotter API -- Get Slotter Meta Entry by /ID", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -106,7 +106,7 @@ describe "V3 Slotter API -- Create Slotter Content", :stg => true do
     TopazToken.set_token('manage-slotters')
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/versions?oauth_token=#{TopazToken.return_token}&fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}/versions?oauth_token=#{TopazToken.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, SlotterAPIHelper.create_slotter_content, {:Principal => "wclaiborne Test Automation", "Content-Type" => 'application/json'}
       sleep 2
@@ -135,7 +135,7 @@ describe "V3 Slotter API -- Check Slotter Content", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/_latest?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}/_latest?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -154,7 +154,7 @@ describe "V3 Slotter API -- Publish Slotter Content", :stg => true do
     TopazToken.set_token('manage-slotters')
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/versions/#{SlotterAPIHelper.version_id}/_publish?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}/versions/#{SlotterAPIHelper.version_id}/_publish?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.put @url, {}.to_json, {:Principal => "wclaiborne Test Automation", "Content-Type" => 'application/json'}
       sleep 2
@@ -175,7 +175,7 @@ describe "V3 Slotter API -- Check Published Content", :stg => true do
     TopazToken.set_token('manage-slotters')
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/_published?oauth_token=#{TopazToken.return_token}&fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}/_published?oauth_token=#{TopazToken.return_token}&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -195,7 +195,7 @@ describe "V3 Slotter API -- (Smoke) Update Content", :stg => true do
     TopazToken.set_token('manage-slotters')
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/versions?oauth_token=#{TopazToken.return_token}&fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}/versions?oauth_token=#{TopazToken.return_token}&fresh=true"
     change = {:name=>'Media QA Test',:items=>[{:url=>'changed url'}]}.to_json
     begin
       @response = RestClient.put @url, change, {:Principal => "wclaiborne Test Automation", "Content-Type" => 'application/json'}
@@ -222,7 +222,7 @@ describe "V3 Slotter API -- Check Updated Content", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/_latest?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}/_latest?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -250,7 +250,7 @@ describe "V3 Slotter API -- Publish Updated Content", :stg => true do
     TopazToken.set_token('manage-slotters')
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/versions/#{SlotterAPIHelper.version_id}/_publish?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}/versions/#{SlotterAPIHelper.version_id}/_publish?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.put @url, {}.to_json, {:Principal => "wclaiborne Test Automation", "Content-Type" => 'application/json'}
       sleep 2
@@ -271,7 +271,7 @@ describe "V3 Slotter API -- Check Updated Published Content", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}/_published?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}/_published?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -301,7 +301,7 @@ describe "V3 Slotter API -- Delete Slotter Meta Entry", :stg => true do
     TopazToken.set_token('manage-slotters')
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_slotter.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.delete @url, :Principal => "wclaiborne Test Automation"
     rescue => e
@@ -315,7 +315,7 @@ describe "V3 Slotter API -- Delete Slotter Meta Entry", :stg => true do
   
   it "should return a 404 when requested" do
     expect do
-      RestClient.get "http://#{@config.staging['baseurl']}/slotters/#{SlotterAPIHelper.id}?fresh=true"
+      RestClient.get "http://#{@config.stg['baseurl']}/slotters/#{SlotterAPIHelper.id}?fresh=true"
     end.to raise_error(RestClient::ResourceNotFound)
   end
   
