@@ -319,7 +319,7 @@ describe "V3 Video API -- GET Specific Non-Published Video", :stg => true do
 
   before(:all) do
     TopazToken.set_token('videos')
-    @base_url = "http://apis.stg.ign.com/video/v3/videos/"
+    @base_url = "http://#{@config.stg['baseurl']}/v3/videos/"
 
     @rand_num = Random.rand(500)
     @vid_body = {"metadata"=>{"name"=>"media qa test #{@rand_num}","slug"=>"media-qa-test-#{@rand_num}","networks"=>["askmen"]},"state"=>"discovered"}.to_json
@@ -398,7 +398,7 @@ describe "V3 Video API -- GET Specific Non-Published Playlist", :stg => true do
 
   before(:all) do
     TopazToken.set_token('videos')
-    @base_url = "http://apis.stg.ign.com/video/v3/playlists/"
+    @base_url = "http://#{@config.stg['baseurl']}/v3/playlists/"
 
     @rand_num = Random.rand(500)
     @vid_body = {"metadata"=>{"name"=>"media qa test #{@rand_num}","slug"=>"media-qa-test-#{@rand_num}","networks"=>["askmen"]},"state"=>"discovered"}.to_json
