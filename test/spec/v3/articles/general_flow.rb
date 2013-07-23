@@ -76,6 +76,8 @@ end
 describe "V3 Articles API -- Create An Article -- POST apis.stg.ign.com/article/v3/articles?oauth_token={token}", :stg => true do
 
   before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.stg['baseurl']}/v3/articles?oauth_token=#{HelperVarsArticleFlow.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, HelperVarsArticleFlow.body_request, :content_type => "application/json"
@@ -122,6 +124,8 @@ end
 describe "V3 Articles API -- Check Article Just Created -- apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
 
   before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.stg['baseurl']}/v3/articles/#{HelperVarsArticleFlow.return_article_id}?fresh=true"
     begin
       @response = RestClient.get @url
@@ -338,6 +342,8 @@ describe "V3 Articles API -- Update Article Just Created -- PUT apis.stg.ign.com
 
   before(:all) do
     put_body = {"content" => ["Test Content Change #{Random.rand(10000-99999)}"]}.to_json
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.stg['baseurl']}/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token=#{HelperVarsArticleFlow.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, put_body, :content_type => "application/json"
@@ -374,6 +380,8 @@ end
 describe "V3 Articles API -- Check Article Just Updated -- apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
 
   before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.stg['baseurl']}/v3/articles/#{HelperVarsArticleFlow.return_article_id}?fresh=true"
     begin
       @response = RestClient.get @url
@@ -564,6 +572,8 @@ end
 describe "V3 Articles API -- Clean up / Delete -- apis.stg.ign.com/article/v3/articles/#{HelperVarsArticleFlow.return_article_id}", :stg => true do
 
   before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.stg['baseurl']}/v3/articles/#{HelperVarsArticleFlow.return_article_id}?oauth_token=#{HelperVarsArticleFlow.return_token}&fresh=true"
     begin
       @response = RestClient.delete @url

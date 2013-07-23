@@ -125,11 +125,13 @@ end end
 ##################################################################
 # GET SINGLE UNPUBLISHED ARTICLE USING ID AND SLUG
 
-describe "V3 Article API -- GET Specific Non-Published Article", :stg=> true do
+describe "V3 Article API -- GET Specific Non-Published Article", :stg => true do
 
   before(:all) do
     TopazToken.set_token('articles')
-    @base_url = "http://#{@config.options['baseurl']}/v3/articles"
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @base_url = "http://#{@config.stg['baseurl']}/v3/articles"
 
     @rand_num = Random.rand(500)
     @article_body = {:metadata=>{:headline=>"Media QA Test Article #@rand_num",:articleType=>"article",:state=>"draft"},:authors=>[{:name=>"Media QA"}],:refs=>{:wordpressId=>234209374}}.to_json
@@ -154,7 +156,7 @@ describe "V3 Article API -- GET Specific Non-Published Article", :stg=> true do
 
   end
 
-  it "should create am article" do
+  it "should create an article" do
     res = RestClient.post "#{@base_url}?oauth_token=#{TopazToken.return_token}", @article_body, :content_type => "application/json"
     data = JSON.parse(res.body)
     puts data['articleId']

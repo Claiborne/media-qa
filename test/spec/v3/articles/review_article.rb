@@ -35,7 +35,9 @@ describe "V3 Articles API -- Create A Review Article -- POST apis.stg.ign.com/ar
 
   before(:all) do
     TopazToken.set_token('articles')
-    @url = "http://#{@config.stg['baseurl']}?oauth_token=#{TopazToken.return_token}&fresh=true"
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
+    @url = "http://#{@config.stg['baseurl']}/v3/articles?oauth_token=#{TopazToken.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, ArticleAPIHelper.new_review_article(ArticleReviewHelper.rand_num), :content_type => "application/json"
     rescue => e
@@ -82,6 +84,8 @@ describe "V3 Articles API -- Check Review Article Just Created -- apis.stg.ign.c
 
   before(:all) do
     TopazToken.set_token('articles')
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.stg['baseurl']}/v3/articles/#{ArticleReviewHelper.return_article_id}?oauth_token=#{TopazToken.return_token}&fresh=true"
     begin
       @response = RestClient.get @url
@@ -174,6 +178,8 @@ describe "V3 Articles API -- Change A Review Article -- PUT apis.stg.ign.com/art
 
   before(:all) do
     TopazToken.set_token('articles')
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.stg['baseurl']}/v3/articles/#{ArticleReviewHelper.return_article_id}?oauth_token=#{TopazToken.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, ArticleAPIHelper.changed_review_article, :content_type => "application/json"
@@ -214,6 +220,8 @@ end
 describe "V3 Articles API -- Check Review Article Just Changed -- apis.stg.ign.com/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :stg => true do
 
   before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.stg['baseurl']}/v3/articles/#{ArticleReviewHelper.return_article_id}?fresh=true"
     begin
       @response = RestClient.get @url
@@ -311,6 +319,8 @@ end
 describe "V3 Articles API -- Clean up / Delete -- apis.stg.ign.com/article/v3/articles/#{ArticleReviewHelper.return_article_id}", :stg => true do
 
   before(:all) do
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
+    @config = PathConfig.new
     @url = "http://#{@config.stg['baseurl']}/v3/articles/#{ArticleReviewHelper.return_article_id}?oauth_token=#{TopazToken.return_token}&fresh=true"
     begin
       @response = RestClient.delete @url
