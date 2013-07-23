@@ -12,7 +12,6 @@ class PathConfig
     environment = ENV['env']
     configs = YAML.load_file(@@config_path)
     @options = configs[environment]
-    puts @options
     raise "No base URL for '#{ENV['env']}' is defined in the test's YML file" unless @options && @options['baseurl']
     
     case environment
