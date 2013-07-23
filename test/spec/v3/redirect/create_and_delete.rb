@@ -41,10 +41,10 @@ describe "V3 Redirect API -- Create A Redirect", :stg => true do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_redirect.yml"
     @config = PathConfig.new
     TopazToken.set_token('redirect')
-    #@url = @url = "http://#{@config.options['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.post @url, (RedirectHelper.new_redirect).to_json, :content_type => "application/json"
+      sleep 2
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -92,8 +92,7 @@ describe "V3 Redirect API -- Confirm Add A Redirect Using '/ID'", :stg => true d
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_redirect.yml"
     @config = PathConfig.new
     TopazToken.set_token('redirect')
-    #@url = @url = "http://#{@config.options['baseurl']}/redirects/#{RedirectHelper::Vars.get_id}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects/#{RedirectHelper::Vars.get_id}?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/redirects/#{RedirectHelper::Vars.get_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -142,8 +141,7 @@ describe "V3 Redirect API -- Confirm Add A Redirect Using '?from='", :stg => tru
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_redirect.yml"
     @config = PathConfig.new
     TopazToken.set_token('redirect')
-    #@url = @url = "http://#{@config.options['baseurl']}/redirects?from=#{RedirectHelper.new_redirect[:from]}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects?from=#{RedirectHelper.new_redirect[:from]}?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/redirects?from=#{RedirectHelper.new_redirect[:from]}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -193,8 +191,7 @@ describe "V3 Redirect API -- Add A Duplicate Redirect", :stg => true do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_redirect.yml"
     @config = PathConfig.new
     TopazToken.set_token('redirect')
-    #@url = "http://#{@config.options['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
   end
 
   before(:each) do
@@ -218,7 +215,7 @@ describe "V3 Redirect API -- Add A Circular Redirect", :stg => true do
     @config = PathConfig.new
     TopazToken.set_token('redirect')
     #@url = "http://#{@config.options['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
     @circ = {:from=>RedirectHelper.new_redirect[:to].to_s,:to=>RedirectHelper.new_redirect[:from].to_s}.to_json
   end
 
@@ -241,8 +238,7 @@ describe "V3 Redirect API -- Delete A Redirect", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_redirect.yml"
     @config = PathConfig.new
-    #@url = @url = "http://#{@config.options['baseurl']}/redirects/#{RedirectHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects/#{RedirectHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/redirects/#{RedirectHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.delete @url
     rescue => e
@@ -280,8 +276,7 @@ describe "V3 Redirect API -- Confirm Delete A Redirect Using '/ID'", :stg => tru
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_redirect.yml"
     @config = PathConfig.new
     TopazToken.set_token('redirect')
-    #@url = @url = "http://#{@config.options['baseurl']}/redirects/#{RedirectHelper::Vars.get_id}?fresh=true"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects/#{RedirectHelper::Vars.get_id}?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/redirects/#{RedirectHelper::Vars.get_id}?fresh=true"
   end
 
   before(:each) do
@@ -304,8 +299,7 @@ describe "V3 Redirect API -- Confirm Delete A Redirect Using '?from='", :stg => 
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_redirect.yml"
     @config = PathConfig.new
     TopazToken.set_token('redirect')
-    #@url = @url = "http://#{@config.options['baseurl']}/redirects?from=#{RedirectHelper.new_redirect[:from]}&fresh=true"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects?from=#{RedirectHelper.new_redirect[:from]}&fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/redirects?from=#{RedirectHelper.new_redirect[:from]}&fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e

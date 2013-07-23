@@ -16,7 +16,7 @@ describe "V3 Redirect API -- Add A Redirect Without a Token", :stg => true do
     @config = PathConfig.new
     TopazToken.set_token('redirect')
     #@url = @url = "http://#{@config.options['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects"
+    @url = "http://#{@config.stg['baseurl']}/redirects"
     @body = {:from=>"http://here.com/foo/bar/should_fail",:to=>"http://there.com/should_fail",:status=>301}.to_json
   end
 
@@ -41,7 +41,7 @@ describe "V3 Redirect API -- Add A Redirect Without a Valid Token", :stg => true
     @config = PathConfig.new
     TopazToken.set_token('redirect')
     #@url = @url = "http://#{@config.options['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects?oauth_token=518197c3ae715c71349a1343"
+    @url = "http://#{@config.stg['baseurl']}/redirects?oauth_token=518197c3ae715c71349a1343"
     @body = {:from=>"http://here.com/foo/bar/should_fail",:to=>"http://there.com/should_fail",:status=>301}.to_json
   end
 
@@ -66,7 +66,7 @@ describe "V3 Redirect API -- Add A Redirect Without a JSON Body", :stg => true d
     @config = PathConfig.new
     TopazToken.set_token('redirect')
     #@url = @url = "http://#{@config.options['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
     @body = {:from=>"http://here.com/foo/bar/should_fail",:to=>"http://there.com/should_fail",:status=>301}
   end
 
@@ -91,7 +91,7 @@ describe "V3 Redirect API -- Add A Redirect With Invalid Content-Type Header", :
     @config = PathConfig.new
     TopazToken.set_token('redirect')
     #@url = @url = "http://#{@config.options['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
-    @url = "http://apis.stg.ign.com/redirect/v3/redirects?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/redirects?oauth_token=#{TopazToken.return_token}"
     @body = {:from=>"http://here.com/foo/bar/should_fail",:to=>"http://there.com/should_fail",:status=>301}
   end
 
