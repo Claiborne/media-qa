@@ -6,7 +6,7 @@ staging:
 
 production:
   baseurl: secure.ign.com
-
-aws:
-  baseurl: secure.ign.com
+  
+other:
+  baseurl: secure-stg.ign.com
 
