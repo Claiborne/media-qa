@@ -1963,7 +1963,9 @@ describe "V3 Object API -- Clean Up: Delete Objects", :stg => true do
       else
         id = ""
     end
-
+    
+  PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
+  @config = PathConfig.new
   del_url = "http://#{@config.stg['baseurl']}/#{obj[val]}/#{id}?oauth_token=#{UpdateHelperVars.return_token}&fresh=true"
   begin
     @response = RestClient.delete del_url
