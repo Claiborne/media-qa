@@ -148,7 +148,7 @@ describe "V3 Object API -- Create #{object_name} With Review Data", :stg => true
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
     TopazToken.set_token('objects')
-    @url = "http://apis.stg.ign.com/object/v3/#{object}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/#{object}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.post @url, create_valid_release_w_review, :content_type => "application/json"
     rescue => e
@@ -172,7 +172,7 @@ describe "V3 Object API -- Create #{object_name} With Review Data", :stg => true
   end
 
   it "should return correct scaledScore data" do
-    url = "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
+    url = "http://#{@config.stg['baseurl']}/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
     begin
       response = RestClient.get url
     rescue => e
@@ -198,7 +198,7 @@ describe "V3 Object API -- Add scaledScore data directly", :stg => true do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
     TopazToken.set_token('objects')
-    @url = "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/#{object}/#{ObjectPostSearch.get_saved_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.put @url, add_scaled_score, :content_type => "application/json"
     rescue => e
@@ -217,7 +217,7 @@ describe "V3 Object API -- Add scaledScore data directly", :stg => true do
 
   it "should should fail" do
     begin
-      response = RestClient.get "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
+      response = RestClient.get "http://#{@config.stg['baseurl']}/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -238,7 +238,7 @@ describe "V3 Object API -- Update #{object_name} With Custom Scaled Score", :stg
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
     TopazToken.set_token('objects')
-    @url = "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/#{object}/#{ObjectPostSearch.get_saved_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.put @url, add_scaled_score, :content_type => "application/json"
     rescue => e
@@ -260,7 +260,7 @@ describe "V3 Object API -- Update #{object_name} With Custom Scaled Score", :stg
 
   it "should fail" do
     begin
-      response = RestClient.get "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
+      response = RestClient.get "http://#{@config.stg['baseurl']}/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -277,7 +277,7 @@ describe "V3 Object API -- Update #{object_name} to Remove Review Score", :stg =
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
     TopazToken.set_token('objects')
-    @url = "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/#{object}/#{ObjectPostSearch.get_saved_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.put @url, remove_review_from_release, :content_type => "application/json"
     rescue => e
@@ -299,7 +299,7 @@ describe "V3 Object API -- Update #{object_name} to Remove Review Score", :stg =
 
   it "should delete scaledScore data" do
     begin
-      response = RestClient.get "http://apis.stg.ign.com/object/v3/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
+      response = RestClient.get "http://#{@config.stg['baseurl']}/#{object}/#{ObjectPostSearch.get_saved_id}?fresh=true"
     rescue => e
       raise Exception.new(e.message+" "+@url)
     end
@@ -339,7 +339,7 @@ describe "V3 Object API -- Clean Up", :stg => true do
   it "should clean up and return 200" do
     raise Exception, 'v3/object/scaled_score.rb did not perform clean up' unless ObjectPostSearch.get_ids.length > 0
     ObjectPostSearch.get_ids.each do |id|
-      @url = "http://apis.stg.ign.com/object/v3/#{object}/#{id}?oauth_token=#{TopazToken.return_token}"
+      @url = "http://#{@config.stg['baseurl']}/#{object}/#{id}?oauth_token=#{TopazToken.return_token}"
       begin
         @response = RestClient.delete @url
       rescue => e

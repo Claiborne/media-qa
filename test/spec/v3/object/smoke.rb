@@ -2789,7 +2789,7 @@ describe "V3 Object API -- Episodes Smoke Tests -- /episodes/season/#{ObjectIds.
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/episodes/season/#{ObjectIds.season_id}?count=50&fresh=true"
+    @url = "http://#{@config.options['baseurl']}/episodes/season/#{ObjectIds.season_id}?count=50&fresh=truetest/spec/v3/object"
     begin
       @response = RestClient.get @url
     rescue => e

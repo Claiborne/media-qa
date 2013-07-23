@@ -17,7 +17,7 @@ describe "V3 Object API -- Create A Release With All Fields" do
     @token = return_topaz_token('objects')
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_object.yml"
     @config = PathConfig.new
-    @url = "http://apis.stg.ign.com/object/v3/releases?oauth_token=#{CreateSmokeHelperVars.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/releases?oauth_token=#{CreateSmokeHelperVars.return_token}"
     begin
       @response = RestClient.post @url, V3ObjCreateSmoke.create_valid_release, :content_type => "application/json"
     rescue => e
