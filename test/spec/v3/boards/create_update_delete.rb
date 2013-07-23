@@ -74,7 +74,7 @@ describe "V3 Boards API -- Create A Board", :stg => true do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
     TopazToken.set_token('boards-admin')
-    @url = "http://#{@config.options['baseurl']}/boards?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/boards?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.post @url, BoardsHelper.new_board.to_json, :content_type => "application/json"
     rescue => e
@@ -117,7 +117,7 @@ describe "V3 Boards API -- Get Board Just Created", :stg => true do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
     TopazToken.set_token('boards-admin')
-    @url = "http://#{@config.options['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -157,7 +157,7 @@ describe "V3 Boards API -- Update A Board", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.put @url, BoardsHelper.update_board_first.to_json, :content_type => "application/json"
     rescue => e
@@ -180,7 +180,7 @@ describe "V3 Boards API -- Update A Board", :stg => true do
   end
 
   it 'should return the updated values' do
-    url = "http://#{@config.options['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
+    url = "http://#{@config.stg['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
     res = RestClient.get url
     data = JSON.parse(res.body)
     data['primaryLegacyId'].should == BoardsHelper.update_board_first[:primaryLegacyId]
@@ -194,7 +194,7 @@ describe "V3 Boards API -- Update A Board A Second Time", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.put @url, BoardsHelper.update_board_second.to_json, :content_type => "application/json"
     rescue => e
@@ -217,7 +217,7 @@ describe "V3 Boards API -- Update A Board A Second Time", :stg => true do
   end
 
   it 'should return the updated values' do
-    url = "http://#{@config.options['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
+    url = "http://#{@config.stg['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
     res = RestClient.get url
     data = JSON.parse(res.body)
     data['relatedLegacyIds'].should == BoardsHelper.update_board_second[:relatedLegacyIds]
@@ -230,7 +230,7 @@ describe "V3 Boards API -- Delete A Board", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.stg['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.delete @url
     rescue => e
@@ -266,7 +266,7 @@ describe "V3 Boards API -- Confirm Delete A Board Using '/ID'", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_boards.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/boards/#{BoardsHelper::Vars.get_id}?fresh=true"
   end
 
   before(:each) do
