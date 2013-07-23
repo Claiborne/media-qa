@@ -9,19 +9,19 @@ require 'assert'
 include Assert
 
 [ "", 
-  "state/published?fresh=true",
-  "?metadata.state=published&metadata.networks=ign",
-  "network/ign?metadata.state=published",
-  "state/published?metadata.networks=ign&metadata.state=published",
-  "?sortOrder=asc&sortBy=metadata.name&metadata.state=published",
-  "?metadata.state=published&fields=metadata.name,metadata.networks,videoId"].each do |call|
+  "/state/published?fresh=true",
+  "?metadata.state=published&metadata.networks=ign&fresh=true",
+  "/network/ign?metadata.state=published&fresh=true",
+  "/state/published?metadata.networks=ign&metadata.state=published&fresh=true",
+  "?sortOrder=asc&sortBy=metadata.name&metadata.state=published&fresh=true",
+  "?metadata.state=published&fields=metadata.name,metadata.networks,videoId&fresh=true"].each do |call|
 
 describe "V3 Video API -- General Smoke Tests -- #{call}" do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
     @config = PathConfig.new
-    @url = "http://#{@config.options['baseurl']}/v3/videos/#{call}&fresh=true"
+    @url = "http://#{@config.options['baseurl']}/v3/videos#{call}"
     begin 
       @response = RestClient.get @url
     rescue => e
