@@ -1,5 +1,5 @@
 development:
-  baseurl: No-url-here-nonononono
+  baseurl:
 
 staging:
   baseurl: media-slotter-stg-api-01.sfdev.colo.ignops.com:8080/slotter/v3
