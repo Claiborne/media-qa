@@ -207,7 +207,7 @@ end end
 
 # Enfore list limit for contains* values on GET search
 %w(contains containsOne).each do |contains|
-describe "V3 Articles API -- Contains Limit On GET Search ", :smoke => true, :test => true do
+describe "V3 Articles API -- Contains Limit On GET Search ", :smoke => true do
 
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
@@ -249,13 +249,13 @@ describe "V3 Articles API -- Contains Limit On GET Search ", :smoke => true, :te
     end
   end
   
-  it "should not return any articles tagged xbox-360" do
+  it "should not return any articles tagged xbox-360 that are not tagged ps3" do
     @data['data'].each do |article|
       article_tags = []
       article['tags'].each do |tag|
         article_tags << tag['slug']
       end
-      article_tags.include?('xbox-360').should be_false
+      article_tags.include?('xbox-360').should be_false unless article_tags.include?('ps3')
     end
   end
   

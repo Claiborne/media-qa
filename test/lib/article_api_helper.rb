@@ -150,7 +150,7 @@ class ArticleAPIHelper
       {
          :field=>"metadata.articleType",
          :condition=>"is",
-         :value=>"post"
+         :value=>"article"
       },
       {
          :field=>"tags.slug",

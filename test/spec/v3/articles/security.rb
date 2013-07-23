@@ -32,8 +32,7 @@ describe "V3 Article API -- GET Unpublished Articles Using /state/#{state} Endpo
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_articles.yml"
     @config = PathConfig.new
     TopazToken.set_token('articles')
-    @url = "http://#{@config.options['baseurl']}/v3/articles/state/#{state}?fresh=true"
-    TopazToken.set_token('videos')
+    @url = "http://#{@config.options['baseurl']}/v3/articles/state/#{state}"
   end
 
   before(:each) do
@@ -45,11 +44,12 @@ describe "V3 Article API -- GET Unpublished Articles Using /state/#{state} Endpo
   end
 
   it "should 401 without an oauth token" do
-    expect {RestClient.get @url}.to raise_error(RestClient::Unauthorized)
+    expect {RestClient.get @url+"?fresh=true"}.to raise_error(RestClient::Unauthorized)
   end
 
   it "should 200 with an oauth token" do
-    res = RestClient.get @url+"?oauth_token=#{TopazToken.return_token}"
+    puts @url+"?oauth_token=#{TopazToken.return_token}"
+    res = RestClient.get @url+"?oauth_token=#{TopazToken.return_token}&fresh=true"
     res.code.should == 200
   end
 
