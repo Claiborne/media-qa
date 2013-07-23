@@ -1,7 +1,7 @@
 require 'yaml'
 
 class PathConfig
-  attr_accessor :options, :staging, :development
+  attr_accessor :options, :stg
 
   def self.config_path=(path)
     @@config_path = path
@@ -12,9 +12,18 @@ class PathConfig
     environment = ENV['env']
     configs = YAML.load_file(@@config_path)
     @options = configs[environment]
-    @staging = configs['staging'] if configs['staging']
-    @development = configs['development'] if configs['development']
-
+    puts @options
+    raise "No base URL for '#{ENV['env']}' is defined in the test's YML file" unless @options && @options['baseurl']
+    
+    case environment
+    when 'staging'
+      @stg = configs['staging']
+    when 'development'
+      @stg = configs['development']
+    when 'other' # this allows testing of any base URL just by adding value to ['other']['baseurl'] in the app's YML file
+      @stg = configs['other']
+    end 
+    
     # this is a bad hack for branch substitution
     @options['baseurl'] = @options['baseurl'].gsub(/branchname/, ENV['branch']) unless ENV['branch'] == nil    
   end
