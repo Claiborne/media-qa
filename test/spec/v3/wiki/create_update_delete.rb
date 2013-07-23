@@ -62,7 +62,7 @@ describe "V3 Wiki API -- Create A Wiki", :stg => true do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
     TopazToken.set_token('wiki-admin')
-    @url = "http://10.97.64.101:8081/wiki/v3/wikis?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.options['baseurl']}/wikis?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.post @url, WikiHelper.new_wiki.to_json, :content_type => "application/json"
     rescue => e
@@ -96,7 +96,7 @@ describe "V3 Wiki API -- Get Wiki Just Created", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    @url = "http://10.97.64.101:8081/wiki/v3/wikis/#{WikiHelper::Vars.get_id}"
+    @url = "http://#{@config.options['baseurl']}/wikis/#{WikiHelper::Vars.get_id}"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -129,7 +129,7 @@ describe "V3 Wiki API -- Update A Wiki", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    @url = "http://10.97.64.101:8081/wiki/v3/wikis/#{WikiHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.options['baseurl']}/wikis/#{WikiHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.put @url, WikiHelper.update_wiki_first.to_json, :content_type => "application/json"
     rescue => e
@@ -152,7 +152,7 @@ describe "V3 Wiki API -- Update A Wiki", :stg => true do
   end
 
   it 'should return the updated values' do
-    url = "http://10.97.64.101:8081/wiki/v3/wikis/#{WikiHelper::Vars.get_id}?fresh=true"
+    url = "http://#{@config.options['baseurl']}/wikis/#{WikiHelper::Vars.get_id}?fresh=true"
     res = RestClient.get url
     data = JSON.parse(res.body)
     {:slug=>WikiHelper.update_wiki_first[:slug], :mediawikiUrl=>WikiHelper.update_wiki_first[:mediawikiUrl], :wikiName=>WikiHelper.update_wiki_first[:wikiName]}.each do |k,v|
@@ -167,7 +167,7 @@ describe "V3 Wiki API -- Delete A Wiki", :stg => true do
   before(:all) do
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_wiki.yml"
     @config = PathConfig.new
-    @url = "http://10.97.64.101:8081/wiki/v3/wikis/#{WikiHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
+    @url = "http://#{@config.options['baseurl']}/wikis/#{WikiHelper::Vars.get_id}?oauth_token=#{TopazToken.return_token}"
     begin
       @response = RestClient.delete @url
     rescue => e
