@@ -112,7 +112,7 @@ end
 describe "V3 Articles API -- Create Article with Promo Fields", :stg => true do
 
   before(:all) do
-    @url = "http://apis.stg.ign.com/article/v3/articles?oauth_token=#{ArticlePromoFieldsHelper.return_token}&fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/v3/articles?oauth_token=#{ArticlePromoFieldsHelper.return_token}&fresh=true"
     begin
       @response = RestClient.post @url, ArticlePromoFieldsHelper.body_request, :content_type => "application/json"
     rescue => e
@@ -158,7 +158,7 @@ end
 describe "V3 Articles API -- Check Promo Fields", :stg => true do
 
   before(:all) do
-    @url = "http://apis.stg.ign.com/article/v3/articles/#{ArticlePromoFieldsHelper.return_article_id}?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/v3/articles/#{ArticlePromoFieldsHelper.return_article_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -222,7 +222,7 @@ end
 describe "V3 Articles API -- Update Article with Promo Fields", :stg => true do
 
   before(:all) do
-    @url = "http://apis.stg.ign.com/article/v3/articles/#{ArticlePromoFieldsHelper.return_article_id}?oauth_token=#{ArticlePromoFieldsHelper.return_token}&fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/v3/articles/#{ArticlePromoFieldsHelper.return_article_id}?oauth_token=#{ArticlePromoFieldsHelper.return_token}&fresh=true"
     begin
       @response = RestClient.put @url, ArticlePromoFieldsHelper.body_update, :content_type => "application/json"
     rescue => e
@@ -258,7 +258,7 @@ end
 describe "V3 Articles API -- Check Updated Promo Fields", :stg => true do
 
   before(:all) do
-    @url = "http://apis.stg.ign.com/article/v3/articles/#{ArticlePromoFieldsHelper.return_article_id}?fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/v3/articles/#{ArticlePromoFieldsHelper.return_article_id}?fresh=true"
     begin
       @response = RestClient.get @url
     rescue => e
@@ -313,7 +313,7 @@ end
 describe "V3 Articles API -- Clean up / Delete -- apis.stg.ign.com/article/v3/articles/#{ArticlePromoFieldsHelper.return_article_id}", :stg => true do
 
   before(:all) do
-    @url = "http://apis.stg.ign.com/article/v3/articles/#{ArticlePromoFieldsHelper.return_article_id}?oauth_token=#{ArticlePromoFieldsHelper.return_token}&fresh=true"
+    @url = "http://#{@config.stg['baseurl']}/v3/articles/#{ArticlePromoFieldsHelper.return_article_id}?oauth_token=#{ArticlePromoFieldsHelper.return_token}&fresh=true"
     begin
       @response = RestClient.delete @url
     rescue => e
