@@ -319,6 +319,8 @@ describe "V3 Video API -- GET Specific Non-Published Video", :stg => true do
 
   before(:all) do
     TopazToken.set_token('videos')
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    @config = PathConfig.new
     @base_url = "http://#{@config.stg['baseurl']}/v3/videos/"
 
     @rand_num = Random.rand(500)
@@ -398,6 +400,8 @@ describe "V3 Video API -- GET Specific Non-Published Playlist", :stg => true do
 
   before(:all) do
     TopazToken.set_token('videos')
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/v3_video.yml"
+    @config = PathConfig.new
     @base_url = "http://#{@config.stg['baseurl']}/v3/playlists/"
 
     @rand_num = Random.rand(500)
