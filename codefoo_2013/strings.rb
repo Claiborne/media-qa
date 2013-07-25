@@ -31,4 +31,4 @@ hi.length #=> 2
 
 # getting input from console
 puts "Would you like to play again? (y/n)"
-answer = gets().downcase.strip
+answer = gets.downcase.strip
