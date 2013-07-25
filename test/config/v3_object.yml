@@ -1,5 +1,5 @@
 development:
-  baseurl: media-oyster-dev-app-01.sfdev.colo.ignops.com:8080
+  baseurl: 
 
 staging:
   baseurl: apis.stg.ign.com/object/v3
