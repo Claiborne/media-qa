@@ -29,7 +29,12 @@ require 'rest_client'
   
   def self.return_token
      @token
-   end
+  end
+    
+  def return_topaz_token(scope) # support for deprecated calls
+    TopazToken.set_token scope
+    TopazToken.return_token       
+  end
   
 end
 
