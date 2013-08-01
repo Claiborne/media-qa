@@ -9,27 +9,27 @@
   </thead>
   <tbody>
     <tr>
-      <td>IGN.com</td>
+      <td>IGN.com <%= render 'status/error_message', :status => @status_ign %></td>
       <td class="glyph enclosed <%= @status_ign[:color] %> status icon"><%= @status_ign[:icon]%></td>
     </tr>
     <tr>
-      <td>Article CMS</td>
+      <td>Article CMS <%= render 'status/error_message', :status => @status_article %></td>
       <td class="glyph enclosed <%= @status_article[:color] %> status icon"><%= @status_article[:icon]%></td>
     </tr>
     <tr>
-      <td>Slotter CMS</td>
+      <td>Slotter CMS <%= render 'status/error_message', :status => @status_slotter %></td>
       <td class="glyph enclosed <%= @status_slotter[:color] %> status icon"><%= @status_slotter[:icon]%></td>
     </tr>
     <tr>
-      <td>Video CMS</td>
+      <td>Video CMS <%= render 'status/error_message', :status => @status_video %></td>
       <td class="glyph enclosed <%= @status_video[:color] %> status icon"><%= @status_video[:icon]%></td>
     </tr>
     <tr>
-      <td>Image CMS</td>
+      <td>Image CMS <%= render 'status/error_message', :status => @status_image %></td>
       <td class="glyph enclosed <%= @status_image[:color] %> status icon"><%= @status_image[:icon]%></td>
     </tr>
     <tr>
-      <td>Object CMS</td>
+      <td>Object CMS <%= render 'status/error_message', :status => @status_object %></td>
       <td class="glyph enclosed <%= @status_object[:color] %> status icon"><%= @status_object[:icon]%></td>
     </tr>
   </tbody>

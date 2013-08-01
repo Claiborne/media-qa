@@ -24,34 +24,37 @@ class StatusController < ApplicationController
     OBJECT_API = 'http://apis.lan.ign.com/object/v3/ping'
 
     def check_ign
+      error_message = {:message => "The homepage is down"}
       begin
-        response = RestClient.get 'http://www.ign.com/'
+        response = RestClient.get 'http://www.ign.com'
       rescue => e
         e.response.code
-        return RED
+        return RED.merge error_message
       end
       return GREEN if response.code == 200
-      RED
+      RED.merge error_message
     end
 
     def check_pingable(url)
+      error_message = {:message => "The backend of this system is down"}
       begin
         response = RestClient.get url  
       rescue => e
-       return RED 
+       return RED.merge error_message 
       end
       return GREEN if response.to_s.match /pong/
-      RED
+      RED.merge error_message
     end
   
     def check_slotter(url)
+      error_message = {:message => "The backend of this system is down"}
       begin
         response = RestClient.get url  
       rescue => e
-       return RED 
+       return RED.merge error_message 
       end
       return GREEN if response.to_s.length > 10000 && response.code < 400
-      RED
+      RED.merge error_message
       
     end
     
