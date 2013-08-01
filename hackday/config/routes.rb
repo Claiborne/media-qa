@@ -1,7 +1,9 @@
 Hackday::Application.routes.draw do
   
   root :to => 'home#index' # get "home/index" this is what rails generated with rails generate controller home index
-
+  
+  match '/status', :to => 'status#show'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
