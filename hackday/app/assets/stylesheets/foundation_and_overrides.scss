@@ -1,7 +1,23 @@
 // Required global settings and mixins for Foundation
-@import "foundation/foundation-global";
+// @import "foundation/foundation-global"
+@import 'foundation-icons';
 
 // Settings file to override Foundation variables
+ 
+.green.status.icon {
+	color: green;
+	font-size: 1.5em;
+}
+
+.orange.status.icon {
+	color: orange;
+	font-size: 1.5em;
+}
+
+.red.status.icon {
+	color: red;
+	font-size: 1.5em;
+}
 
 // You can find the variables for each component at the bottom of their
 // doc page. We tried to name them to where they'd make sense just by reading them.
@@ -16,7 +32,7 @@
 
 // We use these to control various global styles
 // $body-bg: #fff;
-// $body-font-color: #222;
+// body-font-color: red;
 // $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;

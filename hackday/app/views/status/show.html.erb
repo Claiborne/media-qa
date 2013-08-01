@@ -1,2 +1,41 @@
 <h1>Status#show</h1>
-<p>Find me in app/views/status/show.html.erb</p>
+
+<table>
+  <thead>
+    <tr>
+      <th width="500">Component</th>
+      <th width="50">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IGN.com</td>
+      <td class="glyph enclosed <%= @status_ign[:color] %> status icon"><%= @status_ign[:icon]%></td>
+    </tr>
+    <tr>
+      <td>Article CMS</td>
+      <td class="glyph enclosed <%= @status_article[:color] %> status icon"><%= @status_article[:icon]%></td>
+    </tr>
+    <tr>
+      <td>Slotter CMS</td>
+      <td class="glyph enclosed <%= @status_slotter[:color] %> status icon"><%= @status_slotter[:icon]%></td>
+    </tr>
+    <tr>
+      <td>Video CMS</td>
+      <td class="glyph enclosed <%= @status_video[:color] %> status icon"><%= @status_video[:icon]%></td>
+    </tr>
+    <tr>
+      <td>Image CMS</td>
+      <td class="glyph enclosed <%= @status_image[:color] %> status icon"><%= @status_image[:icon]%></td>
+    </tr>
+    <tr>
+      <td>Object CMS</td>
+      <td class="glyph enclosed <%= @status_object[:color] %> status icon"><%= @status_object[:icon]%></td>
+    </tr>
+  </tbody>
+</table>
+
+<%#
+<span class="glyph enclosed orange-status-icon">e</span>
+<span class="glyph enclosed red-status-icon">e</span>
+%>

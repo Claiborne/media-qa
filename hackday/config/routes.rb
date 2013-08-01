@@ -4,6 +4,7 @@ Hackday::Application.routes.draw do
   
   match '/status', :to => 'status#show'
   
+  mount Foundation::Icons::Rails::Engine => '/fi'  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
