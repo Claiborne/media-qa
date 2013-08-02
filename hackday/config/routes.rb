@@ -3,6 +3,7 @@ Hackday::Application.routes.draw do
   root :to => 'home#index' # get "home/index" this is what rails generated with rails generate controller home index
   
   match '/status', :to => 'status#show'
+  get '/status/manage', :to => 'status#manage'
   
   mount Foundation::Icons::Rails::Engine => '/fi'  
   # The priority is based upon order of creation:
