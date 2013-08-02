@@ -12,8 +12,6 @@
 
   	<!-- Set the viewport width to device width for mobile -->
   	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
- 	<script src="http://code.jquery.com/jquery-latest.js"></script>
  
   	<title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
 
@@ -23,10 +21,13 @@
   </head>
 
   <body>
+	  
+	  <script src="http://code.jquery.com/jquery-latest.js"></script>
 
     <%= yield %>
 
     
     <%= javascript_include_tag "application" %>
+	
   </body>
 </html>
