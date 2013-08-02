@@ -1,9 +1,9 @@
 <script type="text/javascript">
-	function showMessage() {
-    	document.getElementById('js_form').style.display = "block";
+	function showErrorField() {
+    	document.getElementById('error_field').style.display = "block";
 	}
-	function hideMessage() {
-    	document.getElementById('js_form').style.display = "none";
+	function hideErrorField() {
+    	document.getElementById('error_field').style.display = "none";
 	}
 </script>
 </br>
@@ -11,24 +11,21 @@
 	<h2><%= @status[:system]%></h2>
 	<h2><%= @status[:status]%></h2>
 	<h2><%= @status[:message]%></h2>
-	<input type="radio" name="answer" onClick="hideMessage()">Normal</input></br>
-	<input type="radio" name="answer" onclick="showMessage()">Partial Outage</input></br>
-	<input type="radio" name="answer" onclick="showMessage()">Severe Outage</input></br>
 </div>
 </br>
 
 <%= form_for @status, url: {action: "update"}, html: {class: "nifty_form"} do |f| %>
 <div id="js_form" class="row">
-	<%= f.radio_button(:status, "green"), {onClick: "showTest()"}) %>
+	<%= f.radio_button :status, "green", {onClick: "hideErrorField()"} %>
 	<%= f.label(:status, "Normal") %>
-	<%= f.radio_button(:status, "orange", {onClick: "showTest()"}) %>
+	<%= f.radio_button :status, "orange", {onClick: "showErrorField()"} %>
 	<%= f.label(:status, "Partial Outage") %>
-	<%= f.radio_button(:status, "red"), {onClick: "showTest()"}) %>
+	<%= f.radio_button :status, "red", {onClick: "showErrorField()"}  %>
 	<%= f.label(:status, "Severe Outage") %>	
-	<div class="large-12 columns">	
-	<label>A non-techincal description of the outage and how it affects users</label>
- 	<%= f.text_field :message %>
-  	<%= f.submit "Edit" %>
+	<div class="large-12 columns" id="error_field" style="display:none;">	
+		<label>A non-techincal description of the outage and how it affects users</label>
+ 		<%= f.text_field :message %>
+  		<%= f.submit "Edit" %>
 	</div>
 </div>
 <% end %>
