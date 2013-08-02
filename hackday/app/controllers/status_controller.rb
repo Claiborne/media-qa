@@ -14,7 +14,6 @@ class StatusController < ApplicationController
   
   def edit
     @status = Status.find params[:id]
-    
     case @status[:status]
     when 'green'
       @error_field_display = "display:none;"

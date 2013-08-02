@@ -13,14 +13,29 @@ module StatusHelper
   OBJECT_API = 'http://apis.lan.ign.com/object/v3/ping'
 
   def check_ign
-    begin
-      response = RestClient.get 'http://www.ign.com'
-    rescue => e
-      e.response.code
-      return RED.merge HOMEPAGE_ERROR_MSG
+    ign = Status.find_by_system "IGN.com"
+    message = {:message => ign[:message]} 
+    if ign[:custom].to_s == 'true'
+      case ign[:status]
+      when 'green'
+        raise RuntimeException
+      when 'orange'
+        return ORANGE.merge message
+      when 'red'
+        return RED.merge message  
+      else
+        return ORANGE.merge message
+      end
+    else
+      begin
+        response = RestClient.get 'http://www.ign.com/404'
+      rescue => e
+        e.response.code
+        return RED.merge HOMEPAGE_ERROR_MSG
+      end
+      return GREEN if response.code == 200
+      RED.merge HOMEPAGE_ERROR_MSG
     end
-    return GREEN if response.code == 200
-    RED.merge HOMEPAGE_ERROR_MSG
   end
 
   def check_pingable(url)
