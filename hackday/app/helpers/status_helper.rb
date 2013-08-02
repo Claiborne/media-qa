@@ -28,7 +28,7 @@ module StatusHelper
       end
     else
       begin
-        response = RestClient.get 'http://www.ign.com/404'
+        response = RestClient.get 'http://www.ign.com'
       rescue => e
         e.response.code
         return RED.merge HOMEPAGE_ERROR_MSG
