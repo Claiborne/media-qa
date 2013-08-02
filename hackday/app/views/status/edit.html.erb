@@ -9,8 +9,8 @@
 </br>
 <div class="row">
 	<h2><%= @status[:system]%></h2>
-	<h2><%= @status[:status]%></h2>
-	<h2><%= @status[:message]%></h2>
+	<h2><%= @status[:custom]%></h2>
+	<h2><%= @status_display %></h2>
 </div>
 </br>
 
@@ -22,10 +22,10 @@
 	<%= f.label(:status, "Partial Outage") %>
 	<%= f.radio_button :status, "red", {onClick: "showErrorField()"}  %>
 	<%= f.label(:status, "Severe Outage") %>	
-	<div class="large-12 columns" id="error_field" style="display:none;">	
+	<div class="large-12 columns" id="error_field" style="<%= @error_field_display %>">	
 		<label>A non-techincal description of the outage and how it affects users</label>
  		<%= f.text_field :message %>
-  		<%= f.submit "Edit" %>
 	</div>
+	<%= f.submit "Submit Status Update" %>
 </div>
 <% end %>

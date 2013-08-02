@@ -4,7 +4,7 @@ class CreateStatuses < ActiveRecord::Migration
       t.string :system
       t.string :status
       t.string :message
-
+      t.boolean :custom
       t.timestamps
     end
   end
