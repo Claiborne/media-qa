@@ -13,7 +13,7 @@ class StatusController < ApplicationController
   end
   
   def manage
-    
+    @status = Status.all 
   end
 
 end
