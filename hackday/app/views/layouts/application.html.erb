@@ -32,6 +32,9 @@
 	              <div id="ignHeader-userBar">
 	                  <div class="container">
 	                      <a href="http://www.ign.com"><span id="ignHeader-logo"></span></a>
+						  <ul id="ignHeader-profileLinks" style="float:left">
+						  <li><%= link_to "Manage", {controller: "status", action: "manage"}, class: "profileLink-link" %></li>
+						  </ul>
 	                  </div>
 	                  <script type="text/javascript">try{ var evoRenderDomain=""; IGNheader.Init(); }catch(err){};</script>
 	              </div>
