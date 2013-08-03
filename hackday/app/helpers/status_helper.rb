@@ -38,24 +38,54 @@ module StatusHelper
     end
   end
 
-  def check_pingable(url)
-    begin
-      response = RestClient.get url  
-    rescue => e
-     return RED.merge BACKEND_ERROR_MSG 
+  def check_pingable(url, name)
+    pingable = Status.find_by_system name
+    message = {:message => pingable[:message]} 
+    if pingable[:custom].to_s == 'true'
+      case pingable[:status]
+      when 'green'
+        raise RuntimeException
+      when 'orange'
+        return ORANGE.merge message
+      when 'red'
+        return RED.merge message  
+      else
+        return ORANGE.merge message
+      end
+    else
+      begin
+        response = RestClient.get url  
+      rescue => e
+        return RED.merge BACKEND_ERROR_MSG 
+      end
+      return GREEN if response.to_s.match /pong/
+      RED.merge BACKEND_ERROR_MSG
     end
-    return GREEN if response.to_s.match /pong/
-    RED.merge BACKEND_ERROR_MSG
   end
 
   def check_slotter(url)
-    begin
-      response = RestClient.get url  
-    rescue => e
-     return RED.merge BACKEND_ERROR_MSG 
+    slotter = Status.find_by_system 'Slotter CMS'
+    message = {:message => slotter[:message]} 
+    if slotter[:custom].to_s == 'true'
+      case slotter[:status]
+      when 'green'
+        raise RuntimeException
+      when 'orange'
+        return ORANGE.merge message
+      when 'red'
+        return RED.merge message  
+      else
+        return ORANGE.merge message
+      end
+    else
+      begin
+        response = RestClient.get url  
+      rescue => e
+        return RED.merge BACKEND_ERROR_MSG 
+      end
+      return GREEN if response.to_s.length > 10000 && response.code < 400
+      RED.merge BACKEND_ERROR_MSG
     end
-    return GREEN if response.to_s.length > 10000 && response.code < 400
-    RED.merge BACKEND_ERROR_MSG
   end
   
 end

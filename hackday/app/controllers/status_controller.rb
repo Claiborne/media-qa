@@ -5,11 +5,11 @@ class StatusController < ApplicationController
  
   def overview   
     @status_ign = check_ign
-    @status_article = check_pingable ARTICLE_API
+    @status_article = check_pingable ARTICLE_API, 'Article CMS'
     @status_slotter = check_slotter SLOTTER_API
-    @status_video = check_pingable VIDEO_API
-    @status_image = check_pingable IMAGE_API
-    @status_object = check_pingable OBJECT_API
+    @status_video = check_pingable VIDEO_API, 'Video CMS'
+    @status_image = check_pingable IMAGE_API, 'Image CMS'
+    @status_object = check_pingable OBJECT_API, 'Object CMS'
     @manage = false
   end
   
