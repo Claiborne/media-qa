@@ -3,13 +3,14 @@ class StatusController < ApplicationController
   include StatusHelper
   require 'rest_client'
  
-  def overview    
+  def overview   
     @status_ign = check_ign
     @status_article = check_pingable ARTICLE_API
     @status_slotter = check_slotter SLOTTER_API
     @status_video = check_pingable VIDEO_API
     @status_image = check_pingable IMAGE_API
     @status_object = check_pingable OBJECT_API
+    @manage = false
   end
   
   def edit
@@ -46,6 +47,12 @@ class StatusController < ApplicationController
       #render 'edit'
     end
     
+  end
+  
+  def manage
+    overview
+    @manage = true
+    render 'status/overview'
   end
 
 end

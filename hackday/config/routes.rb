@@ -2,10 +2,11 @@ Hackday::Application.routes.draw do
   
   root :to => 'home#index' # get "home/index" this is what rails generated with rails generate controller home index
   
-  resources :status, :only => [:show, :edit, :update]
+  resources :status, :only => [:edit, :update]
   
   match '/status', :to => 'status#overview'
   get '/status/ign_site', :to => 'status#ign_site'
+  get '/status/manage', :to => 'status#manage'
   
   mount Foundation::Icons::Rails::Engine => '/fi'  
   # The priority is based upon order of creation:

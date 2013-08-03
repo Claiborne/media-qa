@@ -19,27 +19,33 @@
   </thead>
   <tbody>
     <tr>
-      <td><h5>IGN.com</h5> <%= render 'status/error_message', :status => @status_ign %></td>
+      <td><h5>IGN.com - <%= link_to "EDIT", controller: "status", action: "edit", id: Status.find_by_system('IGN.com') if @manage %></h5>
+		  <%= render 'status/error_message', :status => @status_ign %></td>
       <td class="glyph enclosed <%= @status_ign[:color] %> status icon"><%= @status_ign[:icon]%></td>
     </tr>
     <tr>
-      <td><h5>Article CMS</h5> <%= render 'status/error_message', :status => @status_article %></td>
+      <td><h5>Article CMS - <%= link_to "EDIT", controller: "status", action: "edit", id: Status.find_by_system('Article CMS') if @manage %></h5> 
+		  <%= render 'status/error_message', :status => @status_article %></td>
       <td class="glyph enclosed <%= @status_article[:color] %> status icon"><%= @status_article[:icon]%></td>
     </tr>
     <tr>
-      <td><h5>Slotter CMS</h5> <%= render 'status/error_message', :status => @status_slotter %></td>
+      <td><h5>Slotter CMS - <%= link_to "EDIT", controller: "status", action: "edit", id: Status.find_by_system('Slotter CMS') if @manage %></h5> 
+		  <%= render 'status/error_message', :status => @status_slotter %></td>
       <td class="glyph enclosed <%= @status_slotter[:color] %> status icon"><%= @status_slotter[:icon]%></td>
     </tr>
     <tr>
-      <td><h5>Video CMS</h5> <%= render 'status/error_message', :status => @status_video %></td>
+      <td><h5>Video CMS - <%= link_to "EDIT", controller: "status", action: "edit", id: Status.find_by_system('Video CMS') if @manage %></h5> 
+		  <%= render 'status/error_message', :status => @status_video %></td>
       <td class="glyph enclosed <%= @status_video[:color] %> status icon"><%= @status_video[:icon]%></td>
     </tr>
     <tr>
-      <td><h5>Image CMS</h5> <%= render 'status/error_message', :status => @status_image %></td>
+      <td><h5>Image CMS - <%= link_to "EDIT", controller: "status", action: "edit", id: Status.find_by_system('Image CMS') if @manage %></h5> 
+		  <%= render 'status/error_message', :status => @status_image %></td>
       <td class="glyph enclosed <%= @status_image[:color] %> status icon"><%= @status_image[:icon]%></td>
     </tr>
     <tr>
-      <td><h5>Object CMS</h5> <%= render 'status/error_message', :status => @status_object %></td>
+      <td><h5>Object CMS - <%= link_to "EDIT", controller: "status", action: "edit", id: Status.find_by_system('Object CMS') if @manage %></h5> 
+		  <%= render 'status/error_message', :status => @status_object %></td>
       <td class="glyph enclosed <%= @status_object[:color] %> status icon"><%= @status_object[:icon]%></td>
     </tr>
   </tbody>
