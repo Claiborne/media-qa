@@ -8,22 +8,26 @@
 </script>
 </br>
 <div class="row">
-	<h2><%= @status[:system]%></h2>
+	<h3><%= @status[:system]%></h3>
 </div>
-</br>
 
 <%= form_for @status, url: {action: "update"}, html: {class: "nifty_form"} do |f| %>
 <div id="js_form" class="row">
-	<%= f.radio_button :status, "green", {onClick: "hideErrorField()"} %>
-	<%= f.label(:status, "Normal") %>
+	<%= f.radio_button :status, "green", {onClick: "hideErrorField()"}%>
+	<%= f.label(:status, "Normal", style: "display:inline" ) %>
+	</br>
 	<%= f.radio_button :status, "orange", {onClick: "showErrorField()"} %>
-	<%= f.label(:status, "Partial Outage") %>
+	<%= f.label(:status, "Partial Outage", style: "display:inline") %>
+	</br>
 	<%= f.radio_button :status, "red", {onClick: "showErrorField()"}  %>
-	<%= f.label(:status, "Severe Outage") %>	
+	<%= f.label(:status, "Severe Outage", style: "display:inline") %>	
+	</br>
 	<div class="large-12 columns" id="error_field" style="<%= @error_field_display %>">	
+		</br>
 		<label>A non-techincal description of the outage and how it affects users</label>
  		<%= f.text_field :message %>
 	</div>
+	</br>
 	<%= f.submit "Submit Status Update" %>
 </div>
 <% end %>
