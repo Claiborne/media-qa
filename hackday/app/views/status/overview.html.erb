@@ -1,39 +1,45 @@
 </br>
 <div class='row'>
-	<h1>IGN Status</h1>
-</div>
+<h1>IGN Status</h1>
 
-<div class='row'>
 <table>
   <thead>
     <tr>
-      <th width="500">Component</th>
-      <th width="50">Status</th>
+      <th class='small-about' width="731">If you are experiencing problems with IGN.com or any of the CMSes and do not see a notice posted, please open a ticket with engineering at <a href='http://wwww.ign.com/911'>www.ign.com/911</a>. Selecting emergency priority will page an on-call engineer 24x7</th>
+    </tr>
+  </thead>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th width="650"><h4>System</h4></th>
+      <th width="30"><h4>Status</h4></th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>IGN.com <%= render 'status/error_message', :status => @status_ign %></td>
+      <td><h5>IGN.com</h5> <%= render 'status/error_message', :status => @status_ign %></td>
       <td class="glyph enclosed <%= @status_ign[:color] %> status icon"><%= @status_ign[:icon]%></td>
     </tr>
     <tr>
-      <td>Article CMS <%= render 'status/error_message', :status => @status_article %></td>
+      <td><h5>Article CMS</h5> <%= render 'status/error_message', :status => @status_article %></td>
       <td class="glyph enclosed <%= @status_article[:color] %> status icon"><%= @status_article[:icon]%></td>
     </tr>
     <tr>
-      <td>Slotter CMS <%= render 'status/error_message', :status => @status_slotter %></td>
+      <td><h5>Slotter CMS</h5> <%= render 'status/error_message', :status => @status_slotter %></td>
       <td class="glyph enclosed <%= @status_slotter[:color] %> status icon"><%= @status_slotter[:icon]%></td>
     </tr>
     <tr>
-      <td>Video CMS <%= render 'status/error_message', :status => @status_video %></td>
+      <td><h5>Video CMS</h5> <%= render 'status/error_message', :status => @status_video %></td>
       <td class="glyph enclosed <%= @status_video[:color] %> status icon"><%= @status_video[:icon]%></td>
     </tr>
     <tr>
-      <td>Image CMS <%= render 'status/error_message', :status => @status_image %></td>
+      <td><h5>Image CMS</h5> <%= render 'status/error_message', :status => @status_image %></td>
       <td class="glyph enclosed <%= @status_image[:color] %> status icon"><%= @status_image[:icon]%></td>
     </tr>
     <tr>
-      <td>Object CMS <%= render 'status/error_message', :status => @status_object %></td>
+      <td><h5>Object CMS</h5> <%= render 'status/error_message', :status => @status_object %></td>
       <td class="glyph enclosed <%= @status_object[:color] %> status icon"><%= @status_object[:icon]%></td>
     </tr>
   </tbody>
