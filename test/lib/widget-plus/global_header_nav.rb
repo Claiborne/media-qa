@@ -42,5 +42,30 @@ module GlobalHeaderNav
     end
 
   end
+  
+  def checker_header_signs_in
+    
+    it "should sign in" do
+      sign_in_button = @selenium.find_element(:css => "div#ignHeader a.ignHeader-loginLink")
+      sign_in_button.click
+      @selenium.switch_to.frame 'ignRegistrationModal'
+      @wait.until { @selenium.find_element(:css => "form#signinForm").displayed? }
+      
+      email_field = @selenium.find_element :css => 'input#email'
+      password_field = @selenium.find_element :css => 'input#password'
+      sign_in_button = @selenium.find_element :css => 'input.ignsignin-formButton'
+      
+      email = 'smoketest@testign.com'
+      password = 'testpassword' 
+      
+      email_field.send_keys email
+      password_field.send_keys password
+      sign_in_button.click
+
+      @selenium.switch_to.default_content 
+      @wait.until { @selenium.find_element(:css => "div#ignHeader img.userIcon").displayed?.should be_true }
+    end
+    
+  end
 
 end

@@ -168,6 +168,12 @@ RSpec::Core::RakeTask.new('techfrontend') do |t|
   t.pattern = 'spec/oyster/media/tech.rb'
 end
 
+desc "Run My IGN frontend tests"
+RSpec::Core::RakeTask.new('myignfrontend') do |t|
+  t.rspec_opts = ["-Ilib","--format documentation","--color"]
+  t.pattern = 'spec/oyster/media/my_ign.rb'
+end
+
 ############# OYSTER VARNISH #############
 
 desc "Run Boards frontend tests"
