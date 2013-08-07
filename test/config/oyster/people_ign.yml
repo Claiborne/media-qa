@@ -1,0 +1,8 @@
+development:
+  baseurl: branchname.dev.people.ign.com
+  
+staging:
+  baseurl: branchname.stg.people.ign.com
+
+production:
+  baseurl: people.ign.com
