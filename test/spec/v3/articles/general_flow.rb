@@ -54,7 +54,8 @@ class HelperVarsArticleFlow
         },
         "authors" => [
             {
-                "name"=>"Media-QA"
+                "name"=>"Media-QA",
+                "authorId"=>777
             }
         ],
         "tags" => [
@@ -276,6 +277,13 @@ describe "V3 Articles API -- Check Article Just Created -- apis.stg.ign.com/arti
     @data['authors'][0]['name'].should_not be_nil
     @data['authors'][0]['name'].to_s.delete("^a-zA-Z0-9").length.should > 0
     @data['authors'][0]['name'].should == 'Media-QA'
+  end
+  
+  it "should return an article with an authorId value of '777'" do
+    @data['authors'][0].has_key?('authorId').should be_true
+    @data['authors'][0]['authorId'].should_not be_nil
+    @data['authors'][0]['authorId'].to_s.delete("^a-zA-Z0-9").length.should > 0
+    @data['authors'][0]['authorId'].should == 777
   end
 
   # categoryLocales assertions
