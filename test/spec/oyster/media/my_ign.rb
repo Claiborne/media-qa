@@ -204,7 +204,7 @@ describe "Peer-IGN's Profile Page" do
   
 end
 
-describe "Peer-IGN's Blog Page", :test => true do
+describe "Peer-IGN's Blog Page" do
 
   before(:all) do
 
