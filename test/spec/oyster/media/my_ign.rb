@@ -3,9 +3,12 @@ require 'selenium-webdriver'
 require 'pathconfig'
 require 'rest-client'
 require 'open_page'
+require 'nokogiri'
 require 'open_page'; include OpenPage
 require 'fe_checker'; include FeChecker
 require 'widget-plus/global_header_nav'; include GlobalHeaderNav
+require 'widget/evo_header'; include EvoHeader
+require 'widget/global_footer'; include GlobalFooter
 
 describe 'My IGN', :selenium => true do
 
@@ -111,49 +114,152 @@ describe 'My IGN', :selenium => true do
   
 end
 
-describe "Peer-IGN's Profile Page", :selenium => true, :test => true do
+describe "Peer-IGN's Profile Page" do
 
   before(:all) do
-    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
-    @config = PathConfig.new
-    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/my_ign.yml"
-    @my_config = PathConfig.new
+
     PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/people_ign.yml"
-    @people_config = PathConfig.new
-    BrowserConfig.browser_path = File.dirname(__FILE__) + "/../../../config/browser.yml"
-    @browser_config = BrowserConfig.new
+    @config = PathConfig.new
 
     @base_url = "http://#{@config.options['baseurl']}"
-    @my_base_url = "http://#{@my_config.options['baseurl']}"
-    @people_base_url = "http://#{@people_config.options['baseurl']}"
 
-    @selenium = Selenium::WebDriver.for @browser_config.options['browser'].to_sym
-
-    @wait = Selenium::WebDriver::Wait.new(:timeout => 7)
+    @page = "http://#{@config.options['baseurl']}/peer-ign" 
+    @doc = nokogiri_not_301_open(@page)   
   end
   
-  after(:all) { @selenium.quit }
-  
-  it "should open" do
-    @selenium.get "#@people_base_url/peer-ign"
-    @selenium.current_url.should == "#@people_base_url/peer-ign" 
+  it "should return 200", :smoke => true do
   end
   
+  it "should include at least one css file", :smoke => true do
+    check_include_at_least_one_css_file(@doc)
+  end
+  
+  it "should not include any css files that return 400 or 500", :smoke => true do
+    check_css_files(@doc)
+  end
+  
+  context "Global Header Widget" do
+    widget_evo_header
+  end
+    
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+ 
   context "Profile Header" do
         
     it "should display" do
-      @selenium.find_element(:css => "div#ignSocialHeader div.socialProfileHeader").displayed?.should be_true 
+      @doc.css("div#ignSocialHeader div.socialProfileHeader").count.should == 1
     end
     
     it "should display Peer-IGN" do
-      @selenium.find_element(:css => "div#ignSocialHeader div.socialProfileHeader div.username").text.should == 'Peer-IGN'
+      @doc.css("div#ignSocialHeader div.socialProfileHeader div.username").text.should == 'Peer-IGN'
     end
     
-    it "should dusplay an avatar image" do
-      avatar = @selenium.find_element(:css => "div#ignSocialHeader div.socialProfileHeader div.avatarFrame img")
-      avatar.displayed?.should be_true 
+    it "should display an avatar image" do
+      avatar = @doc.css("div#ignSocialHeader div.socialProfileHeader div.avatarFrame img")
+      avatar.count.should == 1
       RestClient.get avatar.attribute('src').to_s
     end
+    
+    it "should display Peer's Xbox Live Player Card" do
+      @doc.css("div.socialProfileHeader div.gamerCard li.plat_xbox").text.strip.should == 'PeerIGN'
+    end
+    
+    it "should display stats for following, followers, and games" do
+      profile_stats = @doc.css("div.socialProfileHeader ul.profileStats li.counter")  
+      profile_stats.count.should == 3
+      profile_stats.each do |stats|
+        stats.text.strip.length.should > 3
+      end
+    end
+    
+    context "Main Content" do
+      
+      it "should display at least ten activities" do
+        main_content = @doc.css("div#bodyModules div#activityStream ul#activityList")  
+        main_content.count.should == 1
+        activities = main_content.css('li > div.activityBody p')
+        activities.count.should > 9
+        activities.each do |activity|
+          activity.text.strip.gsub(/\s+/,'').length.should > 0
+        end
+      end
+      
+    end
+    
+    context "Right Rail" do
+      
+      it "should display at least one game followed" do
+        @doc.at_css("div#rightRail div.gamesFollowContainer div.gf-thumbContainer a img[src*='http']").should be_true
+      end
+      
+      it "should display at least one person followed" do
+        @doc.at_css("div#rightRail div.pf-clusterContainer a img.pf-avatar[src*='http']").should be_true
+      end
+            
+    end
+    
   end
   
+end
+
+describe "Peer-IGN's Blog Page", :test => true do
+
+  before(:all) do
+
+    PathConfig.config_path = File.dirname(__FILE__) + "/../../../config/oyster/oyster_media.yml"
+    @config = PathConfig.new
+
+    @base_url = "http://#{@config.options['baseurl']}"
+
+    @page = "http://#{@config.options['baseurl']}/blogs/peer-ign" 
+    @doc = nokogiri_not_301_open(@page)   
+  end
+  
+  it "should return 200", :smoke => true do
+  end
+  
+  it "should include at least one css file", :smoke => true do
+    check_include_at_least_one_css_file(@doc)
+  end
+  
+  it "should not include any css files that return 400 or 500", :smoke => true do
+    check_css_files(@doc)
+  end
+  
+  context "Global Header Widget" do
+    widget_evo_header
+  end
+    
+  context "Global Footer Widget" do
+    widget_global_footer
+  end
+  
+  it "should display a header image" do
+    @doc.css("div#ignSocialHeader div").attribute('style').to_s.match(/url\('http/).should be_true
+  end
+  
+  it "should display a blog title" do
+    @doc.css("div#content div.post a").text.strip.gsub(/\s+/,'').length.should > 1
+  end
+  
+  it "should display blog content" do
+    @doc.css("div#content div.post div.entry").text.strip.gsub(/\s+/,'').length.should > 10
+  end
+  
+  it "should display at least two blog entries" do
+    @doc.css("div#content div.post a").count.should > 1
+    @doc.css("div#content div.post div.entry").count.should > 1
+  end
+  
+  context "Right Rail" do
+    
+    it "should not be blank" do
+      @doc.css("div#sidebar div").count.should > 5
+      @doc.css("div#sidebar").text.strip.gsub(/\s+/,'').length.should > 100 # usually > 1,000 in production
+    end
+    
+  end
+    
 end
