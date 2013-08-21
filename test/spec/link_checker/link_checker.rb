@@ -10,6 +10,8 @@ puts "BROKEN LINKS:"
 
 @doc = Nokogiri::HTML(RestClient.get(ENV['url']))
 
+puts "(checking #{@doc.css("#{ENV['css']} a").count}) links"
+
 @doc.css("#{ENV['css']} a").each do |a|
 
   link = a.attribute('href').to_s
