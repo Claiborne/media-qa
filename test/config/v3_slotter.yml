@@ -12,3 +12,6 @@ aws01:
 
 aws02:
   baseurl: ign-apis-prd-services-02.aws1.ignops.com:8080/slotter/v3
+  
+other:
+  baseurl: ign-apis-stg-services-01.aws1.ignops.com:8080/slotter/v3
