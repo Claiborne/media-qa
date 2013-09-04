@@ -39,7 +39,7 @@ The 'scripts' folder contains one-off scripts used for improptu needs.
 To run all tests suites:
 
    cd media-qa/test
-   rake all [OPTIONS] [TAGS] (options and tags explained below)
+   rake all [OPTIONS] [TAGS] options and tags explained below
 
 To run all API tests:
 
