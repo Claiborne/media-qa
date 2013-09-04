@@ -92,3 +92,12 @@ To run the frontend test without the assertions tagged 'spam, I use the followin
 
 To run the frontend testsuite in production without the staging-only assertions, I use the following command to  exclude all stage assertions
 	rake frontend env=production SPEC_OPTS='--tag ~stg'
+	
+### Real Use Case Examples
+
+	rake object-api env=staging SPEC_OPTS='--tag ~prd' # runs object api tests, excluding production-only test cases, in stage
+
+	rake videoplayerpage env=production services=production browser=firefox SPEC_OPTS='--tag ~spam' # runs the tests for the video
+	# player page in production using Firefox as the browser. Excludes all tests tagged 'spam' (e.g., link checkers)
+
+	rake hubs env=staging branch=new-feature-branch # runs all tests for IGN's hub pages against the new-feature-branch staged
