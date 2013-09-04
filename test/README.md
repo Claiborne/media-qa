@@ -1,5 +1,3 @@
-== Automation Framework ==
-
 In order to consolidate various test scripts developed by IGN's QA team, the team is using a unified framework that will be the main entry point for all automated tests and scripts. 
 
 ## REQUIRED SOFTWARE
